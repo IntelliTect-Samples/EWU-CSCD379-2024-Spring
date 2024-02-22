@@ -2,56 +2,56 @@
 
 1. [Assignment 1](Assignment1.md)
    - 100 points +5 EC points
-   - Assigned: 4/4
-   - Initial work complete: 4/9 11:59 pm
+   - Assigned: 4/2
+   - Initial work complete: 4/7 11:59 pm
      - 50% for running pipeline with passing unit test
      - 50% for working website
-   - Code Reviews Due by: 4/11 11:59 pm
-   - Review in class: 4/13 2:00 pm
-   - Final turn in: 4/13 11:59 pm
+   - Code Reviews Due by: 4/07 11:59 pm
+   - Review in class: 4/11 2:00 pm
+   - Final turn-in: 4/11 11:59 pm
 1. [Assignment 2](Assignment2.md)
    - 100 points +5 EC points
-   - Assigned: 4/13
-   - Initial work complete: 4/23 11:59 pm
+   - Assigned: 4/11
+   - Initial work complete: 4/21 11:59 pm
      - 50% for running pipeline with passing unit test
      - 50% for working website
-   - Code Reviews Due by: 4/25 11:59 pm
-   - Review in class: 4/27 2:00 pm
-   - Final turn in: 4/27 11:59 pm
+   - Code Reviews Due by: 4/23 11:59 pm
+   - Review in class: 4/25 2:00 pm
+   - Final turn-in: 4/25 11:59 pm
 1. [Assignment 3](Assignment3.md)
    - 100 points +5 EC points
-   - Assigned: 4/27
-   - Initial work complete: 5/7 11:59 pm
+   - Assigned: 4/25
+   - Initial work complete: 5/5 11:59 pm
      - 50% for running pipeline with passing unit test
      - 50% for working website
-   - Code Reviews Due by: 5/9 11:59 pm
-   - Review in class: 5/11 2:00 pm
-   - Final turn in: 5/11 11:59 pm
+   - Code Reviews Due by: 5/7 11:59 pm
+   - Review in class: 5/09 2:00 pm
+   - Final turn-in: 5/09 11:59 pm
 1. [Assignment 4](Assignment4.md)
    - 100 points +5 EC points
-   - Assigned: 5/11
-   - Initial work complete: 5/21 11:59 pm
+   - Assigned: 5/09
+   - Initial work complete: 5/19 11:59 pm
      - 50% for running pipeline with passing unit test
      - 50% for working website
-   - Code Reviews Due by: 5/23 11:59 pm
-   - Review in class: 5/25 2:00 pm
-   - Final turn in: 5/25 11:59 pm
+   - Code Reviews Due by: 5/21 11:59 pm
+   - Review in class: 5/23 2:00 pm
+   - Final turn-in: 5/23 11:59 pm
 1. [Assignment 5](Assignment5.md)
    - 100 points +5 EC points
-   - Assigned: 5/25
-   - Initial work complete: 6/4 11:59 pm
+   - Assigned: 5/23
+   - Initial work complete: 6/2 11:59 pm
      - 50% for running pipeline with passing unit test
      - 50% for working website
-   - Code Reviews Due by: 6/6 11:59 pm
-   - Review in class: 6/8 2:00 pm
-   - Final turn in: 6/8 11:59 pm
+   - Code Reviews Due by: 6/4 11:59 pm
+   - Review in class: 6/6 2:00 pm
+   - Final turn-in: 6/6 11:59 pm
 1. [Final Project](Final.md)
    - 50 points +50 EC points
-   - Assigned: 4/4
-   - In class hackathon 6/8
+   - Assigned: 4/2
+   - In-class hackathon 6/6
    - Final project presentations finals week
 
-If you are having trouble viwing the below graph, copy the code and paste it [in this editor](https://mermaid-js.github.io/docs/mermaid-live-editor-beta)
+If you are having trouble viewing the below graph, copy the code and paste it [in this editor](https://mermaid-js.github.io/docs/mermaid-live-editor-beta)
 
 ```mermaid
 gantt
@@ -90,7 +90,7 @@ gantt
 
 - Only make changes relevant to the homework.
 - Do not merge in additional/custom changes that are unrelated to the homework.
-- Create a PR from your asssignment in YOUR repo branch to the assignment branch in the class repo (as you typically would)
+- Create a PR from your assignment in YOUR repo branch to the assignment branch in the class repo (as you typically would)
 - On the PR against the class repo, be sure to add the following information to the description:
   - A link to your deployed website & API page
 - Your git diff should only show changes relevant to the assignment criteria, any changes outside of that will cause you to lose points for messy code
@@ -105,13 +105,13 @@ gantt
   - A message saying you want your PR reviewed in YOUR repo
   - A link to the PR in YOUR repo
   - A link to your deployed website & API page
-- Your git diff in YOUR pr in YOUR repo (not the PR against the class repo) should only show changes relevant to the assignment criteria, any changes outside of that will cause you to lose points for messy code
-  - We know the repo against the class will be messy, that code will not be reviewed. The PR in your repo is the one that will be reviewed
+- Your git diff in YOUR PR in YOUR repo (not the PR against the class repo) should only show changes relevant to the assignment criteria, any changes outside of that will cause you to lose points for messy code
+  - We know the repo against the class will be messy, and that code will not be reviewed. The PR in your repo is the one that will be reviewed
 - Here is an example! https://github.com/IntelliTect-Samples/EWU-CSCD379-2024-Spring/pull/70
 
 ### PR Reviews:
 
-You will review PRs like normal, the only difference is if you are reviewing a PR that was created in someone elses repo... you will do the review in their repo, and just add a comment on the PR the class repo with a link to your review
+You will review PRs like normal, the only difference is if you are reviewing a PR that was created in someone else's repo... you will do the review in their repo, and just add a comment on the PR of the class repo with a link to your review
 
 ---
 
@@ -141,11 +141,11 @@ Assignments will also include an additional 10 points that can be awarded to one
 - Code is clean (up to 5 points)
   - Follows best practices.
   - The simplicity first approach is followed.
-  - The code is formatted well with out large amounts of whitespace or indenting issues
+  - The code is formatted well without large amounts of whitespace or indenting issues
   - The PR git diff is clean and easy to read (no extra, unrelated files, or messy PR diffs)
-- 100% deduction if submission is late (for initial turn in date + final turn in date)
-- 50% deduction for broken pipeline with failing unit test by initial turn in date
-- 50% deduction for broken website by initial turn in date
+- 100% deduction if the submission is late (for initial turn-in date + final turn-in date)
+- 50% deduction for a broken pipeline with failing unit test by initial turn-in date
+- 50% deduction for a broken website by initial turn-in date
 
 ## Assignment (60 points)
 
@@ -159,7 +159,7 @@ Assignments will also include an additional 10 points that can be awarded to one
 
 - The review should leave helpful inline comments on the code
 - Look for a PR with no reviews first
-- It is likely each PR will have more than 1 review, so you are also welcome to leave comments ontop of another students review either elaborating further or disagreeing with the review.
+- It is likely each PR will have more than 1 review, so you are also welcome to leave comments on top of another student's review either elaborating further or disagreeing with the review.
 - Make sure you review the assignment for each assignment instruction, commenting inline for each portion of the assignment.
 
 ## Partnered (10 points)
@@ -170,4 +170,4 @@ Assignments will also include an additional 10 points that can be awarded to one
 
 - These points are given out at the instructor's discretion.
 - These may not be given out if the assignment is not completed to a satisfactory level.
-- Extra credit is not guaranteed to be avalible on all assignments.
+- Extra credit is not guaranteed to be available on all assignments.
