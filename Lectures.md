@@ -2,10 +2,11 @@
 - [Recording Links](https://intellitectsp.sharepoint.com/:f:/r/sites/EWU-CSCD379-2024-Spring/Shared%20Documents/General/Recordings?csf=1&web=1&e=DcoaGK)
 - This is an MS Teams link and everyone in the class should have access. If not, please contact an instructor.
 
-## Tentative Lecture Schedule
+## TENTATIVE Lecture Schedule
+(Do not attend or not attend class based on this list. There is a high chance we will cover other topics.)
 
 ## Week 1
-### Lecture 1: 4/2: Build the App (Assignment 1)
+### Lecture 1: 4/2: Build the App (Assignment 1) 🟢🟣
 - Syllabus & expectations
 - Wordle Requirements
 - Set up front end and build out basic application. 
@@ -16,7 +17,7 @@
 - Basic unit testing with Jest
 
 
-### Lecture 2: 4/4: Deployment (Assignment 1)
+### Lecture 2: 4/4: Deployment (Assignment 1) 🟢
 - Complete application 
 - Build deployment for front-end in Azure.
 - Azure DevOps
@@ -25,7 +26,7 @@
 - Vue Build
 
 ## Week 2
-### Lecture 3: 4/09: Vue (Assignment 2)
+### Lecture 3: 4/09: Vue (Assignment 2) 🟢🟣
 - Why Vue? What problem does is solve?
 - What is Vue for and how does it work? Stop messing with the DOM
 - {{ Interpolation }}
@@ -40,12 +41,12 @@
   - Input: https://vuejs.org/guide/essentials/forms.html
 - Computed properties https://vuejs.org/guide/essentials/computed.html
 - Pages
-- Component Basics
+- Component Basics (MG)
 - Routing https://vuejs.org/guide/scaling-up/routing.html
 - Lifecycle: https://vuejs.org/guide/essentials/lifecycle.html
 
 
-### Lecture 4. 4/11: Vuetify (Assignment 2)
+### Lecture 4. 4/11: Vuetify (Assignment 2) 🟣
 - Why CSS is the devil
 - Grid System
 - Display and sizing
@@ -68,7 +69,7 @@
 
 
 ## Week 3
-### Lecture 5. 4/16: Vue Components (Assignment 2)
+### Lecture 5. 4/16: Vue Components (Assignment 2) 🟣
 - Components: https://vuejs.org/guide/components/registration.html
   - Props https://vuejs.org/guide/components/props.html
   - Events https://vuejs.org/guide/components/events.html
@@ -78,7 +79,7 @@
 - Transitions: https://vuejs.org/guide/built-ins/transition.html
 
 
-### Lecture 6. 4/18: ASP.NET Intro
+### Lecture 6. 4/18: ASP.NET Intro 🟣
 - Starting an ASP.NET API Project
 - Creating a simple API
 - Unit Testing the API
@@ -88,19 +89,19 @@
 
 
 ## Week 4
-### Lecture 7. 4/23: Entity Framework Intro
+### Lecture 7. 4/23: Entity Framework Intro 🟢🟣
 - Creating a context
 - Creating models
 - Migrations
 - Deployment (Site and Database)
 
 
-### Lecture 8. 4/25: 
+### Lecture 8. 4/25: 🟣
 - More ASP.NET and EF and homework 3 material
 
 
 ## Week 5
-### Lecture 9. 3/30: 
+### Lecture 9. 3/30: 🟢
 - Initial EF Context
 - Word object
 - Word migration
@@ -108,12 +109,14 @@
 - Word Service
 - Service Dependency Injection
 
-### Lecture 10. 5/2: 
+### Lecture 10. 5/2: 🟢
 - API Post
 - DTOs
 - EF Migration Deltas to a table
 - Basic EF Querying
 - Axios using Post
+
+--- After this point is subject to significant change ---
 
 ## Week 6
 ### Lecture 11. 5/7: 
