@@ -15,6 +15,18 @@
   - Vue
   - Vuetify
 - Basic unit testing with Jest
+- VS Code Extensions
+  - Code Spell Checker
+  - Prettier
+  - GitHub CoPilot
+  - ViTest
+  - Vite
+  - Vue - Official
+  - (Vite)?
+- Details
+  - Create Nuxt app: `npx nuxi@latest init <project-name>`
+  - Add testing: `npm i --save-dev @nuxt/test-utils vitest @vue/test-utils happy-dom playwright-core`
+  - 
 
 
 ### Lecture 2: 4/4: Deployment (Assignment 1) 🟢
