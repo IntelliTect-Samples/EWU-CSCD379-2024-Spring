@@ -6,7 +6,7 @@
    - Initial work complete: 4/7 11:59 pm
      - 50% for running pipeline with passing unit test
      - 50% for working website
-   - Code Reviews Due by: 4/07 11:59 pm
+   - Code Reviews Due by: 4/09 11:59 pm
    - Review in class: 4/11 2:00 pm
    - Final turn-in: 4/11 11:59 pm
 1. [Assignment 2](Assignment2.md)
