@@ -16,7 +16,7 @@ export class Word {
         letter.state = LetterState.Correct;
       }
     }
-
+// TODO: Fix this. :)
     for (const [i, guessedLetter] of wordToGuess.letters.entries()) {
       if (guessedLetter.state === LetterState.Unknown) {
         for (const [j, letter] of this.letters.entries()) {
@@ -28,8 +28,8 @@ export class Word {
             guessedLetter.state = LetterState.Misplaced;
             break;
           }
-          this.letters[j].state = LetterState.Wrong;
         }
+        this.letters[i].state = LetterState.Wrong;
       }
     }
   }
