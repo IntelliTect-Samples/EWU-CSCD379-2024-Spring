@@ -13,8 +13,6 @@
 - Initial look at 
   - NPM
   - Vue
-  - Vuetify
-- Basic unit testing with Jest
 - VS Code Extensions
   - Code Spell Checker
   - Prettier
@@ -22,20 +20,23 @@
   - ViTest
   - Vite
   - Vue - Official
-  - (Vite)?
 - Details
   - Create Nuxt app: `npx nuxi@latest init <project-name>`
-  - Add testing: `npm i --save-dev @nuxt/test-utils vitest @vue/test-utils happy-dom playwright-core`
-  - 
 
 
 ### Lecture 2: 4/4: Deployment (Assignment 1) 🟢
 - Complete application 
+- Basic unit testing with Jest
+  - Add testing: `npm i --save-dev @nuxt/test-utils vitest @vue/test-utils happy-dom playwright-core`
 - Build deployment for front-end in Azure.
 - Azure DevOps
 - YAML
 - Azure AppService
-- Vue Build
+- Vue Build / `npm run generate`
+- Vuetify
+  - `https://nuxt.com/modules/vuetify`
+  - `https://www.codybontecou.com/how-to-use-vuetify-with-nuxt-3.html`
+
 
 ## Week 2
 ### Lecture 3: 4/09: Vue (Assignment 2) 🟢🟣
