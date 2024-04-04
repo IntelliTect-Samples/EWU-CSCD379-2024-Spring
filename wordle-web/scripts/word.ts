@@ -20,10 +20,8 @@ export class Word {
     for (const [i, guessedLetter] of wordToGuess.letters.entries()) {
       if (guessedLetter.state === LetterState.Unknown) {
         for (const [j, letter] of this.letters.entries()) {
-          if (
-            letter.state === LetterState.Unknown &&
-            letter.char === guessedLetter.char
-          ) {
+          if ( letter.state === LetterState.Unknown &&
+            letter.char === guessedLetter.char) {
             this.letters[j].state = LetterState.Misplaced;
             guessedLetter.state = LetterState.Misplaced;
             break;
