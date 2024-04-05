@@ -16,20 +16,22 @@ export class Word {
         letter.state = LetterState.Correct;
       }
     }
-// TODO: Fix this. :)
-    for (const [i, guessedLetter] of wordToGuess.letters.entries()) {
+    // TODO: Fix this. :)
+    for (const guessedLetter of this.letters) {
       if (guessedLetter.state === LetterState.Unknown) {
-        for (const [j, letter] of this.letters.entries()) {
+        for (const toGuessLetter of wordToGuess.letters) {
           if (
-            letter.state === LetterState.Unknown &&
-            letter.char === guessedLetter.char
+            toGuessLetter.state === LetterState.Unknown &&
+            toGuessLetter.char === guessedLetter.char
           ) {
-            this.letters[j].state = LetterState.Misplaced;
             guessedLetter.state = LetterState.Misplaced;
+            toGuessLetter.state = LetterState.Misplaced;
             break;
           }
         }
-        this.letters[i].state = LetterState.Wrong;
+        if (guessedLetter.state === LetterState.Unknown) {
+          guessedLetter.state = LetterState.Wrong;
+        }
       }
     }
   }
