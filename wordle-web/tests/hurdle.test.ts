@@ -1,6 +1,7 @@
 import { expect, test } from "vitest";
-import { hurdleInput } from "~/scripts/hurdle";
+import { Hurdle } from "~/scripts/hurdle";
 
 test("hurdle", () => {
-    expect(hurdleInput("n")).toBe("hii");
+    let hurdle: Hurdle = new Hurdle();
+    expect(hurdle.hurdleInput("n")).toBe("hi");
 });
