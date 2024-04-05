@@ -9,16 +9,14 @@
       v-model="input"
       label="Will you hurdle? (y/n):"
       outlined
-      clearable
-    />
+      clearable />
     <v-card-actions>
       <v-spacer />
       <v-btn
         color="blue"
         variant="elevated"
         elevation="8"
-        @click="enterInput()"
-      >
+        @click="enterInput()">
         Enter
       </v-btn>
     </v-card-actions>
@@ -32,10 +30,10 @@
 </template>
 
 <script setup lang="ts">
-import { hurdleInput } from "~/scripts/hurdle";
+import { hurdleInput } from '~/scripts/hurdle';
 
-const input = ref("");
-const output = ref("");
+const input = ref('');
+const output = ref('');
 
 function enterInput() {
   output.value = hurdleInput(input.value);
