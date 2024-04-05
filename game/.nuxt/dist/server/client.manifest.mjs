@@ -1,0 +1,1 @@
+export { default } from "file:///C:/git/Hadi/EWU-CSCD379-2024-Spring/game/node_modules/@nuxt/vite-builder/dist/runtime/client.manifest.mjs"
