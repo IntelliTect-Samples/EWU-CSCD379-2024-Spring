@@ -1,3 +1,5 @@
 <template>
-    <h1>Hi!</h1>
+    <NuxtLink to="/" external>
+        Home page
+    </NuxtLink>
 </template>
