@@ -1,10 +1,10 @@
 <template>
     <v-card class="mx-auto my-8" elevation="24" max-width="344">
       <v-card-item>
-        <v-card-title>Wordle</v-card-title>
-        <v-card-subtitle>
-          This is our super basic wordle game
-        </v-card-subtitle>
+        <v-card-title style="color: #B71C1C;">Wordle</v-card-title>
+        <v-card-subtitle style="color: #B71C1C;">
+        This is our super basic Wordle game! Good luck 
+      </v-card-subtitle>
       </v-card-item>
   
       <v-card-text>
