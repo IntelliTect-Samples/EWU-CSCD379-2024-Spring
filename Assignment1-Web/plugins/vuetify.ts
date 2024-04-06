@@ -11,8 +11,9 @@ export default defineNuxtPlugin((app) => {
         light: {
           dark: false,
           colors: {
-            primary: colors.yellow.lighten2, // #E53935
-            secondary: colors.orange.darken2, // #FFCDD2
+            primary: colors.pink.accent3, // #E53935
+            secondary: colors.pink.accent3, // #FFCDD2
+            secondarytwo:colors.pink.accent1
             // Define other colors as needed here
           },
         },
