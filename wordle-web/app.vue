@@ -1,16 +1,15 @@
 <template>
-  <div>
-    <NuxtWelcome />
-  </div>
+  <NuxtLayout>
+    <v-app>
+      <v-btn @click="router.push('/')">Home</v-btn>
+      <v-btn @click="router.push('/test')">Test</v-btn>
+      <NuxtPage />
+    </v-app>
+  </NuxtLayout>
 </template>
 
 <script setup lang="ts">
+const router = useRouter()
 
-
-  import { Game } from './scripts/game';
-  const game: Game = new Game("JUMBO");
-
-  game.guess("JUMBO");
-
-  console.log(game);
 </script>
+
