@@ -2,7 +2,7 @@
   <NuxtLayout>
     <v-app>
       <v-btn @click="router.push('/')">Home</v-btn>
-      <v-btn @click="router.push('/game')">WordGuess</v-btn>
+      <v-btn @click="router.push('/game')">Pentagram</v-btn>
       <NuxtPage />
     </v-app>
   </NuxtLayout>
