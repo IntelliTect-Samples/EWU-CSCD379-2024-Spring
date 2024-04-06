@@ -2,13 +2,12 @@
     <v-card>
         <v-card-title>Hello Welcome to Pentagram</v-card-title>
     </v-card>
-
+    <v-card>
+        <v-card-subtitle> This is our super basic wordle game called Pentagram. Penta for 5, and gram for letter</v-card-subtitle>
+    </v-card>
     <v-card class="mx-auto my-8" elevation="16" max-width="344">
         <v-card-item>
           <v-card-title> Pentagram </v-card-title>
-          <v-card-subtitle>
-            This is our super basic wordle game called Pentagram, penta for 5, and gram for letter.
-          </v-card-subtitle>
         </v-card-item>
 
         <v-card-text>
