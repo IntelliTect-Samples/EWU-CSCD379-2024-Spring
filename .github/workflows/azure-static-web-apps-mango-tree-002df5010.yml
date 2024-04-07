@@ -30,9 +30,9 @@ jobs:
         run: npm run generate
         working-directory: ./website  
 
-      #- name: Vitest
-       # run: npm run test
-        #working-directory: ./website  
+      - name: Vitest
+        run: npm run test
+        working-directory: ./website  
 
       - name: Build And Deploy
         id: builddeploy
@@ -40,10 +40,10 @@ jobs:
         with:
           azure_static_web_apps_api_token: ${{ secrets.AZURE_STATIC_WEB_APPS_API_TOKEN_MANGO_TREE_002DF5010 }}
           repo_token: ${{ secrets.GITHUB_TOKEN }} # Used for Github integrations (i.e. PR comments)
-          action: "upload"
+          action: 'upload'
           ###### Repository/Build Configurations - These values can be configured to match your app requirements. ######
           # For more information regarding Static Web App workflow configurations, please visit: https://aka.ms/swaworkflowconfig
-          app_location: "/website" # App source code path
-          output_location: "" # Built app content directory - optional
+          app_location: '/website/.output/public' # App source code path
+          output_location: '' # Built app content directory - optional
           ###### End of Repository/Build Configurations ######
 
