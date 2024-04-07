@@ -1,18 +1,16 @@
 <template>
   <v-card
-    class="mx-auto my-8 text-primary pa-5"
-    color="tertiary"
+    class="mx-auto my-8 pa-5"
+    color="secondary text-primary"
     elevation="24"
-    max-width="500"
+    max-width="750"
   >
-    <v-card-item>
-      <v-card-title class="text-center font-weight-bold"
-        >Pink Wordle!</v-card-title
-      >
-      <v-card-subtitle class="text-center" color="secondary">
-        This is our super basic Wordle game! Good luck
+    <v-card-item class="text-center">
+      <v-card-title class="font-weight-bold">Pink Wordle!</v-card-title>
+      <v-card-subtitle>
+        This is our super basic Wordle game! Good luck!
       </v-card-subtitle>
-      <v-card-text class="text-center font-italic">
+      <v-card-text class="font-italic">
         "Pink Wordle is a delightful twist on the classic word puzzle game,
         Wordle. In this charming variant, the game's interface is adorned with
         various shades of pink, offering a refreshing and visually pleasing
@@ -45,19 +43,12 @@
       </div>
     </v-card-text>
 
-    <v-card-actions class="mx-auto">
+    <v-card-actions>
       <v-spacer />
-      <v-btn
-        color="primary"
-        variant="elevated"
-        elevation="8"
-        @click="submitGuess()"
-      >
+      <v-btn color="secondary" class="bg-primary" @click="submitGuess()">
         Click Me!
       </v-btn>
-      <v-btn color="primary" variant="elevated" elevation="8" to="/">
-        Go Back Home!
-      </v-btn>
+      <v-btn color="secondary" class="bg-primary" to="/"> Go Back Home! </v-btn>
     </v-card-actions>
   </v-card>
 </template>
