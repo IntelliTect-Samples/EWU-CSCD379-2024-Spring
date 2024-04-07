@@ -6,10 +6,24 @@
     max-width="500"
   >
     <v-card-item>
-      <v-card-title class="text-center font-weight-bold">Wordle</v-card-title>
+      <v-card-title class="text-center font-weight-bold"
+        >Pink Wordle!</v-card-title
+      >
       <v-card-subtitle class="text-center" color="secondary">
         This is our super basic Wordle game! Good luck
       </v-card-subtitle>
+      <v-card-text class="text-center font-italic">
+        "Pink Wordle is a delightful twist on the classic word puzzle game,
+        Wordle. In this charming variant, the game's interface is adorned with
+        various shades of pink, offering a refreshing and visually pleasing
+        experience to the players. The objective remains the same - guess the
+        hidden word within six attempts. Each correct letter in the right
+        position is highlighted in a darker shade of pink, while a correct
+        letter in the wrong position is shown in a lighter pink. Incorrect
+        letters remain gray. Pink Wordle combines the mental challenge of the
+        original game with a unique aesthetic, making it a must-try for puzzle
+        enthusiasts and pink lovers alike."
+      </v-card-text>
     </v-card-item>
     <v-spacer />
     <v-card-text>
@@ -40,6 +54,9 @@
         @click="submitGuess()"
       >
         Click Me!
+      </v-btn>
+      <v-btn color="primary" variant="elevated" elevation="8" to="/">
+        Go Back Home!
       </v-btn>
     </v-card-actions>
   </v-card>
