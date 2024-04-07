@@ -1,4 +1,5 @@
 <template>
+    
     <v-card>
         <v-card-title>Hello Welcome to Home</v-card-title>
     </v-card>
@@ -13,11 +14,29 @@
 
         <v-card-text>
           <br />
+          My Guess: "meow"
           <v-text-field
-            label="Enter your guess"
+            label="Enter ANYTHING"
             outlined
             clearable
           />
         </v-card-text>
-    </v-card>
+
+        <v-card-actions>
+          <v-spacer />
+          <v-btn
+            color="pink"
+            variant="elevated"
+            elevation="8"
+            @click=""
+          >
+            Click Me!
+          </v-btn>
+        </v-card-actions>
+      </v-card>
 </template>
+
+<script setup lang="ts">
+import { Website } from "../scripts/website";
+const smth: Website = reactive(new Website());
+</script>
