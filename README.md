@@ -1,6 +1,6 @@
 # EWU-CSCD378-2024-Spring
 
-### Azure Static Site URL: [https://ambitious-pond-0a81b851e.5.azurestaticapps.net](https://ambitious-pond-0a81b851e.5.azurestaticapps.net)
+### Azure Static Site URL: [https://ambitious-pond-0a81b851e.5.azurestaticapps.net](https://ambitious-pond-0a81b851e.5.azurestaticapps.net){:target="_blank"}
 
 ## Assignment 1
 
