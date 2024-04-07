@@ -1,8 +1,8 @@
 <template>
   <NuxtLayout>
     <v-app>
-      <v-btn @click="router.push('/')">Home</v-btn>
-      <v-btn @click="router.push('/test')">Test</v-btn>
+      <v-btn color="pink-accent-3" @click="router.push('/')">Home</v-btn>
+      <v-btn color="pink-accent-3" @click="router.push('/test')">Test</v-btn>
       <NuxtPage />
     </v-app>
   </NuxtLayout>
@@ -12,4 +12,3 @@
 const router = useRouter()
 
 </script>
-
