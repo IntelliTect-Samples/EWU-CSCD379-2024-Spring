@@ -6,13 +6,13 @@ export default defineNuxtConfig({
   },
   devtools: { enabled: true },
   modules: [
-    '@nuxt/test-utils/module',
     (_options, nuxt) => {
-      nuxt.hooks.hook('vite:extendConfig', (config) => {
+      nuxt.hooks.hook('vite:extendConfig', config => {
         // @ts-expect-error
-        config.plugins.push(vuetify({ autoImport: true }))
-      })
+        config.plugins.push(vuetify({ autoImport: true }));
+      });
     },
+    //...
   ],
   vite: {
     vue: {
@@ -21,4 +21,4 @@ export default defineNuxtConfig({
       },
     },
   },
-})
+});
