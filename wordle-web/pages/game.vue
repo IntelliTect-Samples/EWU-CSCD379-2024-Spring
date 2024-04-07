@@ -8,7 +8,7 @@
     <v-card-item class="text-center">
       <v-card-title class="font-weight-bold">Pink Wordle!</v-card-title>
       <v-card-subtitle>
-        This is our super basic Wordle game! Good luck!
+        This is our super basic Pink Wordle game! Good luck!
       </v-card-subtitle>
       <v-card-text class="font-italic">
         "Pink Wordle is a delightful twist on the classic word puzzle game,
