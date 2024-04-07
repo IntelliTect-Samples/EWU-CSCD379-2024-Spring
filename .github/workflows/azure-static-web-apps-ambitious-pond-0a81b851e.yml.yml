@@ -11,7 +11,7 @@ jobs:
     runs-on: ubuntu-latest
     name: Build and Deploy Job
     steps:
-      - name: Get Code
+      - name: Checkout Branch
         uses: actions/checkout@v3
         with:
           submodules: true
@@ -21,7 +21,7 @@ jobs:
         with:
           # Version Spec of the version to use. Examples: 12.x, 10.15.1, >=10.15.0.
           node-version: 18
-      - name: Install Packages
+      - name: Install Node Packages
         run: npm ci
         working-directory: ./wordle-web
       - name: Generate

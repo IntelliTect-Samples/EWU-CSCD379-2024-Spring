@@ -1,9 +1,15 @@
 <template>
-    <v-toolbar color="pink-lighten-5">
-      <v-toolbar-title class="bold">Wordle</v-toolbar-title>
+
+  <v-app>
+    <v-app-bar color="pink-lighten-5">
+      <v-app-bar-title>Wordle</v-app-bar-title>
       <v-btn to="/">Home</v-btn>
       <v-btn to="/game">Game</v-btn>
-      <v-btn to="/test">Test</v-btn>
-    </v-toolbar>
-    <slot />
+    </v-app-bar>
+
+    <v-main>
+      <slot />
+    </v-main>
+  
+  </v-app>
 </template>
