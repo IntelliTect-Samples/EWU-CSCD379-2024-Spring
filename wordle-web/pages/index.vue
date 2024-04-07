@@ -2,6 +2,7 @@
   <v-card
     color="secondary text-primary"
     class="mx-auto mt-8 w-50 pa-8 rounded text-center"
+    elevation="4"
   >
     <v-card-title>
       Hello There! Welcome to Johanne and Alexa's Game Website

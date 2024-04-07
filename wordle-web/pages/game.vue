@@ -2,7 +2,7 @@
   <v-card
     class="mx-auto my-8 pa-5"
     color="secondary text-primary"
-    elevation="24"
+    elevation="4"
     max-width="750"
   >
     <v-card-item class="text-center">
