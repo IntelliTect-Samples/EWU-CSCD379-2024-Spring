@@ -24,15 +24,15 @@ jobs:
 
       - name: Install packages
         run: npm ci
-        working-directory: ./website
+        working-directory: ./wordle-web
 
       - name: Build App
         run: npm run generate
-        working-directory: ./website  
+        working-directory: ./wordle-web
 
       - name: Vitest
         run: npm run test
-        working-directory: ./website  
+        working-directory: ./wordle-web  
 
       - name: Build And Deploy
         id: builddeploy
