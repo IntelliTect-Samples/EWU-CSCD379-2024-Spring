@@ -3,6 +3,11 @@
 ### Azure Static Site URL:
 <a href="[http://example.com/](https://ambitious-pond-0a81b851e.5.azurestaticapps.net)" target="_blank">https://ambitious-pond-0a81b851e.5.azurestaticapps.net</a>
 
+### Extra Credit Ideas
+1. Blacklist of disallowed words. We could add a feature where a user have a blacklist of "words" so that they can't be guessed. A word like `ADIEU` works in Wordle game when it could be seen as cheating by some. People could customize their own Wordle games to their liking.
+2. Time attack. This could be a list of random words taken from somewhere and the user has only x amount of time to do it within. Maybe we could have a leaderboard for fastest times in the project.
+3. Notes. In Sudoku apps that I have played, you can put down what you think the numbers are without actually putting them down. We could do the same by having it so that they could put placeholder letters in places where they know they should be. That way they don't waste gusses.
+
 ## Assignment 1
 
 The purpose of this assignment is to solidify your learning of:
