@@ -1,8 +1,5 @@
 <template>
-  <v-card
-    color="pink-lighten-5 text-pink-lighten-1"
-    class="mx-auto mt-8 w-50 pa-8 rounded"
-  >
+  <v-card color="tertiary text-primary" class="mx-auto mt-8 w-50 pa-8 rounded">
     <v-card-title class="text-center">
       Hello There! Welcome to Johanne and Alexa's Game Website
     </v-card-title>

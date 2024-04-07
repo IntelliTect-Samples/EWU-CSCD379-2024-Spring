@@ -1,6 +1,6 @@
 <template>
   <v-app>
-    <v-app-bar color="pink-lighten-5">
+    <v-app-bar color="tertiary">
       <v-app-bar-title>Wordle</v-app-bar-title>
       <v-btn to="/">Home</v-btn>
       <v-btn to="/game">Game</v-btn>
