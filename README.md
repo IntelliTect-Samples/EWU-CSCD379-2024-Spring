@@ -2,6 +2,8 @@
 
 ## Assignment 1
 
+### Azure Static Site URL: [https://ambitious-pond-0a81b851e.5.azurestaticapps.net](https://ambitious-pond-0a81b851e.5.azurestaticapps.net)
+
 The purpose of this assignment is to solidify your learning of:
 
 - Building a Vue 3, Vuetify, TypeScript App
