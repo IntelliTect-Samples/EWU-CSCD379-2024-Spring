@@ -1,8 +1,8 @@
 # EWU-CSCD378-2024-Spring
 
-## Assignment 1
-
 ### Azure Static Site URL: [https://ambitious-pond-0a81b851e.5.azurestaticapps.net](https://ambitious-pond-0a81b851e.5.azurestaticapps.net)
+
+## Assignment 1
 
 The purpose of this assignment is to solidify your learning of:
 
