@@ -11,7 +11,7 @@
       We made our own "Wordle" game variation called "Pink Wordle" and invite
       you to play! Have fun! :)
     </v-card-subtitle>
-    <v-card-actions class="justify-center ma-8">
+    <v-card-actions class="justify-center mx-2 my-4">
       <v-btn color="secondary" class="bg-primary" to="/game"
         >Play Pink Wordle!</v-btn
       >
