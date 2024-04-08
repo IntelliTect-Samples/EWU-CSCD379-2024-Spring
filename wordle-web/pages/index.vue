@@ -5,10 +5,10 @@
         <v-card>
           <v-card-title class="text-h5">Welcome to the Happy Part of Software Land!</v-card-title>
           <v-card-text>
-            Ready to have some fun? Click the button!!
+            Click the button!! No Software Developrs Allowed
           </v-card-text>
           <v-card-actions>
-            <v-btn color="primary" to="/game">No Software Developrs Allowed</v-btn>
+            <v-btn color="primary" to="/game">Click Me!!</v-btn>
           </v-card-actions>
         </v-card>
       </v-col>

@@ -1,14 +1,14 @@
 <template>
-  <v-card class="mx-auto my-8" elevation="16" max-width="344">
+  <v-card class="mx-auto my-8" elevation="16" max-width="500">
     <v-card-item>
-      <v-card-title> Let's Laugh!!! </v-card-title>
-      <v-card-subtitle> Want to laugh? I am here </v-card-subtitle>
+      <v-card-title> Would you want to light up your day? </v-card-title>
+      <v-card-subtitle> (y/n) </v-card-subtitle>
     </v-card-item>
 
     <v-text-field
       v-if="!jokeAsked"
       v-model="input"
-      label="Would you want to light up your day? obviously :) (y/n):"
+      label="Obviously Yes:)"
       outlined
       clearable />
     <v-text-field
@@ -50,7 +50,7 @@ const jokeAsked = ref(false);
 function askForJoke() {
 if (input.value.trim().toLowerCase() === 'y') {
   jokeAsked.value = true;
-  output.value = "Great! Let's hear a joke. Why don't scientists trust atoms?";
+  output.value = "Great! Let's hear a joke.";
 } else {
   output.value = "Okay, maybe next time!";
 }
