@@ -49,7 +49,7 @@
         label="Enter your guess"
         outlined
         clearable
-        :disabled="game.gameState === GameState.Playing ? false : true"
+        :disabled="game.state === GameState.Playing ? false : true"
       />
     </v-card-text>
 
@@ -58,7 +58,7 @@
       <v-btn
         color="secondary"
         class="bg-primary"
-        :disabled="game.gameState === GameState.Playing ? false : true"
+        :disabled="game.state === GameState.Playing ? false : true"
         @click="submitGuess()"
       >
         Click Me!
@@ -96,7 +96,7 @@ function displayLetterState(letter: Letter) {
 }
 
 function displayGameState() {
-  switch (game.gameState) {
+  switch (game.state) {
     case GameState.Playing:
       return "In Progress...";
     case GameState.Won:

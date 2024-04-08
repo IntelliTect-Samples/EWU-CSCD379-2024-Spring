@@ -10,14 +10,14 @@ export class Game {
   public maxAttempts: number = 6;
   public guesses: Word[] = [];
   public wordToGuess: string;
-  public gameState = GameState.Playing;
+  public state = GameState.Playing;
 
   constructor(wordToGuess: string) {
     this.wordToGuess = wordToGuess;
   }
 
   public guess(guess: string) {
-    if (this.gameState !== GameState.Playing) {
+    if (this.state !== GameState.Playing) {
       return;
     }
 
@@ -25,17 +25,17 @@ export class Game {
     const guessedWord = new Word(this.wordToGuess);
     word.compare(guessedWord);
     this.guesses.push(word);
-    this.UpdateGameState();
+    this.updateGameState();
   }
 
-  public UpdateGameState() {
+  public updateGameState() {
     const word = new Word(this.wordToGuess);
 
     if (word.checkForWin(this.guesses[this.guesses.length - 1]) === true) {
-      this.gameState = GameState.Won;
+      this.state = GameState.Won;
     }
     if (this.guesses.length >= this.maxAttempts) {
-      this.gameState = GameState.Loss;
+      this.state = GameState.Loss;
     }
   }
 }
