@@ -1,5 +1,7 @@
 # Nuxt 3 Minimal Starter
 
+url: https://brave-rock-03632d41e.5.azurestaticapps.net/
+
 Look at the [Nuxt 3 documentation](https://nuxt.com/docs/getting-started/introduction) to learn more.
 
 ## Setup
@@ -22,7 +24,7 @@ bun install
 
 ## Development Server
 
-Start the development server on `http://localhost:3000`:
+Start the development server on `https://brave-rock-03632d41e.5.azurestaticapps.net/`:
 
 ```bash
 # npm
