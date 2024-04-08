@@ -24,18 +24,9 @@
       </v-card-text>
     </v-card-item>
     <v-spacer />
+
     <v-card-text class="fa-2 text-center font-weight-bold text-h6">
       {{ displayGameState() }}
-    </v-card-text>
-    <v-card-text class="text-h6">
-      My Guess: {{ myGuess }}
-      <v-text-field
-        v-model="myGuess"
-        label="Enter your guess"
-        outlined
-        clearable
-        :disabled="game.gameState === GameState.Playing ? false : true"
-      />
     </v-card-text>
 
     <v-card-text>
@@ -49,6 +40,17 @@
           >{{ letter.char }}
         </v-chip>
       </div>
+    </v-card-text>
+
+    <v-card-text class="text-h6">
+      My Guess: {{ myGuess }}
+      <v-text-field
+        v-model="myGuess"
+        label="Enter your guess"
+        outlined
+        clearable
+        :disabled="game.gameState === GameState.Playing ? false : true"
+      />
     </v-card-text>
 
     <v-card-actions>
@@ -71,8 +73,10 @@ import { Game, GameState } from "@/scripts/game"; // Adjust the import path as n
 import { Letter, LetterState } from "@/scripts/letter"; // Adjust the import path as necessary
 
 import { ref, reactive } from "vue";
-
-const game: Game = reactive(new Game("JUMBO"));
+const wordsList = ["HEART", "GRACE", "HONEY", "CANDY", "SWEET", "LOVES"];
+const game: Game = reactive(
+  new Game(wordsList[Math.floor(Math.random() * wordsList.length)])
+);
 const myGuess = ref("");
 
 function submitGuess() {
