@@ -34,7 +34,7 @@ export class Word {
       }
     }
   }
-  public checkForWin() {
+  public checkForWin(): boolean {
     return this.letters.every((letter) => letter.state === LetterState.Correct);
   }
 }

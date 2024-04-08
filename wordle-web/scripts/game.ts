@@ -16,7 +16,7 @@ export class Game {
     this.wordToGuess = wordToGuess;
   }
 
-  public guess(guess: string) {
+  public guess(guess: string): void {
     if (this.state !== GameState.Playing) {
       return;
     }
@@ -28,7 +28,7 @@ export class Game {
     this.updateGameState();
   }
 
-  public updateGameState() {
+  public updateGameState(): void {
     if (this.guesses[this.guesses.length - 1].checkForWin() === true) {
       this.state = GameState.Won;
     }
