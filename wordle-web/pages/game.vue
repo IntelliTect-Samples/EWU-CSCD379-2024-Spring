@@ -1,6 +1,6 @@
 <template>
   <v-card>
-    <v-card-title>Hello Welcome to Hillbilly Wordle</v-card-title>
+    <v-card-title>Hillbilly Wordle</v-card-title>
   </v-card>
 
   <v-card class="mx-auto my-8" elevation="16" max-width="344">
