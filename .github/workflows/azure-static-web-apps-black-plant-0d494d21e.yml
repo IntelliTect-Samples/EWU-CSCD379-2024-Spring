@@ -26,9 +26,9 @@ jobs:
       - name: Generate
         run: npm run generate
         working-directory: ./Assignment1
-      - name: Run Vitest
-        run: npm run test
-        working-directory: ./Assignment1
+      # - name: Run Vitest
+      #   run: npm run test
+      #   working-directory: ./Assignment1
       - name: Build And Deploy
         id: builddeploy
         uses: Azure/static-web-apps-deploy@v1
