@@ -26,6 +26,8 @@
     <v-spacer />
     <v-card-text class="fa-2 text-center font-weight-bold text-h6">
       Hint: {{ game.wordToGuess }}
+      <br />
+      {{ displayGameState() }}
     </v-card-text>
     <v-card-text class="text-h6">
       My Guess: {{ myGuess }}
@@ -34,18 +36,24 @@
         label="Enter your guess"
         outlined
         clearable
+        :disabled="game.gameState === GameState.Playing ? false : true"
       />
     </v-card-text>
 
     <v-card-text>
       <div v-for="(guess, i) of game.guesses" :key="i">
-        Guess: {{ guess.letters.map((x) => x.char).join("") }}
+        Guess {{ i + 1 }}: {{ guess.letters.map((x) => x.char).join("") }}
       </div>
     </v-card-text>
 
     <v-card-actions>
       <v-spacer />
-      <v-btn color="secondary" class="bg-primary" @click="submitGuess()">
+      <v-btn
+        color="secondary"
+        class="bg-primary"
+        :disabled="game.gameState === GameState.Playing ? false : true"
+        @click="submitGuess()"
+      >
         Click Me!
       </v-btn>
       <v-btn color="secondary" class="bg-primary" to="/"> Go Back Home! </v-btn>
@@ -54,7 +62,7 @@
 </template>
 
 <script setup lang="ts">
-import { Game } from "@/scripts/game"; // Adjust the import path as necessary
+import { Game, GameState } from "@/scripts/game"; // Adjust the import path as necessary
 import { ref, reactive } from "vue";
 
 const game: Game = reactive(new Game("JUMBO"));
@@ -63,5 +71,16 @@ const myGuess = ref("");
 function submitGuess() {
   game.guess(myGuess.value.toUpperCase());
   myGuess.value = "";
+}
+
+function displayGameState() {
+  switch (game.gameState) {
+    case GameState.Playing:
+      return "In Progress...";
+    case GameState.Won:
+      return "You won!";
+    case GameState.Loss:
+      return "You lost :( The word was: " + game.wordToGuess;
+  }
 }
 </script>

@@ -1,3 +1,4 @@
+import { LazyTitle } from "#build/components";
 import { Letter, LetterState } from "./letter";
 
 export class Word {
@@ -7,10 +8,8 @@ export class Word {
     this.letters = word.split("").map((char) => new Letter(char));
   }
 
-  public compare(wordToGuessInput: string): void {
-    const wordToGuess = new Word(wordToGuessInput);
-
-    for (const [i, letter] of wordToGuess.letters.entries()) {
+  public compare(wordToGuessInput: Word): void {
+    for (const [i, letter] of wordToGuessInput.letters.entries()) {
       if (letter.char === this.letters[i].char) {
         this.letters[i].state = LetterState.Correct;
         letter.state = LetterState.Correct;
@@ -19,7 +18,7 @@ export class Word {
     // TODO: Fix this. :)
     for (const guessedLetter of this.letters) {
       if (guessedLetter.state === LetterState.Unknown) {
-        for (const toGuessLetter of wordToGuess.letters) {
+        for (const toGuessLetter of wordToGuessInput.letters) {
           if (
             toGuessLetter.state === LetterState.Unknown &&
             toGuessLetter.char === guessedLetter.char
@@ -34,5 +33,10 @@ export class Word {
         }
       }
     }
+  }
+  public checkForWin(lastGuess: Word) {
+    return lastGuess.letters.every(
+      (letter) => letter.state === LetterState.Correct
+    );
   }
 }
