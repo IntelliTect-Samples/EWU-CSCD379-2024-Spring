@@ -24,9 +24,10 @@
       </v-card-text>
     </v-card-item>
     <v-spacer />
-    <v-card-text>
+    <v-card-text class="fa-2 text-center font-weight-bold text-h6">
       Hint: {{ game.wordToGuess }}
-      <br />
+    </v-card-text>
+    <v-card-text class="text-h6">
       My Guess: {{ myGuess }}
       <v-text-field
         v-model="myGuess"
@@ -35,7 +36,6 @@
         clearable
       />
     </v-card-text>
-    <v-spacer />
 
     <v-card-text>
       <div v-for="(guess, i) of game.guesses" :key="i">
