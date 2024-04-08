@@ -1,23 +1,24 @@
 <template>
   <v-card class="mx-auto my-8" elevation="16" max-width="430">
     <v-card-item>
-      <v-card-title> Wordle </v-card-title>
-      <v-card-subtitle> Simple game where you have to guess words <br> (or persons...) </v-card-subtitle>
+      <v-card-title> "Marco!" </v-card-title>
+      <v-card-subtitle> What will you reply? </v-card-subtitle>
     </v-card-item>
-
     <v-card-text>
-      <p class="my-2 font-weight-bold">Hint: {{ hintText }}</p>
       <v-text-field
         v-model="myGuess"
-        label="Enter your guess"
+        label="You say:"
         outlined
         clearable
       >
       </v-text-field>
     </v-card-text>
+    <v-card-text>
+      <p class="my-2 font-weight-bold">Hint: {{ hintText }}</p>
+    </v-card-text>
 
     <v-card-text>
-      <div>Guess: {{ guessText }}</div>
+      <div>Result: {{ guessText }}</div>
     </v-card-text>
 
     <v-card-actions>
@@ -34,7 +35,7 @@
         elevation="8"
         @click="router.push('/')"
       >
-        Home
+        Return
       </v-btn>
     </v-card-actions>
   </v-card>
@@ -58,6 +59,6 @@ function submit() {
 }
 
 function hint() {
-  hintText.value = "Marco?";
+  hintText.value = "Also an explorer";
 }
 </script>
