@@ -1,0 +1,44 @@
+name: Azure Static Web Apps CI/CD
+
+on:
+  push:
+    branches:
+      - Assignment1
+  workflow_dispatch:
+
+jobs:
+  build_and_deploy_job:
+    runs-on: ubuntu-latest
+    name: Build and Deploy Job
+    steps:
+      - name: Get Code
+        uses: actions/checkout@v3
+        with:
+          submodules: true
+          lfs: false
+      - name: Setup Node.js environment
+        uses: actions/setup-node@v4.0.2
+        with:
+          node-version: 18
+      - name: Install Packages
+        run: npm ci
+        working-directory: ./Assignment1
+      - name: Generate
+        run: npm run generate
+        working-directory: ./Assignment1
+      - name: Run Vitest
+        run: npm run test
+        working-directory: ./Assignment1
+      - name: Build And Deploy
+        id: builddeploy
+        uses: Azure/static-web-apps-deploy@v1
+        with:
+          azure_static_web_apps_api_token: ${{ secrets.AZURE_STATIC_WEB_APPS_API_TOKEN_BLACK_PLANT_0D494D21E }}
+          repo_token: ${{ secrets.GITHUB_TOKEN }} # Used for Github integrations (i.e. PR comments)
+          action: "upload"
+          ###### Repository/Build Configurations - These values can be configured to match your app requirements. ######
+          # For more information regarding Static Web App workflow configurations, please visit: https://aka.ms/swaworkflowconfig
+          app_location: "/" # App source code path
+          api_location: ".output/server" # Api source code path - optional
+          output_location: ".output/public" # Built app content directory - optional
+          ###### End of Repository/Build Configurations ######
