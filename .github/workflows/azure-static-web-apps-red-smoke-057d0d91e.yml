@@ -22,13 +22,13 @@ jobs:
           node-version: 18
       - name: Install Packages
         run: npm ci
-        working-directory: ./assignment-1
+        working-directory: ./Assignment1
       - name: Generate
         run: npm run generate
-        working-directory: ./assignment-1
+        working-directory: ./Assignment1
       - name: Run Vitest
         run: npm run test
-        working-directory: ./assignment-1
+        working-directory: ./Assignment1
 
       - name: Build And Deploy
         id: builddeploy
