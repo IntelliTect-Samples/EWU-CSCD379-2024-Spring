@@ -1,8 +1,6 @@
 <template>
   <NuxtLayout>
     <v-app>
-      <v-btn @click="router.push('/')">Home</v-btn>
-      <v-btn @click="router.push('/game')">Go To Game</v-btn>
       <NuxtPage />
     </v-app>
   </NuxtLayout>

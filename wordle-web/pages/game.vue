@@ -11,7 +11,7 @@
 
     <v-card-text>
       <br />
-      My Guess: "meow"
+      My Guess:"meow"
       <v-text-field label="Enter ANYTHING" outlined clearable />
     </v-card-text>
 
@@ -20,7 +20,9 @@
       <v-btn color="pink" variant="elevated" elevation="8" @click="">
         Click Me!
       </v-btn>
+      <v-btn color="pink" variant="elevated" elevation="8" @click="router.push('/')">Home</v-btn>
     </v-card-actions>
+    
   </v-card>
 </template>
 
@@ -34,4 +36,5 @@ function submitGuess() {
   game.guess(myGuess.value.toUpperCase());
   myGuess.value = "";
 }
+const router = useRouter()
 </script>
