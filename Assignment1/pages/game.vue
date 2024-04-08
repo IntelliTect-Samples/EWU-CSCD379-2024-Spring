@@ -1,4 +1,4 @@
-<template>
+<!-- <template>
     <v-card>
       <v-card-title>Hello Welcome to Mystery Number Madness</v-card-title>
       
@@ -46,4 +46,24 @@
         router.push('/')
     }
 </script>
+   -->
+
+   <template>
+    <v-card>
+      <v-card-title>Hello Welcome to Game</v-card-title>
+      
+      <v-row>
+        <v-col cols="12" sm="6">
+          <v-text-field v-model="guess" label="Enter your guess" type="number"></v-text-field>
+          <v-btn @click="checkGuess">Submit Guess</v-btn>
+        </v-col>
+      </v-row>
+      
+      <v-alert v-if="message" :type="messageType as 'error' | 'success' | 'warning' | 'info'">{{ message }}</v-alert>
+    </v-card>
+  </template>
+  
+  <script setup lang="ts">
+  import { guess, message, messageType, checkGuess } from '../scripts/game'
+  </script>
   
