@@ -25,8 +25,6 @@
     </v-card-item>
     <v-spacer />
     <v-card-text class="fa-2 text-center font-weight-bold text-h6">
-      Hint: {{ game.wordToGuess }}
-      <br />
       {{ displayGameState() }}
     </v-card-text>
     <v-card-text class="text-h6">
@@ -42,7 +40,14 @@
 
     <v-card-text>
       <div v-for="(guess, i) of game.guesses" :key="i">
-        Guess {{ i + 1 }}: {{ guess.letters.map((x) => x.char).join("") }}
+        Guess {{ i + 1 }}:
+        <v-chip
+          v-for="(letter, j) of guess.letters"
+          :key="j"
+          :color="displayLetterState(letter)"
+          class="ma-1"
+          >{{ letter.char }}
+        </v-chip>
       </div>
     </v-card-text>
 
@@ -63,6 +68,8 @@
 
 <script setup lang="ts">
 import { Game, GameState } from "@/scripts/game"; // Adjust the import path as necessary
+import { Letter, LetterState } from "@/scripts/letter"; // Adjust the import path as necessary
+
 import { ref, reactive } from "vue";
 
 const game: Game = reactive(new Game("JUMBO"));
@@ -71,6 +78,17 @@ const myGuess = ref("");
 function submitGuess() {
   game.guess(myGuess.value.toUpperCase());
   myGuess.value = "";
+}
+
+function displayLetterState(letter: Letter) {
+  switch (letter.state) {
+    case LetterState.Correct:
+      return "success";
+    case LetterState.Misplaced:
+      return "warning";
+    case LetterState.Wrong:
+      return "error";
+  }
 }
 
 function displayGameState() {
