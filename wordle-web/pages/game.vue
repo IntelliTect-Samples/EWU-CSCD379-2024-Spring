@@ -1,6 +1,6 @@
 <template>
     <v-card>
-        <v-card-title>Hello Welcome to Home</v-card-title>
+        <v-card-title>HOME</v-card-title>
     </v-card>
 
     <v-card class="mx-auto my-8" elevation="16" max-width="344">
