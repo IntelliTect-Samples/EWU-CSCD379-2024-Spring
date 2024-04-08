@@ -5,10 +5,11 @@
 
   <v-card class="mx-auto my-8" elevation="16" max-width="344">
       <v-card-item>
-        <v-card-title color="purple"> GAME </v-card-title>
-        <v-card-subtitle color="green">
-          This is Hadi and Cynthia's game... so far
-          Click the 'GO TO GAME' to go to the game pls
+        <v-card-title color="purple" variant="elevated"
+        elevation="8"> GAME </v-card-title>
+        <v-card-subtitle color="green"  variant="elevated"
+        elevation="8">
+          This is Hadi and Cynthia's game... so far Click the 'GO TO GAME' to go to the game pls
         </v-card-subtitle>
       </v-card-item>
 
