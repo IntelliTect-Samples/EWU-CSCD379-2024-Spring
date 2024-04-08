@@ -23,10 +23,10 @@
 
     <v-card-actions>
       <v-spacer />
-      <v-btn color="pink" variant="elevated" elevation="8" @click="checkInput()">
+      <v-btn color="blue" variant="elevated" elevation="8" @click="checkInput()">
         Check my answer!
       </v-btn>
-      <v-btn color="pink" variant="elevated" elevation="8" @click="router.push('/')">take me home!</v-btn>
+      <v-btn color="blue" variant="elevated" elevation="8" @click="router.push('/')">take me home!</v-btn>
     </v-card-actions>
     <v-card-text>
       YOUR GUESS: {{ myGuess }} <br />
