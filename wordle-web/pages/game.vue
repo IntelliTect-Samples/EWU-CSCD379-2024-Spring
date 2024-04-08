@@ -1,9 +1,8 @@
 <template>
   <v-card
-    class="mx-auto my-8 pa-5"
+    class="mx-auto my-8 w-75 pa-5 rounded"
     color="secondary text-primary"
     elevation="4"
-    max-width="750"
   >
     <v-card-item class="text-center">
       <v-card-title class="font-weight-bold">Pink Wordle!</v-card-title>
@@ -53,8 +52,7 @@
       />
     </v-card-text>
 
-    <v-card-actions>
-      <v-spacer />
+    <v-card-actions class="d-flex justify-center align-center">
       <v-btn
         color="secondary"
         class="bg-primary"
@@ -98,7 +96,7 @@ function displayLetterState(letter: Letter) {
 function displayGameState() {
   switch (game.state) {
     case GameState.Playing:
-      return "In Progress...";
+      return "";
     case GameState.Won:
       return "You won!";
     case GameState.Loss:
