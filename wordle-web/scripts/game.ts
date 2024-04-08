@@ -10,7 +10,7 @@ export class Game {
   public maxAttempts: number = 6;
   public guesses: Word[] = [];
   public wordToGuess: string;
-  public state = GameState.Playing;
+  public state: GameState = GameState.Playing;
 
   constructor(wordToGuess: string) {
     this.wordToGuess = wordToGuess;
