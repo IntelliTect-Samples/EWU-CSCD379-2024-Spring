@@ -1,9 +1,11 @@
 <template>
   <NuxtLayout>
-    <v-app>
-      <v-btn @click="router.push('/')">Home</v-btn>
-      <v-btn @click="router.push('/game')">Pentagram</v-btn>
-      <NuxtPage />
+    <v-app >
+      <v-container>
+        <v-btn variant ="text" @click="router.push('/')">Home</v-btn> 
+        <v-btn variant ="text"@click="router.push('/game')">Pentagram</v-btn>
+      </v-container>
+        <NuxtPage />
     </v-app>
   </NuxtLayout>
 </template>
