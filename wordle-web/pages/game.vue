@@ -24,7 +24,7 @@
     </v-card-item>
     <v-spacer />
 
-    <v-card-text class="fa-2 text-center font-weight-bold text-h6">
+    <v-card-text class="text-center font-weight-bold text-h6">
       {{ displayGameState() }}
     </v-card-text>
 
@@ -52,14 +52,20 @@
       />
     </v-card-text>
 
-    <v-card-actions class="d-flex justify-center align-center">
+    <v-card-actions class="justify-center align-center">
       <v-btn
         color="secondary"
         class="bg-primary"
-        :disabled="game.state === GameState.Playing ? false : true"
+        :disabled="
+          game.state !== GameState.Playing
+            ? true
+            : myGuess === '' || myGuess.length !== game.wordToGuess.length
+            ? true
+            : false
+        "
         @click="submitGuess()"
       >
-        Click Me!
+        Guess!
       </v-btn>
       <v-btn color="secondary" class="bg-primary" to="/"> Go Back Home! </v-btn>
     </v-card-actions>
