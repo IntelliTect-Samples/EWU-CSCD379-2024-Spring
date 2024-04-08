@@ -3,7 +3,7 @@
     <NuxtLayout>
       <v-container>
         <v-btn variant="text" @click="router.push('/')">Home</v-btn>
-        <v-btn variant="text" @click="router.push('/game')">Fun Game</v-btn>
+        <v-btn variant="text" @click="router.push('/game')">Mystery Number Madness</v-btn>
       </v-container>
       <NuxtPage />
     </NuxtLayout>
