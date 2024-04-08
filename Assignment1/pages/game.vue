@@ -2,7 +2,7 @@
   <v-card class="mx-auto my-8" elevation="16" max-width="430">
     <v-card-item>
       <v-card-title> Wordle </v-card-title>
-      <v-card-subtitle> Simple game where you have to guess words <br> (or persons) </v-card-subtitle>
+      <v-card-subtitle> Simple game where you have to guess words <br> (or persons...) </v-card-subtitle>
     </v-card-item>
 
     <v-card-text>
@@ -58,6 +58,6 @@ function submit() {
 }
 
 function hint() {
-  hintText.value = "TODO: Don't forget to add a hint here!";
+  hintText.value = "Marco?";
 }
 </script>
