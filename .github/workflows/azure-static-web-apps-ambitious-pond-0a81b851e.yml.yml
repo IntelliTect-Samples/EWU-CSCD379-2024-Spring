@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - Assignment1
+  pull_request_target:
   workflow_dispatch:
 
 jobs:
