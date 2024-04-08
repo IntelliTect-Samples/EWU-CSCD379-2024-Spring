@@ -59,7 +59,7 @@
         :disabled="
           game.state !== GameState.Playing
             ? true
-            : myGuess === '' || myGuess.length !== 5
+            : myGuess.length !== 5
             ? true
             : false
         "
