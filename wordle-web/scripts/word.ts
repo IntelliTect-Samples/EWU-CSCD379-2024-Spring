@@ -34,9 +34,7 @@ export class Word {
       }
     }
   }
-  public checkForWin(lastGuess: Word) {
-    return lastGuess.letters.every(
-      (letter) => letter.state === LetterState.Correct
-    );
+  public checkForWin() {
+    return this.letters.every((letter) => letter.state === LetterState.Correct);
   }
 }

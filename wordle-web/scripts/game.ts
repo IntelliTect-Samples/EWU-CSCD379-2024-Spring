@@ -31,7 +31,7 @@ export class Game {
   public updateGameState() {
     const word = new Word(this.wordToGuess);
 
-    if (word.checkForWin(this.guesses[this.guesses.length - 1]) === true) {
+    if (this.guesses[this.guesses.length - 1].checkForWin() === true) {
       this.state = GameState.Won;
     }
     if (this.guesses.length >= this.maxAttempts) {

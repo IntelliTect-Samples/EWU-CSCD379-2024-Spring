@@ -59,7 +59,7 @@
         :disabled="
           game.state !== GameState.Playing
             ? true
-            : myGuess === '' || myGuess.length !== game.wordToGuess.length
+            : myGuess === '' || myGuess.length !== 5
             ? true
             : false
         "
@@ -102,7 +102,7 @@ function displayLetterState(letter: Letter) {
 function displayGameState() {
   switch (game.state) {
     case GameState.Playing:
-      return "";
+      return "Keep Guessing <3";
     case GameState.Won:
       return "You won!";
     case GameState.Loss:
