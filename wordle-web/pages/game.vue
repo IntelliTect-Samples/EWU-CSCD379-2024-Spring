@@ -25,8 +25,7 @@
 </template>
 
 <script setup lang="ts">
-import { Game } from "@/scripts/game"; // Adjust the import path as necessary
-import { ref, reactive } from "vue";
+import { Game } from "@/scripts/game";
 
 const game: Game = reactive(new Game("JUMBO"));
 const myGuess = ref("");
