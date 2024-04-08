@@ -23,3 +23,16 @@
     </v-card-actions>
   </v-card>
 </template>
+
+<script setup lang="ts">
+import { Game } from "@/scripts/game"; // Adjust the import path as necessary
+import { ref, reactive } from "vue";
+
+const game: Game = reactive(new Game("JUMBO"));
+const myGuess = ref("");
+
+function submitGuess() {
+  game.guess(myGuess.value.toUpperCase());
+  myGuess.value = "";
+}
+</script>
