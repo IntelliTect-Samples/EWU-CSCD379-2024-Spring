@@ -7,7 +7,6 @@ test('returns Correct! 😄 if the punchline is correct', () => {
 });
 
 test('returns the correct answer if punchline is incorrect', () => {
-  const incorrectPuncline = 'This is not the correct punchline';
   const answer = 'because they make up everything';
-  expect(tellJoke(incorrectPuncline)).toBe('Nope, the correct answer is: ${answer}.');
+  expect(tellJoke(incorrectPuncline)).toBe('Nope, the correct answer is: because they make up everything.');
 });
