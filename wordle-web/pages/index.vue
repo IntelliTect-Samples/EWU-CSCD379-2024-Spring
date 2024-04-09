@@ -1,9 +1,24 @@
 <template>
+  <v-container>
     <v-card>
-        <v-card-title>Hello Welcome to Home</v-card-title>
+      <v-card-title>Wordle</v-card-title>
+
+      <GameBoardGuess
+        v-for="(guess, i) of game.guesses"
+        :key="i"
+        :guess="guess"
+      />
     </v-card>
 
-    <v-card class="mx-auto my-8" elevation="16" max-width="344">
+    <!-- Old Stuff -->
+    <div>
+      <v-divider class="my-5" />
+      <h3>My Old UI</h3>
+      <v-card>
+        <v-card-title>Hello Welcome to Home</v-card-title>
+      </v-card>
+
+      <v-card elevation="16">
         <v-card-item>
           <v-card-title> Wordle </v-card-title>
           <v-card-subtitle>
@@ -23,12 +38,6 @@
           />
         </v-card-text>
 
-        <v-card-text>
-          <div v-for="(guess, i) of game.guesses" :key="i">
-            Guess: {{ guess.letters.map(x => x.char).join("") }}
-          </div>
-        </v-card-text>
-
         <v-card-actions>
           <v-spacer />
           <v-btn
@@ -41,9 +50,12 @@
           </v-btn>
         </v-card-actions>
       </v-card>
+    </div>
+  </v-container>
 </template>
 
 <script setup lang="ts">
+import { Letter, LetterState } from "~/scripts/letter";
 import { Game } from "../scripts/game";
 const game: Game = reactive(new Game("JUMBO"));
 
@@ -54,3 +66,4 @@ function submitGuess() {
   myGuess.value = "";
 }
 </script>
+
