@@ -17,7 +17,10 @@
       </v-card-text>
 
       <v-card-actions>
-      <v-btn color="green" elevation="16" max-width="344" @click="router.push('/game')">Go To Game</v-btn>
+        <v-spacer />
+      <v-btn color="green" variant="elevated" elevation="8" @click="router.push('/game')">
+        Go To Game
+      </v-btn>
       </v-card-actions>
     </v-card>
 </template>

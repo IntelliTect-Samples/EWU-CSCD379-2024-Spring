@@ -1,15 +1,15 @@
 <template>
-  <v-card>
-    <v-card-title>Hillbilly Guess Game</v-card-title>
+  <v-card color="yellow">
+    <v-card-title class="text-green">Hillbilly Guess Game</v-card-title>
   </v-card>
 
-  <v-card class="mx-auto my-8" elevation="16" max-width="344">
+  <v-card color="yellow" class="mx-auto my-8" elevation="16" max-width="344">
     <v-card-item>
-      <v-card-title> Hillbilly Guess of the Day </v-card-title>
-      <v-card-subtitle> This is our super basic game </v-card-subtitle>
+      <v-card-title class="text-green"> Hillbilly Guess of the Day </v-card-title>
+      <v-card-subtitle class="text-green"> This is our super basic game </v-card-subtitle>
     </v-card-item>
 
-    <v-card-text>
+    <v-card-text class="text-green">
       <br />
       WORD TO GUESS IS ....
       <br />
@@ -19,16 +19,16 @@
       <br />
     </v-card-text>
 
-    <v-text-field v-model="myGuess" label="Enter your guess: " outlined clearable />
+    <v-text-field class="text-green" v-model="myGuess" label="Enter your guess: " outlined clearable />
 
     <v-card-actions>
       <v-spacer />
-      <v-btn color="blue" variant="elevated" elevation="8" @click="checkInput()">
+      <v-btn color="green" variant="elevated" elevation="8" @click="checkInput()">
         Check my answer!
       </v-btn>
-      <v-btn color="blue" variant="elevated" elevation="8" @click="router.push('/')">take me home!</v-btn>
+      <v-btn color="green" variant="elevated" elevation="8" @click="router.push('/')">take me home!</v-btn>
     </v-card-actions>
-    <v-card-text>
+    <v-card-text class="text-green">
       YOUR GUESS: {{ myGuess }} <br />
       WAS IT RIGHT? {{ output }}
     </v-card-text>
