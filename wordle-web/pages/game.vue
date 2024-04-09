@@ -1,16 +1,16 @@
 <template>
   <div class="green-background" max-height="900">
-  <v-card color="yellow" elevation="5" max-width="250">
-    <v-card-title class="text-green">Hillbilly Guess Game</v-card-title>
-  </v-card>
+    <v-card color="yellow" elevation="5" max-width="250">
+      <v-card-title class="text-green">Hillbilly Guess Game</v-card-title>
+    </v-card>
+    
+    <v-card color="yellow" class="mx-16 my-10" elevation="16">
+      <v-card-item>
+        <v-card-title class="text-green"> Hillbilly Guess of the Day </v-card-title>
+        <v-card-subtitle class="text-green"> This is our super basic game </v-card-subtitle>
+      </v-card-item>
 
-  <v-card color="yellow" class="mx-16 my-10" elevation="16">
-    <v-card-item>
-      <v-card-title class="text-green"> Hillbilly Guess of the Day </v-card-title>
-      <v-card-subtitle class="text-green"> This is our super basic game </v-card-subtitle>
-    </v-card-item>
-
-    <v-card-text class="text-green">
+      <v-card-text class="text-green">
       <br />
       WORD TO GUESS IS ....
       <br />
@@ -21,7 +21,7 @@
     </v-card-text>
 
     <v-text-field class="text-green" v-model="myGuess" label="Enter your guess: " outlined clearable />
-
+    
     <v-card-actions>
       <v-spacer />
       <v-btn color="green" variant="elevated" elevation="8" @click="checkInput()">
@@ -40,7 +40,7 @@
 
 <script setup lang="ts">
 
- var myGuess = ref("");
+var myGuess = ref("");
 
 const output = ref("");
 
