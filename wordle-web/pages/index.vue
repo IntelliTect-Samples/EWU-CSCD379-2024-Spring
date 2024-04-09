@@ -1,6 +1,6 @@
 <template>
   <div class="green-background" max-height="900">
-  <v-card color="yellow" elevation="5" max-width="700">
+  <v-card color="yellow" elevation="5" max-width="550">
       <v-card-title class=" font-weight-bold text-green" >Welcome To Our Hillbilly Simple Game!</v-card-title>
   </v-card>
 
