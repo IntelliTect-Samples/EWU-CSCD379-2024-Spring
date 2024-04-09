@@ -16,7 +16,7 @@ const color = computed(() => {
     case LetterState.Wrong:
       return "error";
     default:
-      return "grey";
+      return "warning";
   }
 });
 </script>
