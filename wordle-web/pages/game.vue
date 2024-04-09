@@ -23,10 +23,6 @@
     </v-card-item>
     <v-spacer />
 
-    <v-card-text class="text-center font-weight-bold text-h6">
-      {{ displayGameState() }}
-    </v-card-text>
-
     <v-card-item
       class="justify-center"
       v-for="(guess, i) of game.guesses"
@@ -41,18 +37,18 @@
       </v-chip>
     </v-card-item>
 
-    <v-card-text class="text-h6">
-      My Guess: {{ myGuess }}
-      <v-text-field
-        v-model="myGuess"
-        label="Enter your guess"
-        outlined
-        clearable
-        :disabled="game.state === GameState.Playing ? false : true"
-      />
+    <v-card-text class="text-center font-weight-bold text-h6 my-2">
+      {{ displayGameState() }}
     </v-card-text>
+    <v-text-field
+      v-model="myGuess"
+      label="Enter your guess"
+      outlined
+      clearable
+      :disabled="game.state === GameState.Playing ? false : true"
+    />
 
-    <v-card-actions class="justify-center align-center">
+    <v-card-actions class="justify-center">
       <v-btn
         color="secondary"
         class="bg-primary"
@@ -106,7 +102,7 @@ function displayGameState(): string {
     case GameState.Loss:
       return "You lost :( The word was: " + game.wordToGuess;
     default:
-      return "Keep Guessing!";
+      return "Guess: " + myGuess.value;
   }
 }
 </script>
