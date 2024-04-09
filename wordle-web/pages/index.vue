@@ -4,7 +4,7 @@
       <v-card-title class="text-green" >Welcome To Our Hillbilly Simple Game!</v-card-title>
   </v-card>
 
-  <v-card color="yellow" class="mx-auto my-10" elevation="16" max-width="344">
+  <v-card color="yellow" class="mx-15 my-10" elevation="16">
       <v-card-item>
         <v-card-title class="text-green">  Hillbilly Guess Game! </v-card-title>
       </v-card-item>

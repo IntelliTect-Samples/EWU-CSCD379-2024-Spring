@@ -1,10 +1,10 @@
 <template>
   <div class="green-background" max-height="900">
-  <v-card color="yellow" elevation="5" max-width="400">
+  <v-card color="yellow" elevation="5" max-width="250">
     <v-card-title class="text-green">Hillbilly Guess Game</v-card-title>
   </v-card>
 
-  <v-card color="yellow" class="mx-auto my-8" elevation="16" max-width="344">
+  <v-card color="yellow" class="mx-16 my-10" elevation="16">
     <v-card-item>
       <v-card-title class="text-green"> Hillbilly Guess of the Day </v-card-title>
       <v-card-subtitle class="text-green"> This is our super basic game </v-card-subtitle>
