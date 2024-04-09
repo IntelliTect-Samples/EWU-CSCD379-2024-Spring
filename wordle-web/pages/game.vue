@@ -45,20 +45,14 @@
       label="Enter your guess"
       outlined
       clearable
-      :disabled="game.state === GameState.Playing ? false : true"
+      :disabled="game.state === GameState.Playing"
     />
 
     <v-card-actions class="justify-center">
       <v-btn
         color="secondary"
         class="bg-primary"
-        :disabled="
-          game.state !== GameState.Playing
-            ? true
-            : myGuess.length !== 5
-            ? true
-            : false
-        "
+        :disabled="game.state !== GameState.Playing || myGuess.length !== 5"
         @click="submitGuess()"
       >
         Guess!
