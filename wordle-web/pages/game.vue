@@ -13,7 +13,7 @@
     <v-card-actions>
       <v-spacer />
       <v-btn
-        color="blue"
+        color="red-accent-4"
         variant="elevated"
         elevation="8"
         @click="enterInput()">
