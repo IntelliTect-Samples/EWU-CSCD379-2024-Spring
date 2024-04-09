@@ -88,10 +88,8 @@ const wordsList = [
   "FLORA",
   "LILAC",
   "MAGIC",
-  "MINTY",
   "PIXIE",
   "TULIP",
-  "WISHY",
 ];
 const game: Game = reactive(
   new Game(wordsList[Math.floor(Math.random() * wordsList.length)])
