@@ -45,7 +45,7 @@
       label="Enter your guess"
       outlined
       clearable
-      :disabled="game.state === GameState.Playing"
+      :disabled="game.state !== GameState.Playing"
     />
 
     <v-card-actions class="justify-center">
