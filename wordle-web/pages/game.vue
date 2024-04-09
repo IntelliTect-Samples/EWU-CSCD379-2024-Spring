@@ -2,7 +2,7 @@
   <v-card class="mx-auto my-8" elevation="16" max-width="344">
     <v-card-item>
       <v-card-title> Hurdle Over This Wordle!!! </v-card-title>
-      <v-card-subtitle> Hurdle it. I dare you. </v-card-subtitle>
+      <v-card-subtitle> <strong class="text-red-accent-4">hurdle it. I dare you. </strong> </v-card-subtitle>
     </v-card-item>
 
     <v-text-field
@@ -27,6 +27,13 @@
       <NuxtLink to="/" external> Home page </NuxtLink>
     </v-card-text>
   </v-card>
+  <v-row justify="center">
+    <v-card align-center>
+      <v-row>
+      <v-img aspect-ratio="1" width="600" src="https://media0.giphy.com/media/v1.Y2lkPTc5MGI3NjExaXA5Yjc3ZW9rYTFyaHA5eTU1bnhnc2wxdzl6dThrc2owZG55ejE2OSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/uurtMtTKqkJda4dk8Y/giphy.gif"></v-img>
+    </v-row>
+    </v-card>
+  </v-row>
 </template>
 
 <script setup lang="ts">
