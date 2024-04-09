@@ -1,7 +1,7 @@
 <template>
   <div class="green-background" max-height="900">
-  <v-card color="yellow" elevation="5" max-width="550">
-      <v-card-title class=" font-weight-bold text-green" >Welcome To Our Hillbilly Simple Game!</v-card-title>
+  <v-card color="black" elevation="5">
+      <v-card-title class=" font-weight-bold green-text" >Welcome To Our Hillbilly Simple Game!</v-card-title>
   </v-card>
 
   <v-card color="yellow" class="mx-15 my-10" elevation="16">
@@ -35,5 +35,9 @@ const router = useRouter()
 .green-background {
   background-color: yellowgreen;
   height: 100vh
+}
+
+.green-text{
+  color: yellowgreen;
 }
 </style>
