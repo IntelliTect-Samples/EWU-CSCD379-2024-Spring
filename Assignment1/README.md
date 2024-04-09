@@ -1,4 +1,5 @@
 # Nuxt 3 Minimal Starter
+Link to azure deployed web app: https://black-plant-0d494d21e.5.azurestaticapps.net/
 
 Look at the [Nuxt 3 documentation](https://nuxt.com/docs/getting-started/introduction) to learn more.
 
