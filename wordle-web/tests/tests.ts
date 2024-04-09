@@ -1,4 +1,6 @@
 import { expect, test } from "vitest";
-test('mathtest', () => {
-    expect(1+2).toBe(3)
-  });
+import checkInput from "..\\pages\\game.vue";
+
+test('input',() =>{
+  expect(new checkInput('hill billy')).contain('CORRECT');
+});    
