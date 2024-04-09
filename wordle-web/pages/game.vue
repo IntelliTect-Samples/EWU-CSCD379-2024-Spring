@@ -73,7 +73,32 @@ import { Game, GameState } from "@/scripts/game"; // Adjust the import path as n
 import { Letter, LetterState } from "@/scripts/letter"; // Adjust the import path as necessary
 
 import { ref, reactive } from "vue";
-const wordsList = ["HEART", "GRACE", "HONEY", "CANDY", "SWEET", "LOVES"];
+const wordsList = [
+  "HEART",
+  "GRACE",
+  "HONEY",
+  "CANDY",
+  "SWEET",
+  "LOVES",
+  "SMILE",
+  "PEACH",
+  "BLOOM",
+  "BLUSH",
+  "DAISY",
+  "FAIRY",
+  "ANGEL",
+  "BLISS",
+  "CHERI",
+  "CUPID",
+  "DREAM",
+  "FLORA",
+  "LILAC",
+  "MAGIC",
+  "MINTY",
+  "PIXIE",
+  "TULIP",
+  "WISHY",
+];
 const game: Game = reactive(
   new Game(wordsList[Math.floor(Math.random() * wordsList.length)])
 );
