@@ -5,7 +5,9 @@
     elevation="4"
   >
     <v-card-item class="text-center">
-      <v-card-title class="font-weight-bold">Pink Wordle!</v-card-title>
+      <v-card-title class="font-weight-bold"
+        >Pink Wordle <v-icon icon="mdi-heart"></v-icon
+      ></v-card-title>
       <v-card-subtitle>
         This is our super basic Pink Wordle game! Good luck!
       </v-card-subtitle>
@@ -28,18 +30,19 @@
       {{ displayGameState() }}
     </v-card-text>
 
-    <v-card-text>
-      <div v-for="(guess, i) of game.guesses" :key="i">
-        Guess {{ i + 1 }}:
-        <v-chip
-          v-for="(letter, j) of guess.letters"
-          :key="j"
-          :color="displayLetterState(letter)"
-          class="ma-1"
-          >{{ letter.char }}
-        </v-chip>
-      </div>
-    </v-card-text>
+    <v-card-item
+      class="justify-center"
+      v-for="(guess, i) of game.guesses"
+      :key="i"
+    >
+      <v-chip
+        v-for="(letter, j) of guess.letters"
+        :key="j"
+        :color="displayLetterState(letter)"
+        class="ma-1 pa-2 text-h5"
+        >{{ letter.char }}
+      </v-chip>
+    </v-card-item>
 
     <v-card-text class="text-h6">
       My Guess: {{ myGuess }}
@@ -83,30 +86,30 @@ const game: Game = reactive(
 );
 const myGuess = ref("");
 
-function submitGuess() {
+function submitGuess(): void {
   game.guess(myGuess.value.toUpperCase());
   myGuess.value = "";
 }
 
-function displayLetterState(letter: Letter) {
+function displayLetterState(letter: Letter): string {
   switch (letter.state) {
     case LetterState.Correct:
       return "success";
     case LetterState.Misplaced:
       return "warning";
-    case LetterState.Wrong:
+    default:
       return "error";
   }
 }
 
-function displayGameState() {
+function displayGameState(): string {
   switch (game.state) {
-    case GameState.Playing:
-      return "Keep Guessing <3";
     case GameState.Won:
-      return "You won!";
+      return "You won :)";
     case GameState.Loss:
       return "You lost :( The word was: " + game.wordToGuess;
+    default:
+      return "Keep Guessing!";
   }
 }
 </script>
