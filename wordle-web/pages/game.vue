@@ -16,12 +16,9 @@
         Wordle. In this charming variant, the game's interface is adorned with
         various shades of pink, offering a refreshing and visually pleasing
         experience to the players. The objective remains the same - guess the
-        hidden word within six attempts. Each correct letter in the right
-        position is highlighted in a darker shade of pink, while a correct
-        letter in the wrong position is shown in a lighter pink. Incorrect
-        letters remain gray. Pink Wordle combines the mental challenge of the
-        original game with a unique aesthetic, making it a must-try for puzzle
-        enthusiasts and pink lovers alike."
+        hidden word within six attempts.Pink Wordle combines the mental
+        challenge of the original game with a unique aesthetic, making it a
+        must-try for puzzle enthusiasts and pink lovers alike."
       </v-card-text>
     </v-card-item>
     <v-spacer />
