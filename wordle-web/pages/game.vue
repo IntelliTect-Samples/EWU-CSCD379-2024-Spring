@@ -23,18 +23,8 @@
     </v-card-item>
     <v-spacer />
 
-    <v-card-item
-      class="justify-center"
-      v-for="(guess, i) of game.guesses"
-      :key="i"
-    >
-      <v-chip
-        v-for="(letter, j) of guess.letters"
-        :key="j"
-        :color="displayLetterState(letter)"
-        class="ma-1 pa-2 text-h5"
-        >{{ letter.char }}
-      </v-chip>
+    <v-card-item class="justify-center">
+      <GameboardGuess v-for="guess of game.guesses" :guess="guess" />
     </v-card-item>
 
     <v-card-text class="text-center font-weight-bold text-h6 my-2">
@@ -64,9 +54,9 @@
 
 <script setup lang="ts">
 import { Game, GameState } from "@/scripts/game"; // Adjust the import path as necessary
-import { Letter, LetterState } from "@/scripts/letter"; // Adjust the import path as necessary
 
 import { ref, reactive } from "vue";
+import GameboardGuess from "~/components/GameboardGuess.vue";
 const wordsList = [
   "HEART",
   "GRACE",
@@ -90,7 +80,7 @@ const wordsList = [
   "PIXIE",
   "TULIP",
   "MINTY",
-  "CHARM"
+  "CHARM",
 ];
 const game: Game = reactive(
   new Game(wordsList[Math.floor(Math.random() * wordsList.length)])
@@ -100,17 +90,6 @@ const myGuess = ref("");
 function submitGuess(): void {
   game.guess(myGuess.value.toUpperCase());
   myGuess.value = "";
-}
-
-function displayLetterState(letter: Letter): string {
-  switch (letter.state) {
-    case LetterState.Correct:
-      return "success";
-    case LetterState.Misplaced:
-      return "warning";
-    default:
-      return "error";
-  }
 }
 
 function displayGameState(): string {
