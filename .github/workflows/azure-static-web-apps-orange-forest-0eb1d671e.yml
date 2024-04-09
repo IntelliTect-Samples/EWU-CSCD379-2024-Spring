@@ -37,7 +37,7 @@ jobs:
     needs: build_and_test
     runs-on: ubuntu-latest
     name: Deploy to Azure
-    if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+    if: github.event_name == 'push' || github.event_name == 'workflow_dispatch'
     steps:
       - name: Get Code
         uses: actions/checkout@v3
