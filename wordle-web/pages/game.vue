@@ -1,5 +1,6 @@
 <template>
-  <v-card color="yellow">
+  <div class="green-background" max-height="900">
+  <v-card color="yellow" elevation="5" max-width="400">
     <v-card-title class="text-green">Hillbilly Guess Game</v-card-title>
   </v-card>
 
@@ -34,6 +35,7 @@
     </v-card-text>
     
   </v-card>
+</div>
 </template>
 
 <script setup lang="ts">
@@ -52,3 +54,10 @@ function checkInput() {
 }
 const router = useRouter()
 </script>
+
+<style>
+.green-background {
+  background-color: yellowgreen;
+  height: 100vh
+}
+</style>

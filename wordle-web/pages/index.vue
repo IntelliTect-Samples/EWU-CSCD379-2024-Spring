@@ -1,5 +1,6 @@
 <template>
-  <v-card color="yellow" elevation="16" max-width="400">
+  <div class="green-background" max-height="900">
+  <v-card color="yellow" elevation="5" max-width="400">
       <v-card-title class="text-green" >Welcome To Our Hillbilly Simple Game!</v-card-title>
   </v-card>
 
@@ -23,9 +24,16 @@
       </v-btn>
       </v-card-actions>
     </v-card>
+  </div>
 </template>
 
 <script setup lang="ts">
 const router = useRouter()
 
 </script>
+<style>
+.green-background {
+  background-color: yellowgreen;
+  height: 100vh
+}
+</style>
