@@ -1,14 +1,11 @@
 <template>
   <v-container class="w-75">
     <v-row justify="center" v-for="(guess, i) in game.maxAttempts" :key="i">
-      <v-col
-        cols="1"
-        class="bg-pink-lighten-2 ma-1 rounded-lg"
+      <GameboardLetter
         v-for="(letter, j) in game.wordToGuess.length"
         :key="j"
-      >
-        {{ getGuess(i, j) }}
-      </v-col>
+        :letter="getGuess(i, j)"
+      />
     </v-row>
   </v-container>
 </template>
@@ -22,19 +19,21 @@
 
 <script setup lang="ts">
 import { Game } from "~/scripts/game";
+import GameboardLetter from "./GameboardLetter.vue";
+import { Letter } from "~/scripts/letter";
 
 const props = defineProps<{
   game: Game;
   guess: string;
 }>();
 
-function getGuess(i: number, j: number) {
+function getGuess(i: number, j: number): Letter {
   if (i < props.game.guesses.length) {
-    return props.game.guesses[i].letters[j].char;
+    return props.game.guesses[i].letters[j];
   } else if (i === props.game.guesses.length) {
-    return props.guess.charAt(j);
+    return new Letter(props.guess.charAt(j));
   } else {
-    return "";
+    return new Letter("");
   }
 }
 </script>

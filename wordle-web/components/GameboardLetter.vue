@@ -1,6 +1,22 @@
 <template>
-  <v-chip :color="color" class="ma-1 pa-2 text-h5">{{ letter.char }} </v-chip>
+  <v-col
+    cols="1"
+    class="ma-1 rounded-lg text-white"
+    :style="{ background: color }"
+    >{{ letter.char.toUpperCase() }}
+  </v-col>
 </template>
+
+<style scoped>
+.v-col {
+  height: 75px;
+  width: 75px;
+  font-size: 3em;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+</style>
 
 <script setup lang="ts">
 import { defineProps } from "vue";
@@ -12,11 +28,13 @@ const props = defineProps<{
 const color = computed(() => {
   switch (props.letter.state) {
     case LetterState.Correct:
-      return "success";
+      return "#66BB6A";
     case LetterState.Wrong:
-      return "error";
+      return "#EF5350";
+    case LetterState.Misplaced:
+      return "#FFEE58";
     default:
-      return "warning";
+      return "#BDBDBD";
   }
 });
 </script>
