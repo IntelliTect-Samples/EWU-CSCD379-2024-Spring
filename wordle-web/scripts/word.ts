@@ -1,4 +1,3 @@
-import { LazyTitle } from "#build/components";
 import { Letter, LetterState } from "./letter";
 
 export class Word {
