@@ -41,9 +41,17 @@
 ## Week 2
 ### Lecture 3: 4/09: Vue (Assignment 2) 🟢🟣
 - Why Vue? What problem does is solve?
+- HTML Primer: elements, classes, styling
+- CSS Primer
+- Chrome debugger
 - What is Vue for and how does it work? Stop messing with the DOM
 - {{ Interpolation }}
 - Data Binding and Observables: https://vuejs.org/guide/essentials/template-syntax.html
+  - Creating the word and letter elements
+  - Changing these into components
+  - Observables
+ 
+
   - Proxies
   - Attributes
   - Class and Style https://vuejs.org/guide/essentials/class-and-style.html
