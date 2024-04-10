@@ -9,9 +9,9 @@
 
 <style scoped>
 .v-col {
-  height: 75px;
-  width: 75px;
-  font-size: 3em;
+  height: 50px;
+  width: 50px;
+  font-size: 2em;
   display: flex;
   justify-content: center;
   align-items: center;

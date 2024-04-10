@@ -1,9 +1,12 @@
 <template>
-  <GameboardLetter
-    v-for="(letter, j) of guess.letters"
-    :key="j"
-    :letter="letter"
-  />
+  <v-row justify="center">
+    <GameboardLetter
+      v-for="(letter, j) of guess.letters"
+      :key="j"
+      :letter="letter"
+    />
+  </v-row>
+
   <v-spacer />
 </template>
 

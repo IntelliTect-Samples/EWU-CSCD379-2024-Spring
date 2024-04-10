@@ -1,5 +1,5 @@
 <template>
-  <v-container class="w-75">
+  <v-container>
     <v-row justify="center" v-for="(guess, i) in game.maxAttempts" :key="i">
       <GameboardLetter
         v-for="(letter, j) in game.wordToGuess.length"
@@ -9,13 +9,6 @@
     </v-row>
   </v-container>
 </template>
-
-<style scoped>
-.v-col {
-  height: 75px;
-  width: 75px;
-}
-</style>
 
 <script setup lang="ts">
 import { Game } from "~/scripts/game";

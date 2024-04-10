@@ -44,7 +44,6 @@
 <script setup lang="ts">
 import { Game, GameState } from "@/scripts/game"; // Adjust the import path as necessary
 import { ref, reactive } from "vue";
-import GameboardGuess from "~/components/GameboardGuess.vue";
 const wordsList = [
   "HEART",
   "GRACE",
@@ -87,7 +86,7 @@ function displayGameState(): string {
     case GameState.Loss:
       return "You lost :( The word was: " + game.wordToGuess;
     default:
-      return "Guess: " + myGuess.value;
+      return "Good luck!!!";
   }
 }
 </script>
