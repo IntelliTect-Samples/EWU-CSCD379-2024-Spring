@@ -28,9 +28,9 @@ const color = computed(() => {
     case LetterState.Wrong:
       return "#EF5350";
     case LetterState.Misplaced:
-      return "#FFEE58";
+      return "#FFF176";
     default:
-      return "#BDBDBD";
+      return "#B0BEC5";
   }
 });
 </script>
