@@ -3,6 +3,13 @@
     <v-card>
       <v-card-title>Wordle</v-card-title>
 
+      <div v-if="game.gameState == GameState.Won">
+        You've Won!
+      </div>
+      <div v-if="game.gameState == GameState.Lost">
+        You've Lost!
+      </div>
+
       <GameBoardGuess
         v-for="(guess, i) of game.guesses"
         :key="i"
@@ -13,7 +20,7 @@
 </template>
 
 <script setup lang="ts">
-import { Game } from "../scripts/game";
+import { Game, GameState } from "../scripts/game";
 const game: Game = reactive(new Game("JUMBO"));
 
 const myGuess = ref("");

@@ -5,6 +5,7 @@ export class Game {
   public guesses: Word[] = [];
   public secretWord: string;
   public guessIndex: number = 0;
+  public gameState: GameState = GameState.Playing;
 
   constructor(secretWord: string, maxAttempts: number = 6) {
     this.secretWord = secretWord;
@@ -23,15 +24,35 @@ export class Game {
   }
 
   public removeLastLetter() {
-    this.guess.removeLastLetter();
+    if(this.gameState === GameState.Playing){
+      this.guess.removeLastLetter();
+    }
   }
 
   public addLetter(letter: string) {
-    this.guess.addLetter(letter);
+    if(this.gameState === GameState.Playing){
+      this.guess.addLetter(letter);
+    }
   }
 
   public submitGuess() {
-    this.guess.compare(this.secretWord);
-    this.guessIndex++;
+    if(this.gameState !== GameState.Playing) return;
+    if(!this.guess.isFilled()) return;
+
+    if (this.guess.compare(this.secretWord)) {
+      this.gameState = GameState.Won;
+    } else {
+      if (this.guessIndex === this.maxAttempts - 1) {
+        this.gameState = GameState.Lost;
+      } else {
+        this.guessIndex++;
+      }
+    }
   }
+}
+
+export enum GameState {
+  Playing,
+  Won,
+  Lost,
 }

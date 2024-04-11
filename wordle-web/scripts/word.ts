@@ -4,15 +4,17 @@ export class Word {
   public letters: Letter[];
 
   constructor(wordOptions: WordOptions) {
-    if(wordOptions.word){
+    if (wordOptions.word) {
       this.letters = wordOptions.word.split("").map((char) => new Letter(char));
-    }else if(wordOptions.maxNumberOfLetters){
+    } else if (wordOptions.maxNumberOfLetters) {
       this.letters = [];
       for (let i = 0; i < wordOptions.maxNumberOfLetters; i++) {
         this.letters.push(new Letter(""));
       }
-    }else{
-      throw new Error("WordOptions must have either maxNumberOfLetters or word");
+    } else {
+      throw new Error(
+        "WordOptions must have either maxNumberOfLetters or word"
+      );
     }
   }
 
@@ -33,14 +35,20 @@ export class Word {
       }
     }
   }
+  public isFilled(): boolean {
+    return this.letters.every((letter) => letter.char);
+  }
 
-  public compare(secretWordString: string): void {
+  public compare(secretWordString: string): boolean {
     const secretWord = new Word({ word: secretWordString });
+    let isMatch = true;
 
     for (const [i, letter] of secretWord.letters.entries()) {
       if (letter.char === this.letters[i].char) {
         this.letters[i].state = LetterState.Correct;
         letter.state = LetterState.Correct;
+      }else{
+        isMatch = false;
       }
     }
     for (const guessedLetter of this.letters) {
@@ -60,6 +68,8 @@ export class Word {
         }
       }
     }
+
+    return isMatch;
   }
 }
 
