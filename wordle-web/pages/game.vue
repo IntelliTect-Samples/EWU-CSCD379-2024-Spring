@@ -55,6 +55,7 @@ function checkInput() {
 const router = useRouter()
 </script>
 
+
 <style>
 
 .red-background {

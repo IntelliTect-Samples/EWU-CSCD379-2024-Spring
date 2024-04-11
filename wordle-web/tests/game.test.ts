@@ -6,6 +6,10 @@ test('input',() =>{
 });  */
 
 import { expect, test } from "vitest";
-test('mathtest', () => {
-    expect(1+2).toBe(3)
-  });
+import {checkInput} from "../scripts/gamescript"
+test("not valid", ()=>{
+  expect(checkInput("hill")).toBe("WRONG")
+  expect(checkInput("hill billy")).toBe("CORRECT")
+}
+
+  )
