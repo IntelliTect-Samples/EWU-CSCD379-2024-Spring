@@ -1,32 +1,29 @@
 <template>
   <v-container>
-    <v-row justify="center" v-for="(guess, i) in game.maxAttempts" :key="i">
-      <GameboardLetter
-        v-for="(letter, j) in game.wordToGuess.length"
-        :key="j"
-        :letter="getGuess(i, j)"
-      />
-    </v-row>
+    <GameboardGuess
+      v-for="(guess, i) in game.maxAttempts"
+      :guess="getGuess(i)"
+      :key="i"
+    />
+    {{ guess }}
   </v-container>
 </template>
 
 <script setup lang="ts">
 import { Game } from "~/scripts/game";
-import GameboardLetter from "./GameboardLetter.vue";
-import { Letter } from "~/scripts/letter";
-
+import { Word } from "~/scripts/word";
 const props = defineProps<{
   game: Game;
   guess: string;
 }>();
 
-function getGuess(i: number, j: number): Letter {
-  if (i < props.game.guesses.length) {
-    return props.game.guesses[i].letters[j];
+function getGuess(i: number): Word {
+  if (i > props.game.guesses.length) {
+    return new Word("");
   } else if (i === props.game.guesses.length) {
-    return new Letter(props.guess.charAt(j));
+    return new Word(props.guess);
   } else {
-    return new Letter("");
+    return props.game.guesses[i];
   }
 }
 </script>
