@@ -28,7 +28,7 @@
 
 <script setup lang="ts">
 import { Game, GameState } from "../scripts/game";
-const game: Game = reactive(new Game("JUMBO"));
+const game: Game = reactive(new Game());
 
 const myGuess = ref("");
 
