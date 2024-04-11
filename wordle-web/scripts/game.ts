@@ -11,7 +11,14 @@ export class Game {
     this.secretWord = secretWord;
     this.maxAttempts = maxAttempts;
 
+    this.startNewGame();
+  }
+
+  public startNewGame() {
+    this.guessIndex = 0;
+    this.gameState = GameState.Playing;
     // Populate guesses with the correct number of empty words
+    this.guesses = [];
     for (let i = 0; i < this.maxAttempts; i++) {
       this.guesses.push(
         new Word({ maxNumberOfLetters: this.secretWord.length })
@@ -24,20 +31,20 @@ export class Game {
   }
 
   public removeLastLetter() {
-    if(this.gameState === GameState.Playing){
+    if (this.gameState === GameState.Playing) {
       this.guess.removeLastLetter();
     }
   }
 
   public addLetter(letter: string) {
-    if(this.gameState === GameState.Playing){
+    if (this.gameState === GameState.Playing) {
       this.guess.addLetter(letter);
     }
   }
 
   public submitGuess() {
-    if(this.gameState !== GameState.Playing) return;
-    if(!this.guess.isFilled()) return;
+    if (this.gameState !== GameState.Playing) return;
+    if (!this.guess.isFilled()) return;
 
     if (this.guess.compare(this.secretWord)) {
       this.gameState = GameState.Won;
