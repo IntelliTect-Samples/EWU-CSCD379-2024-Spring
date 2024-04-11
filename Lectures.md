@@ -59,7 +59,7 @@
 - Lists (For loops): https://vuejs.org/guide/essentials/list.html
 
 
-### Lecture 4. 4/11: Vuetify (Assignment 2) 🟢🟣
+### Lecture 4. 4/11: More Vue (Assignment 2) 🟢🟣
 - Add Additional Wordle Functionality
   - Word list
   - Random word selection
