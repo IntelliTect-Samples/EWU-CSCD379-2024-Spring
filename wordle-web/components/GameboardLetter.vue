@@ -1,20 +1,16 @@
 <template>
   <v-col
     cols="1"
-    class="ma-1 rounded-lg text-white"
+    class="guess-letter font-size-2 d-flex justify-center align-center ma-1 rounded-lg text-white text-h4"
     :style="{ background: color }"
     >{{ letter.char.toUpperCase() }}
   </v-col>
 </template>
 
 <style scoped>
-.v-col {
+.guess-letter {
   height: 50px;
   width: 50px;
-  font-size: 2em;
-  display: flex;
-  justify-content: center;
-  align-items: center;
 }
 </style>
 
