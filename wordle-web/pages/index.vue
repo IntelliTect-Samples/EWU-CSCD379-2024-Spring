@@ -15,6 +15,13 @@
         :key="i"
         :guess="guess"
       />
+
+      <v-card-actions>
+        <v-spacer />
+        <v-btn v-if="game.gameState !== GameState.Playing" variant="tonal" color="red" @click="game.startNewGame()">
+          Restart Game
+        </v-btn>
+      </v-card-actions>
     </v-card>
   </v-container>
 </template>
