@@ -1,22 +1,27 @@
 import { Word } from "./word";
+import { WordList } from "./wordList";
 
 export class Game {
   public maxAttempts: number;
   public guesses: Word[] = [];
-  public secretWord: string;
+  public secretWord: string = "";
   public guessIndex: number = 0;
   public gameState: GameState = GameState.Playing;
 
-  constructor(secretWord: string, maxAttempts: number = 6) {
-    this.secretWord = secretWord;
+  constructor(maxAttempts: number = 6) {
     this.maxAttempts = maxAttempts;
-
     this.startNewGame();
   }
 
   public startNewGame() {
     this.guessIndex = 0;
     this.gameState = GameState.Playing;
+
+    // Get random word from word list
+    this.secretWord =
+      WordList[Math.floor(Math.random() * WordList.length)].toUpperCase();
+    console.log(this.secretWord);
+
     // Populate guesses with the correct number of empty words
     this.guesses = [];
     for (let i = 0; i < this.maxAttempts; i++) {
