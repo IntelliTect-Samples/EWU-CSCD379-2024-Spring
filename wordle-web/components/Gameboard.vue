@@ -5,7 +5,6 @@
       :guess="getGuess(i)"
       :key="i"
     />
-    {{ guess }}
   </v-container>
 </template>
 
