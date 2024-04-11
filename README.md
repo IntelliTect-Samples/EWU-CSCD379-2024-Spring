@@ -1,3 +1,17 @@
+# Website
+https://lively-sea-0f3b4921e.5.azurestaticapps.net
+
+## three unique ideas
+
+### 1. LexiQuest
+An RPG style word guessing game where you can level up as you progress.
+
+### 2. Themed words
+Each puzzle comes with a subtle hint pointing to a specific fandom, genre, or subject such as star wars, music, or history.
+
+### 3. Custom word lists
+Personalized puzzles with user submitted word list. They can be similar to the themed words or something entirely different, this could give users the chance to tailer their experience to whatever they want.
+
 ## Instructors ##
 [Grant Erickson](https://github.com/GrantErickson) and [Meg Woodford](https://github.com/mmwoodfo)
 For general questions, we suggest asking in Teams so that others can help as well. We encourage people to work together and collaborate. Please feel free to help your fellow students out. Though it is possible to privately message people directly, as much as possible, we encourage open discussion on the main chat so that others can benefit as well.
