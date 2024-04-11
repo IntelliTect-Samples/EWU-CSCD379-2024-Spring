@@ -1,10 +1,11 @@
 
 export function checkInput(guess : string): string{
     
-    if(guess = "hill billy"){
+    if(guess == "hill billy"){
         return "CORRECT"
     }
     else{
         return "WRONG"
     } 
     }
+//export function checkInput(guess : string)
