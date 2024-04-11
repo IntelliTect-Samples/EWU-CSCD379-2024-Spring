@@ -15,13 +15,20 @@
         :key="i"
         :guess="guess"
       />
+
+      <v-card-actions>
+        <v-spacer />
+        <v-btn v-if="game.gameState !== GameState.Playing" variant="tonal" color="red" @click="game.startNewGame()">
+          Restart Game
+        </v-btn>
+      </v-card-actions>
     </v-card>
   </v-container>
 </template>
 
 <script setup lang="ts">
 import { Game, GameState } from "../scripts/game";
-const game: Game = reactive(new Game("JUMBO"));
+const game: Game = reactive(new Game());
 
 const myGuess = ref("");
 
