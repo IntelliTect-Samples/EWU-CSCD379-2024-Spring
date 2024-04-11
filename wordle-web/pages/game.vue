@@ -29,16 +29,11 @@
       <NuxtLink to="/"> Home page </NuxtLink>
     </v-card-text>
   </v-card>
-  <v-row justify="center">
-    <v-card align-center>
-      <v-row>
-        <v-img
-          aspect-ratio="1"
-          width="600"
-          src="https://media0.giphy.com/media/v1.Y2lkPTc5MGI3NjExaXA5Yjc3ZW9rYTFyaHA5eTU1bnhnc2wxdzl6dThrc2owZG55ejE2OSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/uurtMtTKqkJda4dk8Y/giphy.gif"></v-img>
-      </v-row>
-    </v-card>
-  </v-row>
+  <v-img
+    class="mx-auto"
+    aspect-ratio="1"
+    width="600"
+    src="https://media0.giphy.com/media/v1.Y2lkPTc5MGI3NjExaXA5Yjc3ZW9rYTFyaHA5eTU1bnhnc2wxdzl6dThrc2owZG55ejE2OSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/uurtMtTKqkJda4dk8Y/giphy.gif"></v-img>
 </template>
 
 <script setup lang="ts">
