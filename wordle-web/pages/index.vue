@@ -5,7 +5,7 @@
           Embark on a thrilling journey through puzzles and wordplay in LexiQuest, where language meets adventure!
           </v-card-subtitle>
       <v-card-text>
-        <NuxtLink to="/game"> Game </NuxtLink>
+        <NuxtLink to="/game"> Begin Quest! </NuxtLink>
       </v-card-text>
     </v-card>
 </template>
