@@ -1,6 +1,7 @@
 <template>
-  <v-card class="mx-auto my-8" elevation="16" max-width="500">
-    <v-card-item>
+  <v-card color="light-blue-darken-1" class="mx-auto my-8" elevation="16" max-width="500">
+
+    <v-card-item >
       <v-card-title> Would you want to light up your day? </v-card-title>
       <v-card-subtitle> (y/n) </v-card-subtitle>
     </v-card-item>
