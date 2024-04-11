@@ -56,16 +56,26 @@
 - Component Basics (MG)
 - Routing https://vuejs.org/guide/scaling-up/routing.html
 - Lifecycle: https://vuejs.org/guide/essentials/lifecycle.html
+- Lists (For loops): https://vuejs.org/guide/essentials/list.html
 
 
-### Lecture 4. 4/11: Vuetify (Assignment 2) 🟣
+### Lecture 4. 4/11: Vuetify (Assignment 2) 🟢🟣
+- Add Additional Wordle Functionality
+  - Word list
+  - Random word selection
+  - Showing all 6 guess lines
+  - Entering letters not in a text box
+  - Determine win & loss
+  - Game state
+  - Restart game
 - Attributes
 - Observables
 - Proxies
 - Functions
 - Conditional Rendering: https://vuejs.org/guide/essentials/conditional.html
-- Lists (For loops): https://vuejs.org/guide/essentials/list.html
 - Events: https://vuejs.org/guide/essentials/event-handling.html
+
+### Next Time
 - Input: https://vuejs.org/guide/essentials/forms.html
 - Grid System
 - Display and sizing
