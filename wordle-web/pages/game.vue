@@ -24,7 +24,7 @@
     
     <v-card-actions>
       <v-spacer />
-      <v-btn color="green text-yellow font-weight-bold" variant="elevated" elevation="8" @click="checkInput()">
+      <v-btn color="green text-yellow font-weight-bold" variant="elevated" elevation="8" @click="checkIn()">
         Check my answer!
       </v-btn>
       <v-btn color="green text-yellow font-weight-bold" variant="elevated" elevation="8" @click="router.push('/')">take me home!</v-btn>
@@ -39,19 +39,17 @@
 </template>
 
 <script setup lang="ts">
+import { ref } from "vue";
+import { checkInput } from '~/scripts/gamescript';
+const myGuess = ref("")
 
-var myGuess = ref("");
+const output =  ref("")
 
-const output = ref("");
-
-function checkInput() {
-  if(myGuess.value == "hill billy"){
-    output.value = "CORRECT"
-  }
-  else{
-    output.value = "WRONG"
-  }
+function checkIn(){
+  output.value = checkInput(myGuess.value);
 }
+
+
 const router = useRouter()
 </script>
 
