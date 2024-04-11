@@ -1,4 +1,5 @@
 import { Letter, LetterState } from "./letter";
+import { WordList } from "./wordList";
 
 export class Word {
   public letters: Letter[];
@@ -70,6 +71,20 @@ export class Word {
     }
 
     return isMatch;
+  }
+
+  public get word(): string {
+    return this.letters.map((x) => x.char).join("");
+  }
+
+  public isValidWord() {
+    return WordList.includes(this.word.toLowerCase());
+  }
+
+  public clear() {
+    for (const letter of this.letters) {
+      letter.char = "";
+    }
   }
 }
 
