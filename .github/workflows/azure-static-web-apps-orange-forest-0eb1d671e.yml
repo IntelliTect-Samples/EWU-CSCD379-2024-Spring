@@ -48,5 +48,3 @@ jobs:
           app_location: "./wordle-web/.output/public" # App source code path
           output_location: "" # Built app content directory - optional
           ###### End of Repository/Build Configurations ######
-          output_location: "" # Built app content directory - optional
-          ###### End of Repository/Build Configurations ######
