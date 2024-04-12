@@ -1,5 +1,9 @@
 # EWU-CSCD378-2024-Spring
 
+### Azure Static Site URL:
+
+[Blank](blank.com)
+
 ## Assignment 2
 
 The purpose of this assignment is to solidify your learning of:
@@ -11,6 +15,7 @@ The purpose of this assignment is to solidify your learning of:
 
 ## Due Dates
 
+- 100 points +5 EC points
 - Assigned: 4/11
 - Initial work complete: 4/21 11:59 pm
   - 50% for running pipeline with passing unit test
