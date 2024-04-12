@@ -2,7 +2,7 @@
 
 ### Azure Static Site URL:
 
-[Blank](blank.com)
+[https://black-beach-03b41781e.5.azurestaticapps.net/](https://black-beach-03b41781e.5.azurestaticapps.net/)
 
 ## Assignment 2
 
