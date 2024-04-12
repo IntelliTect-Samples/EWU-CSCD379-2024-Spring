@@ -46,6 +46,8 @@
   <script setup lang="ts">
   import { Game, GameState } from "../scripts/game";
   const game: Game = reactive(new Game());
+  const mySound = new Audio('/audio/click.mp3');
+
   
   onMounted(() => {
     window.addEventListener("keyup", onKeyup);
@@ -56,12 +58,18 @@
   });
   
   function onKeyup(event: KeyboardEvent) {
+    if (event.key.match(/[A-z]/)) {
+    mySound.currentTime = 0;  // Reset the playback to the start
+    mySound.play();
+
     if(event.key === "Enter") {
       game.submitGuess();
     } else if(event.key == 'Backspace'){
       game.removeLastLetter();
     } else if(event.key.match(/[A-z]/)){
+        mySound.play();
       game.addLetter(event.key.toUpperCase());
     }
   }
+}
   </script>
