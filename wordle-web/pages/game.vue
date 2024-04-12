@@ -3,13 +3,13 @@
     <v-card-item>
       <v-card-title>Spell Casting Challenge!</v-card-title>
       <v-card-subtitle>
-        <strong class="text-deep-purple-accent-4">Cast the correct spell to vanquish the dragon!</strong>
+        <strong class="text-deep-purple-accent-4">Quick cast a spell to defeat the monster!</strong>
       </v-card-subtitle>
     </v-card-item>
 
     <v-text-field
       v-model="guess"
-      label="Type 'fireball' to cast the spell:"
+      label="Place incantation here:"
       outlined
       clearable />
     <v-card-actions>
@@ -29,6 +29,11 @@
       <NuxtLink to="/"> Return to the Guild </NuxtLink>
     </v-card-text>
   </v-card>
+  <v-img
+    class="mx-auto"
+    aspect-ratio="1"
+    width="600"
+    src="https://media1.tenor.com/m/k6oNn3CSaswAAAAC/fireball-on-fire.gif"></v-img>
 </template>
 
 <script setup lang="ts">
@@ -39,7 +44,7 @@ const feedback = ref('');
 
 function castSpell() {
   if (guess.value.toLowerCase() === 'fireball') {
-    feedback.value = 'Success! The dragon is defeated!';
+    feedback.value = 'Success! The monster is defeated!';
   } else {
     feedback.value = 'The spell fails... Try again!';
   }
