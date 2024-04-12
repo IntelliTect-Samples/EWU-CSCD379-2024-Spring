@@ -24,8 +24,8 @@
         </v-card-item>
         <v-spacer />
   
-        <div v-if="game.gameState === GameState.Won">You've Won!</div>
-        <div v-if="game.gameState === GameState.Lost">You've Lost!</div>
+        <div v-if="game.gameState === GameState.Won">You Won! :)</div>
+        <div v-if="game.gameState === GameState.Lost">You Lost! :(</div>
   
         <GameBoardGuess
           v-for="(guess, i) of game.guesses"
