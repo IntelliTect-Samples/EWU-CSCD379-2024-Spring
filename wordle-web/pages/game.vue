@@ -1,3 +1,26 @@
+<script setup lang="ts">
+import { ref } from 'vue';
+import { tellJoke as tellJokeFunction } from '../scripts/joke'; // Adjust the import path as necessary and rename the imported function
+
+const input = ref('');
+const punchline = ref('');
+const output = ref('');
+const jokeAsked = ref(false);
+
+function askForJoke() {
+if (input.value.trim().toLowerCase() === 'y') {
+  jokeAsked.value = true;
+  output.value = "Great! Let's hear a joke.";
+} else {
+  output.value = "Okay, maybe next time!";
+}
+}
+
+function checkPunchline() {
+output.value = tellJokeFunction(punchline.value); // Use the renamed imported function
+}
+</script>
+
 <template>
   <v-card color="light-blue-darken-1" class="mx-auto my-8" elevation="16" max-width="500">
 
@@ -38,26 +61,3 @@
     </v-card-text>
   </v-card>
 </template>
-
-<script setup lang="ts">
-import { ref } from 'vue';
-import { tellJoke as tellJokeFunction } from '../scripts/joke'; // Adjust the import path as necessary and rename the imported function
-
-const input = ref('');
-const punchline = ref('');
-const output = ref('');
-const jokeAsked = ref(false);
-
-function askForJoke() {
-if (input.value.trim().toLowerCase() === 'y') {
-  jokeAsked.value = true;
-  output.value = "Great! Let's hear a joke.";
-} else {
-  output.value = "Okay, maybe next time!";
-}
-}
-
-function checkPunchline() {
-output.value = tellJokeFunction(punchline.value); // Use the renamed imported function
-}
-</script>
