@@ -1,15 +1,15 @@
 <template>
   <v-card class="mx-auto my-8" elevation="16" max-width="344">
     <v-card-item>
-      <v-card-title>LexiQuest: The Spell of Truth</v-card-title>
+      <v-card-title>Spell Casting Challenge!</v-card-title>
       <v-card-subtitle>
-        <strong class="text-deep-purple-accent-4">Cast the correct spell to reveal the hidden truth!</strong>
+        <strong class="text-deep-purple-accent-4">Cast the correct spell to vanquish the dragon!</strong>
       </v-card-subtitle>
     </v-card-item>
 
     <v-text-field
       v-model="guess"
-      label="Enter your spell (guess):"
+      label="Type 'fireball' to cast the spell:"
       outlined
       clearable />
     <v-card-actions>
@@ -22,13 +22,8 @@
         Cast Spell
       </v-btn>
     </v-card-actions>
-    <v-card-text v-if="isCorrect">
-      <p>{{ feedback }}</p>
-      <p>You see the creature wince as your spell hits its mark! Onward to the next challenge!</p>
-    </v-card-text>
-    <v-card-text v-else>
-      <p>{{ feedback }}</p>
-      <p>The magic fizzles... nothing happens. Try again to master the spell!</p>
+    <v-card-text>
+      {{ feedback }}
     </v-card-text>
     <v-card-text>
       <NuxtLink to="/"> Return to the Guild </NuxtLink>
@@ -39,19 +34,15 @@
 <script setup lang="ts">
 import { ref } from 'vue';
 
-const correctWord = 'quest';
 const guess = ref('');
 const feedback = ref('');
-const isCorrect = ref(false);
 
 function castSpell() {
-  if (guess.value.toLowerCase() === correctWord) {
-    feedback.value = 'Perfect!';
-    isCorrect.value = true;
+  if (guess.value.toLowerCase() === 'fireball') {
+    feedback.value = 'Success! The dragon is defeated!';
   } else {
-    feedback.value = 'Incorrect spell!';
-    isCorrect.value = false;
+    feedback.value = 'The spell fails... Try again!';
   }
-  guess.value = ''; // Clear input after casting
+  guess.value = ''; // Clear input after attempt
 }
 </script>
