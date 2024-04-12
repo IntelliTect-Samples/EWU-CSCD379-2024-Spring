@@ -22,7 +22,7 @@ bun install
 
 ## Development Server
 
-Start the development server on `http://localhost:3000`:
+Start the development server on `https://gentle-beach-0eb2d061e.5.azurestaticapps.net/`:
 
 ```bash
 # npm
