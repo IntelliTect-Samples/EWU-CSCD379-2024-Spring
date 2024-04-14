@@ -29,7 +29,7 @@ export class Game {
   }
 
   public updateGameState(): void {
-    if (this.guesses[this.guesses.length - 1].checkForWin() === true) {
+    if (this.guesses[this.guesses.length - 1].checkForWin()) {
       this.state = GameState.Won;
     } else if (this.guesses.length >= this.maxAttempts) {
       this.state = GameState.Loss;
