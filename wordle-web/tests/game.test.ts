@@ -49,7 +49,7 @@ test("max-attempts stops guesses appending at 6", () => {
 test("won gamestate", () => {
   const game = new Game("autos");
   game.guess("autos");
-  expect(game.state).toBe(1);
+  expect(game.state).toBe(GameState.Won);
 });
 
 test("loss gamestate", () => {
