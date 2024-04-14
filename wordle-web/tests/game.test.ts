@@ -33,8 +33,10 @@ test("guess-word", () => {
   expect(game.guesses[2].letters[4].state).toBe(LetterState.Correct);
 });
 
-test("max-attempts stops guesses appending at 6", () => {
+test("max-attempts stops guesses appending at maxAttempts", () => {
   const game = new Game("autos");
+  game.maxAttempts = 4;
+  
   game.guess("trips");
   game.guess("grabs");
   game.guess("woops");
@@ -43,7 +45,7 @@ test("max-attempts stops guesses appending at 6", () => {
   game.guess("jumps");
   game.guess("jumps");
 
-  expect(game.guesses.length).toBe(6);
+  expect(game.guesses.length).toBe(game.maxAttempts);
 });
 
 test("won gamestate", () => {
