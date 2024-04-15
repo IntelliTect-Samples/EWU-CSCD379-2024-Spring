@@ -17,3 +17,17 @@ test('WordService test full word', ()=> {
   const validWords = WordService.validGuessedWords(guess, states);
   expect(validWords).toEqual(['aargh']);
 });
+
+test('WordService test partial word', ()=> {
+  const guess = 'aarg';
+  const states = [
+    LetterState.Correct,
+    LetterState.Correct,
+    LetterState.Correct,
+    LetterState.Correct,
+    LetterState.Unknown,
+  ];
+
+  const validWords = WordService.validGuessedWords(guess, states);
+  expect(validWords).toEqual(['aargh']);
+})

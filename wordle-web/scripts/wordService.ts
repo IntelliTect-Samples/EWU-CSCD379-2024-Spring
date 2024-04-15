@@ -1,7 +1,7 @@
 import { LetterState } from "./letter";
 import { WordList } from "./wordList";
 
-export class wordService {
+export class WordService {
   static validGuessedWords(currentGuess: string, states: LetterState[]): string[] {
     return WordList.filter(word => {
       for(let i = 0; i < word.length; i++) {
