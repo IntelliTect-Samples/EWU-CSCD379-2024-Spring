@@ -5,7 +5,7 @@ export class WordService {
   static validGuessedWords(currentGuess: string, states: LetterState[]): string[] {
     return WordList.filter(word => {
       for(let i = 0; i < word.length; i++) {
-        const guessedChar = currentGuess[i].toLowerCase();
+        const guessedChar = (i < currentGuess.length) ? currentGuess[i].toLowerCase() : null;
         const isCorrectPosition = word[i] === guessedChar;
         const isInWord = word.includes(guessedChar);
 
