@@ -31,3 +31,19 @@ test('WordService test partial word', ()=> {
   const validWords = WordService.validGuessedWords(guess, states);
   expect(validWords).toEqual(['aargh']);
 })
+
+test('WordService test partial word, results in multiple words', ()=> {
+  const guess = 'abac';
+  const states = [
+    LetterState.Correct,
+    LetterState.Correct,
+    LetterState.Correct,
+    LetterState.Correct,
+    LetterState.Unknown,
+  ];
+
+  const validWords = WordService.validGuessedWords(guess, states);
+  expect(validWords[0]).toEqual('abaca');
+  expect(validWords[1]).toEqual('abaci');
+  expect(validWords[2]).toEqual('aback');
+});
