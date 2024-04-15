@@ -65,6 +65,20 @@ export class Game {
       }
     }
   }
+  public validateWord(word: string): Array<string> {
+    const myList = new Array<string>();
+
+    if(word == ''){
+      return myList;
+    }
+    for (let i = 0; i < WordList.length; i++) {
+      if (WordList[i].startsWith(word.toUpperCase())) {
+        myList.push(WordList[i]);
+      }
+    }
+    return myList;
+  }
+
 }
 
 export enum GameState {
