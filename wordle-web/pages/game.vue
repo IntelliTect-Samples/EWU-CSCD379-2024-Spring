@@ -1,53 +1,53 @@
 <template>
-    <v-card elevation="16" min-width="344">
-        <v-card-title>Hello Welcome to Pentagram</v-card-title>
-        <v-card-subtitle> This is our super basic wordle game called Pentagram. Penta for five, and gram for letter</v-card-subtitle>
+  <v-container>
+    <v-card>
+      <v-card-title>Hello, Welcome to Pentagram</v-card-title>
+      <v-card-subtitle> This is our super basic wordle game called Pentagram. Penta for five, and gram for letter</v-card-subtitle>
+
+      <div v-if="game.gameState == GameState.Won">
+        You've Won!
+      </div>
+      <div v-if="game.gameState == GameState.Lost">
+        You've Lost!
+      </div>
+
+      <GameBoardGuess
+        v-for="(guess, i) of game.guesses"
+        :key="i"
+        :guess="guess"
+      />
+
+      <v-card-actions>
+        <v-spacer />
+        <v-btn v-if="game.gameState !== GameState.Playing" variant="tonal" color="red" @click="game.startNewGame()">
+          Restart Game
+        </v-btn>
+      </v-card-actions>
     </v-card>
-    <v-card class="mx-auto my-8" elevation="16" min-width="344">
-        <v-card-item>
-          <v-card-title> Pentagram </v-card-title>
-        </v-card-item>
-
-        <v-card-text>
-          Hint: {{ game.wordToGuess }}
-          <br />
-          My Guess: {{ myGuess }}
-          <v-text-field
-            v-model="myGuess"
-            label="Enter your guess"
-            outlined
-            clearable
-          />
-        </v-card-text>
-
-        <v-card-text>
-          <div v-for="(guess, i) of game.guesses" :key="i">
-            Guess: {{ guess.letters.map(x => x.char).join("") }}
-          </div>
-        </v-card-text>
-
-        <v-card-actions>
-          <v-spacer />
-          <v-btn
-            color="pink"
-            variant="elevated"
-            elevation="8"
-            @click="submitGuess()"
-          >
-            Click Me!
-          </v-btn>
-        </v-card-actions>
-      </v-card>
+  </v-container>
 </template>
 
 <script setup lang="ts">
-import { Game } from "../scripts/game";
-const game: Game = reactive(new Game("JUMBO"));
+import { Game, GameState } from "../scripts/game";
+const game: Game = reactive(new Game());
 
 const myGuess = ref("");
 
-function submitGuess() {
-  game.guess(myGuess.value.toUpperCase());
-  myGuess.value = "";
+onMounted(() => {
+  window.addEventListener("keyup", onKeyup);
+});
+
+onUnmounted(() => {
+  window.removeEventListener("keyup", onKeyup);
+});
+
+function onKeyup(event: KeyboardEvent) {
+  if(event.key === "Enter") {
+    game.submitGuess();
+  } else if(event.key == 'Backspace'){
+    game.removeLastLetter();
+  } else if(event.key.match(/[A-z]/)){
+    game.addLetter(event.key.toUpperCase());
+  }
 }
 </script>
