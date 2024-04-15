@@ -9,6 +9,8 @@ test("game", () => {
   expect(game.wordToGuess.length).toBe(5);
 });
 
+
+//Change these
 test("guess-word", () => {
   const game = new Game("autos");
   game.guess("tangs");
