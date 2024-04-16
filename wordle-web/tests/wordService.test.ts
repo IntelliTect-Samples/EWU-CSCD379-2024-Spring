@@ -47,3 +47,17 @@ test('WordService test partial word, results in multiple words', ()=> {
   expect(validWords[1]).toEqual('abaci');
   expect(validWords[2]).toEqual('aback');
 });
+
+test('WordService test wrongplaced letters full word, results in aargh', ()=> {
+  const guess = "ahgra";
+  const states = [
+    LetterState.Misplaced,
+    LetterState.Misplaced,
+    LetterState.Misplaced,
+    LetterState.Misplaced,
+    LetterState.Misplaced,
+  ];
+
+  const validWords = WordService.validGuessedWords(guess, states);
+  expect(validWords).toEqual(['aargh']);
+});
