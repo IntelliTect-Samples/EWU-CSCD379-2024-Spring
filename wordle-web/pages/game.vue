@@ -2,7 +2,8 @@
   <v-container>
     <v-card>
       <v-card-title>Hello, Welcome to Pentagram</v-card-title>
-      <v-card-subtitle> This is our super basic wordle game called Pentagram. Penta for five, and gram for letter</v-card-subtitle>
+      <v-card-subtitle> This is our super basic wordle game called Pentagram. Penta for five, and gram for
+        letter</v-card-subtitle>
 
       <div v-if="game.gameState == GameState.Won">
         You've Won!
@@ -11,11 +12,7 @@
         You've Lost!
       </div>
 
-      <GameBoardGuess
-        v-for="(guess, i) of game.guesses"
-        :key="i"
-        :guess="guess"
-      />
+      <GameBoardGuess v-for="(guess, i) of game.guesses" :key="i" :guess="guess" />
 
       <v-card-actions>
         <v-spacer />
@@ -42,11 +39,11 @@ onUnmounted(() => {
 });
 
 function onKeyup(event: KeyboardEvent) {
-  if(event.key === "Enter") {
+  if (event.key === "Enter") {
     game.submitGuess();
-  } else if(event.key == 'Backspace'){
+  } else if (event.key == 'Backspace') {
     game.removeLastLetter();
-  } else if(event.key.match(/[A-z]/)){
+  } else if (event.key.match(/[A-z]/)) {
     game.addLetter(event.key.toUpperCase());
   }
 }
