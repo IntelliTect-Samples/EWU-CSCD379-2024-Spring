@@ -49,13 +49,13 @@ test('WordService test partial word, results in multiple words', ()=> {
 });
 
 test('WordService test wrongplaced letters full word, results in aargh', ()=> {
-  const guess = "ahgra";
+  const guess = "aragh";
   const states = [
+    LetterState.Correct,
     LetterState.Misplaced,
     LetterState.Misplaced,
-    LetterState.Misplaced,
-    LetterState.Misplaced,
-    LetterState.Misplaced,
+    LetterState.Correct,
+    LetterState.Correct,
   ];
 
   const validWords = WordService.validGuessedWords(guess, states);

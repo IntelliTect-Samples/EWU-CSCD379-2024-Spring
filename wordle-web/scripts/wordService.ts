@@ -4,6 +4,7 @@ import { WordList } from "./wordList";
 export class WordService {
   static validGuessedWords(currentGuess: string, states: LetterState[]): string[] {
     return WordList.filter(word => {
+      let isValid = true;
       for(let i = 0; i < word.length; i++) {
         const guessedChar = (i < currentGuess.length) ? currentGuess[i].toLowerCase() : null;
         const isCorrectPosition = word[i] === guessedChar;
@@ -11,19 +12,20 @@ export class WordService {
 
         switch (states[i]) {
           case LetterState.Correct:
-            if(!isCorrectPosition) return false;
+            if(!isCorrectPosition) isValid = false;
             break;
           case LetterState.Misplaced:
-            if(isCorrectPosition || !isInWord) return false;
+            if(isCorrectPosition || !isInWord) isValid = false;
             break;
           case LetterState.Wrong:
-            if(isInWord) return false;
+            if(isInWord) isValid = false;
             break;
           case LetterState.Unknown:
             break;
         }
+        if (!isValid) break;
       }
-      return true;
+      return isValid;
     });
   }
 }
