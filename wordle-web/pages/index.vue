@@ -16,6 +16,8 @@
         :guess="guess"
       />
 
+      <Keyboard />
+
       <v-card-actions>
         <v-spacer />
         <v-btn v-if="game.gameState !== GameState.Playing" variant="tonal" color="red" @click="game.startNewGame()">

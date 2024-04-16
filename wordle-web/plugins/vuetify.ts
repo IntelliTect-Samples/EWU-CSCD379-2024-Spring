@@ -12,21 +12,27 @@ export default defineNuxtPlugin((app) => {
         light: {
           colors: {
             primary: "#673AB7",
-            secondary: "#FF5722",
+            secondary: "#FF9800",
             error: "#FF5252",
             info: "#2196F3",
             success: "#4CAF50",
             warning: "#FFC107",
+            correct:"#4CAF50",
+            misplaced:"#FFC107",
+            wrong:"#BDBDBD"
           },
         },
         dark: {
           colors: {
             primary: "#673AB7",
-            secondary: "#FF5722",
+            secondary: "#FF9800",
             error: "#FF5252",
             info: "#2196F3",
             success: "#4CAF50",
             warning: "#FFC107",
+            correct:"#4CAF50",
+            misplaced:"#FFC107",
+            wrong:"#616161"
           },
         },
       },
