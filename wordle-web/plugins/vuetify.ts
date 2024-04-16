@@ -16,6 +16,9 @@ export default defineNuxtPlugin((app) => {
             error: "",
             info: "",
             success: "",
+            correct: "#4CAF50",
+            misplaced: "#FFFF00",
+            wrong: "#BDBDBD",
           },
         },
         dark: {
@@ -25,6 +28,9 @@ export default defineNuxtPlugin((app) => {
             error: "",
             info: "",
             success: "",
+            correct: "#4CAF50",
+            misplaced: "#FFFF00",
+            wrong: "#757575",
           }
         }
       }

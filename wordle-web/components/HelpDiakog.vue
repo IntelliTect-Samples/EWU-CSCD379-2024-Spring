@@ -1,11 +1,20 @@
 <template>
-    <v-dialog v-modle=showHelpDialog>
-        <v-card title="Dialog">
-            <v-card-text>insert help here</v-card-text>
+    <v-dialog v-modle="modleValue" max-width="500">
+        <v-card>
+            <v-sheet color="primary">
+                <v-card-text>
+                    How to play worldle
+                </v-card-text>
+            </v-sheet>
+            <v-card-text>
+                insert insturctions here
+            </v-card-text>
+            <v-divider />
         </v-card>
         <v-card-actions>
             <v-spacer></v-spacer>
         </v-card-actions>
+        <v-btn text="Close" @click="modelValue = false" color="primary" varient="tonal"></v-btn>
 
     </v-dialog>
 </template>
