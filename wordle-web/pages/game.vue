@@ -34,6 +34,13 @@
       />
 
       <v-card-actions class="justify-center mx-2 my-4">
+        <v-btn
+          color="secondary"
+          class="bg-primary"
+          to="/"
+          >
+          Go Back Home
+        </v-btn>
         <v-spacer />
         <v-btn
           v-if="game.gameState !== GameState.Playing"
