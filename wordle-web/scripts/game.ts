@@ -1,10 +1,10 @@
-import { Word } from "./word";
-import { WordList } from "./wordList";
+import { Word } from './word';
+import { WordList } from './wordList';
 
 export class Game {
   public maxAttempts: number;
   public guesses: Word[] = [];
-  public secretWord: string = "";
+  public secretWord: string = '';
   public guessIndex: number = 0;
   public gameState: GameState = GameState.Playing;
 
@@ -20,7 +20,6 @@ export class Game {
     // Get random word from word list
     this.secretWord =
       WordList[Math.floor(Math.random() * WordList.length)].toUpperCase();
-    console.log(this.secretWord);
 
     // Populate guesses with the correct number of empty words
     this.guesses = [];
@@ -50,7 +49,7 @@ export class Game {
   public submitGuess() {
     if (this.gameState !== GameState.Playing) return;
     if (!this.guess.isFilled()) return;
-    if(!this.guess.isValidWord()){
+    if (!this.guess.isValidWord()) {
       this.guess.clear();
       return;
     }
