@@ -24,5 +24,5 @@ test("guess-word", () => {
   expect(game.guesses[1].letters[2].state).toBe(LetterState.Correct);
   expect(game.guesses[1].letters[3].state).toBe(LetterState.Correct);
   expect(game.guesses[1].letters[4].state).toBe(LetterState.Correct);
+
 });
-// Will expand tests once more features are added to the game

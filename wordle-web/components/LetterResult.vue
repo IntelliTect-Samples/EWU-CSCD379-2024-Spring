@@ -1,5 +1,5 @@
 <template>
-  <div class="letter-box" :class="color">
+  <div class="letter-box" :class="letter.color">
     {{ letter.char }}
   </div>
 </template>
@@ -11,20 +11,6 @@ import { defineProps } from "vue";
 const props = defineProps<{
   letter: Letter;
 }>();
-
-const color = computed(() => {
-  switch (props.letter.state) {
-    case LetterState.Correct:
-      return "correct";
-    case LetterState.Misplaced:
-      return "misplaced";
-    case LetterState.Wrong:
-      return "wrong";
-    default:
-      return "unknown";
-  }
-});
-
 </script>
 
 <style scoped>
