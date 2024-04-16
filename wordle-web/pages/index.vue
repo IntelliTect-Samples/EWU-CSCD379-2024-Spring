@@ -1,24 +1,23 @@
 <template>
   <v-container>
     <v-card>
-      <v-card-title>Wordle</v-card-title>
+      <v-card-title class=".h-25">Wordle</v-card-title>
 
-      <div v-if="game.gameState == GameState.Won">
-        You've Won!
-      </div>
-      <div v-if="game.gameState == GameState.Lost">
-        You've Lost!
-      </div>
+      <div v-if="game.gameState == GameState.Won">You've Won!</div>
+      <div v-if="game.gameState == GameState.Lost">You've Lost!</div>
 
       <GameBoardGuess
         v-for="(guess, i) of game.guesses"
         :key="i"
-        :guess="guess"
-      />
+        :guess="guess" />
 
       <v-card-actions>
         <v-spacer />
-        <v-btn v-if="game.gameState !== GameState.Playing" variant="tonal" color="red" @click="game.startNewGame()">
+        <v-btn
+          v-if="game.gameState !== GameState.Playing"
+          variant="tonal"
+          color="red"
+          @click="game.startNewGame()">
           Restart Game
         </v-btn>
       </v-card-actions>
@@ -27,27 +26,26 @@
 </template>
 
 <script setup lang="ts">
-import { Game, GameState } from "../scripts/game";
+import { Game, GameState } from '../scripts/game';
 const game: Game = reactive(new Game());
 
-const myGuess = ref("");
+const myGuess = ref('');
 
 onMounted(() => {
-  window.addEventListener("keyup", onKeyup);
+  window.addEventListener('keyup', onKeyup);
 });
 
 onUnmounted(() => {
-  window.removeEventListener("keyup", onKeyup);
+  window.removeEventListener('keyup', onKeyup);
 });
 
 function onKeyup(event: KeyboardEvent) {
-  if(event.key === "Enter") {
+  if (event.key === 'Enter') {
     game.submitGuess();
-  } else if(event.key == 'Backspace'){
+  } else if (event.key == 'Backspace') {
     game.removeLastLetter();
-  } else if(event.key.match(/[A-z]/)){
+  } else if (event.key.match(/[A-z]/)) {
     game.addLetter(event.key.toUpperCase());
   }
 }
 </script>
-
