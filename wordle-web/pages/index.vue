@@ -22,6 +22,8 @@
           Restart Game
         </v-btn>
       </v-card-actions>
+      <PossibleWords
+      />
     </v-card>
   </v-container>
 </template>
