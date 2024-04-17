@@ -1,13 +1,13 @@
 <template>
   <v-card class="mx-auto my-8" elevation="16" max-width="430">
     <v-card-item>
-      <v-card-title> "Marco!" </v-card-title>
-      <v-card-subtitle> What will you reply? </v-card-subtitle>
+      <v-card-title> "Guess the word" </v-card-title>
+      <v-card-subtitle> (It will be 5 letters) </v-card-subtitle>
     </v-card-item>
     <v-card-text>
       <v-text-field
         v-model="myGuess"
-        label="You say:"
+        label="Guess:"
         outlined
         clearable
       >
@@ -49,16 +49,15 @@ const myGuess = ref("");
 const guessText = ref("");
 
 function submit() {
-  if (myGuess.value.toUpperCase() === "POLO") {
+  if (myGuess.value.toUpperCase() === "JUMBO") {
     guessText.value = "Correct!";
-  } else if (myGuess.value.toUpperCase() === "MONTOYA") {
-    guessText.value = "Mark, it's not C# class anymore!";
-  } else {
+  } 
+  else {
     guessText.value = "Incorrect!";
   }
 }
 
 function hint() {
-  hintText.value = "Also an explorer";
+  hintText.value = "Means big";
 }
 </script>
