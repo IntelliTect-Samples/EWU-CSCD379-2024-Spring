@@ -5,14 +5,12 @@
         <template v-slot:prepend>
           <v-icon color="secondary"> mdi-book </v-icon>
         </template>
-
         <v-app-bar-title @click="router.push('/')">Wordle Web<v-icon @click="router.push('/')">mdi-lightbulb-on-outline</v-icon></v-app-bar-title>
 
         <v-btn @click="router.push('/')">Home</v-btn>
         <v-btn @click="router.push('/test')">Test</v-btn>
-        <v-btn icon="mdi-theme-light-dark" @click="toggleTheme" />
-        <v-btn icon="mdi-help-circle" @click="showHelpDialog = true" />
-        <HelpDialog v-model="showHelpDialog" />
+        <v-btn icon="mdi-weather-night" @click="toggleTheme" />
+        <v-btn icon="mdi-help-circle" @click="showHelpDialog = router.push('/aboutPage')" />
       </v-app-bar>
       <v-main>
         <NuxtPage />
@@ -24,16 +22,12 @@
 
 <script setup lang="ts">
 import { useTheme } from "vuetify";
-import nuxtStorage from 'nuxt-storage';
 
 const router = useRouter();
 const theme = useTheme();
 const showHelpDialog = ref(false);
+const menuOpen= ref(false);
 
-onMounted(() => {
-  var defaultTheme = nuxtStorage.localStorage.getData('theme');
-  theme.global.name.value = defaultTheme ?? "dark";
-});
 
 function toggleTheme() {
   if (theme.global.name.value === "light") {
@@ -44,4 +38,8 @@ function toggleTheme() {
 
   nuxtStorage.localStorage.setData('theme', theme.global.name.value);
 }
+  // function toggleMenu() {
+  //   menuOpen.value=! menuOpen.value;
+  // }
+
 </script>
