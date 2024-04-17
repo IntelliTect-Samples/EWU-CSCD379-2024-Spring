@@ -7,7 +7,7 @@
       >
         <v-card-text class="text-center">
           <v-card-title class="font-weight-bold" style="color: #FFFFFF;font-size:24px;">
-            About <v-icon>mdi-information-outline</v-icon>
+            About
           </v-card-title>
           <v-card-text class="font-italic" style="color: #FFFFFF; font-size: 20px;">
             This class project is about exploring more of Vue and Vuetify 
