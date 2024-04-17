@@ -6,7 +6,7 @@
     </h1>
     </div>
   </div>
-  <div class="about-container" style="text-align:justify; font-family: Georgia">
+  <p class="about-container" style="text-align:justify; font-family: Georgia">
     <br>
     This project is for EWU's 379 course. We're building on the wordle
     that we started in class, and making it more functional.<br> For example, 
@@ -15,10 +15,18 @@
     <br>
     Meg rocks and makes coding fun and easy to follow. 
     Thanks Meg!
-  </div>
+    <p style="text-align: center; font-family: Georgia;">Click below to go back home</p>
+  </p>
+
+
+  <div class="vertical-center">
+  <v-btn icon="mdi-home-export-outline" @click="router.push('/')"></v-btn>
+</div>
 </template>
 
-<script lang="ts" setup>
+<script setup lang="ts">
+
+const router = useRouter();
 
 </script>
 
@@ -31,5 +39,12 @@
 .about-content{
   margin: 0 auto;
   margin-top: 30px
+}
+.vertical-center{
+  margin:0;
+  position: absolute;
+  top: 35%;
+  right: 47%
+  
 }
 </style>
