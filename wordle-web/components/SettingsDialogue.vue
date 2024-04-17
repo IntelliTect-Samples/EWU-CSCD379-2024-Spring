@@ -1,15 +1,14 @@
 <template>
     <v-dialog v-model="modelValue" max-width="500">
-      <v-card title="Dialog">
+      <v-card title="Settings">
         <v-card-text>
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
-          tempor incididunt ut labore et dolore magna aliqua.
+          settings here 
         </v-card-text>
   
         <v-card-actions>
           <v-spacer></v-spacer>
   
-          <v-btn text="Close Dialog" @click="modelValue = false"></v-btn>
+          <v-btn text="Exit Settings" @click="modelValue = false"></v-btn>
         </v-card-actions>
       </v-card>
     </v-dialog>
