@@ -41,26 +41,42 @@
 ## Week 2
 ### Lecture 3: 4/09: Vue (Assignment 2) 🟢🟣
 - Why Vue? What problem does is solve?
+- HTML Primer: elements, classes, styling
+- CSS Primer
+- Why CSS is the devil
+- Chrome debugger
 - What is Vue for and how does it work? Stop messing with the DOM
 - {{ Interpolation }}
 - Data Binding and Observables: https://vuejs.org/guide/essentials/template-syntax.html
-  - Proxies
-  - Attributes
+  - Creating the word and letter elements
+  - Changing these into components
   - Class and Style https://vuejs.org/guide/essentials/class-and-style.html
-  - Functions
-  - Conditional Rendering: https://vuejs.org/guide/essentials/conditional.html
-  - Lists (For loops): https://vuejs.org/guide/essentials/list.html
-  - Events: https://vuejs.org/guide/essentials/event-handling.html
-  - Input: https://vuejs.org/guide/essentials/forms.html
 - Computed properties https://vuejs.org/guide/essentials/computed.html
 - Pages
 - Component Basics (MG)
 - Routing https://vuejs.org/guide/scaling-up/routing.html
 - Lifecycle: https://vuejs.org/guide/essentials/lifecycle.html
+- Lists (For loops): https://vuejs.org/guide/essentials/list.html
 
 
-### Lecture 4. 4/11: Vuetify (Assignment 2) 🟣
-- Why CSS is the devil
+### Lecture 4. 4/11: More Vue (Assignment 2) 🟢🟣
+- Add Additional Wordle Functionality
+  - Word list
+  - Random word selection
+  - Showing all 6 guess lines
+  - Entering letters not in a text box
+  - Determine win & loss
+  - Game state
+  - Restart game
+- Attributes
+- Observables
+- Proxies
+- Functions
+- Conditional Rendering: https://vuejs.org/guide/essentials/conditional.html
+- Events: https://vuejs.org/guide/essentials/event-handling.html
+
+### Next Time
+- Input: https://vuejs.org/guide/essentials/forms.html
 - Grid System
 - Display and sizing
 - Icons
