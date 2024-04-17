@@ -1,56 +1,20 @@
 <template>
-    <v-app>
-      <v-dialog v-model="settingsDialog" persistent max-width="500px">
-        <v-card>
-          <v-card-title>
-            <v-icon left>mdi-cog</v-icon>
-            Settings
-          </v-card-title>
-          <v-card-text>
-            <v-switch v-model="darkTheme" label="Dark Mode"></v-switch>
-            <v-select
-              v-model="themeColor"
-              :items="themeColors"
-              label="Theme Color"
-              item-text="name"
-              item-value="color"
-            ></v-select>
-          </v-card-text>
-          <v-card-actions>
-            <v-spacer></v-spacer>
-            <v-btn color="primary" text @click="toggleDialog">Close</v-btn>
-          </v-card-actions>
-        </v-card>
-      </v-dialog>
-    </v-app>
+    <v-dialog v-model="modelValue" max-width="500">
+      <v-card title="Dialog">
+        <v-card-text>
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
+          tempor incididunt ut labore et dolore magna aliqua.
+        </v-card-text>
+  
+        <v-card-actions>
+          <v-spacer></v-spacer>
+  
+          <v-btn text="Close Dialog" @click="modelValue = false"></v-btn>
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
   </template>
   
-  <script>
-  export default {
-    data() {
-      return {
-        settingsDialog: false,
-        darkTheme: false,
-        themeColor: '',
-        themeColors: [
-          { name: 'Default', color: 'secondary' },
-          { name: 'Sunset Glow', color: 'orange' },
-          { name: 'Ocean Blue', color: 'blue' },
-        ],
-      };
-    },
-    methods: {
-      toggleDialog() {
-        this.settingsDialog = !this.settingsDialog;
-      }
-    },
-    watch: {
-      darkTheme(value) {
-        this.$vuetify.theme.dark = value;
-      },
-      themeColor(value) {
-        this.$vuetify.theme.colors.primary = value;
-      },
-    },
-  };
+  <script setup lang="ts">
+  const modelValue = defineModel<boolean>({ default: false });
   </script>
