@@ -1,26 +1,29 @@
 <template>
   <v-container>
-    <v-card>
-      <v-card-title class=".h-25">Wordle</v-card-title>
+    <v-card class="mx-auto w-75">
+      <v-card-item class="text-center">
+        <v-card-title>Whurdle</v-card-title>
+      </v-card-item>
+      <v-container class="text-center">
+        <div v-if="game.gameState == GameState.Won">You've Won!</div>
+        <div v-if="game.gameState == GameState.Lost">You've Lost!</div>
 
-      <div v-if="game.gameState == GameState.Won">You've Won!</div>
-      <div v-if="game.gameState == GameState.Lost">You've Lost!</div>
+        <GameBoardGuess
+          v-for="(guess, i) of game.guesses"
+          :key="i"
+          :guess="guess" />
 
-      <GameBoardGuess
-        v-for="(guess, i) of game.guesses"
-        :key="i"
-        :guess="guess" />
-
-      <v-card-actions>
-        <v-spacer />
-        <v-btn
-          v-if="game.gameState !== GameState.Playing"
-          variant="tonal"
-          color="red"
-          @click="game.startNewGame()">
-          Restart Game
-        </v-btn>
-      </v-card-actions>
+        <v-card-actions>
+          <v-spacer />
+          <v-btn
+            v-if="game.gameState !== GameState.Playing"
+            variant="tonal"
+            color="red"
+            @click="game.startNewGame()">
+            Restart Game
+          </v-btn>
+        </v-card-actions>
+      </v-container>
     </v-card>
   </v-container>
 </template>
