@@ -6,13 +6,13 @@
       elevation="4"
     >
       <v-card-item class="text-center">
-        <v-card-title class="font-weight-bold">
+        <v-card-title class="font-weight-bold" style="color:#FFFFFF;">
           Pink Wordle <v-icon>mdi-heart</v-icon>
         </v-card-title>
-        <v-card-subtitle>
+        <v-card-subtitle style="color: #FFFFFF;">
           This is our super basic Pink Wordle game! Good luck!
         </v-card-subtitle>
-        <v-card-text class="font-italic">
+        <v-card-text class="font-italic" style="color: #FFFFFF;">
           "Pink Wordle is a delightful twist on the classic word puzzle game,
           Wordle. In this charming variant, the game's interface is adorned with
           various shades of pink, offering a refreshing and visually pleasing

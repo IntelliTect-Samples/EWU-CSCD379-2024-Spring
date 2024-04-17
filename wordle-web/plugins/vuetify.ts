@@ -9,13 +9,32 @@ import { createVuetify } from 'vuetify'
 export default defineNuxtPlugin((app) => {
   const vuetify = createVuetify({
     theme: {
+      defaultTheme: "light",
       themes: {
         light: {
-          dark: false,
           colors: {
-            primary: colors.pink.accent3, // #E53935
-            secondary: colors.pink.lighten5,
-            // Define other colors as needed here
+            primary: "#F50057",
+            secondary: "#F48FB1",
+            error: "#FF5252",
+            info: "#2196F3",
+            success: "#4CAF50",
+            warning: "#FFC107",
+            correct:"#4CAF50",
+            misplaced:"#FFC107",
+            wrong:"#BDBDBD"
+          },
+        },
+        dark: {
+          colors: {
+            primary: "#F50057",
+            secondary: "#F48FB1",
+            error: "#FF5252",
+            info: "#2196F3",
+            success: "#4CAF50",
+            warning: "#FFC107",
+            correct:"#4CAF50",
+            misplaced:"#FFC107",
+            wrong:"#616161"
           },
         },
       },
