@@ -11,8 +11,8 @@
         <v-btn @click="router.push('/')">Home</v-btn>
         <v-btn @click="router.push('/about')">About</v-btn>
         <v-btn icon="mdi-theme-light-dark" @click="toggleTheme" />
-        <v-btn icon="mdi-cog" @click="showHelpDialog = true" />
-        <SettingsDialog v-model="showHelpDialog" />
+        <v-btn icon="mdi-cog" @click="showSettingsDialog = true" />
+        <SettingsDialogue v-model="showSettingsDialog" />
       </v-app-bar>
       <v-main>
         <NuxtPage />
