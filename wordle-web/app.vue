@@ -3,7 +3,7 @@
     <v-app>
       <v-app-bar color="primary" :elevation="2">
         <template v-slot:prepend>
-          <v-icon color="white"> mdi-flower-poppy </v-icon>
+          <v-icon color="#FFFFFF"> mdi-flower-poppy </v-icon>
         </template>
 
         <v-app-bar-title>Johanne & Alexa's Wordle</v-app-bar-title>
@@ -11,8 +11,8 @@
         <v-btn @click="router.push('/')">Home</v-btn>
         <v-btn @click="router.push('/about')">About</v-btn>
         <v-btn icon="mdi-theme-light-dark" @click="toggleTheme" />
-        <v-btn icon="mdi-cog" @click="showSettingsDialog = true" />
-        <SettingsDialogue v-model="showSettingsDialog" />
+        <v-btn icon="mdi-cog" @click="showHelpDialog = true" />
+        <SettingsDialogue v-model="showHelpDialog" />
       </v-app-bar>
       <v-main>
         <NuxtPage />
@@ -21,5 +21,3 @@
   </NuxtLayout>
 
 </template>
-<script setup lang="ts">
-import { useTheme } from "vuetify";
