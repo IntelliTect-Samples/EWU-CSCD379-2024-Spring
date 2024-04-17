@@ -6,7 +6,7 @@
           <v-icon>mdi-wrap-disabled</v-icon>
         </template>
 
-        <v-app-bar-title>Wordle Web</v-app-bar-title>
+        <v-app-bar-title @click="router.push('/')">Wordle Web</v-app-bar-title>
 
         <v-btn @click="router.push('/')">Home</v-btn>
         <v-btn @click="router.push('/test')">Test</v-btn>
