@@ -1,9 +1,9 @@
 <template>
   <NuxtLayout>
     <v-app>
-      <v-app-bar :elevation="2">
+      <v-app-bar color="primary" :elevation="2">
         <template v-slot:prepend>
-          <v-icon>mdi-wrap-disabled</v-icon>
+          <v-icon color="secondary"> mdi-book </v-icon>
         </template>
         <v-app-bar-title @click="router.push('/')">
           Wordle Web
@@ -19,7 +19,7 @@
         <v-btn icon="mdi-help-circle" @click="showHelpDialog = router.push('/aboutPage')" />
       </v-app-bar>
       <v-main>
-      <NuxtPage />
+        <NuxtPage />
       </v-main>
     </v-app>
   </NuxtLayout>
@@ -31,7 +31,6 @@ import { useTheme } from "vuetify";
 
 const router = useRouter();
 const theme = useTheme();
-
 const showHelpDialog = ref(false);
 var menuOpen= ref(false);
 var settingsDialog = ref(false);
@@ -50,11 +49,11 @@ function toggleTheme() {
   } else {
     theme.global.name.value = "light";
   }
+
+  nuxtStorage.localStorage.setData('theme', theme.global.name.value);
 }
   // function toggleMenu() {
   //   menuOpen.value=! menuOpen.value;
   // }
 
 </script>
-
-
