@@ -18,18 +18,7 @@
         For example, if the word is "BLIMP" and you guess "BILBO", the feedback
         might look like this:
       </v-card-text>
-      <div class="d-flex justify-center mt-3 mb-5">
-        <v-card
-          v-for="letter in exampleWord.letters"
-          :key="letter.char"
-          width="50px"
-          height="50px"
-          :color="letter.color"
-          class="mx-1 text-center"
-        >
-          <v-card-text> {{ letter.char }} </v-card-text>
-        </v-card>
-      </div>
+        <GameBoardGuess :guess="exampleWord" class="mb-3" />
 
       <v-divider />
       <v-card-actions>
@@ -54,10 +43,10 @@ const modelValue = defineModel<boolean>({ default: false });
 
 const exampleWord = new Word({ word: "BILBO" });
 exampleWord.letters = [
-    new Letter("B", LetterState.Correct),
-    new Letter("I", LetterState.Correct),
-    new Letter("L", LetterState.Misplaced),
-    new Letter("B", LetterState.Wrong),
-    new Letter("O", LetterState.Wrong),
-]
+  new Letter("B", LetterState.Correct),
+  new Letter("I", LetterState.Correct),
+  new Letter("L", LetterState.Misplaced),
+  new Letter("B", LetterState.Wrong),
+  new Letter("O", LetterState.Wrong),
+];
 </script>

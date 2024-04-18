@@ -27,10 +27,11 @@ const props = withDefaults(
   }
 );
 
-const game: Game = inject("GAME")!;
+const game: Game | undefined = inject("GAME", undefined);
 const boxSize = 50;
 
 function clickKey() {
+  if (!game) return;
   if (props.letter.char === "👈") {
     game.removeLastLetter();
   } else {
