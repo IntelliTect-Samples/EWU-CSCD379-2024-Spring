@@ -17,11 +17,9 @@
 </template>
 
 <script setup lang="ts">
-import { useDisplay } from "vuetify";
 import { Letter } from "~/scripts/letter";
 import { Game } from "../scripts/game";
 
-const display = useDisplay();
 const game: Game = inject("GAME")!;
 
 const keyboardLetterRows = computed(() => {
