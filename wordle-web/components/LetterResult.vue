@@ -30,11 +30,13 @@ const props = withDefaults(
   }
 );
 
-const game: Game = inject("GAME")!;
+const game: Game | undefined = inject("GAME", undefined);
 const boxSize = ref(60);
 const display = useDisplay();
 
 function onClicked() {
+  if(!game) return;
+
   if (props.letter.char === "👈") {
     game.removeLastLetter();
   } else {

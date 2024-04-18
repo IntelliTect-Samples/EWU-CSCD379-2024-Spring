@@ -73,7 +73,7 @@ export class Game {
 
   public submitGuess() {
     if (this.gameState !== GameState.Playing) return;
-    if (!this.guess.isFilled()) return;
+    if (!this.guess.isFilled) return;
     if (!this.guess.isValidWord()) {
       this.guess.clear();
       return;
