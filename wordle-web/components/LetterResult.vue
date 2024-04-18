@@ -20,8 +20,6 @@ import { defineProps } from "vue";
 import { Game } from "~/scripts/game";
 import { useDisplay } from "vuetify";
 
-const display = useDisplay();
-
 const props = withDefaults(
   defineProps<{
     letter: Letter;
@@ -32,21 +30,20 @@ const props = withDefaults(
   }
 );
 
+const display = useDisplay();
+
 const game: Game | undefined = inject("GAME", undefined);
 const boxSize = ref(60);
 
-watch(
-  [display.sm, display.xs, display.md],
-  () => {
-    if (display.sm.value) {
-      boxSize.value = 40;
-    } else if (display.xs.value) {
-      boxSize.value = 30;
-    } else {
-      boxSize.value = 60;
-    }
+watch([display.sm, display.xs, display.md], () => {
+  if (display.sm.value) {
+    boxSize.value = 40;
+  } else if (display.xs.value) {
+    boxSize.value = 30;
+  } else {
+    boxSize.value = 60;
   }
-);
+});
 
 function clickKey() {
   if (!game) return;
