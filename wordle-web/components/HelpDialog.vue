@@ -19,16 +19,7 @@
         might look like this:
       </v-card-text>
       <div class="d-flex justify-center mt-3 mb-5">
-        <v-card
-          v-for="letter in exampleWord.letters"
-          :key="letter.char"
-          width="50px"
-          height="50px"
-          :color="letter.color"
-          class="mx-1 text-center"
-        >
-          <v-card-text> {{ letter.char }} </v-card-text>
-        </v-card>
+        <GameBoardGuess :guess="exampleWord" />
       </div>
 
       <v-divider />

@@ -2,13 +2,11 @@
   <v-container>
     <v-card>
       <v-card class="text-center">
-        <v-alert v-if="game.gameState != GameState.Playing" 
-        :color="game.gameState == GameState.Won? 'sucess' : 'error'" 
-        tile
-        >
-          You {{game.gameState == GameState.Won? 'Won' : 'Lost'}}
+        <v-alert v-if="game.gameState != GameState.Playing"
+          :color="game.gameState == GameState.Won ? 'sucess' : 'error'" tile>
+          You {{ game.gameState == GameState.Won ? 'Won' : 'Lost' }}
           <v-card-text>
-            The word was: {{game.secretWord}}
+            The word was: {{ game.secretWord }}
           </v-card-text>
           <br />
         </v-alert>
@@ -23,8 +21,10 @@
       </div>
 
       <GameBoardGuess v-for="(guess, i) of game.guesses" :key="i" :guess="guess" />
-
-      <Keyboard />
+      <div class="my-18">
+        <Keyboard />
+        <v-btn class="justify-center" @click=>Guess</v-btn>
+      </div>
 
       <v-card-actions>
         <v-spacer />
@@ -39,6 +39,8 @@
 <script setup lang="ts">
 import { Game, GameState } from "../scripts/game";
 const game: Game = reactive(new Game());
+
+provide("GAME", game);
 
 const myGuess = ref("");
 
@@ -55,7 +57,7 @@ function onKeyup(event: KeyboardEvent) {
     game.submitGuess();
   } else if (event.key == 'Backspace') {
     game.removeLastLetter();
-  } else if (event.key.match(/[A-z]/)) {
+  } else if (event.key.match(/[A-z]/) && event.key.length === 1) {
     game.addLetter(event.key.toUpperCase());
   }
 }

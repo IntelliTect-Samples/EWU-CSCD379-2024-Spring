@@ -2,7 +2,9 @@
   <NuxtLayout>
     <v-app>
       <v-app-bar color="primary">
-        <v-icon>mdi-pentagram</v-icon>
+        <template v-slot:prepend>
+            <v-icon size="x-large">mdi-pentagram</v-icon>
+        </template>
         <v-app-bar-title>Pentagram</v-app-bar-title>
         <v-btn @click="router.push('/')">Home</v-btn>
         <v-btn @click="router.push('/game')">Pentagram</v-btn>
