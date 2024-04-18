@@ -18,7 +18,10 @@
 
 <script setup lang="ts">
 import { useDisplay } from "vuetify";
+import { Game } from "~/scripts/game";
 import { Letter } from "~/scripts/letter";
+
+const game: Game = inject("GAME")!;
 
 const display = useDisplay();
 
@@ -36,9 +39,9 @@ const keyboardLetterRows = computed(() => {
     let keyboardLetterRow: Letter[] = []
     // For each key in each row, convert to a letter object
     for(let key of keyboardRow){
-      keyboardLetterRow.push(new Letter(key));
+      keyboardLetterRow.push(game.guessedLetters.find((letter) => letter.char === key) ?? new Letter(key));
     }
-    keyboardLetterRows.push(keyboardLetterRow); 
+    keyboardLetterRows.push(keyboardLetterRow);
   }
 
   return keyboardLetterRows;
