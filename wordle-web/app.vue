@@ -5,10 +5,16 @@
         <template v-slot:prepend>
           <v-icon color="secondary"> mdi-book </v-icon>
         </template>
-        <v-app-bar-title @click="router.push('/')">Wordle Web<v-icon @click="router.push('/')">mdi-lightbulb-on-outline</v-icon></v-app-bar-title>
+        <v-app-bar-title @click="router.push('/')">
+          Wordle Web
+          <v-icon @click="router.push('/')">
+            mdi-lightbulb-on-outline
+          </v-icon>
+        </v-app-bar-title>
 
         <v-btn @click="router.push('/')">Home</v-btn>
         <v-btn @click="router.push('/test')">Test</v-btn>
+        <v-btn icon="mdi-cog-outline" @click="router.push('/openSettings')"></v-btn>
         <v-btn icon="mdi-weather-night" @click="toggleTheme" />
         <v-btn icon="mdi-help-circle" @click="showHelpDialog = router.push('/aboutPage')" />
       </v-app-bar>
@@ -26,8 +32,16 @@ import { useTheme } from "vuetify";
 const router = useRouter();
 const theme = useTheme();
 const showHelpDialog = ref(false);
-const menuOpen= ref(false);
+var menuOpen= ref(false);
+var settingsDialog = ref(false);
 
+function openSettingsDialog(){
+  settingsDialog = true;
+}
+
+function openMenu(){
+  menuOpen = true;
+}
 
 function toggleTheme() {
   if (theme.global.name.value === "light") {
