@@ -30,7 +30,9 @@
         <Keyboard />
       </div>
 
-      <v-btn @click="game.submitGuess()" class="mb-5" color="primary"> Guess! </v-btn>
+      <v-btn @click="game.submitGuess()" class="mb-5" color="primary">
+        Guess!
+      </v-btn>
     </v-card>
   </v-container>
 </template>
@@ -56,7 +58,7 @@ function onKeyup(event: KeyboardEvent) {
     game.submitGuess();
   } else if (event.key == "Backspace") {
     game.removeLastLetter();
-  } else if (event.key.match(/[A-z]/)) {
+  } else if (event.key.match(/[A-z]/) && event.key.length === 1) {
     game.addLetter(event.key.toUpperCase());
   }
 }

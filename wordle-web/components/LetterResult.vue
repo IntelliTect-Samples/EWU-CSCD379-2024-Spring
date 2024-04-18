@@ -17,6 +17,7 @@
 <script setup lang="ts">
 import { Letter } from "~/scripts/letter";
 import { defineProps } from "vue";
+import { useDisplay } from "vuetify";
 import { Game } from "~/scripts/game";
 
 const props = withDefaults(
@@ -30,15 +31,26 @@ const props = withDefaults(
 );
 
 const game: Game = inject("GAME")!;
-const boxSize = 50;
+const boxSize = ref(60);
+const display = useDisplay();
 
-function onClicked(){
-  if(props.letter.char === "👈"){
+function onClicked() {
+  if (props.letter.char === "👈") {
     game.removeLastLetter();
   } else {
     game.addLetter(props.letter.char.toUpperCase());
   }
 }
+
+watch([display.sm, display.xs, display.md], () => {
+  if(display.xs.value){
+    boxSize.value = 30;
+  }else if (display.sm.value) {
+    boxSize.value = 40;
+  } else {
+    boxSize.value = 60;
+  }
+});
 </script>
 
 <style scoped>
