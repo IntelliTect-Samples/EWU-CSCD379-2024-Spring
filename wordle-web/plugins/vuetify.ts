@@ -19,7 +19,8 @@ export default defineNuxtPlugin((app) => {
             warning: "#FFC107",
             correct:"#4CAF50",
             misplaced:"#FFC107",
-            wrong:"#BDBDBD"
+            wrong:"#BDBDBD",
+            unknown:"#EEEEEE"
           },
         },
         dark: {
@@ -32,7 +33,8 @@ export default defineNuxtPlugin((app) => {
             warning: "#FFC107",
             correct:"#4CAF50",
             misplaced:"#FFC107",
-            wrong:"#616161"
+            wrong:"#616161",
+            unknown: "#424242"
           },
         },
       },

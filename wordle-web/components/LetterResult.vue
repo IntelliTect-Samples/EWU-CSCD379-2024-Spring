@@ -1,42 +1,42 @@
 <template>
-  <div class="letter-box" :class="letter.color">
+  <v-btn
+    :color="letter.color"
+    label
+    :height="boxSize"
+    :width="boxSize"
+    variant="flat"
+    :class="clickable ? '' : 'no-pointer'"
+  >
     {{ letter.char }}
-  </div>
+  </v-btn>
 </template>
 
 <script setup lang="ts">
-import { Letter, LetterState } from "~/scripts/letter";
+import { Letter } from "~/scripts/letter";
 import { defineProps } from "vue";
 
-const props = defineProps<{
-  letter: Letter;
-}>();
+const props = withDefaults(
+  defineProps<{
+    letter: Letter;
+    boxSize?: number | "unset";
+    clickable?: boolean;
+  }>(),
+  {
+    boxSize: 50,
+    clickable: false,
+  }
+);
+
+const boxSize = computed(() => {
+  if (props.boxSize === "unset") {
+    return "";
+  }
+  return props.boxSize;
+});
 </script>
 
 <style scoped>
-.letter-box {
-  border: 1px solid black;
-  margin: 3px;
-  text-align: center;
-  font-size: 32px;
-  height: 50px;
-  width: 50px;
-  display: inline-block;
-}
-
-.letter-box.correct {
-  background-color: green;
-}
-
-.letter-box.misplaced {
-  background-color: yellow;
-}
-
-.letter-box.wrong {
-  background-color: grey;
-}
-
-.letter-box.unknown {
-  background-color: white;
+.no-pointer {
+  pointer-events: none;
 }
 </style>
