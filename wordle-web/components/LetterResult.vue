@@ -6,6 +6,7 @@
     :width="boxSize"
     variant="flat"
     :class="clickable ? '' : 'no-pointer'"
+    @click="clickKey"
   >
     {{ letter.char }}
   </v-btn>
@@ -14,25 +15,28 @@
 <script setup lang="ts">
 import { Letter } from "~/scripts/letter";
 import { defineProps } from "vue";
+import { Game } from "~/scripts/game";
 
 const props = withDefaults(
   defineProps<{
     letter: Letter;
-    boxSize?: number | "unset";
     clickable?: boolean;
   }>(),
   {
-    boxSize: 50,
     clickable: false,
   }
 );
 
-const boxSize = computed(() => {
-  if (props.boxSize === "unset") {
-    return "";
+const game: Game = inject("GAME")!;
+const boxSize = 50;
+
+function clickKey() {
+  if (props.letter.char === "👈") {
+    game.removeLastLetter();
+  } else {
+    game.addLetter(props.letter.char);
   }
-  return props.boxSize;
-});
+}
 </script>
 
 <style scoped>
