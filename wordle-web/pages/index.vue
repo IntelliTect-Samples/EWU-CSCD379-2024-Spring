@@ -1,6 +1,18 @@
 <template>
   <v-container>
     <v-card>
+      <v-card class="text-center">
+        <v-alert v-if="game.gameState != GameState.Playing" 
+        :color="game.gameState == GameState.Won? 'sucess' : 'error'" 
+        tile
+        >
+          You {{game.gameState == GameState.Won? 'Won' : 'Lost'}}
+          <v-card-text>
+            The word was: {{game.secretWord}}
+          </v-card-text>
+          <br />
+        </v-alert>
+      </v-card>
       <v-card-title>Wordle</v-card-title>
 
       <div v-if="game.gameState == GameState.Won">
@@ -10,11 +22,7 @@
         You've Lost!
       </div>
 
-      <GameBoardGuess
-        v-for="(guess, i) of game.guesses"
-        :key="i"
-        :guess="guess"
-      />
+      <GameBoardGuess v-for="(guess, i) of game.guesses" :key="i" :guess="guess" />
 
       <Keyboard />
 
@@ -43,13 +51,12 @@ onUnmounted(() => {
 });
 
 function onKeyup(event: KeyboardEvent) {
-  if(event.key === "Enter") {
+  if (event.key === "Enter") {
     game.submitGuess();
-  } else if(event.key == 'Backspace'){
+  } else if (event.key == 'Backspace') {
     game.removeLastLetter();
-  } else if(event.key.match(/[A-z]/)){
+  } else if (event.key.match(/[A-z]/)) {
     game.addLetter(event.key.toUpperCase());
   }
 }
 </script>
-
