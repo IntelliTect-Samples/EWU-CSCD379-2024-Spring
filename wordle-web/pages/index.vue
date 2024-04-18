@@ -26,7 +26,11 @@
         :guess="guess"
       />
 
-      <Keyboard />
+      <div class="my-10">
+        <Keyboard />
+      </div>
+
+      <v-btn @click="game.submitGuess()" class="mb-5" color="primary"> Guess! </v-btn>
     </v-card>
   </v-container>
 </template>
@@ -34,6 +38,8 @@
 <script setup lang="ts">
 import { Game, GameState } from "../scripts/game";
 const game: Game = reactive(new Game());
+
+provide("GAME", game);
 
 const myGuess = ref("");
 
