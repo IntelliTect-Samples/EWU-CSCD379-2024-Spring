@@ -1,14 +1,23 @@
 <template>
   <v-container>
-    <v-card>
+    <v-card class="text-center">
+      <v-alert
+        v-if="game.gameState != GameState.Playing"
+        :color="game.gameState == GameState.Won ? 'success' : 'error'"
+        tile
+      >
+        You've {{ game.gameState == GameState.Won ? "Won! 🥳" : "Lost... 😭" }}
+        <v-card-text>
+          The word was: <strong>{{ game.secretWord }}</strong>
+        </v-card-text>
+        <v-btn variant="outlined" @click="game.startNewGame()">
+          Restart Game
+        </v-btn>
+      </v-alert>
       <v-card-title>Wordle</v-card-title>
 
-      <div v-if="game.gameState == GameState.Won">
-        You've Won!
-      </div>
-      <div v-if="game.gameState == GameState.Lost">
-        You've Lost!
-      </div>
+      <div v-if="game.gameState == GameState.Won">You've Won!</div>
+      <div v-if="game.gameState == GameState.Lost">You've Lost!</div>
 
       <GameBoardGuess
         v-for="(guess, i) of game.guesses"
@@ -17,13 +26,6 @@
       />
 
       <Keyboard />
-
-      <v-card-actions>
-        <v-spacer />
-        <v-btn v-if="game.gameState !== GameState.Playing" variant="tonal" color="red" @click="game.startNewGame()">
-          Restart Game
-        </v-btn>
-      </v-card-actions>
     </v-card>
   </v-container>
 </template>
@@ -43,13 +45,12 @@ onUnmounted(() => {
 });
 
 function onKeyup(event: KeyboardEvent) {
-  if(event.key === "Enter") {
+  if (event.key === "Enter") {
     game.submitGuess();
-  } else if(event.key == 'Backspace'){
+  } else if (event.key == "Backspace") {
     game.removeLastLetter();
-  } else if(event.key.match(/[A-z]/)){
+  } else if (event.key.match(/[A-z]/)) {
     game.addLetter(event.key.toUpperCase());
   }
 }
 </script>
-
