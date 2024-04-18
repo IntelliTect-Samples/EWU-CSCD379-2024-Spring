@@ -11,15 +11,15 @@
           You've
           {{ game.gameState == GameState.Won ? "Won! 🥳" : "Lost... 😭" }}
         </h3>
+        <h3>
+          The word was: <strong>{{ game.secretWord }}</strong>
+        </h3>
         <v-btn variant="outlined" @click="game.startNewGame()">
           <v-icon size="large" class="mr-2"> mdi-restart </v-icon>
           New Game
         </v-btn>
       </v-alert>
       <v-card-title v-else> Wordle </v-card-title>
-
-      <div v-if="game.gameState == GameState.Won">You've Won!</div>
-      <div v-if="game.gameState == GameState.Lost">You've Lost!</div>
 
       <GameBoardGuess
         v-for="(guess, i) of game.guesses"

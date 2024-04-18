@@ -60,7 +60,10 @@ export class Game {
       if (index !== -1) {
         // Do not update the letter if it is already correct
         if (this.guessedLetters[index].state !== LetterState.Correct) {
-          this.guessedLetters[index] = letter;
+          // Do not update the letter if it wrong
+          if (letter.state !== LetterState.Wrong) {
+            this.guessedLetters[index] = letter;
+          }
         }
       } else {
         // If the letter does not already exist, add it to the array
