@@ -4,20 +4,21 @@
       <v-alert
         v-if="game.gameState != GameState.Playing"
         :color="game.gameState == GameState.Won ? 'success' : 'error'"
+        class="mb-5"
         tile
       >
-        You've {{ game.gameState == GameState.Won ? "Won! 🥳" : "Lost... 😭" }}
+        <h3>
+          You've
+          {{ game.gameState == GameState.Won ? "Won! 🥳" : "Lost... 😭" }}
+        </h3>
         <v-card-text>
           The word was: <strong>{{ game.secretWord }}</strong>
         </v-card-text>
         <v-btn variant="outlined" @click="game.startNewGame()">
-          Restart Game
+          <v-icon size="large" class="mr-2"> mdi-restart </v-icon> Restart Game
         </v-btn>
       </v-alert>
-      <v-card-title>Wordle</v-card-title>
-
-      <div v-if="game.gameState == GameState.Won">You've Won!</div>
-      <div v-if="game.gameState == GameState.Lost">You've Lost!</div>
+      <v-card-title v-else>Wordle</v-card-title>
 
       <GameBoardGuess
         v-for="(guess, i) of game.guesses"
