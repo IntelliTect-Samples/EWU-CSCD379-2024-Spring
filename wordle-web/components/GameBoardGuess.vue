@@ -1,11 +1,9 @@
 <template>
-  <div>
-    <LetterResult
-      v-for="(letter, k) of guess.letters"
-      :key="k"
-      :letter="letter"
-    />
-  </div>
+  <v-row dense class="justify-center">
+    <v-col cols="auto" v-for="(letter, k) of guess.letters" :key="k">
+      <LetterResult :letter="letter" />
+    </v-col>
+  </v-row>
 </template>
 
 <script setup lang="ts">
