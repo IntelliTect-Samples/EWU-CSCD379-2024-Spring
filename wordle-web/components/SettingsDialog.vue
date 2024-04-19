@@ -11,9 +11,12 @@
       <v-sheet class="mx-auto" width="300">
         <v-form @submit.prevent>
           <v-select
+            v-model="selectedTheme"
             label="Select theme"
             :items="['Regular', 'Jungle', 'Flamingo']"></v-select>
-          <v-btn class="mt-2" type="submit" block>Submit</v-btn>
+          <v-btn @click="changeColorScheme" class="mt-2" type="submit" block
+            >Submit</v-btn
+          >
         </v-form>
       </v-sheet>
     </v-card>
@@ -25,22 +28,41 @@ import { useTheme } from 'vuetify';
 import nuxtStorage from 'nuxt-storage';
 
 const modelValue = defineModel<boolean>({ default: false });
-const router = useRouter();
 const theme = useTheme();
-const showHelpDialog = ref(false);
+const selectedTheme = ref('Regular');
 
 onMounted(() => {
   var defaultTheme = nuxtStorage.localStorage.getData('theme');
-  theme.global.name.value = defaultTheme ?? 'dark';
+  theme.global.name.value = defaultTheme ?? 'regularDark';
 });
 
 function toggleTheme() {
-  if (theme.global.name.value === 'light') {
-    theme.global.name.value = 'dark';
+  if (getDarkLightMode(theme.global.name.value) === 'Light') {
+    theme.global.name.value = 'Dark';
   } else {
-    theme.global.name.value = 'light';
+    theme.global.name.value = 'Light';
   }
 
   nuxtStorage.localStorage.setData('theme', theme.global.name.value);
+}
+
+function changeColorScheme() {
+  theme.global.name.value =
+    selectedTheme.value.toLowerCase() +
+    getDarkLightMode(theme.global.name.value);
+  nuxtStorage.localStorage.setData('theme', theme.global.name.value);
+}
+
+function getDarkLightMode(currentTheme: string) {
+  return currentTheme.substring(currentTheme.length - 4);
+}
+
+enum Theme {
+  regularLight,
+  regularDark,
+  jungleLight,
+  jungleDark,
+  flamingoLight,
+  flamingoDark,
 }
 </script>

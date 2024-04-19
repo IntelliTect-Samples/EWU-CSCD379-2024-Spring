@@ -4,8 +4,8 @@
       <v-card-title> About </v-card-title>
     </v-sheet>
     <v-card-text>
-      Meg is super cool. She knows all the colors and has a cool GitHub profile
-      picture :D
+      Meg is super cool. She knows all the colors and has a cool GitKraken
+      profile picture :D
     </v-card-text>
     <v-btn @click="router.go(-1)" class="ma-4" color="secondary">Back</v-btn>
   </v-card>
