@@ -4,8 +4,8 @@ import { Game } from '~/scripts/game';
 import { LetterState } from '~/scripts/letter';
 
 test('substring', () => {
-  const str = 'regularDark';
-  expect(str.substring(str.length - 4)).toBe('Dark');
+  const str = 'regularLight';
+  expect(str.substring(0, str.length - 4)).toBe('regular');
 });
 
 // test("game", () => {

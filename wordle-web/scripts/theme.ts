@@ -1,7 +1,12 @@
-export class Theme {
-    static help() {
-
-    }
+export class ThemeUtils {
+  static help() {}
 }
 
-export enum 
+export enum Theme {
+  regularLight,
+  regularDark,
+  jungleLight,
+  jungleDark,
+  flamingoLight,
+  flamingoDark,
+}
