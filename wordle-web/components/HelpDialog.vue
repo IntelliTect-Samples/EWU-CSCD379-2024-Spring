@@ -5,14 +5,10 @@
         <v-card-text> How to play Wordle </v-card-text>
       </v-sheet>
       <v-card-text>
-        Wordle is a word puzzle game where you have to guess a five-letter word
-        within a certain number of attempts. After each guess, Wordle will
-        provide feedback to indicate if each letter:
-        <ul>
-          <li>Is in the correct position and is the right letter.</li>
-          <li>Is in the word but in the wrong position.</li>
-          <li>Is not in the word at all.</li>
-        </ul>
+      How To Play <br>
+      Guess the Wordle in 6 tries.<br>
+      *Each guess must be a valid 5-letter word.<br>
+      *The color of the tiles will change to show how close your guess was to the word.
       </v-card-text>
       <v-card-text>
         For example, if the word is "BLIMP" and you guess "BILBO", the feedback

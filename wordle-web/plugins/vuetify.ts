@@ -7,12 +7,12 @@ import { createVuetify } from "vuetify";
 export default defineNuxtPlugin((app) => {
   const vuetify = createVuetify({
     theme: {
-      defaultTheme: "dark",
+      defaultTheme: "light",
       themes: {
         light: {
           colors: {
-            primary: "#673AB7",
-            secondary: "#FF9800",
+            primary: "##1BF0BE",
+            secondary: "##FFE605",
             error: "#FF5252",
             info: "#2196F3",
             success: "#4CAF50",
@@ -25,8 +25,8 @@ export default defineNuxtPlugin((app) => {
         },
         dark: {
           colors: {
-            primary: "#673AB7",
-            secondary: "#FF9800",
+            primary: "##1BF0BE",
+            secondary: "##FFE605",
             error: "#FF5252",
             info: "#2196F3",
             success: "#4CAF50",

@@ -3,7 +3,7 @@
     <v-app>
       <v-app-bar color="primary" :elevation="2">
         <template v-slot:prepend>
-          <v-icon color="secondary"> mdi-book </v-icon>
+          <v-icon color="hamburger"> mdi-hamburger</v-icon>
         </template>
         <v-app-bar-title @click="router.push('/')">
           Wordle Web
@@ -15,8 +15,9 @@
         <v-btn @click="router.push('/')">Home</v-btn>
         <v-btn @click="router.push('/test')">Test</v-btn>
         <v-btn icon="mdi-cog-outline" @click="router.push('/openSettings')"></v-btn>
-        <v-btn icon="mdi-weather-night" @click="toggleTheme" />
-        <v-btn icon="mdi-help-circle" @click="showHelpDialog = router.push('/aboutPage')" />
+        <v-btn icon="mdi-weather-night" @click="toggleTheme"></v-btn>
+        <v-btn icon="mdi-help-circle" @click="showHelpDialog = router.push('./helpDialog')"></v-btn>
+        <v-btn icon="mdi-book-open-page-variant" @click="showHelpDialog = router.push('./aboutPage')"></v-btn>
       </v-app-bar>
       <v-main>
         <NuxtPage />
