@@ -36,8 +36,8 @@ export class Word {
       }
     }
   }
-  public isFilled(): boolean {
-    return this.letters.every(letter => letter.char);
+  public get isFilled(): boolean {
+    return this.letters.every((letter) => letter.char);
   }
 
   public compare(secretWordString: string): boolean {

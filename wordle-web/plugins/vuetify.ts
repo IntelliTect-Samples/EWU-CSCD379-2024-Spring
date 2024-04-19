@@ -11,6 +11,7 @@ export default defineNuxtPlugin(app => {
       themes: {
         regularLight: {
           colors: {
+            unknown: "#d6d6d6"
             primary: '#9575CD',
             secondary: '#FFD54F',
             error: '#FF5252',
@@ -33,6 +34,7 @@ export default defineNuxtPlugin(app => {
             correct: '#4CAF50',
             misplaced: '#FFC107',
             wrong: '#616161',
+            unknown: "#424242"
           },
         },
         jungleLight: {

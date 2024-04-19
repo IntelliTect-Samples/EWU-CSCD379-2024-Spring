@@ -1,3 +1,6 @@
+import { LetterState, type Letter } from "./letter";
+import { Word } from "./word";
+import { WordList } from "./wordList";
 import { Word } from './word';
 import { WordList, myWordList } from './wordList';
 
@@ -7,6 +10,7 @@ export class Game {
   public secretWord: string = '';
   public guessIndex: number = 0;
   public gameState: GameState = GameState.Playing;
+  public guessedLetters: Letter[] = [];
 
   constructor(maxAttempts: number = 6) {
     this.maxAttempts = maxAttempts;
@@ -16,6 +20,7 @@ export class Game {
   public startNewGame() {
     this.guessIndex = 0;
     this.gameState = GameState.Playing;
+    this.guessedLetters = [];
 
     // Get random word from word list
     this.secretWord =
@@ -46,15 +51,39 @@ export class Game {
     }
   }
 
+  public updateGuessedLetters() {
+    for (const letter of this.guess.letters) {
+      // Find the index of the letter in the guessed letters array
+      const index = this.guessedLetters.findIndex(
+        (existingLetter) => existingLetter.char === letter.char
+      );
+      if (index !== -1) {
+        // Do not update the letter if it is already correct
+        if (this.guessedLetters[index].state !== LetterState.Correct) {
+          // Do not update the letter if it is wrong
+          if (letter.state !== LetterState.Wrong) {
+            this.guessedLetters[index] = letter;
+          }
+        }
+      } else {
+        // If letter does not already exist, add it to the array
+        this.guessedLetters.push(letter);
+      }
+    }
+  }
+
   public submitGuess() {
     if (this.gameState !== GameState.Playing) return;
-    if (!this.guess.isFilled()) return;
+    if (!this.guess.isFilled) return;
     if (!this.guess.isValidWord()) {
       this.guess.clear();
       return;
     }
 
-    if (this.guess.compare(this.secretWord)) {
+    const isCorrect = this.guess.compare(this.secretWord);
+    this.updateGuessedLetters();
+
+    if (isCorrect) {
       this.gameState = GameState.Won;
     } else {
       if (this.guessIndex === this.maxAttempts - 1) {
