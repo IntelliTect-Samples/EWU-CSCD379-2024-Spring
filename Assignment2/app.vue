@@ -13,7 +13,13 @@
         <v-btn icon="mdi-theme-light-dark" @click="toggleTheme" />
         <v-btn icon="mdi-help-circle" @click="showHelpDialog = true" />
         <HelpDialog v-model="showHelpDialog" />
+        <v-btn @click="toggleDrawer" icon = "mdi-menu"></v-btn>
       </v-app-bar>
+      <v-navigation-drawer v-model="drawer"  location="right">
+        <v-list>
+          <v-list-item @click="router.push('/About')" class="text-center">About</v-list-item>
+        </v-list>
+      </v-navigation-drawer>
       <v-main>
         <NuxtPage />
       </v-main>
@@ -28,6 +34,10 @@ import nuxtStorage from "nuxt-storage";
 const router = useRouter();
 const theme = useTheme();
 const showHelpDialog = ref(false);
+var drawer = ref(false);
+function toggleDrawer() {
+  drawer.value = !drawer.value;
+}
 
 onMounted(() => {
   var defaultTheme = nuxtStorage.localStorage.getData("theme");
