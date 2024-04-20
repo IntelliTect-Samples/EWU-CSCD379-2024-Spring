@@ -1,24 +1,28 @@
-import { expect, test } from 'vitest'
-import { Game } from '../scripts/game'
+// @vitest-environment nuxt
+import { expect, test } from "vitest";
+import { Game } from "~/scripts/game";
+import { LetterState } from "~/scripts/letter";
 
-test('adds 1 + 2 to equal 3', () => {
-  expect(1 + 2).toBe(3);
-})
+test("game", () => {
+  // create game and check if it's created
+  const game = new Game("autos");
+  expect(game.wordToGuess.length).toBe(5);
+});
 
-test('check string for name', () => {
-  expect('Hello, World!').toMatch('Hello');
-})
+test("guess-word", () => {
+  const game = new Game("autos");
+  game.guess("tangs");
+  expect(game.guesses[0].letters[0].state).toBe(LetterState.Misplaced);
+  expect(game.guesses[0].letters[1].state).toBe(LetterState.Misplaced);
+  expect(game.guesses[0].letters[2].state).toBe(LetterState.Wrong);
+  expect(game.guesses[0].letters[3].state).toBe(LetterState.Wrong);
+  expect(game.guesses[0].letters[4].state).toBe(LetterState.Correct);
 
-test('check object for property', () => {
-  expect({ name: 'John' }).toHaveProperty('name');
-})
+  game.guess("autos");
+  expect(game.guesses[1].letters[0].state).toBe(LetterState.Correct);
+  expect(game.guesses[1].letters[1].state).toBe(LetterState.Correct);
+  expect(game.guesses[1].letters[2].state).toBe(LetterState.Correct);
+  expect(game.guesses[1].letters[3].state).toBe(LetterState.Correct);
+  expect(game.guesses[1].letters[4].state).toBe(LetterState.Correct);
 
-test('check game guess word property', () => {
-  const game = new Game('hello');
-  expect(game.wordToGuess).toBe('hello');
-})
-
-test('check game guess word wrong', () => {
-  const game = new Game('hello');
-  expect(game.wordToGuess).not.toBe('world');
-})
+});
