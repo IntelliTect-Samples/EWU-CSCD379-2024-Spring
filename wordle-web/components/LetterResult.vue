@@ -7,8 +7,16 @@
     :class="[
       clickable ? '' : 'no-pointer',
       'align-center d-flex justify-center',
-      `elevation-20`,
+      `elevation-10`,
     ]"
+    :style="{
+      'background-image':
+        'radial-gradient(rgb(var(--v-theme-' +
+        letter.color +
+        ')) 40%, rgb(var(--v-theme-' +
+        letter.colorGradient +
+        ')) 95%)',
+    }"
     @click="onClicked()">
     {{ letter.char }}
   </v-card>
@@ -57,18 +65,6 @@ watch([display.sm, display.xs, display.md], () => {
   }
   updateWidth();
 });
-//Need advise on how to tackle gradient css
-function setGradient(): string {
-  if (props.letter.color == 'correct') {
-    return `background: linear-gradient(90deg, white 0%, correct 100%)`;
-  } else if (props.letter.color == 'misplaced') {
-    return `background: linear-gradient(90deg, white 0%, misplace 100%)`;
-  } else if (props.letter.color == 'wrong') {
-    return `background: linear-gradient(90deg, white 0%,  misplaced 100%)`;
-  } else {
-    return `background: linear-gradient(90deg, white 0%, unknown 100%)`;
-  }
-}
 
 function updateWidth() {
   if (props.widthPercentOfHeight !== undefined) {
@@ -84,11 +80,5 @@ function updateWidth() {
 <style scoped>
 .no-pointer {
   pointer-events: none;
-}
-</style>
-<!--Need advise on how to tackle css-->
-<style scoped>
-.card {
-  color: 'background: linear-gradient(grey, ${props.letter.color})';
 }
 </style>
