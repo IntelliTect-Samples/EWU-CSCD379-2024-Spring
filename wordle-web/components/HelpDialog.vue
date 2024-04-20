@@ -8,6 +8,8 @@
         Wordle is a word puzzle game where you have to guess a five-letter word
         within a certain number of attempts. After each guess, Wordle will
         provide feedback to indicate if each letter:
+      </v-card-text>
+      <v-card-text class="ml-3">
         <ul>
           <li>Is in the correct position and is the right letter.</li>
           <li>Is in the word but is in a misplaced position.</li>

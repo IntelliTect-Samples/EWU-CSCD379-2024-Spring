@@ -17,7 +17,6 @@
         <v-icon size="large" class="mr-2"> mdi-restart </v-icon> Restart Game
       </v-btn>
     </v-alert>
-    <v-card-title class="text-center">Wordle</v-card-title>
 
     <GameBoardGuess
       v-for="(guess, i) of game.guesses"

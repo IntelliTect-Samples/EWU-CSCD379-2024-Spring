@@ -1,6 +1,11 @@
 <template>
   <v-row dense class="justify-center">
-    <v-col :class="isShaking ? 'shaking' : ''" cols="auto" v-for="(letter, k) of guess.letters" :key="k">
+    <v-col
+      :class="isShaking ? 'shaking' : ''"
+      cols="auto"
+      v-for="(letter, k) of guess.letters"
+      :key="k"
+    >
       <LetterResult :letter="letter" />
     </v-col>
   </v-row>
@@ -16,15 +21,17 @@ const props = defineProps<{
 
 const isShaking = ref(false);
 
-watch(() => props.guess.isFilled,
-() => {
-  if(!props.guess.isFilled){
-    isShaking.value = true;
-    setTimeout(() => {
-      isShaking.value = false;
-    }, 300);
+watch(
+  () => props.guess.isFilled,
+  () => {
+    if (!props.guess.isFilled) {
+      isShaking.value = true;
+      setTimeout(() => {
+        isShaking.value = false;
+      }, 300);
+    }
   }
-});
+);
 </script>
 
 <style scoped>
