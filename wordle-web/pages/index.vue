@@ -1,39 +1,41 @@
 <template>
   <v-container>
-    <v-card class="text-center">
-      <v-alert
-        v-if="game.gameState != GameState.Playing"
-        :color="game.gameState == GameState.Won ? 'success' : 'error'"
-        class="mb-5"
-        tile
-      >
-        <h3>
-          You've
-          {{ game.gameState == GameState.Won ? "Won! 🥳" : "Lost... 😭" }}
-        </h3>
-        <v-card-text>
-          The word was: <strong>{{ game.secretWord }}</strong>
-        </v-card-text>
-        <v-btn variant="outlined" @click="game.startNewGame()">
-          <v-icon size="large" class="mr-2"> mdi-restart </v-icon> Restart Game
-        </v-btn>
-      </v-alert>
-      <v-card-title v-else>Wordle</v-card-title>
-
-      <GameBoardGuess
-        v-for="(guess, i) of game.guesses"
-        :key="i"
-        :guess="guess"
-      />
-
-      <div class="my-10">
-        <Keyboard />
-      </div>
-
-      <v-btn @click="game.submitGuess()" class="mb-5" color="primary">
-        Guess!
+    <v-alert
+      v-if="game.gameState != GameState.Playing"
+      :color="game.gameState == GameState.Won ? 'success' : 'error'"
+      class="mb-5"
+      tile
+    >
+      <h3>
+        You've
+        {{ game.gameState == GameState.Won ? "Won! 🥳" : "Lost... 😭" }}
+      </h3>
+      <v-card-text>
+        The word was: <strong>{{ game.secretWord }}</strong>
+      </v-card-text>
+      <v-btn variant="outlined" @click="game.startNewGame()">
+        <v-icon size="large" class="mr-2"> mdi-restart </v-icon> Restart Game
       </v-btn>
-    </v-card>
+    </v-alert>
+    <v-card-title class="text-center">Wordle</v-card-title>
+
+    <GameBoardGuess
+      v-for="(guess, i) of game.guesses"
+      :key="i"
+      :guess="guess"
+    />
+
+    <div class="my-10">
+      <Keyboard />
+    </div>
+
+    <v-btn
+      @click="game.submitGuess()"
+      class="d-flex justify-center mx-auto"
+      color="primary"
+    >
+      Guess!
+    </v-btn>
   </v-container>
 </template>
 
