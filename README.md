@@ -1,86 +1,66 @@
-## Instructors ##
-[Grant Erickson](https://github.com/GrantErickson) and [Meg Woodford](https://github.com/mmwoodfo)
-For general questions, we suggest asking in Teams so that others can help as well. We encourage people to work together and collaborate. Please feel free to help your fellow students out. Though it is possible to privately message people directly, as much as possible, we encourage open discussion on the main chat so that others can benefit as well.
-You can also send an e-mail to: [EWU-Instructors@IntelliTect.com](EWU-Instructors@IntelliTect.com) for final grade or general questions.
+# EWU-CSCD378-2024-Spring
 
-## GitHub Information
-We will be using GitHub for all class lectures and assignments. All work will be submitted via GitHub pull requests.
-* Please sign up for a GitHub if you do not already have one. 
-* You can get added benefits by signing up for a free [GitHub Student Developer Pack](https://education.github.com/pack).  
-* **IMPORTANT** : Please fill out this **[form](https://docs.google.com/forms/d/e/1FAIpQLSdlpBMhof2gxL64vrqLg9o0Uc4di5lYejpo10XUBiMoyb-Xxg/viewform?usp=sf_link)** with your GitHub information. This is used by us so we can appropriately grade assignments.
+## Assignment 2
 
-## Prerequisites
-This class will build on CSCD-371. It will be very difficult if you have not taken the CSCD-371 that was offered in Winter. We will be building on much of what was presented in that class. Here are the things the instructors will assume you already know in addition to all standard classes taken by juniors and seniors in the CS program as of Winter.
-* Good grasp of the C# programming language
-* Good familiarity with web development (as taught in the CSCD-371 Winter) HTML, CSS, JS
-* Familiarity with development environments like Visual Studio and VS Code
-* Understanding of how Git source control works with the ability to perform standard development workflows
-* Understanding of GitHub especially doing pull requests
-* Good grasp of programming theory: OOP, data structures, etc.
+The purpose of this assignment is to solidify your learning of:
 
-## Tech Stack References
+- Front end component development
+- Using Vuetify's components
+- Building a new custom component
+- Creating new pages
 
-### Front End
-* [VueJs 3](https://vuejs.org/)
-* [VuetifyJs 3](https://vuetifyjs.com/en/)
-* [TypeScript](https://www.typescriptlang.org/docs/) ([Style Guide](https://google.github.io/styleguide/tsguide.html))
-* [Vitest](https://vitest.dev/)
-* [npm](https://docs.npmjs.com/)
-* [Axios](https://axios-http.com/docs/intro) (Calling APIs)
-* Interesting reading about creating a front-end framework: https://18alan.space/posts/how-hard-is-it-to-build-a-frontend-framework.html#reactivity
-* [Responsiveness and Media Queries](https://engineering.kablamo.com.au/posts/2023/media-queries-and-responsive-design/)
+## Due Dates
 
-### Back End
-* [.NET](https://dotnet.microsoft.com/en-us/)
-* [C#](https://learn.microsoft.com/en-us/dotnet/csharp/) ([Essential C# Web Site](https://essentialcsharp.com/home))
-* [ASP.NET 8.0](https://docs.microsoft.com/en-us/aspnet/core/?view=aspnetcore-8.0)
-* [Entity Framework 8](https://learn.microsoft.com/en-us/ef)
-* [ASP.NET Core Identity](https://learn.microsoft.com/en-us/aspnet/core/security/authentication/identity?view=aspnetcore-8.0&tabs=visual-studio)
+- Assigned: 4/11
+- Initial work complete: 4/21 11:59 pm
+  - 50% for running pipeline with passing unit test
+  - 50% for working website
+- Code Reviews Due by: 4/23 11:59 pm
+- Review in class: 4/25 2:00 pm
+- Final turn-in: 4/25 11:59 pm
 
-### DevOps
-* [Azure](https://docs.microsoft.com/en-us/azure/?product=popular)
-* [Azure AppService](https://docs.microsoft.com/en-us/azure/app-service/)
-* [Azure SQL](https://docs.microsoft.com/en-us/azure/azure-sql/)
-* [GitHub Actions](https://docs.github.com/en/actions)
-* [GitHub Actions YAML](https://docs.github.com/en/actions/using-workflows/workflow-syntax-for-github-actions)
-* [SignalR](https://docs.microsoft.com/en-us/aspnet/core/signalr/introduction?view=aspnetcore-8.0) (Potentially)
-* [Azure Deployment Action](https://learn.microsoft.com/en-us/azure/static-web-apps/build-configuration?tabs=github-actions#build-and-deploy)
+## Instructions
 
-## General Information:
-* **Office Hours**: Office hours are available before class on Tuesdays and Thursdays starting at 1 PM. To ensure that an instructor will be available, please schedule an appointment 24 hours beforehand by sending a meeting request email to EWU-Instructors@IntelliTect.com. Alternative times may be available upon request.
-* A list of topics covered in class will be recorded by students in the [**Lectures**](Lectures.md) markdown file. It will also contain a general schedule for the class, but this may be adjusted based on pacing.
+Note: Custom CSS can only be used where specified.
 
-### Homework and Assignments
-* Homework will be hard and will take time to complete. Do not put it off. 
-* Start homework early and come to class with questions. Starting homework late is a recipe for disaster and pain.
-* All assignments, due dates, and grading information are in [**Assignments**](Assignments.md)
-* Homework will be done in pairs. If you are experiencing issues, please contact an instructor.
-* Code reviews are done individually, each student should review code that is not done by them or their partner.
-* The day homework is initially due we will typically go over the assignment in class. (no guarantees)
+1. Create a custom component to show available words ❌✅
 
-## Computer Setup ##
-- [Visual Studio Code](https://code.visualstudio.com/) This can largely be used as an alternative to Visual Studio. Many of us also use it as our catch-all lightweight text/code editor.
-- [Azure for Students](https://azure.microsoft.com/en-us/free/students/) You will need to sign up for the free Azure student credits. This provides a place for us to deploy our application.
-The coursework will be cross-platform. However, in class the instructors will be working on Windows in both VSCode (for front end) and Visual Studio (for back end).
-- [nodejs & npm (LTS)](https://nodejs.org/en/download/) Node Package Manager will provide tooling for bulding our front end web site.
+- Create/extend a word list component with a method called validWords that returns an array of valid words based on current guesses ❌✅
+- Create unit tests for the validWords method ❌✅
+- Display the number of valid words based on the entered letters ❌✅
+- When the number is clicked, show a dialog with all the available words with scrolling if there are too many to show on the screen. ❌✅
+- When a word is clicked, the word should be entered as the guess but not submitted ❌✅
+- Add a hover over for the word so it is obvious that it can be clicked. (No CSS) ❌✅
 
-### Recommended ###
-- [Visual Studio 2022](https://visualstudio.microsoft.com/downloads/). Version 17.9 or later. The community edition is fine, though we believe most students should have access to higher SKUs with EWU's MSDN (this assumption may be wrong). Lab computers should have Visual Studio Professional already installed. This should install .NET 8.0.
-- [GitKraken](https://gitkraken.keboo.dev/) Though you can do all of the git interaction from within Visual Studio or on the command line, GitKraken is free for open source work. It also provides a nice graphical version of the commit history so you can see how various commits and branches relate. 
-- [GitHub Student Developer Pack](https://education.github.com/students) Lots of great development tools and resources. The JetBrains products ReSharper (a plugin for Visual Studio), and Rider (a full C# IDE) are great tools for helping you write better code. 
+2. Convert the sidebar to an App Bar ❌✅
 
-### VS Code Extensions used in class ###
-- [Vitest](https://marketplace.visualstudio.com/items?itemName=ZixuanChen.vitest-explorer) Unit testing extension
-- [Prettier](https://marketplace.visualstudio.com/items?itemName=esbenp.prettier-vscode) code formatting extension
-- [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) Vue tooling
-- [TypeScript vue Plugin (Volar)](https://marketplace.visualstudio.com/items?itemName=Vue.vscode-typescript-vue-plugin) Vue TypeScript Tooling
-- [Code Spell Checker](https://marketplace.visualstudio.com/items?itemName=streetsidesoftware.code-spell-checker)
+- Name of the app on the left with an icon ❌✅
+- Choose an icon for the app (from Material Design or somewhere on the web) ❌✅
+- Clicking the name and icon of the app take you to the home page ❌✅
+- Hamburger menu on the right ❌✅
+- Menu option for an About page ❌✅
+  - Create an About page that has a few sentences about this class project and how great Meg is ❌✅
+  - Make sure this has a back button ❌✅
 
-### Troubleshooting issues in VS Code
-- Make sure you run `npm i` or `npm ci`
-- Make sure all the extensions are installed
-- Restart VS Code
-- Pull the repo again and see if the unmodified version works
+3. Add a settings dialog ❌✅
 
-### Azure Issues
-If you are having issues gettig Azure setup correctly and everything working, please check out this document: https://github.com/IntelliTect-Samples/EWU-CSCD379-2024-Spring/blob/main/SettingUpAzure.md
+- Add a settings selection to the App Bar's menu with a gear icon. This should open this dialog regardless of where you are on the site ❌✅
+- Option for dark and light mode ❌✅
+- Develop two additional color schemes (with creative names) and allow the user to change to them. Schemes should look good in both light and dark mode ❌✅
+- The above two items must be implemented with built in Veutify features ❌✅
+
+4. Style the main game page ❌✅
+
+- Make it look like [wordle.com](https://www.nytimes.com/games/wordle/index.html) or the Wordle mobile app ❌✅
+- Add gradient to guesses blocks and keys (with CSS) ❌✅
+- Add drop shadow to keys (No CSS) ❌✅
+- Make the app responsive (No CSS) ❌✅
+
+5. Include a link to your Azure App in your PR comments.
+
+## Extra Credit
+
+- Add an appropriate sound when the UI letter buttons are clicked (5 points)
+- Add creative styling following good UI/UX practices
+  - Look at products by Google or some of the vuetify components for good UX/UI ideas
+  - https://m2.material.io/design/guidelines-overview
