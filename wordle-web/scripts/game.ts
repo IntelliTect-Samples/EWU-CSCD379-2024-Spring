@@ -19,6 +19,7 @@ export class Game {
   public startNewGame() {
     this.guessIndex = 0;
     this.gameState = GameState.Playing;
+    this.guessedLetters = [];
 
     // Get random word from word list
     this.secretWord =
