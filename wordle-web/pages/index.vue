@@ -23,7 +23,7 @@
       <GameBoardGuess v-for="(guess, i) of game.guesses" :key="i" :guess="guess" />
       <div class="my-18">
         <Keyboard />
-        <v-btn class="justify-center" @click=>Guess</v-btn>
+        <v-btn @click=>Guess</v-btn>
       </div>
 
       <v-card-actions>

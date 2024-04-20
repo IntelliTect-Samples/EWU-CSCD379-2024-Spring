@@ -1,6 +1,16 @@
 <template>
-  <v-row class="justify-center" v-for="(keyboardRow, rowIndex) in keyboardLetterRows" :key="rowIndex" dense>
-    <v-col cols="auto" v-for="letter in keyboardRow" :key="letter.char" :class="'ml-1 px-0'">
+  <v-row
+    class="justify-center"
+    v-for="(keyboardRow, rowIndex) in keyboardLetterRows"
+    :key="rowIndex"
+    dense
+  >
+    <v-col
+      cols="auto"
+      v-for="letter in keyboardRow"
+      :key="letter.char"
+      :class="'ml-1 px-0'"
+    >
       <LetterResult :letter="letter" :clickable="true" />
     </v-col>
   </v-row>
@@ -11,6 +21,7 @@ import { Game } from "~/scripts/game";
 import { Letter } from "~/scripts/letter";
 
 const game: Game = inject("GAME")!;
+
 
 const keyboardLetterRows = computed(() => {
   let keyboardLetterRows: Letter[][] = [];
