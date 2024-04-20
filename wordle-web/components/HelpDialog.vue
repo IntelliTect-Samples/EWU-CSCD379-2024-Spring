@@ -15,7 +15,7 @@
         </ul>
       </v-card-text>
       <v-card-text>
-        For example, if the word is "BLIMP" and you guess "BILBO", the feedback
+        For example, if the word is "DAISY" and you guess "BASED", the feedback
         might look like this:
       </v-card-text>
       <div class="d-flex justify-center mt-3 mb-5">
@@ -43,12 +43,12 @@ import { Word } from "~/scripts/word";
 
 const modelValue = defineModel<boolean>({ default: false });
 
-const exampleWord = new Word({ word: "BILBO" });
+const exampleWord = new Word({ word: "BASED" });
 exampleWord.letters = [
-    new Letter("B", LetterState.Correct),
-    new Letter("I", LetterState.Correct),
-    new Letter("L", LetterState.Misplaced),
-    new Letter("B", LetterState.Wrong),
-    new Letter("O", LetterState.Wrong),
-]
+  new Letter("B", LetterState.Wrong),
+  new Letter("A", LetterState.Correct),
+  new Letter("S", LetterState.Misplaced),
+  new Letter("E", LetterState.Wrong),
+  new Letter("D", LetterState.Misplaced),
+];
 </script>

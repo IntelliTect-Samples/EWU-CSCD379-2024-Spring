@@ -5,9 +5,9 @@
         <v-icon color="secondary"> mdi-book </v-icon>
       </template>
 
-      <v-app-bar-title>WordleApp</v-app-bar-title>
+      <v-app-bar-title>Pink Wordle</v-app-bar-title>
 
-      <v-btn to="/">Home</v-btn>
+      <v-btn to="/about">About</v-btn>
       <v-btn icon="mdi-theme-light-dark" @click="toggleTheme" />
       <v-btn icon="mdi-help-circle" @click="showHelpDialog = true" />
       <HelpDialog v-model="showHelpDialog" />

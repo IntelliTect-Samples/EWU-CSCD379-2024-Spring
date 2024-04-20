@@ -45,8 +45,6 @@ const game: Game = reactive(new Game());
 
 provide("GAME", game);
 
-const myGuess = ref("");
-
 onMounted(() => {
   window.addEventListener("keyup", onKeyup);
 });
