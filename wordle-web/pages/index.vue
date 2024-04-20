@@ -5,11 +5,10 @@
         v-if="game.gameState != GameState.Playing"
         :color="game.gameState == GameState.Won ? 'success' : 'error'"
         class="mb-5"
-        tile
-      >
+        tile>
         <h3>
           You've
-          {{ game.gameState == GameState.Won ? "Won! 🥳" : "Lost... 😭" }}
+          {{ game.gameState == GameState.Won ? 'Won! 🥳' : 'Lost... 😭' }}
         </h3>
         <v-card-text>
           The word was: <strong>{{ game.secretWord }}</strong>
@@ -23,8 +22,7 @@
       <GameBoardGuess
         v-for="(guess, i) of game.guesses"
         :key="i"
-        :guess="guess"
-      />
+        :guess="guess" />
 
       <div class="my-10">
         <Keyboard />
@@ -41,9 +39,10 @@
 import { Game, GameState } from '../scripts/game';
 const game: Game = reactive(new Game());
 
-provide("GAME", game);
+provide('GAME', game);
 
-const myGuess = ref("");
+const myGuess = ref('');
+console.log(game.secretWord);
 
 onMounted(() => {
   window.addEventListener('keyup', onKeyup);
@@ -54,9 +53,9 @@ onUnmounted(() => {
 });
 
 function onKeyup(event: KeyboardEvent) {
-  if (event.key === "Enter") {
+  if (event.key === 'Enter') {
     game.submitGuess();
-  } else if (event.key == "Backspace") {
+  } else if (event.key == 'Backspace') {
     game.removeLastLetter();
   } else if (event.key.match(/[A-z]/) && event.key.length === 1) {
     game.addLetter(event.key.toUpperCase());

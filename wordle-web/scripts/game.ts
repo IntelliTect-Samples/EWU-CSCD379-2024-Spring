@@ -1,5 +1,5 @@
-import { LetterState, type Letter } from "./letter";
-import { Word } from "./word";
+import { LetterState, type Letter } from './letter';
+import { Word } from './word';
 import { WordList, myWordList } from './wordList';
 
 export class Game {
@@ -53,7 +53,7 @@ export class Game {
     for (const letter of this.guess.letters) {
       // Find the index of the letter in the guessed letters array
       const index = this.guessedLetters.findIndex(
-        (existingLetter) => existingLetter.char === letter.char
+        existingLetter => existingLetter.char === letter.char
       );
       if (index !== -1) {
         // Do not update the letter if it is already correct
