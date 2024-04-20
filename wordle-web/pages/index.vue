@@ -9,6 +9,9 @@
             The word was: {{ game.secretWord }}
           </v-card-text>
           <br />
+          <v-btn variant="outlined" @click="game.startNewGame()">
+          <v-icon size="large" class="mr-2"> mdi-restart </v-icon> Restart Game
+        </v-btn>
         </v-alert>
       </v-card>
       <v-card-title>Wordle</v-card-title>
@@ -23,12 +26,12 @@
       <GameBoardGuess v-for="(guess, i) of game.guesses" :key="i" :guess="guess" />
       <div class="my-18">
         <Keyboard />
-        <v-btn @click=>Guess</v-btn>
       </div>
+      <v-btn color="secondary" class="justify-center" @click=game.submitGuess>Guess</v-btn>
 
       <v-card-actions>
         <v-spacer />
-        <v-btn v-if="game.gameState !== GameState.Playing" variant="tonal" color="red" @click="game.startNewGame()">
+        <v-btn v-if="game.gameState !== GameState.Playing" variant="text" color="secondary" @click="game.startNewGame()">
           Restart Game
         </v-btn>
       </v-card-actions>
