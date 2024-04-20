@@ -1,56 +1,65 @@
 <template>
-    <v-card>
-        <v-card-title>Hello Welcome to Home</v-card-title>
+  <v-container>
+    <v-card class="text-center">
+      <v-alert
+        v-if="game.gameState != GameState.Playing"
+        :color="game.gameState == GameState.Won ? 'success' : 'error'"
+        class="mb-5"
+        tile
+      >
+        <h3>
+          You've
+          {{ game.gameState == GameState.Won ? "Won! 🥳" : "Lost... 😭" }}
+        </h3>
+        <v-card-text>
+          The word was: <strong>{{ game.secretWord }}</strong>
+        </v-card-text>
+        <v-btn variant="outlined" @click="game.startNewGame()">
+          <v-icon size="large" class="mr-2"> mdi-restart </v-icon> Restart Game
+        </v-btn>
+      </v-alert>
+      <v-card-title v-else>Wordle</v-card-title>
+
+      <GameBoardGuess
+        v-for="(guess, i) of game.guesses"
+        :key="i"
+        :guess="guess"
+      />
+
+      <div class="my-10">
+        <Keyboard />
+      </div>
+
+      <v-btn @click="game.submitGuess()" class="mb-5" color="primary">
+        Guess!
+      </v-btn>
     </v-card>
-
-    <v-card class="mx-auto my-8" elevation="16" max-width="344">
-        <v-card-item>
-          <v-card-title> Wordle </v-card-title>
-          <v-card-subtitle>
-            This is our super basic wordle game
-          </v-card-subtitle>
-        </v-card-item>
-
-        <v-card-text>
-          Hint: {{ game.wordToGuess }}
-          <br />
-          My Guess: {{ myGuess }}
-          <v-text-field
-            v-model="myGuess"
-            label="Enter your guess"
-            outlined
-            clearable
-          />
-        </v-card-text>
-
-        <v-card-text>
-          <div v-for="(guess, i) of game.guesses" :key="i">
-            Guess: {{ guess.letters.map(x => x.char).join("") }}
-          </div>
-        </v-card-text>
-
-        <v-card-actions>
-          <v-spacer />
-          <v-btn
-            color="pink"
-            variant="elevated"
-            elevation="8"
-            @click="submitGuess()"
-          >
-            Click Me!
-          </v-btn>
-        </v-card-actions>
-      </v-card>
+  </v-container>
 </template>
 
 <script setup lang="ts">
-import { Game } from "../scripts/game";
-const game: Game = reactive(new Game("JUMBO"));
+import { Game, GameState } from "../scripts/game";
+const game: Game = reactive(new Game());
+
+provide("GAME", game);
 
 const myGuess = ref("");
 
-function submitGuess() {
-  game.guess(myGuess.value.toUpperCase());
-  myGuess.value = "";
+onMounted(() => {
+  window.addEventListener("keyup", onKeyup);
+});
+
+onUnmounted(() => {
+  window.removeEventListener("keyup", onKeyup);
+});
+
+function onKeyup(event: KeyboardEvent) {
+  if (event.key === "Enter") {
+    game.submitGuess();
+  } else if (event.key == "Backspace") {
+    game.removeLastLetter();
+  } else if (event.key.match(/[A-z]/) && event.key.length === 1) {
+    game.addLetter(event.key.toUpperCase());
+  }
 }
 </script>
