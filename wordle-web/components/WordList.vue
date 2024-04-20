@@ -1,6 +1,5 @@
 <template>
   <v-pagination v-model="currentPage" :length="totalPages" />
-  <div>{{ currentPage }}</div>
   <ul>
     <li v-for="word in pagedWord" :key="word">{{ word }}</li>
   </ul>
@@ -8,6 +7,10 @@
 
 <script setup lang="ts">
 import { WordList } from "~/scripts/wordList";
+import { Game } from "~/scripts/game";
+
+const game: Game = inject("GAME")!;
+
 const words = WordList;
 const wordsPerPage = WordList.length / 10;
 const totalPages = 10;

@@ -1,11 +1,10 @@
 <template>
   <v-app>
     <v-app-bar color="primary" :elevation="2">
-      <template v-slot:prepend>
+      <v-app-bar-title @click="$router.push('/')" style="cursor: pointer">
         <v-icon color="secondary"> mdi-book </v-icon>
-      </template>
-
-      <v-app-bar-title>Pink Wordle</v-app-bar-title>
+        Pink Wordle</v-app-bar-title
+      >
 
       <v-btn to="/about">About</v-btn>
       <v-btn icon="mdi-theme-light-dark" @click="toggleTheme" />
