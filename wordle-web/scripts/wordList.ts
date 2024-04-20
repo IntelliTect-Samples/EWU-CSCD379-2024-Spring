@@ -1,17 +1,21 @@
 // From: https://github.com/charlesreid1/five-letter-words/blob/master/sgb-words.txt
 
-export abstract class WordList {
+export class WordList {
+  
   public validateWord(word: string): Array<string> {
     const myList = new Array<string>();
 
     if (word == '') {
       return myList;
     }
-    for (let i = 0; i < WordList.length; i++) {
-      if (myWordList[i].startsWith(word.toUpperCase())) {
-        myList.push(myWordList[i]);
-      }
+    else{
+      return myWordList.filter((myWord) => { return myWord.substring(0 , word.length) == word});
     }
+    //for (let i = 0; i < WordList.length; i++) {
+    //  if (myWordList[i].startsWith(word.toUpperCase())) {
+    //    myList.push(myWordList[i]);
+    //  }
+    //}
     return myList;
   }
 }

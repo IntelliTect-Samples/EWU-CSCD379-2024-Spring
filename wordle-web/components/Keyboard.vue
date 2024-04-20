@@ -1,5 +1,7 @@
 <template>
+
   <v-row
+    rows="auto"
     class="justify-center"
     v-for="(keyboardRow, rowIndex) in keyboardLetterRows"
     :key="rowIndex"
@@ -7,9 +9,10 @@
   >
     <v-col
       cols="auto"
+      class="rounded-sm"
       v-for="letter in keyboardRow"
       :key="letter.char"
-      :class="'ml-1 px-0'"
+      :class="[`ml-1`, `px-0`]"
     >
       <LetterResult :letter="letter" :clickable="true" />
     </v-col>

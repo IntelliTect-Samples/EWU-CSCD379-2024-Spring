@@ -6,7 +6,7 @@
     flat
     :class="[
       clickable ? '' : 'no-pointer',
-      'align-center d-flex justify-center',
+      'align-center d-flex justify-center', `elevation-20`
     ]"
     @click="onClicked()"
   >
@@ -53,10 +53,28 @@ watch([display.sm, display.xs, display.md], () => {
     boxSize.value = 60;
   }
 });
+//Need advise on how to tackle gradient css
+function setGradient(): string{
+    if(props.letter.color == "correct"){
+      return `background: linear-gradient(90deg, white 0%, correct 100%)`;
+    }else if(props.letter.color == "misplaced"){
+      return `background: linear-gradient(90deg, white 0%, misplace 100%)`;
+    }else if(props.letter.color == "wrong"){ 
+      return `background: linear-gradient(90deg, white 0%,  misplaced 100%)`;
+    }else{
+      return `background: linear-gradient(90deg, white 0%, unknown 100%)`;
+    }
+  }
 </script>
 
 <style scoped>
 .no-pointer {
   pointer-events: none;
 }
+</style>
+<!--Need advise on how to tackle css-->
+<style scoped>
+  .card {
+    color: "background: linear-gradient(grey, ${props.letter.color})"
+  }
 </style>
