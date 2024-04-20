@@ -29,13 +29,6 @@
       <Keyboard />
     </div>
 
-    <v-btn
-      @click="game.submitGuess()"
-      class="d-flex justify-center mx-auto"
-      color="primary"
-    >
-      Guess!
-    </v-btn>
     <WordList />
   </v-container>
 </template>

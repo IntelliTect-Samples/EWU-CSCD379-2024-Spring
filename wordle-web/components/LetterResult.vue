@@ -1,7 +1,7 @@
 <template>
   <v-card
     :height="boxSize"
-    :width="boxSize"
+    :width="letter.char.length < 2 ? boxSize : boxSize * 1.5"
     :color="letter.color"
     flat
     :class="[
@@ -35,19 +35,21 @@ const boxSize = ref(60);
 const display = useDisplay();
 
 function onClicked() {
-  if(!game) return;
+  if (!game) return;
 
   if (props.letter.char === "👈") {
     game.removeLastLetter();
+  } else if (props.letter.char === "ENTER") {
+    game.submitGuess();
   } else {
     game.addLetter(props.letter.char.toUpperCase());
   }
 }
 
 watch([display.sm, display.xs, display.md], () => {
-  if(display.xs.value){
+  if (display.xs.value) {
     boxSize.value = 30;
-  }else if (display.sm.value) {
+  } else if (display.sm.value) {
     boxSize.value = 40;
   } else {
     boxSize.value = 60;
