@@ -1,8 +1,7 @@
 // From: https://github.com/charlesreid1/five-letter-words/blob/master/sgb-words.txt
 
-export class WordList {
-  
-  public validateWord(word: string): Array<string> {
+export class WordList {  
+  static validateWord(word: string): Array<string> {
     const myList = new Array<string>();
 
     if (word == '') {
@@ -16,7 +15,7 @@ export class WordList {
     //    myList.push(myWordList[i]);
     //  }
     //}
-    return myList;
+    //return myList;
   }
 }
 export const myWordList = [

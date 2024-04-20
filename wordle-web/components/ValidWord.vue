@@ -2,7 +2,7 @@
   <v-card>
     <v-card-title>Valid Words</v-card-title>
     <v-list>
-      <v-list-item v-for="(word, i) in validator.validateWord(props.game.guess.text)" 
+      <v-list-item v-for="(word, i) in WordList.validateWord(props.game.guess.text)"
       :key="i"
       :value="word"
       active-color="primary"

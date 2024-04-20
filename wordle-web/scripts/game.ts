@@ -1,7 +1,5 @@
 import { LetterState, type Letter } from "./letter";
 import { Word } from "./word";
-import { WordList } from "./wordList";
-import { Word } from './word';
 import { WordList, myWordList } from './wordList';
 
 export class Game {
