@@ -14,9 +14,10 @@
           Whurdle
         </v-app-bar-title>
       </template>
-      <v-btn icon="mdi-help-circle" />
-      <v-app-bar-nav-icon id="menu-activator"> </v-app-bar-nav-icon>
-      <v-menu activator="#menu-activator">
+      <v-btn icon="mdi-help-circle" @click="showHelpDialog = true" />
+      <HelpDialog v-model="showHelpDialog" />
+      <v-app-bar-nav-icon @click.stop="showDrawer = !showDrawer" />
+      <!-- <v-menu activator="#menu-activator">
         <v-list>
           <v-list-item @click="router.push('/about')">
             <v-list-item-title> About </v-list-item-title>
@@ -27,8 +28,21 @@
             </v-list-item-title>
           </v-list-item>
         </v-list>
-      </v-menu>
+      </v-menu> -->
     </v-app-bar>
+    <v-navigation-drawer app v-model="showDrawer" location="right">
+      <v-list>
+        <v-list-item @click="router.push('/about')">
+          <v-list-item-title> About </v-list-item-title>
+        </v-list-item>
+        <v-divider />
+        <v-list-item @click="showSettingsDialog = true">
+          <v-list-item-title>
+            <v-icon>mdi-cog</v-icon>
+          </v-list-item-title>
+        </v-list-item>
+      </v-list>
+    </v-navigation-drawer>
     <SettingsDialog v-model="showSettingsDialog" />
     <v-main>
       <slot />
@@ -38,6 +52,10 @@
 
 <script setup lang="ts">
 const router = useRouter();
-const showDrawer = ref(false);
+const showHelpDialog = ref(false);
 const showSettingsDialog = ref(false);
+const showDrawer = ref(false);
+watch(showDrawer, () => {
+  console.log(showDrawer.value);
+});
 </script>

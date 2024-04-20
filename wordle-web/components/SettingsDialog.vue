@@ -1,20 +1,31 @@
 <template>
   <v-dialog v-model="modelValue">
-    <v-card>
+    <v-card class="ma-auto" min-width="400">
       <v-sheet color="secondary">
         <v-card-title>Settings</v-card-title>
       </v-sheet>
       <v-card-text>
-        Welcome to settings! Let me know if you wanna set some stuff.
+        <v-divider class="my-4" />
+        Light/Dark Mode:
+        <v-btn
+          color="secondary"
+          @click="toggleTheme"
+          icon="mdi-theme-light-dark" />
+        <v-divider class="my-4" />
       </v-card-text>
-      <v-btn @click="toggleTheme" icon="mdi-theme-light-dark" />
-      <v-sheet class="mx-auto" width="300">
+
+      <v-sheet class="ml-6" width="200">
         <v-form @submit.prevent>
           <v-select
+            color="secondary"
             v-model="selectedTheme"
             label="Select theme"
             :items="['Regular', 'Jungle', 'Flamingo']"></v-select>
-          <v-btn @click="changeColorScheme" class="mt-2" type="submit" block
+          <v-btn
+            color="secondary"
+            @click="changeColorScheme"
+            class="mb-6"
+            type="submit"
             >Submit</v-btn
           >
         </v-form>
@@ -26,6 +37,7 @@
 <script setup lang="ts">
 import { useTheme } from 'vuetify';
 import nuxtStorage from 'nuxt-storage';
+import { Theme } from '~/scripts/theme';
 
 const modelValue = defineModel<boolean>({ default: false });
 const theme = useTheme();
@@ -37,10 +49,14 @@ onMounted(() => {
 });
 
 function toggleTheme() {
-  if (getDarkLightMode(theme.global.name.value) === 'Light') {
-    theme.global.name.value = 'Dark';
+  if (getLightDarkMode(theme.global.name.value) === 'Light') {
+    theme.global.name.value =
+      theme.global.name.value.substring(0, theme.global.name.value.length - 5) +
+      'Dark';
   } else {
-    theme.global.name.value = 'Light';
+    theme.global.name.value =
+      theme.global.name.value.substring(0, theme.global.name.value.length - 4) +
+      'Light';
   }
 
   nuxtStorage.localStorage.setData('theme', theme.global.name.value);
@@ -49,20 +65,14 @@ function toggleTheme() {
 function changeColorScheme() {
   theme.global.name.value =
     selectedTheme.value.toLowerCase() +
-    getDarkLightMode(theme.global.name.value);
+    getLightDarkMode(theme.global.name.value);
   nuxtStorage.localStorage.setData('theme', theme.global.name.value);
 }
 
-function getDarkLightMode(currentTheme: string) {
-  return currentTheme.substring(currentTheme.length - 4);
-}
-
-enum Theme {
-  regularLight,
-  regularDark,
-  jungleLight,
-  jungleDark,
-  flamingoLight,
-  flamingoDark,
+function getLightDarkMode(currentTheme: string) {
+  // Themes will end in either 'Dark' or 'Light'. This check makes it easy
+  // to see if the currentTheme is 'Dark' by checking the last char for a 'k' or 't'.
+  let isDark = currentTheme.charAt(currentTheme.length - 1) === 'k';
+  return isDark ? 'Dark' : 'Light';
 }
 </script>
