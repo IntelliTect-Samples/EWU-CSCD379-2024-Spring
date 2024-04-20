@@ -36,7 +36,7 @@ export class Word {
       }
     }
   }
-  public isFilled(): boolean {
+  public get isFilled(): boolean {
     return this.letters.every((letter) => letter.char);
   }
 

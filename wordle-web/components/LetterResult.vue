@@ -1,56 +1,62 @@
 <template>
-  <div class="letter-box" :class="color">
+  <v-card
+    :height="boxSize"
+    :width="boxSize"
+    :color="letter.color"
+    flat
+    :class="[
+      clickable ? '' : 'no-pointer',
+      'align-center d-flex justify-center',
+    ]"
+    @click="onClicked()"
+  >
     {{ letter.char }}
-  </div>
+  </v-card>
 </template>
 
 <script setup lang="ts">
-import { Letter, LetterState } from "~/scripts/letter";
+import { Letter } from "~/scripts/letter";
 import { defineProps } from "vue";
+import { useDisplay } from "vuetify";
+import { Game } from "~/scripts/game";
 
-const props = defineProps<{
-  letter: Letter;
-}>();
+const props = withDefaults(
+  defineProps<{
+    letter: Letter;
+    clickable?: boolean;
+  }>(),
+  {
+    clickable: false,
+  }
+);
 
-const color = computed(() => {
-  switch (props.letter.state) {
-    case LetterState.Correct:
-      return "correct";
-    case LetterState.Misplaced:
-      return "misplaced";
-    case LetterState.Wrong:
-      return "wrong";
-    default:
-      return "unknown";
+const game: Game | undefined = inject("GAME", undefined);
+const boxSize = ref(60);
+const display = useDisplay();
+
+function onClicked() {
+  if(!game) return;
+
+  if (props.letter.char === "👈") {
+    game.removeLastLetter();
+  } else {
+    game.addLetter(props.letter.char.toUpperCase());
+  }
+}
+
+watch([display.sm, display.xs, display.md], () => {
+  if(display.xs.value){
+    boxSize.value = 30;
+  }else if (display.sm.value) {
+    boxSize.value = 40;
+  } else {
+    boxSize.value = 60;
   }
 });
-
 </script>
 
 <style scoped>
-.letter-box {
-  border: 1px solid black;
-  margin: 3px;
-  text-align: center;
-  font-size: 32px;
-  height: 50px;
-  width: 50px;
-  display: inline-block;
-}
-
-.letter-box.correct {
-  background-color: green;
-}
-
-.letter-box.misplaced {
-  background-color: yellow;
-}
-
-.letter-box.wrong {
-  background-color: grey;
-}
-
-.letter-box.unknown {
-  background-color: white;
+.no-pointer {
+  pointer-events: none;
 }
 </style>
