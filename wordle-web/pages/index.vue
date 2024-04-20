@@ -36,6 +36,7 @@
     >
       Guess!
     </v-btn>
+    <WordList />
   </v-container>
 </template>
 

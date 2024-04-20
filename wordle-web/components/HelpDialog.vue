@@ -10,8 +10,8 @@
         provide feedback to indicate if each letter:
         <ul>
           <li>Is in the correct position and is the right letter.</li>
-          <li>Is in the word but in the wrong position.</li>
-          <li>Is not in the word at all.</li>
+          <li>Is in the word but is in a misplaced position.</li>
+          <li>Is not in the word at all and is wrong.</li>
         </ul>
       </v-card-text>
       <v-card-text>
