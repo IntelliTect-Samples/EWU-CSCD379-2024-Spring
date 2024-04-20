@@ -37,6 +37,34 @@ export default defineNuxtPlugin((app) => {
             unknown: "#424242"
           },
         },
+        rainbow: {
+          colors: {
+            primary: "#FF0000",
+            secondary: "#FF8300",
+            error: "#FBFF00",
+            info: "#61FF00",
+            success: "#00FF0F",
+            warning: "#00FFDC",
+            correct:"#0083FF",
+            misplaced:"#A200FF",
+            wrong:"#FF00EC",
+            unknown: "#775D1C"
+          },
+        },
+        noir: {
+          colors: {
+            primary: "#000000",
+            secondary: "#000000",
+            error: "#C7C7C7",
+            info: "#ADADAD",
+            success: "#919191",
+            warning: "#777777",
+            correct:"#FFFFFF",
+            misplaced:"#505050",
+            wrong:"#262626",
+            unknown: "#000000"
+          },
+        },
       },
     },
   });

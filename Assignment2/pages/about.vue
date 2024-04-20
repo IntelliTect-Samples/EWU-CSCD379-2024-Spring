@@ -2,8 +2,8 @@
 	<v-card>
 		<v-card-title>About</v-card-title>
 		<v-card-text>
-			<p> Placeholder for about page text</p>
-			<p> Placeholder for Meg text</p>
+			<p> Wow this project is so amazing I definitely haven't stressed about it and lost sleep over it</p>
+			<p> To be fair though meg is a nice teacher, it just seems like everything it very fast</p>
 		</v-card-text>
 	</v-card>
 	<v-btn
