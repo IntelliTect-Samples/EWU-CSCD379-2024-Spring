@@ -45,8 +45,8 @@ export default defineNuxtPlugin((app) => {
             success: "#00E5E5",
             correct: "#00E5E5",
             misplaced: "#FEFE00",
-            wrong: "#757575",
-            unknown: "#424242"
+            wrong: "#424242",
+            unknown: "#757575"
           }
         },
       }

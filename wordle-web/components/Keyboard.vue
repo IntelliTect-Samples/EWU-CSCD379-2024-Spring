@@ -21,6 +21,8 @@ import { Game } from "~/scripts/game";
 import { Letter } from "~/scripts/letter";
 
 const game: Game = inject("GAME")!;
+//reset keybord after game is over
+
 
 
 const keyboardLetterRows = computed(() => {
