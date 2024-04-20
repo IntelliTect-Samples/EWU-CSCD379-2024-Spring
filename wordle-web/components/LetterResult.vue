@@ -37,7 +37,7 @@ const display = useDisplay();
 function onClicked() {
   if(!game) return;
 
-  if (props.letter.char === "👈") {
+  if (props.letter.char === "⌫ ") {
     game.removeLastLetter();
   } else {
     game.addLetter(props.letter.char.toUpperCase());
