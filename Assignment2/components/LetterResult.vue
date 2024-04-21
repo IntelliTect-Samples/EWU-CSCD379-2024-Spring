@@ -3,7 +3,7 @@
     :height="boxSize"
     :width="boxSize"
     :color="letter.color"
-    flat
+    :elevation="5"
     :class="[
       clickable ? '' : 'no-pointer',
       'align-center d-flex justify-center',
