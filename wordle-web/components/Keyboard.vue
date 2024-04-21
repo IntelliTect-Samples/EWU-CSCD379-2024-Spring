@@ -19,7 +19,7 @@
 <script setup lang="ts">
 import { Game } from "~/scripts/game";
 import { Letter } from "~/scripts/letter";
-
+import { GameState } from "~/scripts/game";
 const game: Game = inject("GAME")!;
 
 const keyboardLetterRows = computed(() => {

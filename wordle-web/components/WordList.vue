@@ -2,7 +2,7 @@
   <v-dialog v-model="modelValue" max-width="800" max-height="800" class="pa-2">
     <v-card>
       <v-autocomplete
-        v-model="search"
+        v-model="selectedWord"
         prepend-inner-icon="mdi-magnify"
         :items="validWords()"
         placeholder="Enter a Word!"
@@ -36,7 +36,7 @@ import { LetterState } from "~/scripts/letter";
 const game: Game = inject("GAME")!;
 
 const modelValue = defineModel<boolean>({ default: false });
-const search = ref("");
+const selectedWord = ref("");
 const words = WordList;
 const totalPages = ref(Math.ceil(words.length / 10));
 const updatedWords = ref(words);
@@ -101,8 +101,7 @@ watch(game.guessedLetters, () => {
 });
 
 const updatePage = () => {
-  console.log(search.value);
-  const index = updatedWords.value.indexOf(search.value.toLowerCase());
+  const index = updatedWords.value.indexOf(selectedWord.value.toLowerCase());
   if (index !== -1) {
     const pageNumber = Math.ceil((index + 1) / 10);
     currentPage.value = pageNumber;
