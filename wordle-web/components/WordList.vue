@@ -3,7 +3,7 @@
   {{ game.guessedLetters }}
 
   <ul>
-    <li v-for="word in updatedWords" :key="word">{{ word }}</li>
+    <li v-for="word in pagedWords" :key="word">{{ word }}</li>
   </ul>
 </template>
 
@@ -30,9 +30,35 @@ const pagedWords = computed(() => {
 function validWords(): string[] {
   return words.filter((word) => {
     for (let i = 0; i < game.guessedLetters.length; i++) {
+      const letterObj = game.guessedLetters[i];
+      const letterChar = letterObj.char.toLowerCase();
+
+      const indexOfLetterInWord = word.indexOf(letterChar);
+      const indexOfLetterInSecretWord = game.secretWord
+        .toLowerCase()
+        .indexOf(letterChar);
       if (
-        word.includes(game.guessedLetters[i].char.toLowerCase()) &&
+        word.includes(letterChar) &&
         game.guessedLetters[i].state === LetterState.Wrong
+      ) {
+        return false;
+      }
+      if (
+        !word.includes(letterChar) &&
+        (letterObj.state === LetterState.Correct ||
+          letterObj.state === LetterState.Misplaced)
+      ) {
+        return false;
+      }
+      if (
+        letterObj.state === LetterState.Misplaced &&
+        indexOfLetterInWord !== indexOfLetterInSecretWord
+      ) {
+        return false;
+      }
+      if (
+        letterObj.state === LetterState.Correct &&
+        indexOfLetterInWord !== indexOfLetterInSecretWord
       ) {
         return false;
       }
