@@ -13,7 +13,7 @@ const DeepSeaDive: ThemeDefinition = {
     lose: colors.red.lighten1,
     win: colors.green.accent3,
     correct: colors.lightBlue.accent1,
-    misplaced: colors.cyan.lighten2,
+    misplaced: colors.cyan.darken1,
     wrong: colors.teal.lighten1,
     unknown: colors.lightBlue.lighten3,
     background: colors.blue.lighten4,
