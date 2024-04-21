@@ -34,15 +34,17 @@ import {WordList} from "wordList.ts";
       <v-btn @click="game.submitGuess()" class="mb-5" color="primary">
         Guess!
       </v-btn>
+      <div>
+        <v-btn @click="toggleList">Word List (Below)</v-btn>
+      </div>
     </v-card>
-    <v-btn @click="toggleList">Word List</v-btn>
     <div v-if="list" class = "list-container">
         <v-virtual-scroll
           :height="300"
           :items= WordList
           >
           <template v-slot:default="{ item }">
-            <v-btn @click="wordList(item)" class="word-button">{{ item }}</v-btn>
+            <v-btn location = "center" @click="wordList(item)" class="word-button">{{ item }}</v-btn>
           </template>
         </v-virtual-scroll>
       </div>
