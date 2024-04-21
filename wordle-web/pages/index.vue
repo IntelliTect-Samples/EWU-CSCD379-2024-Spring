@@ -32,12 +32,21 @@
         Guess!
       </v-btn>
     </v-card>
+    <!--<ValidWord
+      @guessClick="checkGuess"
+      @wordSelection="selectWord"
+      :game="game"
+      :guess="myGuess"
+      elevation="5"
+    />-->
   </v-container>
 </template>
 
 <script setup lang="ts">
+import { WordList } from '~/scripts/wordList';
 import { Game, GameState } from '../scripts/game';
 const game: Game = reactive(new Game());
+let ValidWord = new Array<string>;
 
 provide('GAME', game);
 
@@ -60,5 +69,20 @@ function onKeyup(event: KeyboardEvent) {
   } else if (event.key.match(/[A-z]/) && event.key.length === 1) {
     game.addLetter(event.key.toUpperCase());
   }
+}
+function checkGuess(){
+  game.submitGuess();
+  myGuess.value = '';
+}
+function selectWord(selected: string){
+  game.guess.clear();
+  myGuess.value = '';
+  for(let letter of selected){
+    game.addLetter(letter);
+    myGuess.value += letter;
+  }
+}
+function getValidGuess(){
+  ValidWord = WordList.validateWord(myGuess.value);
 }
 </script>
