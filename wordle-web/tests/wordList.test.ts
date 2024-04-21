@@ -1,9 +1,19 @@
 import { describe, it, test, expect } from 'vitest';
+import { Game } from '~/scripts/game';
 import { myWordList } from '~/scripts/wordList';
 import { ValidWordsUtils } from '~/scripts/validWordsUtils';
 
 test('validWords', () => {
-  expect('a'.charCodeAt(0)).toBe(97);
+  let game = new Game(6);
+  game.secretWord = 'abaca';
+  let utils = new ValidWordsUtils();
+  game.addLetter('a');
+  game.addLetter('a');
+  game.addLetter('r');
+  game.addLetter('g');
+  game.addLetter('h');
+  let validWords = utils.validWords(game);
+  expect(validWords[0]).toBe('abaca');
 });
 
 // describe("wordList", () => {
