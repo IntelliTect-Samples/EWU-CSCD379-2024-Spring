@@ -32,14 +32,7 @@
       <v-btn @click="game.submitGuess()" class="mb-5" color="primary">
         Guess!
       </v-btn>
-      <ValidWords
-        :game
-        @chooseWord="
-          word => {
-            selectWord(word);
-            console.log(word);
-          }
-        " />
+      <ValidWords :game @chooseWord="word => selectWord(word)" />
     </v-card>
     <!-- <ValidWord
       @guessClick="checkGuess"
@@ -82,7 +75,7 @@ function selectWord(selected: string) {
   game.guess.clear();
   myGuess.value = '';
   selected.split('').forEach(character => {
-    console.log(character);
+    character = character.toUpperCase();
     game.addLetter(character);
     myGuess.value += character;
   });

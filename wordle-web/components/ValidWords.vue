@@ -3,9 +3,9 @@
     <v-card-title> Valid Words </v-card-title>
     <v-infinite-scroll :height="300" :items="output" :onLoad="load">
       <template v-for="(item, index) in output" :key="index">
-        <div class="pa-2" @click="$emit('chooseWord', item)">
+        <v-btn class="pa-2" height="50" @click="$emit('chooseWord', item)">
           {{ item }}
-        </div>
+        </v-btn>
       </template>
     </v-infinite-scroll>
   </v-card>
