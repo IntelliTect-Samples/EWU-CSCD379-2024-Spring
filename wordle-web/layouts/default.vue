@@ -2,14 +2,16 @@
   <v-app>
     <v-app-bar color="primary" :elevation="2">
       <v-app-bar-title @click="$router.push('/')" style="cursor: pointer">
-        <v-icon color="secondary"> mdi-heart </v-icon>
+        <v-icon color="secondary"> mdi-flower-poppy </v-icon>
         Pink Wordle</v-app-bar-title
       >
 
       <v-btn to="/about">About</v-btn>
       <v-btn icon="mdi-theme-light-dark" @click="toggleTheme" />
       <v-btn icon="mdi-help-circle" @click="showHelpDialog = true" />
+      <v-btn icon="mdi-cog" @click="showSettingsDialog = true" />
       <HelpDialog v-model="showHelpDialog" />
+      <SettingsDialogue v-model="showSettingsDialog" />
     </v-app-bar>
     <v-main>
       <slot />
@@ -24,6 +26,7 @@ import nuxtStorage from "nuxt-storage";
 const router = useRouter();
 const theme = useTheme();
 const showHelpDialog = ref(false);
+const showSettingsDialog = ref(false);
 
 function toggleTheme() {
   if (theme.global.name.value === "light") {
