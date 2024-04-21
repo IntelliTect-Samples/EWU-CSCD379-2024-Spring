@@ -24,7 +24,6 @@
 
 <script setup lang="ts">
 import { Letter } from '~/scripts/letter';
-import { defineProps } from 'vue';
 import { useDisplay } from 'vuetify';
 import { Game } from '~/scripts/game';
 
