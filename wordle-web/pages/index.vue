@@ -32,7 +32,14 @@
       <v-btn @click="game.submitGuess()" class="mb-5" color="primary">
         Guess!
       </v-btn>
-      <ValidWords :game />
+      <ValidWords
+        :game
+        @chooseWord="
+          word => {
+            selectWord(word);
+            console.log(word);
+          }
+        " />
     </v-card>
     <!-- <ValidWord
       @guessClick="checkGuess"
@@ -69,6 +76,16 @@ function onKeyup(event: KeyboardEvent) {
   } else if (event.key.match(/[A-z]/) && event.key.length === 1) {
     game.addLetter(event.key.toUpperCase());
   }
+}
+
+function selectWord(selected: string) {
+  game.guess.clear();
+  myGuess.value = '';
+  selected.split('').forEach(character => {
+    console.log(character);
+    game.addLetter(character);
+    myGuess.value += character;
+  });
 }
 // function checkGuess() {
 //   game.submitGuess();

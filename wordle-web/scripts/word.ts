@@ -1,5 +1,5 @@
 import { Letter, LetterState } from './letter';
-import { WordList, myWordList } from './wordList';
+import { myWordList } from './wordList';
 
 export class Word {
   public letters: Letter[];
@@ -37,7 +37,7 @@ export class Word {
     }
   }
   public get isFilled(): boolean {
-    return this.letters.every((letter) => letter.char);
+    return this.letters.every(letter => letter.char);
   }
 
   public compare(secretWordString: string): boolean {
