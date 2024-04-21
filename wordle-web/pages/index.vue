@@ -17,12 +17,13 @@
           <v-icon size="large" class="mr-2"> mdi-restart </v-icon> Restart Game
         </v-btn>
       </v-alert>
-      <v-card-title v-else>Wordle</v-card-title>
 
-      <GameBoardGuess
-        v-for="(guess, i) of game.guesses"
-        :key="i"
-        :guess="guess" />
+      <div class="mt-10">
+        <GameBoardGuess
+          v-for="(guess, i) of game.guesses"
+          :key="i"
+          :guess="guess" />
+      </div>
 
       <div class="my-10">
         <Keyboard />
@@ -31,22 +32,21 @@
       <v-btn @click="game.submitGuess()" class="mb-5" color="primary">
         Guess!
       </v-btn>
+      <ValidWords :game />
     </v-card>
-    <!--<ValidWord
+    <!-- <ValidWord
       @guessClick="checkGuess"
       @wordSelection="selectWord"
       :game="game"
       :guess="myGuess"
-      elevation="5"
-    />-->
+      elevation="5" /> -->
   </v-container>
 </template>
 
 <script setup lang="ts">
-import { WordList } from '~/scripts/wordList';
 import { Game, GameState } from '../scripts/game';
 const game: Game = reactive(new Game());
-let ValidWord = new Array<string>;
+let ValidWord = new Array<string>();
 
 provide('GAME', game);
 
@@ -70,19 +70,19 @@ function onKeyup(event: KeyboardEvent) {
     game.addLetter(event.key.toUpperCase());
   }
 }
-function checkGuess(){
-  game.submitGuess();
-  myGuess.value = '';
-}
-function selectWord(selected: string){
-  game.guess.clear();
-  myGuess.value = '';
-  for(let letter of selected){
-    game.addLetter(letter);
-    myGuess.value += letter;
-  }
-}
-function getValidGuess(){
-  ValidWord = WordList.validateWord(myGuess.value);
-}
+// function checkGuess() {
+//   game.submitGuess();
+//   myGuess.value = '';
+// }
+// function selectWord(selected: string) {
+//   game.guess.clear();
+//   myGuess.value = '';
+//   for (let letter of selected) {
+//     game.addLetter(letter);
+//     myGuess.value += letter;
+//   }
+// }
+// function getValidGuess() {
+//   ValidWord = WordList.validateWord(myGuess.value);
+// }
 </script>

@@ -1,6 +1,6 @@
 import { LetterState, type Letter } from './letter';
 import { Word } from './word';
-import { WordList, myWordList } from './wordList';
+import { myWordList } from './wordList';
 
 export class Game {
   public maxAttempts: number;
@@ -22,7 +22,7 @@ export class Game {
 
     // Get random word from word list
     this.secretWord =
-      myWordList[Math.floor(Math.random() * WordList.length)].toUpperCase();
+      myWordList[Math.floor(Math.random() * myWordList.length)].toUpperCase();
 
     // Populate guesses with the correct number of empty words
     this.guesses = [];
