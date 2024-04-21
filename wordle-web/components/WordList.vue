@@ -13,6 +13,7 @@
         class="align-center d-flex justify-center"
         v-for="word in pagedWords"
         :key="word"
+        @click="addGuess(word)"
       >
         {{ word.toUpperCase() }}
       </v-btn>
@@ -82,6 +83,14 @@ function validWords(): string[] {
     }
     return true;
   });
+}
+
+function addGuess(word: string) {
+  game.guess.clear();
+  for (let i = 0; i < word.length; i++) {
+    game.addLetter(word[i].toUpperCase());
+  }
+  modelValue.value = false;
 }
 
 watch(game.guessedLetters, () => {
