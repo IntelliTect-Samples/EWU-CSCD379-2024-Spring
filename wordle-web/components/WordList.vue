@@ -1,7 +1,5 @@
 <template>
   <v-pagination v-model="currentPage" :length="totalPages" />
-  {{ game.guessedLetters }}
-
   <ul>
     <li v-for="word in pagedWords" :key="word">{{ word }}</li>
   </ul>
@@ -14,13 +12,12 @@ import { LetterState } from "~/scripts/letter";
 const game: Game = inject("GAME")!;
 
 const words = WordList;
-const wordsPerPage = WordList.length / 10;
-const totalPages = 10;
+const totalPages = ref(words.length / 20);
 const updatedWords = ref(words);
 const currentPage = ref(1);
 const pagedWords = computed(() => {
-  const start = (currentPage.value - 1) * wordsPerPage;
-  const end = start + wordsPerPage;
+  const start = (currentPage.value - 1) * 20;
+  const end = start + 20;
   return (game.guessedLetters.length === 0 ? words : validWords()).slice(
     start,
     end
@@ -51,13 +48,9 @@ function validWords(): string[] {
         return false;
       }
       if (
-        letterObj.state === LetterState.Misplaced &&
-        indexOfLetterInWord !== indexOfLetterInSecretWord
-      ) {
-        return false;
-      }
-      if (
-        letterObj.state === LetterState.Correct &&
+        word.includes(letterChar) &&
+        (letterObj.state === LetterState.Correct ||
+          letterObj.state === LetterState.Misplaced) &&
         indexOfLetterInWord !== indexOfLetterInSecretWord
       ) {
         return false;
@@ -69,5 +62,9 @@ function validWords(): string[] {
 
 watch(game.guessedLetters, () => {
   updatedWords.value = validWords();
+});
+
+watch(updatedWords, () => {
+  totalPages.value = Math.ceil(updatedWords.value.length / 20);
 });
 </script>
