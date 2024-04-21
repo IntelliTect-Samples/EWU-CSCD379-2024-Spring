@@ -9,20 +9,24 @@
         <v-select
           v-model="selctedTheme"
           :items="['Light', 'Dark', 'Deep See Dive']"
-          @update:model-value="updateTheme"
         />
       </v-card-item>
       <v-divider />
 
       <v-card-actions>
         <v-spacer></v-spacer>
-
+        <v-btn
+          color="secondary"
+          variant="tonal"
+          text="Apply"
+          @click="updateTheme"
+        />
         <v-btn
           color="secondary"
           variant="tonal"
           text="Close"
           @click="modelValue = false"
-        ></v-btn>
+        />
       </v-card-actions>
     </v-card>
   </v-dialog>

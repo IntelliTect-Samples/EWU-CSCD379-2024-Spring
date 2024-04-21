@@ -20,9 +20,21 @@
         For example, if the word is "DAISY" and you guess "BASED", the feedback
         might look like this:
       </v-card-text>
-      <div class="d-flex justify-center mt-3 mb-5">
+      <v-card-item>
         <GameBoardGuess :guess="exampleWord" />
-      </div>
+      </v-card-item>
+
+      <v-card-item>
+        <v-label>Color Codes</v-label>
+        <v-container class="d-flex flex-row ga-5">
+          <LetterResult
+            v-for="letter in key.letters"
+            :key="letter.char"
+            :letter="letter"
+            :clickable="false"
+          />
+        </v-container>
+      </v-card-item>
 
       <v-divider />
       <v-card-actions>
@@ -53,4 +65,12 @@ exampleWord.letters = [
   new Letter("E", LetterState.Wrong),
   new Letter("D", LetterState.Misplaced),
 ];
+
+const key = {
+  letters: [
+    new Letter("Correct", LetterState.Correct),
+    new Letter("Misplaced", LetterState.Misplaced),
+    new Letter("Wrong", LetterState.Wrong),
+  ],
+};
 </script>
