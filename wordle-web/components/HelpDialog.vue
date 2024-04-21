@@ -2,7 +2,7 @@
   <v-dialog v-model="modelValue" max-width="500">
     <v-card>
       <v-sheet color="primary">
-        <v-card-text> How to play Wordle </v-card-text>
+        <v-card-title> How to play Wordle </v-card-title>
       </v-sheet>
       <v-card-text>
         Wordle is a word puzzle game where you have to guess a five-letter word

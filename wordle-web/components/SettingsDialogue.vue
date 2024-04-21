@@ -4,22 +4,25 @@
       <v-sheet color="primary">
         <v-card-title> Settings </v-card-title>
       </v-sheet>
-      <v-container class="pa-5">
-        <v-row>
-          <v-col cols="4" class="text-h6"> Toggle Theme </v-col>
-          <v-col>
-            <v-select
-              v-model="theme.global.name.value"
-              :items="['light', 'dark']"
-              @change="toggleTheme"
-            />
-          </v-col>
-        </v-row>
-      </v-container>
+      <v-card-item>
+        <v-label>Theme</v-label>
+        <v-select
+          v-model="selctedTheme"
+          :items="['Light', 'Dark', 'Deep See Dive']"
+          @update:model-value="updateTheme"
+        />
+      </v-card-item>
+      <v-divider />
+
       <v-card-actions>
         <v-spacer></v-spacer>
 
-        <v-btn text="Exit Settings" @click="modelValue = false"></v-btn>
+        <v-btn
+          color="secondary"
+          variant="tonal"
+          text="Close"
+          @click="modelValue = false"
+        ></v-btn>
       </v-card-actions>
     </v-card>
   </v-dialog>
@@ -30,12 +33,19 @@ const modelValue = defineModel<boolean>({ default: false });
 import { useTheme } from "vuetify";
 import nuxtStorage from "nuxt-storage";
 const theme = useTheme();
+const selctedTheme = ref();
 
-function toggleTheme() {
-  if (theme.global.name.value === "light") {
-    theme.global.name.value = "light";
-  } else {
-    theme.global.name.value = "dark";
+function updateTheme() {
+  switch (selctedTheme.value) {
+    case "Light":
+      theme.global.name.value = "light";
+      break;
+    case "Dark":
+      theme.global.name.value = "dark";
+      break;
+    case "Deep See Dive":
+      theme.global.name.value = "DeepSeaDive";
+      break;
   }
 
   nuxtStorage.localStorage.setData("theme", theme.global.name.value);
