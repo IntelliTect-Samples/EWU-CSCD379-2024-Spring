@@ -1,7 +1,7 @@
 <template>
   <v-card
-    :height="boxSize"
-    :width="letter.char.length < 2 ? boxSize : boxSize * 1.5"
+    :height="updatedBaseSize"
+    :width="letter.char.length < 2 ? updatedBaseSize : updatedBaseSize * 1.5"
     elevation="4"
     flat
     :class="[
@@ -26,16 +26,17 @@ const props = withDefaults(
   defineProps<{
     letter: Letter;
     clickable?: boolean;
+    baseSize?: number;
   }>(),
   {
     clickable: false,
+    baseSize: 60,
   }
 );
 
 const game: Game | undefined = inject("GAME", undefined);
-const boxSize = ref(60);
 const display = useDisplay();
-
+const updatedBaseSize = ref(props.baseSize);
 function onClicked() {
   if (!game) return;
 
@@ -63,11 +64,11 @@ function correctState(letterState: LetterState) {
 
 watch([display.sm, display.xs, display.md], () => {
   if (display.xs.value) {
-    boxSize.value = 30;
+    updatedBaseSize.value = props.baseSize - 30;
   } else if (display.sm.value) {
-    boxSize.value = 40;
+    updatedBaseSize.value = props.baseSize - 20;
   } else {
-    boxSize.value = 60;
+    updatedBaseSize.value = 60;
   }
 });
 </script>

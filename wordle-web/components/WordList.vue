@@ -1,5 +1,5 @@
 <template>
-  <v-dialog v-model="modelValue" max-width="800" max-height="800" class="pa-2">
+  <v-dialog v-model="modelValue" max-width="800" max-height="600" class="pa-2">
     <v-card>
       <v-autocomplete
         v-model="selectedWord"
@@ -10,7 +10,7 @@
       >
       </v-autocomplete>
       <v-btn
-        height="60px"
+        height="40px"
         class="align-center d-flex justify-center"
         v-for="word in pagedWords"
         :key="word"

@@ -17,5 +17,5 @@ test("guess-word", () => {
   game.guess.addLetter("Z");
   game.guess.addLetter("Z");
   game.guess.addLetter("Z");
-  expect(game.guess.isFilled()).toBe(true);
+  expect(game.guess.letters.length).toBe(6);
 });
