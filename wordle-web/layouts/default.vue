@@ -2,7 +2,7 @@
   <v-app>
     <v-app-bar color="primary" :elevation="2">
       <v-app-bar-title @click="$router.push('/')" style="cursor: pointer">
-        <v-icon color="secondary"> mdi-flower-poppy </v-icon>
+        <v-icon> mdi-flower-poppy </v-icon>
         Pink Wordle</v-app-bar-title
       >
 

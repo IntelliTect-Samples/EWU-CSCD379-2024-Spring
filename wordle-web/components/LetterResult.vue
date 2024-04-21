@@ -2,10 +2,11 @@
   <v-card
     :height="boxSize"
     :width="letter.char.length < 2 ? boxSize : boxSize * 1.5"
-    :color="letter.color"
+    elevation="4"
     flat
     :class="[
       clickable ? '' : 'no-pointer',
+      correctState(letter.state),
       'align-center d-flex justify-center',
     ]"
     @click="onClicked()"
@@ -19,6 +20,7 @@ import { Letter } from "~/scripts/letter";
 import { defineProps } from "vue";
 import { useDisplay } from "vuetify";
 import { Game } from "~/scripts/game";
+import { LetterState } from "~/scripts/letter";
 
 const props = withDefaults(
   defineProps<{
@@ -46,6 +48,19 @@ function onClicked() {
   }
 }
 
+function correctState(letterState: LetterState) {
+  switch (letterState) {
+    case LetterState.Correct:
+      return "correct-letter";
+    case LetterState.Wrong:
+      return "wrong-letter";
+    case LetterState.Misplaced:
+      return "misplaced-letter";
+    default:
+      return "unkown-letter";
+  }
+}
+
 watch([display.sm, display.xs, display.md], () => {
   if (display.xs.value) {
     boxSize.value = 30;
@@ -60,5 +75,33 @@ watch([display.sm, display.xs, display.md], () => {
 <style scoped>
 .no-pointer {
   pointer-events: none;
+}
+.correct-letter {
+  background: linear-gradient(
+    to bottom,
+    rgba(var(--v-theme-correct), 0.6),
+    rgba(var(--v-theme-correct), 0.9)
+  );
+}
+.wrong-letter {
+  background: linear-gradient(
+    to bottom,
+    rgba(var(--v-theme-wrong), 0.6),
+    rgba(var(--v-theme-wrong), 0.9)
+  );
+}
+.misplaced-letter {
+  background: linear-gradient(
+    to bottom,
+    rgba(var(--v-theme-misplaced), 0.6),
+    rgba(var(--v-theme-misplaced), 0.9)
+  );
+}
+.unkown-letter {
+  background: linear-gradient(
+    to bottom,
+    rgba(var(--v-theme-unknown), 0.6),
+    rgba(var(--v-theme-unknown), 0.9)
+  );
 }
 </style>

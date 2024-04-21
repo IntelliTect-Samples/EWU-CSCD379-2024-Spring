@@ -2,23 +2,24 @@
   <v-container>
     <v-dialog v-model="isGameOn" class="mx-auto" max-width="500">
       <v-card
-        :color="game.gameState == GameState.Won ? 'success' : 'error'"
+        :color="game.gameState == GameState.Won ? 'win' : 'lose'"
         tile
-        class="pa-5 text-center"
+        class="pa-5 text-center text-white"
+        rounded
       >
-        <h3>
+        <v-card-title class="text-h4">
           You've
           {{ game.gameState == GameState.Won ? "Won! 🥳" : "Lost... 😭" }}
-        </h3>
-        <v-divider class="my-5" />
+        </v-card-title>
 
-        <v-card-text class="text-h5">
+        <v-card-text class="my-3">
           The word was: <strong>{{ game.secretWord }}</strong>
         </v-card-text>
-        <v-divider class="my-5" />
-        <v-btn variant="outlined" @click="game.startNewGame()">
-          <v-icon size="large" class="mr-2"> mdi-restart </v-icon> Restart Game
-        </v-btn>
+        <v-card-actions class="mx-auto">
+          <v-btn variant="outlined" @click="game.startNewGame()">
+            <v-icon size="large" class="mr-2"> mdi-restart </v-icon> Play Again
+          </v-btn>
+        </v-card-actions>
       </v-card>
     </v-dialog>
     <GameBoardGuess
