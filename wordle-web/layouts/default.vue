@@ -7,7 +7,6 @@
       >
 
       <v-btn to="/about">About</v-btn>
-      <v-btn icon="mdi-theme-light-dark" @click="toggleTheme" />
       <v-btn icon="mdi-help-circle" @click="showHelpDialog = true" />
       <v-btn icon="mdi-cog" @click="showSettingsDialog = true" />
       <HelpDialog v-model="showHelpDialog" />
@@ -23,20 +22,9 @@
 import { useTheme } from "vuetify";
 import nuxtStorage from "nuxt-storage";
 
-const router = useRouter();
 const theme = useTheme();
 const showHelpDialog = ref(false);
 const showSettingsDialog = ref(false);
-
-function toggleTheme() {
-  if (theme.global.name.value === "light") {
-    theme.global.name.value = "dark";
-  } else {
-    theme.global.name.value = "light";
-  }
-
-  nuxtStorage.localStorage.setData("theme", theme.global.name.value);
-}
 
 onMounted(() => {
   var defaultTheme = nuxtStorage.localStorage.getData("theme");
