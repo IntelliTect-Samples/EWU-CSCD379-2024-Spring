@@ -2,12 +2,13 @@
   <v-dialog v-model="modelValue" max-width="800" max-height="800" class="pa-2">
     <v-card>
       <v-autocomplete
-        menu-icon
         v-model="search"
         prepend-inner-icon="mdi-magnify"
         :items="validWords()"
         placeholder="Enter a Word!"
-      ></v-autocomplete>
+        @update:modelValue="updatePage"
+      >
+      </v-autocomplete>
       <v-btn
         height="60px"
         class="align-center d-flex justify-center"
@@ -98,12 +99,13 @@ watch(game.guessedLetters, () => {
   updatedWords.value = validWords();
   totalPages.value = Math.ceil(updatedWords.value.length / 10);
 });
-watch(search, () => {
-  const index = updatedWords.value.indexOf(search.value.toLowerCase());
 
+const updatePage = () => {
+  console.log(search.value);
+  const index = updatedWords.value.indexOf(search.value.toLowerCase());
   if (index !== -1) {
     const pageNumber = Math.ceil((index + 1) / 10);
     currentPage.value = pageNumber;
   }
-});
+};
 </script>
