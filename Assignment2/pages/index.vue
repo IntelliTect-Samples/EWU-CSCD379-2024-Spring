@@ -44,7 +44,7 @@ import {WordList} from "wordList.ts";
           :items= WordList
           >
           <template v-slot:default="{ item }">
-            <v-btn location = "center" @click="wordList(item)" class="word-button">{{ item }}</v-btn>
+            <v-btn location = "center" hover @click="wordList(item)" class="word-button">{{ item }}</v-btn>
           </template>
         </v-virtual-scroll>
       </div>
