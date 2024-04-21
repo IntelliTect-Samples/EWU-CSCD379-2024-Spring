@@ -6,7 +6,6 @@
         Ascetic Wordle</v-app-bar-title
       >
 
-      <v-btn to="/about">About</v-btn>
       <v-btn icon="mdi-help-circle" @click="showHelpDialog = true" />
       <v-btn icon="mdi-cog" @click="showSettingsDialog = true" />
       <v-app-bar-nav-icon
