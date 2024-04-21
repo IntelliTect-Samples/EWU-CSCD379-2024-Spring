@@ -96,12 +96,8 @@ function addGuess(word: string) {
 
 watch(game.guessedLetters, () => {
   updatedWords.value = validWords();
-});
-
-watch(updatedWords, () => {
   totalPages.value = Math.ceil(updatedWords.value.length / 10);
 });
-
 watch(search, () => {
   const index = updatedWords.value.indexOf(search.value.toLowerCase());
 

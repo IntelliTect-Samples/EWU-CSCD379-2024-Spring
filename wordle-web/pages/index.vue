@@ -56,6 +56,10 @@ onUnmounted(() => {
 });
 
 function onKeyup(event: KeyboardEvent) {
+  if (showWordsList.value) {
+    return;
+  }
+
   if (event.key === "Enter") {
     game.submitGuess();
   } else if (event.key == "Backspace") {
