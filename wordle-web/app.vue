@@ -23,14 +23,14 @@
 
 <script setup lang="ts">
 import { useTheme } from "vuetify";
-import nuxtStorage from 'nuxt-storage';
+import nuxtStorage from "nuxt-storage";
 
 const router = useRouter();
 const theme = useTheme();
 const showHelpDialog = ref(false);
 
 onMounted(() => {
-  var defaultTheme = nuxtStorage.localStorage.getData('theme');
+  var defaultTheme = nuxtStorage.localStorage.getData("theme");
   theme.global.name.value = defaultTheme ?? "dark";
 });
 
@@ -41,6 +41,6 @@ function toggleTheme() {
     theme.global.name.value = "light";
   }
 
-  nuxtStorage.localStorage.setData('theme', theme.global.name.value);
+  nuxtStorage.localStorage.setData("theme", theme.global.name.value);
 }
 </script>
