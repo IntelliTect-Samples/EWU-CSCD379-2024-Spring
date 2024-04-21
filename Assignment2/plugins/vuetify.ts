@@ -73,9 +73,9 @@ export default defineNuxtPlugin((app) => {
             info: "#2196F3",
             success: "#4CAF50",
             warning: "#FFC107",
-            correct:"#4CAF50",
-            misplaced:"#FFC107",
-            wrong:"#616161",
+            correct:"#05FF00",
+            misplaced:"#FFEF28",
+            wrong:"#FF5252",
             unknown: "#424242"
           },
         },
@@ -87,14 +87,14 @@ export default defineNuxtPlugin((app) => {
             info: "#2196F3",
             success: "#4CAF50",
             warning: "#FFC107",
-            correct:"#4CAF50",
-            misplaced:"#FFC107",
-            wrong:"#616161",
+            correct:"#FFFFFF",
+            misplaced:"#505050",
+            wrong:"#000000",
             unknown: "#424242"
-          },
-        },
-      },
-    },
+          }
+        }
+      }
+    }
   });
   app.vueApp.use(vuetify);
 });

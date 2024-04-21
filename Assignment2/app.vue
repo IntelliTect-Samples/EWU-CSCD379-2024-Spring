@@ -24,8 +24,8 @@
           <v-list-item @click="menuItemClicked(2)" class="text-center">Dark Mode</v-list-item>
           <v-list-item @click="menuItemClicked(3)" class="text-center">Light Rainbow Mode</v-list-item>
           <v-list-item @click="menuItemClicked(4)" class="text-center">Light Noir Mode</v-list-item>
-          <v-list-item @click="menuItemClicked(3)" class="text-center">Dark Rainbow Mode</v-list-item>
-          <v-list-item @click="menuItemClicked(4)" class="text-center">Dark Noir Mode</v-list-item>
+          <v-list-item @click="menuItemClicked(5)" class="text-center">Dark Rainbow Mode</v-list-item>
+          <v-list-item @click="menuItemClicked(6)" class="text-center">Dark Noir Mode</v-list-item>
         </v-list>
       </v-navigation-drawer>
       <v-main>
