@@ -1,8 +1,25 @@
 <template>
-  <v-pagination v-model="currentPage" :length="totalPages" />
-  <ul>
-    <li v-for="word in pagedWords" :key="word">{{ word }}</li>
-  </ul>
+  <v-dialog v-model="modelValue" max-width="800" max-height="700">
+    <v-card>
+      <v-card-text
+        height="60px"
+        width="200px"
+        class="align-center d-flex justify-center"
+        @click="console.log('hi')"
+        v-for="word in pagedWords"
+        :key="word"
+      >
+        {{ word.toUpperCase() }}
+      </v-card-text>
+      <v-card-actions>
+        <v-pagination
+          density="compact"
+          v-model="currentPage"
+          :length="totalPages"
+        />
+      </v-card-actions>
+    </v-card>
+  </v-dialog>
 </template>
 
 <script setup lang="ts">
@@ -11,13 +28,15 @@ import { Game } from "~/scripts/game";
 import { LetterState } from "~/scripts/letter";
 const game: Game = inject("GAME")!;
 
+const modelValue = defineModel<boolean>({ default: false });
+
 const words = WordList;
-const totalPages = ref(words.length / 20);
+const totalPages = ref(words.length / 10);
 const updatedWords = ref(words);
 const currentPage = ref(1);
 const pagedWords = computed(() => {
-  const start = (currentPage.value - 1) * 20;
-  const end = start + 20;
+  const start = (currentPage.value - 1) * 10;
+  const end = start + 10;
   return (game.guessedLetters.length === 0 ? words : validWords()).slice(
     start,
     end
