@@ -37,7 +37,7 @@ const game: Game = inject("GAME")!;
 const modelValue = defineModel<boolean>({ default: false });
 const search = ref("");
 const words = WordList;
-const totalPages = ref(words.length / 10);
+const totalPages = ref(Math.ceil(words.length / 10));
 const updatedWords = ref(words);
 const currentPage = ref(1);
 const pagedWords = computed(() => {
