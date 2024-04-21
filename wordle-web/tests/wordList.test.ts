@@ -2,7 +2,9 @@ import { describe, it, test, expect } from 'vitest';
 import { myWordList } from '~/scripts/wordList';
 import { ValidWordsUtils } from '~/scripts/validWordsUtils';
 
-test('validWords', () => {});
+test('validWords', () => {
+  expect('a'.charCodeAt(0)).toBe(97);
+});
 
 // describe("wordList", () => {
 //     it("should have a list of 1 letter", () => {
