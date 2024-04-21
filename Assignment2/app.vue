@@ -46,6 +46,10 @@ function toggleDrawer() {
   drawer.value = !drawer.value;
 }
 
+function toggleMenu(){
+  menu.value = !menu.value;
+}
+
 onMounted(() => {
   var defaultTheme = nuxtStorage.localStorage.getData("theme");
   theme.global.name.value = defaultTheme ?? "dark";
@@ -65,8 +69,5 @@ function menuItemClicked(item: number){
     theme.global.name.value = "noir";
   }
   nuxtStorage.localStorage.setData("theme", theme.global.name.value);
-}
-function toggleMenu(){
-  menu.value = !menu.value;
 }
 </script>
