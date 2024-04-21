@@ -22,8 +22,10 @@
           <v-list-item class="text-center">Choose your color mode!</v-list-item>
           <v-list-item @click="menuItemClicked(1)" class="text-center">Light Mode</v-list-item>
           <v-list-item @click="menuItemClicked(2)" class="text-center">Dark Mode</v-list-item>
-          <v-list-item @click="menuItemClicked(3)" class="text-center">Rainbow Mode</v-list-item>
-          <v-list-item @click="menuItemClicked(4)" class="text-center">Noir Mode</v-list-item>
+          <v-list-item @click="menuItemClicked(3)" class="text-center">Light Rainbow Mode</v-list-item>
+          <v-list-item @click="menuItemClicked(4)" class="text-center">Light Noir Mode</v-list-item>
+          <v-list-item @click="menuItemClicked(3)" class="text-center">Dark Rainbow Mode</v-list-item>
+          <v-list-item @click="menuItemClicked(4)" class="text-center">Dark Noir Mode</v-list-item>
         </v-list>
       </v-navigation-drawer>
       <v-main>
@@ -63,10 +65,16 @@ function menuItemClicked(item: number){
     theme.global.name.value = "dark";
   }
   else if(item == 3){
-    theme.global.name.value = "rainbow";
+    theme.global.name.value = "lightrainbow";
   }
   else if(item == 4){
-    theme.global.name.value = "noir";
+    theme.global.name.value = "lightnoir";
+  }
+  else if(item == 5){
+    theme.global.name.value = "darkrainbow";
+  }
+  else if(item == 6){
+    theme.global.name.value = "darknoir";
   }
   nuxtStorage.localStorage.setData("theme", theme.global.name.value);
 }

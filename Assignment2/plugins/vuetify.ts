@@ -23,6 +23,34 @@ export default defineNuxtPlugin((app) => {
             unknown: "#d6d6d6"
           },
         },
+        lightrainbow: {
+          colors: {
+            primary: "#673AB7",
+            secondary: "#FF9800",
+            error: "#FF5252",
+            info: "#2196F3",
+            success: "#4CAF50",
+            warning: "#FFC107",
+            correct:"#05FF00",
+            misplaced:"#FFEF28",
+            wrong:"#FF5252",
+            unknown: "#d6d6d6"
+          },
+        },
+        lightnoir: {
+          colors: {
+            primary: "#673AB7",
+            secondary: "#FF9800",
+            error: "#FF5252",
+            info: "#2196F3",
+            success: "#4CAF50",
+            warning: "#FFC107",
+            correct:"#FFFFFF",
+            misplaced:"#505050",
+            wrong:"#000000",
+            unknown: "#d6d6d6"
+          },
+        },
         dark: {
           colors: {
             primary: "#673AB7",
@@ -37,32 +65,32 @@ export default defineNuxtPlugin((app) => {
             unknown: "#424242"
           },
         },
-        rainbow: {
+        darkrainbow: {
           colors: {
-            primary: "#FF0000",
-            secondary: "#FF8300",
-            error: "#FBFF00",
-            info: "#61FF00",
-            success: "#00FF0F",
-            warning: "#00FFDC",
-            correct:"#0083FF",
-            misplaced:"#A200FF",
-            wrong:"#FF00EC",
-            unknown: "#775D1C"
+            primary: "#673AB7",
+            secondary: "#FF9800",
+            error: "#FF5252",
+            info: "#2196F3",
+            success: "#4CAF50",
+            warning: "#FFC107",
+            correct:"#4CAF50",
+            misplaced:"#FFC107",
+            wrong:"#616161",
+            unknown: "#424242"
           },
         },
-        noir: {
+        darknoir: {
           colors: {
-            primary: "#000000",
-            secondary: "#000000",
-            error: "#C7C7C7",
-            info: "#ADADAD",
-            success: "#919191",
-            warning: "#777777",
-            correct:"#FFFFFF",
-            misplaced:"#505050",
-            wrong:"#262626",
-            unknown: "#000000"
+            primary: "#673AB7",
+            secondary: "#FF9800",
+            error: "#FF5252",
+            info: "#2196F3",
+            success: "#4CAF50",
+            warning: "#FFC107",
+            correct:"#4CAF50",
+            misplaced:"#FFC107",
+            wrong:"#616161",
+            unknown: "#424242"
           },
         },
       },
