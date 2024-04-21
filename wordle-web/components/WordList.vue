@@ -91,6 +91,7 @@ function addGuess(word: string) {
     game.addLetter(word[i].toUpperCase());
   }
   modelValue.value = false;
+  currentPage.value = 1;
 }
 
 watch(game.guessedLetters, () => {
@@ -98,7 +99,7 @@ watch(game.guessedLetters, () => {
 });
 
 watch(updatedWords, () => {
-  totalPages.value = Math.ceil(updatedWords.value.length / 20);
+  totalPages.value = Math.ceil(updatedWords.value.length / 10);
 });
 
 watch(search, () => {
