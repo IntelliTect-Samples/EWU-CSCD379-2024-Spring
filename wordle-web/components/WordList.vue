@@ -1,21 +1,28 @@
 <template>
   <v-dialog v-model="modelValue" max-width="800" max-height="800" class="pa-2">
     <v-card>
+      <v-autocomplete
+        menu-icon
+        v-model="search"
+        prepend-inner-icon="mdi-magnify"
+        :items="validWords()"
+        placeholder="Enter a Word!"
+      ></v-autocomplete>
       <v-btn
         height="60px"
-        width="200px"
         class="align-center d-flex justify-center"
-        @click="console.log('hi')"
         v-for="word in pagedWords"
         :key="word"
       >
         {{ word.toUpperCase() }}
       </v-btn>
-      <v-pagination
-        density="compact"
-        v-model="currentPage"
-        :length="totalPages"
-      />
+      <v-card-item class="ma-3">
+        <v-pagination
+          density="compact"
+          v-model="currentPage"
+          :length="totalPages"
+        />
+      </v-card-item>
     </v-card>
   </v-dialog>
 </template>
@@ -27,7 +34,7 @@ import { LetterState } from "~/scripts/letter";
 const game: Game = inject("GAME")!;
 
 const modelValue = defineModel<boolean>({ default: false });
-
+const search = ref("");
 const words = WordList;
 const totalPages = ref(words.length / 10);
 const updatedWords = ref(words);
@@ -83,5 +90,14 @@ watch(game.guessedLetters, () => {
 
 watch(updatedWords, () => {
   totalPages.value = Math.ceil(updatedWords.value.length / 20);
+});
+
+watch(search, () => {
+  const index = updatedWords.value.indexOf(search.value.toLowerCase());
+
+  if (index !== -1) {
+    const pageNumber = Math.ceil((index + 1) / 10);
+    currentPage.value = pageNumber;
+  }
 });
 </script>
