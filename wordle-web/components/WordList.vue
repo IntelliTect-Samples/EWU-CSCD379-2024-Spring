@@ -1,7 +1,7 @@
 <template>
-  <v-dialog v-model="modelValue" max-width="800" max-height="700">
+  <v-dialog v-model="modelValue" max-width="800" max-height="800" class="pa-2">
     <v-card>
-      <v-card-text
+      <v-btn
         height="60px"
         width="200px"
         class="align-center d-flex justify-center"
@@ -10,14 +10,12 @@
         :key="word"
       >
         {{ word.toUpperCase() }}
-      </v-card-text>
-      <v-card-actions>
-        <v-pagination
-          density="compact"
-          v-model="currentPage"
-          :length="totalPages"
-        />
-      </v-card-actions>
+      </v-btn>
+      <v-pagination
+        density="compact"
+        v-model="currentPage"
+        :length="totalPages"
+      />
     </v-card>
   </v-dialog>
 </template>
