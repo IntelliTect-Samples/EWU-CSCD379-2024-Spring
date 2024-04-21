@@ -27,7 +27,7 @@
         <v-spacer></v-spacer>
 
         <v-btn
-          color="secondary"
+          color="primary"
           variant="flat"
           text="Close"
           @click="modelValue = false"

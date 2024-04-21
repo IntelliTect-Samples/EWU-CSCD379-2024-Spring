@@ -2,49 +2,21 @@
   <v-container>
     <v-card>
       <v-card-title>Hello, Welcome to Pentagram</v-card-title>
-      <v-card-subtitle> This is our super basic wordle game called Pentagram. Penta for five, and gram for
-        letter</v-card-subtitle>
-
-      <div v-if="game.gameState == GameState.Won">
-        You've Won!
-      </div>
-      <div v-if="game.gameState == GameState.Lost">
-        You've Lost!
-      </div>
-
-      <GameBoardGuess v-for="(guess, i) of game.guesses" :key="i" :guess="guess" />
-
-      <v-card-actions>
-        <v-spacer />
-        <v-btn v-if="game.gameState !== GameState.Playing" variant="tonal" color="red" @click="game.startNewGame()">
-          Restart Game
-        </v-btn>
-      </v-card-actions>
+      <v-card-subtitle> This is our super basic wordle game called Pentagram. Penta for five, and gram for letter
+      </v-card-subtitle>
+      <v-card-text>
+        This website was built for a school project. we are using vuetify and nuxt to build this website.
+        The assignment is to recreate the wordle app: https://www.nytimes.com/games/wordle/index.html
+      </v-card-text>
+      <v-card-text>One of our instructors is Meghan Woodford, 
+        She has been very helpful in teaching the basics and giving us the knowledge to build this website.
+        I have never built a website before, so this is all new to me.
+      </v-card-text>
+      <v-btn color ="primary" @click="router.push('/')">Home</v-btn>
     </v-card>
   </v-container>
 </template>
 
 <script setup lang="ts">
-import { Game, GameState } from "../scripts/game";
-const game: Game = reactive(new Game());
-
-const myGuess = ref("");
-
-onMounted(() => {
-  window.addEventListener("keyup", onKeyup);
-});
-
-onUnmounted(() => {
-  window.removeEventListener("keyup", onKeyup);
-});
-
-function onKeyup(event: KeyboardEvent) {
-  if (event.key === "Enter") {
-    game.submitGuess();
-  } else if (event.key == 'Backspace') {
-    game.removeLastLetter();
-  } else if (event.key.match(/[A-z]/)) {
-    game.addLetter(event.key.toUpperCase());
-  }
-}
+const router = useRouter();
 </script>

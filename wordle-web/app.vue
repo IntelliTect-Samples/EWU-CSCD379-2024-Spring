@@ -8,8 +8,9 @@
           <v-icon size="x-large">mdi-pentagram</v-icon>
         </template>
         <v-btn @click="router.push('/')">Home</v-btn>
-        <!-- <v-btn @click="router.push('/game')">Pentagram</v-btn>-->
+        <v-btn @click="router.push('/game')">About</v-btn>
         <!-- create dropdown menu to dispay all themes-->
+        <v-btn icon="mdi-theme-light-dark" @click="toggleTheme" />
         <v-menu>
           <template v-slot:activator="{ props }">
             <v-btn v-bind="props" icon>
@@ -17,7 +18,7 @@
             </v-btn>
           </template>
           <v-list>
-            <v-list-item v-for="theme in themes" :key="theme.name" @click="changeTheme(theme.name)">
+            <v-list-item v-for="theme in themes"  @click="changeTheme(theme.theme)">
               <v-list-item-title>{{ theme.name }}</v-list-item-title>
             </v-list-item>
           </v-list>
@@ -40,26 +41,34 @@ const router = useRouter();
 const theme = useTheme();
 const showHelpDialog = ref(false);
 const themes = [
-  { name: "light" },
-  { name: "dark" },
-  { name: "sans"}
+  { name: "default", theme: "dark"},
+  { name: "sans", theme: "sansDark"},
+  { name: "watermelon", theme: "jaringDark"},
 ];
 onMounted(() => {
   var defaultTheme = nuxtStorage.localStorage.getData('theme');
   theme.global.name.value = defaultTheme ?? "dark";
 });
 
-
-function toggleTheme() {
-  if (theme.global.name.value === "light") {
-    theme.global.name.value = "dark"
-  } else {
-    theme.global.name.value = "light"
-  }
-}
 function changeTheme(themeName: string) {
   theme.global.name.value = themeName;
   nuxtStorage.localStorage.setData('theme', themeName);
+}
+
+function toggleTheme() {
+  if (theme.global.name.value === "dark") {
+    changeTheme("light");
+  } else if(theme.global.name.value === "sansLight") {
+    changeTheme("sansDark");
+  } else if(theme.global.name.value === "sansDark") {
+    changeTheme("sansLight");
+  } else if(theme.global.name.value === "jaringLight") {
+    changeTheme("jaringDark");
+  } else if(theme.global.name.value === "jaringDark") {
+    changeTheme("jaringLight");
+  } else {
+    changeTheme("dark");
+  }
 }
 
 </script>
