@@ -11,7 +11,7 @@
       :key="letter.char"
       :class="'ml-1 px-0'"
     >
-      <LetterResult :letter="letter" :clickable="true" :base-size="25" />
+      <LetterResult :letter="letter" :clickable="true" />
     </v-col>
   </v-row>
 </template>

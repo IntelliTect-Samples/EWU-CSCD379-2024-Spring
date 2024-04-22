@@ -1,12 +1,19 @@
 <template>
   <v-card
-    :min-height="updatedBaseSize"
-    :min-width="letter.char.length < 2 ? updatedBaseSize : updatedBaseSize * 2"
+    :height="boxSize"
+    :width="
+      clickable
+        ? letter.char.length > 2
+          ? boxSize * 1.25
+          : boxSize / 1.65
+        : letter.char.length < 2
+        ? boxSize
+        : boxSize * 1.5
+    "
     elevation="4"
     flat
     :class="[
       clickable ? '' : 'no-pointer',
-      letter.char.length > 2 ? 'px-2' : '',
       correctState(letter.state),
       'align-center d-flex justify-center',
     ]"
@@ -27,17 +34,16 @@ const props = withDefaults(
   defineProps<{
     letter: Letter;
     clickable?: boolean;
-    baseSize?: number;
   }>(),
   {
     clickable: false,
-    baseSize: 50,
   }
 );
 
 const game: Game | undefined = inject("GAME", undefined);
+const boxSize = ref(60);
 const display = useDisplay();
-const updatedBaseSize = ref(props.baseSize);
+
 function onClicked() {
   if (!game) return;
 
@@ -65,11 +71,11 @@ function correctState(letterState: LetterState) {
 
 watch([display.sm, display.xs, display.md], () => {
   if (display.xs.value) {
-    updatedBaseSize.value = props.baseSize - 30;
+    boxSize.value = 30;
   } else if (display.sm.value) {
-    updatedBaseSize.value = props.baseSize - 20;
+    boxSize.value = 40;
   } else {
-    updatedBaseSize.value = 60;
+    boxSize.value = 60;
   }
 });
 </script>
