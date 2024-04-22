@@ -79,10 +79,10 @@ const selected=ref(null);
 
 
 const themes= [
-  {name: "default", value: "default"}
-  {name: "hill Billy", value: "hillBilly"}
-  {name: "business Casual", value: "bCasual"}
-  {name: "dark", value:"dark"}
+  {name: "default",value: "default"},
+  {name: "hill Billy", value: "hillBilly"},
+  {name: "business Casual", value: "bCasual"},
+  {name: "dark", value:"dark"},
 ]
 
 onMounted(() => {
@@ -90,6 +90,15 @@ onMounted(() => {
   theme.global.name.value = defaultTheme ?? "dark";
 });
 
+
+function toggleTheme() {
+  if (theme.global.name.value === "light") {
+    theme.global.name.value = "dark";
+  } else {
+    theme.global.name.value = "light";
+  }
+  nuxtStorage.localStorage.setData("theme", theme.global.name.value);
+}
 
   const openSettingsDialog = () => {
   settings.value = true;
