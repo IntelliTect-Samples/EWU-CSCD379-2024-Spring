@@ -34,21 +34,12 @@
       </v-btn>
       <ValidWords v-model="game" @chooseWord="word => selectWord(word)" />
     </v-card>
-    <!-- <ValidWord
-      @guessClick="checkGuess"
-      @wordSelection="selectWord"
-      :game="game"
-      :guess="myGuess"
-      elevation="5" /> -->
   </v-container>
 </template>
 
 <script setup lang="ts">
 import { Game, GameState } from '../scripts/game';
 const game: Game = reactive(new Game());
-game.secretWord = 'ABACA';
-let ValidWord = new Array<string>();
-
 provide('GAME', game);
 
 const myGuess = ref('');
@@ -81,19 +72,4 @@ function selectWord(selected: string) {
     myGuess.value += character;
   });
 }
-// function checkGuess() {
-//   game.submitGuess();
-//   myGuess.value = '';
-// }
-// function selectWord(selected: string) {
-//   game.guess.clear();
-//   myGuess.value = '';
-//   for (let letter of selected) {
-//     game.addLetter(letter);
-//     myGuess.value += letter;
-//   }
-// }
-// function getValidGuess() {
-//   ValidWord = WordList.validateWord(myGuess.value);
-// }
 </script>

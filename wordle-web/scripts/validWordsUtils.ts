@@ -7,7 +7,9 @@ export class ValidWordsUtils {
   public letters: LetterHelper[];
   public partialWord: Array<string | undefined> = new Array(5);
   public wordList: Array<string>;
+  public count: number;
   constructor(wordList: Array<string> = myWordList) {
+    this.count = 0;
     this.wordList = wordList;
     this.partialWord = Array.from({ length: 5 }, (v, k) => undefined);
     this.letters = Array.from({ length: 26 }, (v, k) => {
@@ -41,10 +43,10 @@ export class ValidWordsUtils {
         if (lettersArray[index].state === LetterState.Correct) {
           this.partialWord[index] = lettersArray[index].char;
         } else if (lettersArray[index].state === LetterState.Misplaced) {
-          let lettersIndex = lettersArray[index].char.charCodeAt(0) - 97;
+          let lettersIndex = lettersArray[index].char.charCodeAt(0) - 65;
           this.letters[lettersIndex].isValidForIndex[index] = false;
         } else if (lettersArray[index].state === LetterState.Wrong) {
-          let lettersIndex = lettersArray[index].char.charCodeAt(0) - 97;
+          let lettersIndex = lettersArray[index].char.charCodeAt(0) - 65;
           this.letters[lettersIndex].isValidForIndex = [
             false,
             false,
