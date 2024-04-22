@@ -20,15 +20,32 @@
         <v-btn icon="mdi-weather-night" @click="toggleTheme" />
         <v-btn icon="mdi-help-circle" @click="showHelpDialog = router.push('/aboutPage')" />
       </v-app-bar>
-
+      
       <v-navigation-drawer
-        v-model="drawer"
-        :location="$vuetify.display.mobile ? 'bottom' : undefined"
-        temporary
+        expand-on-hover
+        rail
       >
-        <v-list
-          :items= "items"
-        ></v-list>
+        <v-list>
+          <v-list-item
+            prepend-avatar="https://randomuser.me/api/portraits/women/86.jpg"
+            subtitle="Webdev"
+            title="Cynthia"
+          ></v-list-item>
+          <v-list-item
+            prepend-avatar="https://randomuser.me/api/portraits/men/88.jpg"
+            subtitle="Webdev"
+            title="Hadi"
+          ></v-list-item>
+        </v-list>
+
+        <v-divider></v-divider>
+
+        <v-list density="compact" nav>
+          <v-list-item prepend-icon="mdi-home" title="Home" @click="router.push('/')"></v-list-item>
+          <v-list-item prepend-icon="mdi-magnify" title="Test" @click="router.push('/test')"></v-list-item>
+          <v-list-item prepend-icon="mdi-cog-outline" title="Settings" @click="router.push('/openSettings')"></v-list-item>
+          
+        </v-list>
       </v-navigation-drawer>
       
       <v-main>
