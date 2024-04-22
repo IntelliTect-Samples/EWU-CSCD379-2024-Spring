@@ -10,6 +10,7 @@ export class Game {
   public guessIndex: number = 0;
   public gameState: GameState = GameState.Playing;
   public guessedLetters: Letter[] = [];
+  public validWordList: string[] = WordList;
 
   constructor(maxAttempts: number = 6) {
     this.maxAttempts = maxAttempts;
@@ -81,6 +82,8 @@ export class Game {
 
     const isCorrect = this.guess.compare(this.secretWord);
     this.updateGuessedLetters();
+    findValidWords(this.guess.word, 
+
 
     if (isCorrect) {
       this.gameState = GameState.Won;
