@@ -65,21 +65,17 @@ function correctState(letterState: LetterState) {
   }
 }
 
-watch(
-  [display.sm, display.xs, display.md],
-  () => {
-    if (display.xs.value) {
-      boxSize.value = 45;
-      keySize.value = 30;
-    } else if (display.sm.value) {
-      boxSize.value = 60;
-    } else {
-      boxSize.value = 60;
-      keySize.value = 60;
-    }
-  },
-  { immediate: true }
-);
+onMounted(() => {
+  if (display.xs.value) {
+    boxSize.value = 45;
+    keySize.value = 30;
+  } else if (display.sm.value) {
+    boxSize.value = 60;
+  } else {
+    boxSize.value = 60;
+    keySize.value = 60;
+  }
+});
 </script>
 
 <style scoped>
