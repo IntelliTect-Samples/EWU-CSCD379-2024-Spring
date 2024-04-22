@@ -56,10 +56,19 @@
         <v-card>
           <v-card-title>Settings</v-card-title>
           <v-card-text>
-            <v-btn icon="mdi-theme-light-dark" @click="toggleTheme" />
-            Change between light and dark theme
+            Choose your theme:
             <br>
-            <v-btn icon="mdi-pine-tree"/>
+            <v-btn icon="mdi-weather-sunny" @click="toggleTheme('light')" />
+            Light
+            <br>
+            <v-btn icon="mdi-moon-waning-crescent" @click="toggleTheme('dark')" />
+            Dark
+            <br>
+            <v-btn icon="mdi-pine-tree" @click="toggleTheme('forest')"/>
+            Forest
+            <br>
+            <v-btn icon="mdi-beach" @click="toggleTheme('ocean')" />
+            Beach
           </v-card-text>
           <v-card-actions>
             <v-btn color="primary" @click="settingsDialog = false">Close</v-btn>
@@ -82,15 +91,12 @@ onMounted(() => {
   theme.global.name.value = defaultTheme ?? "dark";
 });
 
-function toggleTheme() {
-  if (theme.global.name.value === "light") {
-    theme.global.name.value = "dark";
-  } else {
-    theme.global.name.value = "light";
-  }
+function toggleTheme(themeType: string) {
+  theme.global.name.value = themeType;
 
   nuxtStorage.localStorage.setData("theme", theme.global.name.value);
 }
+
 import { useRouter } from "vue-router";
 import { ref } from "vue";
 
