@@ -13,12 +13,6 @@
             mdi-lightbulb-on-outline
           </v-icon>
         </v-app-bar-title>
-        
-        <v-btn @click="router.push('/')">Home</v-btn>
-        <v-btn @click="router.push('/test')">Test</v-btn>
-        <v-btn icon="mdi-cog-outline" @click="router.push('/openSettings')"></v-btn>
-        <v-btn icon="mdi-weather-night" @click="toggleTheme" />
-        <v-btn icon="mdi-help-circle" @click="showHelpDialog = router.push('/aboutPage')" />
       </v-app-bar>
       
       <v-navigation-drawer
@@ -42,7 +36,6 @@
 
         <v-list density="compact" nav>
           <v-list-item prepend-icon="mdi-home" title="Home" @click="router.push('/')"></v-list-item>
-          <v-list-item prepend-icon="mdi-magnify" title="Test" @click="router.push('/test')"></v-list-item>
           <v-list-item prepend-icon="mdi-cog-outline" title="Settings" @click="router.push('/openSettings')"></v-list-item>
           <v-list-item prepend-icon="mdi-help-circle" title="About" @click="showHelpDialog = router.push('/aboutPage')"></v-list-item>
         </v-list>
