@@ -33,7 +33,11 @@
       <v-btn @click="game.submitGuess()" class="mb-5" color="primary">
         Guess!
       </v-btn>
-      <WordList class="mb-5" color="primary" />
+      <WordList 
+      class="mb-5" 
+      color="primary" 
+      v-if="game.gameState === GameState.Playing"
+      v-model="possibleWords"/>
     </v-card>
   </v-container>
 </template>
@@ -45,6 +49,7 @@ const game: Game = reactive(new Game());
 provide("GAME", game);
 
 const myGuess = ref("");
+const possibleWords = ref(false);
 
 onMounted(() => {
   window.addEventListener("keyup", onKeyup);
@@ -57,6 +62,9 @@ onUnmounted(() => {
 function onKeyup(event: KeyboardEvent) {
   if (event.key === "Enter") {
     game.submitGuess();
+    if(possibleWords.value){
+      return;
+    }
   } else if (event.key == "Backspace") {
     game.removeLastLetter();
   } else if (event.key.match(/[A-z]/) && event.key.length === 1) {

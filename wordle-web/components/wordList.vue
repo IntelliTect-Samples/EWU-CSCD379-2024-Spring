@@ -5,13 +5,12 @@
         v-bind="activatorProps"
         color="primary"
         class="mb-5"
-        text="Valid Words"
         variant="flat"
-      ></v-btn>
+      >Valid Words {{ words.length }}</v-btn>
     </template>
 
     <template v-slot:default="{ isActive }">
-      <v-card title="Dialog">
+      <v-card title="Possible Words">
         <v-card-text>
           <ul>
             <li v-for="word in words" :key="word">{{ word }}</li>
@@ -32,7 +31,8 @@
 
 <script setup lang="ts">
 import { ref } from "vue";
-import { WordList } from "../scripts/wordList";
+import { Game } from "../scripts/game";
 
-const words = ref(WordList);
+const game = new Game();
+const words = game.validWords();
 </script>
