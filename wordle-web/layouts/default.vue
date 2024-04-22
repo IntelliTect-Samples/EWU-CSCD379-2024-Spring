@@ -5,7 +5,7 @@
         <div class="text-h5 ml-5">
           <v-icon
             color="secondary"
-            @click="router.push('/')"
+            @click="router.push('/index')"
             class="cursor-pointer"
             >mdi-alpha-w</v-icon
           >
@@ -17,18 +17,6 @@
       <v-btn icon="mdi-help-circle" @click="showHelpDialog = true" />
       <HelpDialog v-model="showHelpDialog" />
       <v-app-bar-nav-icon @click.stop="showDrawer = !showDrawer" />
-      <!-- <v-menu activator="#menu-activator">
-        <v-list>
-          <v-list-item @click="router.push('/about')">
-            <v-list-item-title> About </v-list-item-title>
-          </v-list-item>
-          <v-list-item @click="showSettingsDialog = true">
-            <v-list-item-title>
-              <v-icon>mdi-cog</v-icon>
-            </v-list-item-title>
-          </v-list-item>
-        </v-list>
-      </v-menu> -->
     </v-app-bar>
     <v-navigation-drawer app v-model="showDrawer" location="right">
       <v-list>
