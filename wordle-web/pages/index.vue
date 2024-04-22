@@ -32,9 +32,12 @@
       <v-btn @click="game.submitGuess()" class="mb-5" color="primary">
         Guess!
       </v-btn>
-      <v-btn @click="showDialog = !showDialog">Hint!</v-btn>
+      <v-btn @click="showDialog = !showDialog"
+        >{{ validWordsCount }} possible words!</v-btn
+      >
       <ValidWords
-        v-model="showDialog"
+        v-model:show="showDialog"
+        v-model:valid-words-count="validWordsCount"
         :game="game"
         @chooseWord="word => selectWord(word)" />
     </v-card>
@@ -43,9 +46,11 @@
 
 <script setup lang="ts">
 import { Game, GameState } from '../scripts/game';
+import { myWordList } from '~/scripts/wordList';
 const game: Game = reactive(new Game());
 provide('GAME', game);
 const showDialog = ref(false);
+const validWordsCount = ref(myWordList.length);
 
 const myGuess = ref('');
 console.log(game.secretWord);

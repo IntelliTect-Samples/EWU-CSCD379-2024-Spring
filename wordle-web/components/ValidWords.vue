@@ -26,10 +26,25 @@ import { ValidWordsUtils } from '~/scripts/validWordsUtils';
 const props = defineProps<{
   game: Game;
 }>();
-const show = defineModel<boolean>({ required: true });
+const show = defineModel<boolean>('show', { required: true });
+const validWordsCount = defineModel<number>('validWordsCount', {
+  required: true,
+});
 defineEmits(['chooseWord']);
 const utils = new ValidWordsUtils();
-const output = ref(new Array<string>());
+// const gameGuessIndex = computed(() => {
+//   return props.game.guessIndex;
+// });
+let validWords = new Array<string>();
+watch([props.game], () => {
+  output = new Array<string>();
+  index = 0;
+  localGuessIndex = props.game.guessIndex;
+  validWords = utils.validWords(props.game);
+  validWordsCount.value = validWords.length;
+  console.log('ITS HAPPENING');
+});
+let output = new Array<string>();
 let index = 0;
 let localGuessIndex = 0;
 let isReloading = ref(false);
@@ -46,7 +61,7 @@ async function reload() {
   isReloading.value = true;
   const res = await api();
   res.forEach(item => {
-    output.value.push(item);
+    output.push(item);
   });
   setTimeout(() => {
     isReloading.value = false;
@@ -55,12 +70,13 @@ async function reload() {
 
 function getNextTenWords() {
   if (props.game.guessIndex !== localGuessIndex) {
-    output.value = new Array<string>();
+    output = new Array<string>();
     index = 0;
     localGuessIndex = props.game.guessIndex;
   }
   let array = new Array<string>();
   let validWords = ref(utils.validWords(props.game));
+  validWordsCount.value = validWords.value.length;
   const maxIndex = index + 10;
   while (index < maxIndex) {
     const item = validWords.value[index];
@@ -77,7 +93,7 @@ async function load({ done }: { done: any }) {
   // Perform API call
   const res = await api();
   res.forEach(item => {
-    output.value.push(item);
+    output.push(item);
   });
 
   done('ok');

@@ -20,7 +20,24 @@ export class ValidWordsUtils {
 
   validWords(game: Game): Array<string> {
     this.setup(game);
-    return myWordList.filter(wordListWord => this.filterWordList(wordListWord));
+    let result = myWordList.filter(wordListWord =>
+      this.filterWordList(wordListWord)
+    );
+    console.log(result.length);
+    return result.filter(wordListWord => {
+      let lettersEntered = game.guesses[game.guessIndex].letters;
+      let lettersLength = lettersEntered.length;
+      let count = 0;
+      while (count < lettersLength && lettersEntered[count].char !== '') {
+        debugger;
+        if (wordListWord[count].toUpperCase() !== lettersEntered[count].char) {
+          console.log(wordListWord[count] + ' ' + lettersEntered[count].char);
+          return false;
+        }
+        count++;
+      }
+      return true;
+    });
   }
 
   filterWordList(wordListWord: string): boolean {
@@ -37,7 +54,8 @@ export class ValidWordsUtils {
   }
 
   setup(game: Game) {
-    game.guesses.forEach(guess => {
+    for (let index = 0; index < game.guessIndex; index++) {
+      let guess = game.guesses[index];
       if (!guess.isFilled) {
         return;
       }
@@ -59,7 +77,7 @@ export class ValidWordsUtils {
           ];
         }
       }
-    });
+    }
   }
 }
 
