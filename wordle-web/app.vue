@@ -1,9 +1,11 @@
 <template>
   <NuxtLayout>
+  
     <v-app>
       <v-app-bar color="primary" :elevation="2">
+        <v-app-bar-nav-icon variant="text" @click.stop="drawer = !drawer"></v-app-bar-nav-icon>
         <template v-slot:prepend>
-          <v-icon color="hamburger"> mdi-hamburger</v-icon>
+          <v-icon color="secondary"> mdi-book </v-icon>
         </template>
         <v-app-bar-title @click="router.push('/')">
           Wordle Web
@@ -11,14 +13,24 @@
             mdi-lightbulb-on-outline
           </v-icon>
         </v-app-bar-title>
-
+        
         <v-btn @click="router.push('/')">Home</v-btn>
         <v-btn @click="router.push('/test')">Test</v-btn>
         <v-btn icon="mdi-cog-outline" @click="router.push('/openSettings')"></v-btn>
-        <v-btn icon="mdi-weather-night" @click="toggleTheme"></v-btn>
-        <v-btn icon="mdi-help-circle" @click="showHelpDialog = router.push('./helpDialog')"></v-btn>
-        <v-btn icon="mdi-book-open-page-variant" @click="showHelpDialog = router.push('./aboutPage')"></v-btn>
+        <v-btn icon="mdi-weather-night" @click="toggleTheme" />
+        <v-btn icon="mdi-help-circle" @click="showHelpDialog = router.push('/aboutPage')" />
       </v-app-bar>
+
+      <v-navigation-drawer
+        v-model="drawer"
+        :location="$vuetify.display.mobile ? 'bottom' : undefined"
+        temporary
+      >
+        <v-list
+          :items= "items"
+        ></v-list>
+      </v-navigation-drawer>
+      
       <v-main>
         <NuxtPage />
       </v-main>
@@ -29,7 +41,7 @@
 
 <script setup lang="ts">
 import { useTheme } from "vuetify";
-import nuxtStorage from "nuxt-storage";
+import nuxtStorage from 'nuxt-storage';
 
 const router = useRouter();
 const theme = useTheme();
