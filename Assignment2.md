@@ -28,17 +28,17 @@ Note: Custom CSS can only be used where specified.
   - Create an About page that has a few sentences about this class project and how great Meg is ✅
   - Make sure this has a back button ❌✅
 
-3. Add a settings dialog ❌✅
-- Add a settings selection to the App Bar's menu with a gear icon. This should open this dialog regardless of where you are on the site ❌✅
-- Option for dark and light mode ❌✅
-- Develop two additional color schemes (with creative names) and allow the user to change to them. Schemes should look good in both light and dark mode ❌✅
-- The above two items must be implemented with built in Veutify features ❌✅
+3. Add a settings dialog ✅
+- Add a settings selection to the App Bar's menu with a gear icon. This should open this dialog regardless of where you are on the site ✅
+- Option for dark and light mode ✅
+- Develop two additional color schemes (with creative names) and allow the user to change to them. Schemes should look good in both light and dark mode ✅
+- The above two items must be implemented with built in Veutify features ✅
 
-4. Style the main game page ❌✅
-- Make it look like [wordle.com](https://www.nytimes.com/games/wordle/index.html) or the Wordle mobile app ❌✅
-- Add gradient to guesses blocks and keys (with CSS) ❌✅
-- Add drop shadow to keys (No CSS) ❌✅
-- Make the app responsive (No CSS) ❌✅
+4. Style the main game page ✅
+- Make it look like [wordle.com](https://www.nytimes.com/games/wordle/index.html) or the Wordle mobile app ✅
+- Add gradient to guesses blocks and keys (with CSS) ✅
+- Add drop shadow to keys (No CSS) ✅
+- Make the app responsive (No CSS) ✅
 
 5. Include a link to your Azure App in your PR comments.
 
