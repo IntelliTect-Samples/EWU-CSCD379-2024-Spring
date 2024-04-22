@@ -6,12 +6,14 @@ import { ValidWordsUtils } from '~/scripts/validWordsUtils';
 test('validWords', () => {
   let game = new Game(6);
   game.secretWord = 'abaca';
+
   let utils = new ValidWordsUtils();
   game.addLetter('a');
   game.addLetter('a');
   game.addLetter('r');
   game.addLetter('g');
   game.addLetter('h');
+  game.submitGuess();
   let validWords = utils.validWords(game);
   expect(validWords[0]).toBe('abaca');
 });

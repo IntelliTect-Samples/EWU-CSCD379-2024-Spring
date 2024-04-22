@@ -32,7 +32,7 @@
       <v-btn @click="game.submitGuess()" class="mb-5" color="primary">
         Guess!
       </v-btn>
-      <ValidWords :game @chooseWord="word => selectWord(word)" />
+      <ValidWords v-model="game" @chooseWord="word => selectWord(word)" />
     </v-card>
     <!-- <ValidWord
       @guessClick="checkGuess"
@@ -46,6 +46,7 @@
 <script setup lang="ts">
 import { Game, GameState } from '../scripts/game';
 const game: Game = reactive(new Game());
+game.secretWord = 'ABACA';
 let ValidWord = new Array<string>();
 
 provide('GAME', game);

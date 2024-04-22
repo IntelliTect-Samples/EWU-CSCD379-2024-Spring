@@ -24,7 +24,7 @@
     "happy-dom": "^13.10.1",
     "playwright-core": "^1.43.0",
     "vite-plugin-vuetify": "^2.0.3",
-    "vitest": "^1.4.0",
+    "vitest": "^1.5.0",
     "vuetify": "^3.5.14"
   }
 }

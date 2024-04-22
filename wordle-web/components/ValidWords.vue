@@ -14,12 +14,11 @@
 <script setup lang="ts">
 import { Game } from '~/scripts/game';
 import { ValidWordsUtils } from '~/scripts/validWordsUtils';
-const props = defineProps<{
-  game: Game;
-}>();
-const utils = ref(new ValidWordsUtils(props.game));
+const modelValue = defineModel<Game>({ required: true });
+defineEmits(['chooseWord']);
+const utils = ref(new ValidWordsUtils());
 const validWords = computed<Array<string>>(() => {
-  return utils.value.validWords();
+  return utils.value.validWords(modelValue.value);
 });
 const output = ref(new Array<string>());
 let index = 0;

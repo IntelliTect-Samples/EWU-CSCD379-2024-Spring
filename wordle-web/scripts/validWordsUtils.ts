@@ -6,7 +6,9 @@ import { Letter, LetterState } from '~/scripts/letter';
 export class ValidWordsUtils {
   public letters: LetterHelper[];
   public partialWord: Array<string | undefined> = new Array(5);
-  constructor() {
+  public wordList: Array<string>;
+  constructor(wordList: Array<string> = myWordList) {
+    this.wordList = wordList;
     this.partialWord = Array.from({ length: 5 }, (v, k) => undefined);
     this.letters = Array.from({ length: 26 }, (v, k) => {
       let character = String.fromCharCode(97 + k);
