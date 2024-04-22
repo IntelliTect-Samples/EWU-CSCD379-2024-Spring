@@ -3570,6 +3570,7 @@ export const myWordList = [
   'pecan',
   'pecks',
   'pedal',
+  'peech',
   'peeks',
   'peels',
   'peens',
