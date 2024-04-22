@@ -4,7 +4,7 @@ on:
   push:
     branches:
       - main
-      - Assignment2 - Cole Stewart]
+      - Assignment2 - Cole Stewart
   pull_request:
     branches:
       - Assignment2
