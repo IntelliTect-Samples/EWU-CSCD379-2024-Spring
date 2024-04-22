@@ -34,6 +34,16 @@
         Guess!
       </v-btn>
     </v-card>
+    <v-card>
+      <v-container>
+        <v-btn @click="engine = !engine">Word Engine</v-btn>
+        <ValidGuess
+          v-model="engine"
+          :game="game"
+          @chooseWord="(word) => selectWord(word)"
+        />
+      </v-container>
+    </v-card>
   </v-container>
 </template>
 
@@ -44,6 +54,7 @@ const game: Game = reactive(new Game());
 provide("GAME", game);
 
 const myGuess = ref("");
+const engine = ref(false);
 
 onMounted(() => {
   window.addEventListener("keyup", onKeyup);

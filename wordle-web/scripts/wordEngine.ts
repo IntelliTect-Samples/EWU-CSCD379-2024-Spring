@@ -4,31 +4,71 @@ import { Letter, LetterState } from '~/scripts/letter';
 import { Word } from '~/scripts/word';
 
 export class WordEngine {
-    
-  static validGuessedWords(currentGuess: string, states: LetterState[]): string[] {
-    return WordList.filter(word => {
-      let isValid = true;
-      for(let i = 0; i < word.length; i++) {
-        const guessedChar = (i < currentGuess.length) ? currentGuess[i].toLowerCase() : ''; // Use an empty string as a fallback
-        const isCorrectPosition = word[i] === guessedChar;
-        const isInWord = word.includes(guessedChar);
-
-        switch (states[i]) {
-          case LetterState.Correct:
-            if (!isCorrectPosition) isValid = false;
-            break;
-          case LetterState.Misplaced:
-            if (isCorrectPosition || !isInWord) isValid = false;
-            break;
-          case LetterState.Wrong:
-            if (isInWord) isValid = false;
-            break;
-          case LetterState.Unknown:
-            break;
+    public letters: LetterHelper[];
+    public partialWord: Array<string | undefined> = new Array(5);
+    public wordList: Array<string>;
+    public count: number;
+    constructor(wordList: Array<string> = WordList) {
+      this.count = 0;
+      this.wordList = wordList;
+      this.partialWord = Array.from({ length: 5 }, (v, k) => undefined);
+      this.letters = Array.from({ length: 26 }, (v, k) => {
+        let character = String.fromCharCode(65 + k);
+        return new LetterHelper(character);
+      });
+    }
+  
+    validWords(game: Game): Array<string> {
+      this.setup(game);
+      return WordList.filter(wordListWord => this.filterWordList(wordListWord));
+    }
+  
+    filterWordList(wordListWord: string): boolean {
+      let characters = wordListWord.toUpperCase().split('');
+      for (let index = 0; index < characters.length; index++) {
+        let character = characters[index];
+        let lettersIndex = character.charCodeAt(0) - 65;
+        let letterHelper = this.letters[lettersIndex];
+        if (!letterHelper.isValidForIndex[index]) {
+          return false;
         }
-        if (!isValid) break;
       }
-      return isValid;
-    });
+      return true;
+    }
+  
+    setup(game: Game) {
+      game.guesses.forEach(guess => {
+        if (!guess.isFilled) {
+          return;
+        }
+        let lettersArray = guess.letters;
+        for (let index = 0; index < lettersArray.length; index++) {
+          if (lettersArray[index].state === LetterState.Correct) {
+            this.partialWord[index] = lettersArray[index].char;
+          } else if (lettersArray[index].state === LetterState.Misplaced) {
+            let lettersIndex = lettersArray[index].char.charCodeAt(0) - 65;
+            this.letters[lettersIndex].isValidForIndex[index] = false;
+          } else if (lettersArray[index].state === LetterState.Wrong) {
+            let lettersIndex = lettersArray[index].char.charCodeAt(0) - 65;
+            this.letters[lettersIndex].isValidForIndex = [
+              false,
+              false,
+              false,
+              false,
+              false,
+            ];
+          }
+        }
+      });
+    }
   }
-}
+  
+  class LetterHelper {
+    public isValidForIndex: boolean[];
+    public character: string;
+  
+    constructor(character: string) {
+      this.isValidForIndex = [true, true, true, true, true];
+      this.character = character;
+    }
+  }
