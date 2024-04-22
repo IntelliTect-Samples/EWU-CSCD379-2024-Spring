@@ -13,13 +13,10 @@
             mdi-lightbulb-on-outline
           </v-icon>
         </v-app-bar-title>
-        <v-btn icon="mdi-weather-night" @click="toggleTheme" />
+        <v-btn icon="mdi-weather-night" @click="toggleTheme()" />
       </v-app-bar>
       
-      <v-navigation-drawer
-        expand-on-hover
-        rail
-      >
+      <v-navigation-drawer expand-on-hover rail>
         <v-list>
           <v-list-item
             prepend-avatar="https://randomuser.me/api/portraits/women/86.jpg"
@@ -41,6 +38,21 @@
           <v-list-item prepend-icon="mdi-help-circle" title="About" @click="showHelpDialog = router.push('/aboutPage')"></v-list-item>
         </v-list>
       </v-navigation-drawer>
+
+      <v-dialog v-model="openSettingsDialog">
+        <v-card>
+        </v-card>
+        <v-card-text>
+        <v-switch v-model="darkMode" label="Dark Mode"/>
+        <v-switch v-model="hillBilly" label="Hill Billy Mode"/>
+        <v-switch v-model="bCasual" label="Business Casual"/>
+        </v-card-text>
+
+        <v-card-actions>
+          <v-btn color="primary" @click="saveSettings">Save</v-btn>
+          <v-btn @click="closeSettingsDial()">close</v-btn>
+        </v-card-actions>
+      </v-dialog>
       
       <v-main>
         <NuxtPage />
@@ -50,36 +62,46 @@
 </template>
 
 
+
+
 <script setup lang="ts">
 import { useTheme } from "vuetify";
 import nuxtStorage from 'nuxt-storage';
+import { ref } from "vue";
 
 const router = useRouter();
 const theme = useTheme();
 const showHelpDialog = ref(false);
 var menuOpen= ref(false);
-var settingsDialog = ref(false);
+const settings = ref(false);
+const darkMode=ref(false);
+const selected=ref(null);
+
+
+const themes= [
+  {name: "default", value: "default"},
+  {name: "hill Billy", value: "hillBilly"},
+  {name: "business Casual", value: "bCasual"}
+  {name: "dark", value:"dark"}
+]
 
 onMounted(() => {
   var defaultTheme = nuxtStorage.localStorage.getData("theme");
   theme.global.name.value = defaultTheme ?? "dark";
 });
 
-function openMenu(){
-  menuOpen = true;
-}
 
-function toggleTheme() {
-  if (theme.global.name.value === "light") {
-    theme.global.name.value = "dark";
-  } else {
-    theme.global.name.value = "light";
-  }
+  const openSettingsDialog = () => {
+  settings.value = true;
+}; 
 
-  nuxtStorage.localStorage.setData("theme", theme.global.name.value);
-}
-  // function toggleMenu() {
-  //   menuOpen.value=! menuOpen.value;
-  // }
+const closeSettingsDialog = () => {
+  settings.value = false;
+};
+
+const saveSettings = () => {
+  nuxtStorage.localStorage.setData("selectedTheme", selected.value);
+   closeSettingsDialog();
+};
 
 </script>
