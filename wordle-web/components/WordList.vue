@@ -10,7 +10,7 @@
       >
       </v-autocomplete>
       <v-btn
-        height="50px"
+        height="40px"
         class="align-center d-flex justify-center"
         v-for="word in pagedWords"
         :key="word"
