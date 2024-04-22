@@ -71,6 +71,23 @@ export class Game {
     }
   }
 
+  public validWords() {
+    // Update guessed letters
+    this.updateGuessedLetters();
+  
+    // Filter out words containing unavailable letters
+    const availableWords = WordList.filter((word) => {
+      for (const letter of word.split("")) {
+        if (!this.guessedLetters.some((guessedLetter) => guessedLetter.char === letter)) {
+          return false; // Word contains an unavailable letter
+        }
+      }
+      return true; // All letters in the word are available
+    });
+  
+    return availableWords;
+  }
+
   public submitGuess() {
     if (this.gameState !== GameState.Playing) return;
     if (!this.guess.isFilled) return;

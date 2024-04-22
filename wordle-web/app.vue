@@ -25,6 +25,9 @@
           <v-icon>mdi-cog</v-icon>
         </v-btn>
 
+        <v-btn icon="mdi-help-circle" @click="showHelpDialog = true" />
+        <HelpDialog v-model="showHelpDialog" />
+
         <v-btn icon>
           <v-icon>mdi-dots-vertical</v-icon>
         </v-btn>
@@ -83,6 +86,7 @@
 import { useTheme } from "vuetify";
 import nuxtStorage from "nuxt-storage";
 
+const router = useRouter();
 const theme = useTheme();
 const showHelpDialog = ref(false);
 
@@ -101,7 +105,6 @@ import { useRouter } from "vue-router";
 import { ref } from "vue";
 
 const drawer = ref(false);
-const router = useRouter();
 const settingsDialog = ref(false);
 function openSettingsDialog() {
   settingsDialog.value = true;

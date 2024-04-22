@@ -33,6 +33,7 @@
       <v-btn @click="game.submitGuess()" class="mb-5" color="primary">
         Guess!
       </v-btn>
+      <WordList class="mb-5" color="primary" />
     </v-card>
   </v-container>
 </template>
