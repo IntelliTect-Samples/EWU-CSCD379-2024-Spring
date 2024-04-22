@@ -29,7 +29,19 @@ jobs:
       - name: Build App
         run: npm run generate
         working-directory: ./wordle-web
-        
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@v2
+        with:
+          name: build-output
+          path: ./wordle-web/.output/public
+          
+      - name: Download artifact
+        uses: actions/download-artifact@v2
+        with:
+          name: build-output
+          path: ./wordle-web/.output/public
+          
       - name: Build And Deploy
         id: builddeploy
         uses: Azure/static-web-apps-deploy@v1
