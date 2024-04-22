@@ -1,6 +1,11 @@
 import { Letter, LetterState } from "./letter";
 import { WordList } from "./wordList";
 
+interface WordOptions {
+  maxNumberOfLetters?: number;
+  word?: string;
+}
+
 export class Word {
   public letters: Letter[];
 
@@ -8,10 +13,10 @@ export class Word {
     if (wordOptions.word) {
       this.letters = wordOptions.word.split("").map((char) => new Letter(char));
     } else if (wordOptions.maxNumberOfLetters) {
-      this.letters = [];
-      for (let i = 0; i < wordOptions.maxNumberOfLetters; i++) {
-        this.letters.push(new Letter(""));
-      }
+      this.letters = Array.from(
+        { length: wordOptions.maxNumberOfLetters },
+        () => new Letter("")
+      );
     } else {
       throw new Error(
         "WordOptions must have either maxNumberOfLetters or word"
@@ -20,11 +25,9 @@ export class Word {
   }
 
   public addLetter(newLetter: string): void {
-    for (const letter of this.letters) {
-      if (!letter.char) {
-        letter.char = newLetter;
-        break;
-      }
+    const emptyLetter = this.letters.find((letter) => !letter.char);
+    if (emptyLetter) {
+      emptyLetter.char = newLetter;
     }
   }
 
@@ -36,6 +39,7 @@ export class Word {
       }
     }
   }
+
   public get isFilled(): boolean {
     return this.letters.every((letter) => letter.char);
   }
@@ -44,51 +48,70 @@ export class Word {
     const secretWord = new Word({ word: secretWordString });
     let isMatch = true;
 
-    for (const [i, letter] of secretWord.letters.entries()) {
-      if (letter.char === this.letters[i].char) {
-        this.letters[i].state = LetterState.Correct;
+    // Check for correct letters
+    this.letters.forEach((letter, i) => {
+      if (letter.char === secretWord.letters[i].char) {
         letter.state = LetterState.Correct;
-      }else{
+      } else {
         isMatch = false;
+        letter.state = LetterState.Wrong; // Preset to wrong before checking for misplaced
       }
-    }
-    for (const guessedLetter of this.letters) {
-      if (guessedLetter.state === LetterState.Unknown) {
-        for (const toGuessLetter of secretWord.letters) {
-          if (
-            toGuessLetter.state === LetterState.Unknown &&
-            toGuessLetter.char === guessedLetter.char
-          ) {
-            guessedLetter.state = LetterState.Misplaced;
-            toGuessLetter.state = LetterState.Misplaced;
-            break;
-          }
-        }
-        if (guessedLetter.state === LetterState.Unknown) {
-          guessedLetter.state = LetterState.Wrong;
+    });
+
+    // Check for misplaced letters
+    this.letters.forEach((guessedLetter) => {
+      if (guessedLetter.state === LetterState.Wrong) {
+        const sameLetterInSecret = secretWord.letters.find(
+          (toGuessLetter) => toGuessLetter.char === guessedLetter.char && toGuessLetter.state !== LetterState.Correct
+        );
+        if (sameLetterInSecret) {
+          guessedLetter.state = LetterState.Misplaced;
         }
       }
-    }
+    });
 
     return isMatch;
   }
 
   public get word(): string {
-    return this.letters.map((x) => x.char).join("");
+    return this.letters.map((letter) => letter.char).join("");
   }
 
-  public isValidWord() {
+  public isValidWord(): boolean {
     return WordList.includes(this.word.toLowerCase());
   }
 
-  public clear() {
-    for (const letter of this.letters) {
+  public clear(): void {
+    this.letters.forEach((letter) => {
       letter.char = "";
-    }
+    });
   }
-}
 
-class WordOptions {
-  maxNumberOfLetters?: number = 0;
-  word?: string | null = null;
+  public isCompatibleWith(otherWordString: string): boolean {
+    const otherWord = new Word({ word: otherWordString });
+
+    return this.letters.every((letter, i) => {
+      if (letter.char) {
+        if (letter.state === LetterState.Correct && letter.char !== otherWord.letters[i].char) {
+          return false;
+        }
+        if (letter.state === LetterState.Wrong && otherWord.word.includes(letter.char)) {
+          return false;
+        }
+        if (letter.state === LetterState.Misplaced && (!otherWord.word.includes(letter.char) || otherWord.letters[i].char === letter.char)) {
+          return false;
+        }
+      }
+      return true;
+    });
+  }
+
+  public fill(wordString: string): void {
+    this.clear();
+    wordString.split('').forEach((char, index) => {
+      if (index < this.letters.length) {
+        this.letters[index].char = char;
+      }
+    });
+  }
 }
