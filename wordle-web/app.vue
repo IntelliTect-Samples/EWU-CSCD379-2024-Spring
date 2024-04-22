@@ -44,7 +44,7 @@
           <v-list-item prepend-icon="mdi-home" title="Home" @click="router.push('/')"></v-list-item>
           <v-list-item prepend-icon="mdi-magnify" title="Test" @click="router.push('/test')"></v-list-item>
           <v-list-item prepend-icon="mdi-cog-outline" title="Settings" @click="router.push('/openSettings')"></v-list-item>
-          
+          <v-list-item prepend-icon="mdi-help-circle" title="About" @click="showHelpDialog = router.push('/aboutPage')"></v-list-item>
         </v-list>
       </v-navigation-drawer>
       
