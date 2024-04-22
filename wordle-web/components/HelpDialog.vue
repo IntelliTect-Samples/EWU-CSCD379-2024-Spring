@@ -2,13 +2,31 @@
   <v-dialog v-model="modelValue" max-width="500">
     <v-card>
       <v-sheet color="primary">
-        <v-card-text> How to play Wordle </v-card-text>
+        <v-card-text style="text-align: center; text-size-adjust: auto; font-size: larger;">
+          <header> How to play Wordle <hr></header>
+        </v-card-text>
       </v-sheet>
+      
+      <v-card-text style="text-align: center; font-size: medium;">
+        <header>Guess the Wordle in 6 tries.</header>
+      </v-card-text>
       <v-card-text>
-      How To Play <br>
-      Guess the Wordle in 6 tries.<br>
-      *Each guess must be a valid 5-letter word.<br>
-      *The color of the tiles will change to show how close your guess was to the word.
+      <ul>
+        <li>Each guess must be a valid 5-letter word.<br></li>
+        <li>The color of the tiles will change to show how close your guess was to the word.</li>
+      </ul>
+      </v-card-text>
+      
+      <v-card-text style="text-align: center">
+        <header>Types of state for each letter.</header>
+      </v-card-text>
+
+      <v-card-text>
+        <ul>
+            <li>Is in the correct position and is the right letter.</li>
+            <li>Is in the word but in the wrong position.</li>
+            <li>Is not in the word at all.</li>
+          </ul>
       </v-card-text>
       <v-card-text>
         For example, if the word is "BLIMP" and you guess "BILBO", the feedback
