@@ -27,6 +27,18 @@
       </v-card-item>
     </v-card>
   </v-dialog>
+
+  <v-btn
+    position="fixed"
+    location="bottom right"
+    class="mr-3 mb-3"
+    size="default"
+    color="primary"
+    elevation="8"
+    rounded
+    @click="modelValue = true"
+    >Word List: {{ validWords().length }}</v-btn
+  >
 </template>
 
 <script setup lang="ts">

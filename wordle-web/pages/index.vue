@@ -41,14 +41,6 @@
     <Keyboard />
 
     <WordList v-model="showWordsList" />
-
-    <v-bottom-navigation>
-      <v-btn value="recent" @click="showWordsList = true">
-        <v-icon>mdi-history</v-icon>
-
-        <span>Word List</span>
-      </v-btn>
-    </v-bottom-navigation>
   </v-container>
 </template>
 
