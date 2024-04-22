@@ -12,42 +12,42 @@
         <v-container>
           <v-row>
             <v-col cols="12" sm="6">
-              <v-btn @click="menuItemClicked('light')" block color="secondary"
+              <v-btn @click="menuItemClicked('light')" block color="#673AB7"
                 >Light Mode</v-btn
               >
             </v-col>
             <v-col cols="12" sm="6">
-              <v-btn @click="menuItemClicked('dark')" block color="secondary"
+              <v-btn @click="menuItemClicked('dark')" block color="#673AB7"
                 >Dark Mode</v-btn
               >
             </v-col>
             <v-col cols="12" sm="6">
-              <v-btn @click="menuItemClicked('pastelLight')" block color="secondary"
+              <v-btn @click="menuItemClicked('pastelLight')" block color="#CB9CF2"
                 >Pastel Light Mode</v-btn
               >
             </v-col>
             <v-col cols="12" sm="6">
-              <v-btn @click="menuItemClicked('pastelDark')" block color="secondary"
+              <v-btn @click="menuItemClicked('pastelDark')" block color="#997DB5"
                 >Pastel Dark Mode</v-btn
               >
             </v-col>
             <v-col cols="12" sm="6">
-              <v-btn @click="menuItemClicked('retroLight')" block color="secondary"
+              <v-btn @click="menuItemClicked('retroLight')" block color="#FFDB58"
                 >Retro Light Mode</v-btn
               >
             </v-col>
             <v-col cols="12" sm="6">
-              <v-btn @click="menuItemClicked('retroDark')" block color="secondary"
+              <v-btn @click="menuItemClicked('retroDark')" block color="#C7A317"
                 >Retro Dark Mode</v-btn
               >
             </v-col>
             <v-col cols="12" sm="6">
-              <v-btn @click="menuItemClicked('natureLight')" block color="secondary"
+              <v-btn @click="menuItemClicked('natureLight')" block color="#228B22"
                 >Nature Light Mode</v-btn
               >
             </v-col>
             <v-col cols="12" sm="6">
-              <v-btn @click="menuItemClicked('natureDark')" block color="secondary"
+              <v-btn @click="menuItemClicked('natureDark')" block color="#016524"
                 >Nature Dark Mode</v-btn
               >
             </v-col>
