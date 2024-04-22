@@ -1,5 +1,5 @@
 <template>
-  <v-card>
+  <v-card v-model="modelValue">
     <v-card-title> Valid Words </v-card-title>
     <v-infinite-scroll :height="300" :items="output" :onLoad="load">
       <template v-for="(item, index) in output" :key="index">
