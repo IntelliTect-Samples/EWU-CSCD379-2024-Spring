@@ -4,6 +4,9 @@
       <v-app-bar color="primary" :elevation="2">
 
         <template v-slot:append>
+          <v-btn icon="mdi-theme-light-dark" @click="toggleTheme" />
+          <v-btn icon="mdi-help-circle" @click="showHelpDialog = true" />
+          <HelpDialog v-model="showHelpDialog" />
           <v-app-bar-nav-icon
             color="secondary"
             @click="toggleMenu"
@@ -12,14 +15,14 @@
         </template>
         
         <template v-slot:prepend>
-          <v-icon color="secondary"> mdi-book </v-icon>
+          <v-app-bar-nav-icon
+            color = "secondary"
+            icon="mdi-book"
+            @click="router.push('/')"
+          ></v-app-bar-nav-icon>
+          <v-btn @click="router.push('/')">WORDLE</v-btn>
         </template>
 
-        <v-app-bar-title>WordleApp</v-app-bar-title>
-
-        <v-btn icon="mdi-theme-light-dark" @click="toggleTheme" />
-        <v-btn icon="mdi-help-circle" @click="showHelpDialog = true" />
-        <HelpDialog v-model="showHelpDialog" />
       </v-app-bar>
       
       <v-navigation-drawer
