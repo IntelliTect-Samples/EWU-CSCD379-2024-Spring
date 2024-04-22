@@ -35,6 +35,12 @@
           <v-list-item link @click="router.push('/about')">
             <v-list-item-title>About</v-list-item-title>
           </v-list-item>
+          <v-list-item>
+            <template>
+              <v-btn icon="mdi-cog" @click="showSettingDialog = true" />
+              <SettingsDialog v-model="showSettingDialog" />
+            </template>
+          </v-list-item>
         </v-list>
       </v-navigation-drawer>
 
@@ -53,6 +59,7 @@ const router = useRouter();
 const theme = useTheme();
 const showHelpDialog = ref(false);
 const menuOpen = ref(false);
+const showSettingDialog = ref(false);
 
 onMounted(() => {
   var defaultTheme = nuxtStorage.localStorage.getData("theme");
