@@ -1,27 +1,32 @@
 <template>
-  <v-card v-model="modelValue">
-    <v-card-title>
-      Valid Words
-      <v-btn @click="reload">Reload</v-btn></v-card-title
-    >
-    <v-infinite-scroll
-      v-if="!isReloading"
-      :height="300"
-      :items="output"
-      :onLoad="load">
-      <template v-for="(item, index) in output" :key="index">
-        <v-btn class="pa-2" height="50" @click="$emit('chooseWord', item)">
-          {{ item }}
-        </v-btn>
-      </template>
-    </v-infinite-scroll>
-  </v-card>
+  <v-dialog v-model="show">
+    <v-card>
+      <v-card-title>
+        Valid Words
+        <v-btn @click="reload">Reload</v-btn></v-card-title
+      >
+      <v-infinite-scroll
+        v-if="!isReloading"
+        :height="300"
+        :items="output"
+        :onLoad="load">
+        <template v-for="(item, index) in output" :key="index">
+          <v-btn class="pa-2" height="50" @click="$emit('chooseWord', item)">
+            {{ item }}
+          </v-btn>
+        </template>
+      </v-infinite-scroll>
+    </v-card>
+  </v-dialog>
 </template>
 
 <script setup lang="ts">
 import { Game } from '~/scripts/game';
 import { ValidWordsUtils } from '~/scripts/validWordsUtils';
-const modelValue = defineModel<Game>({ required: true });
+const props = defineProps<{
+  game: Game;
+}>();
+const show = defineModel<boolean>({ required: true });
 defineEmits(['chooseWord']);
 const utils = new ValidWordsUtils();
 const output = ref(new Array<string>());
@@ -49,14 +54,13 @@ async function reload() {
 }
 
 function getNextTenWords() {
-  if (modelValue.value.guessIndex !== localGuessIndex) {
-    console.log('THE THING WENT OFF');
+  if (props.game.guessIndex !== localGuessIndex) {
     output.value = new Array<string>();
     index = 0;
-    localGuessIndex = modelValue.value.guessIndex;
+    localGuessIndex = props.game.guessIndex;
   }
   let array = new Array<string>();
-  let validWords = ref(utils.validWords(modelValue.value));
+  let validWords = ref(utils.validWords(props.game));
   const maxIndex = index + 10;
   while (index < maxIndex) {
     const item = validWords.value[index];

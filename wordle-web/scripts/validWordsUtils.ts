@@ -24,7 +24,7 @@ export class ValidWordsUtils {
   }
 
   filterWordList(wordListWord: string): boolean {
-    let characters = wordListWord.split('');
+    let characters = wordListWord.toUpperCase().split('');
     for (let index = 0; index < characters.length; index++) {
       let character = characters[index];
       let lettersIndex = character.charCodeAt(0) - 65;
