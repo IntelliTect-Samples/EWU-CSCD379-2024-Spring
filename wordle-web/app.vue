@@ -5,7 +5,7 @@
       <v-app-bar color="primary" :elevation="2">
         
         <template v-slot:prepend>
-          <v-icon color="secondary"> mdi-book </v-icon>
+         
         </template>
         <v-app-bar-title @click="router.push('/')">
           Wordle Web
