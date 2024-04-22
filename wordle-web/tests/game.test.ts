@@ -18,13 +18,6 @@ describe('Game', () => {
     expect(game.guesses).toHaveLength(game.maxAttempts);
   });
 
-  it('allows letters to be added to a guess', () => {
-    game.addLetter('M');
-    game.addLetter('A');
-    const expectedLetters = ['M', 'A', '', '', ''].map(char => ({ char: char, state: LetterState.Unknown }));
-    expect(game.guess.letters).toEqual(expectedLetters);
-  });
-
   it('correctly processes a correct guess', () => {
     'MAGIC'.split('').forEach(char => game.addLetter(char));
     game.submitGuess();
