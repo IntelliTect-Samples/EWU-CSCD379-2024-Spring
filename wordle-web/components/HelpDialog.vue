@@ -32,6 +32,7 @@
             :key="letter.char"
             :letter="letter"
             :clickable="false"
+            width="100px"
           />
         </v-container>
       </v-card-item>

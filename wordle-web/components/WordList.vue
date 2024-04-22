@@ -33,6 +33,7 @@
 import { WordList } from "~/scripts/wordList";
 import { Game } from "~/scripts/game";
 import { LetterState } from "~/scripts/letter";
+import { filterValidWords } from "~/scripts/wordListUtils";
 const game: Game = inject("GAME")!;
 
 const modelValue = defineModel<boolean>({ default: false });
@@ -51,39 +52,7 @@ const pagedWords = computed(() => {
 });
 
 function validWords(): string[] {
-  return words.filter((word) => {
-    for (let i = 0; i < game.guessedLetters.length; i++) {
-      const letterObj = game.guessedLetters[i];
-      const letterChar = letterObj.char.toLowerCase();
-
-      const indexOfLetterInWord = word.indexOf(letterChar);
-      const indexOfLetterInSecretWord = game.secretWord
-        .toLowerCase()
-        .indexOf(letterChar);
-      if (
-        word.includes(letterChar) &&
-        game.guessedLetters[i].state === LetterState.Wrong
-      ) {
-        return false;
-      }
-      if (
-        !word.includes(letterChar) &&
-        (letterObj.state === LetterState.Correct ||
-          letterObj.state === LetterState.Misplaced)
-      ) {
-        return false;
-      }
-      if (
-        word.includes(letterChar) &&
-        (letterObj.state === LetterState.Correct ||
-          letterObj.state === LetterState.Misplaced) &&
-        indexOfLetterInWord !== indexOfLetterInSecretWord
-      ) {
-        return false;
-      }
-    }
-    return true;
-  });
+  return filterValidWords(game);
 }
 
 function addGuess(word: string) {
