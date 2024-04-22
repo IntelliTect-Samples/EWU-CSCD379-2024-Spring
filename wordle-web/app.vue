@@ -79,8 +79,8 @@ const selected=ref(null);
 
 
 const themes= [
-  {name: "default", value: "default"},
-  {name: "hill Billy", value: "hillBilly"},
+  {name: "default", value: "default"}
+  {name: "hill Billy", value: "hillBilly"}
   {name: "business Casual", value: "bCasual"}
   {name: "dark", value:"dark"}
 ]
