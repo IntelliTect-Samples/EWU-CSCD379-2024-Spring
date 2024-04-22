@@ -34,16 +34,17 @@
         Guess!
       </v-btn>
     </v-card>
-    <v-card>
-      <v-container>
-        <v-btn @click="engine = !engine">Word Engine</v-btn>
-        <ValidGuess
-          v-model="engine"
-          :game="game"
-          @chooseWord="(word) => selectWord(word)"
-        />
-      </v-container>
-    </v-card>
+    <v-card color="primary" dark>
+  <v-container>
+    <v-btn color="secondary" dark @click="engine = !engine">Word Engine</v-btn>
+    <ValidGuess
+      v-model="engine"
+      :game="game"
+      @chooseWord="(word) => selectWord(word)"
+    />
+  </v-container>
+</v-card>
+
   </v-container>
 </template>
 
