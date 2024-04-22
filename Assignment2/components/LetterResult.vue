@@ -3,7 +3,7 @@
     :height="boxSize"
     :width="boxSize"
     :color="letter.color"
-    :elevation="5"
+    :elevation="2"
     :class="[
       clickable ? '' : 'no-pointer',
       'align-center d-flex justify-center',
@@ -44,7 +44,11 @@ function onClicked() {
   }
 }
 
-watch([display.sm, display.xs, display.md], () => {
+onMounted(() => {
+  updateBoxSize();
+});
+
+function updateBoxSize() {
   if(display.xs.value){
     boxSize.value = 30;
   }else if (display.sm.value) {
@@ -52,7 +56,21 @@ watch([display.sm, display.xs, display.md], () => {
   } else {
     boxSize.value = 60;
   }
+}
+
+watch([display.sm, display.xs, display.md], () => {
+  updateBoxSize();
 });
+
+// watch([display.sm, display.xs, display.md], () => {
+//   if(display.xs.value){
+//     boxSize.value = 30;
+//   }else if (display.sm.value) {
+//     boxSize.value = 40;
+//   } else {
+//     boxSize.value = 60;
+//   }
+// });
 </script>
 
 <style scoped>
