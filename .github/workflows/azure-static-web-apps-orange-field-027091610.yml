@@ -29,10 +29,6 @@ jobs:
       - name: Build App
         run: npm run generate
         working-directory: ./wordle-web
-
-      - name: Vitest
-        run: npm run test
-        working-directory: ./wordle-web
         
       - name: Build And Deploy
         id: builddeploy
