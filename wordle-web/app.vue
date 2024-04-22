@@ -14,8 +14,12 @@
           </v-icon>
         </v-app-bar-title>
         <v-btn icon="mdi-weather-night" @click="toggleTheme()" />
+        <v-btn icon="mdi-help" @click="showHelpDialog = true" />
+        <v-btn icon="mdi-engine" @click="wordEngineDialog = true" />
       </v-app-bar>
-      
+
+      <HelpDialog v-model="showHelpDialog" />
+
       <v-navigation-drawer expand-on-hover rail>
         <v-list>
           <v-list-item
@@ -34,10 +38,10 @@
         <v-list density="compact" nav>
           <v-list-item prepend-icon="mdi-home" title="Home" @click="router.push('/')"></v-list-item>
           <v-list-item prepend-icon="mdi-cog-outline" title="Settings" @click="settingsDialog = true"></v-list-item>
-          <v-list-item prepend-icon="mdi-help-circle" title="About" @click="showHelpDialog = router.push('/aboutPage')"></v-list-item>
+          <v-list-item prepend-icon="mdi-help-circle" title="About" @click="router.push('/aboutPage')"></v-list-item>
         </v-list>
       </v-navigation-drawer>
-
+      
       <!-- Settings Dialog -->
       <v-dialog v-model="settingsDialog" max-width="500">
         <v-card>
@@ -55,6 +59,20 @@
         </v-card>
       </v-dialog>
       
+      <!-- Word Engine Dialog -->
+      <v-dialog v-model="wordEngineDialog" max-width="500">
+        <v-card>
+          <v-sheet color="secondry">
+            <v-card-text>Available Words Mechanic Still inprogress</v-card-text>
+          </v-sheet>
+          <v-card-text>
+            <v-container>
+              
+            </v-container>
+          </v-card-text>
+        </v-card>
+      </v-dialog>
+
       <v-main>
         <NuxtPage />
       </v-main>
@@ -73,6 +91,7 @@ const showHelpDialog = ref(false);
 const settingsDialog = ref(false);
 const darkMode = ref(false);
 const selected = ref(null);
+const wordEngineDialog = ref(false);
 
 onMounted(() => {
   var defaultTheme = nuxtStorage.localStorage.getData("theme");
