@@ -1,11 +1,12 @@
 <template>
   <v-card
-    :height="updatedBaseSize"
-    :width="letter.char.length < 2 ? updatedBaseSize : updatedBaseSize * 1.5"
+    :min-height="updatedBaseSize"
+    :min-width="letter.char.length < 2 ? updatedBaseSize : updatedBaseSize * 2"
     elevation="4"
     flat
     :class="[
       clickable ? '' : 'no-pointer',
+      letter.char.length > 2 ? 'px-2' : '',
       correctState(letter.state),
       'align-center d-flex justify-center',
     ]"
@@ -30,7 +31,7 @@ const props = withDefaults(
   }>(),
   {
     clickable: false,
-    baseSize: 60,
+    baseSize: 50,
   }
 );
 

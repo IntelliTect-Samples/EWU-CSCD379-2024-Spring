@@ -52,7 +52,7 @@ const pagedWords = computed(() => {
 
 function validWords(): string[] {
   return words.filter((word) => {
-    for (let i = 0; i < game.guessedLetters.length; i++) {
+    for (let i = 0; i < game.guesses; i++) {
       const letterObj = game.guessedLetters[i];
       const letterChar = letterObj.char.toLowerCase();
 
