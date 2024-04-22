@@ -21,7 +21,7 @@ const DeepSeaDive: ThemeDefinition = {
 };
 
 const EmeraldIsle: ThemeDefinition = {
-  dark: true,
+  dark: false,
   colors: {
     primary: "#8bc34a",
     secondary: "#ffeb3b",
@@ -32,11 +32,11 @@ const EmeraldIsle: ThemeDefinition = {
     success: "#4caf50",
     lose: colors.red.lighten1,
     win: colors.green.accent3,
-    correct: colors.green.accent4,
-    misplaced: colors.yellow.darken1,
-    wrong: colors.grey.darken2,
-    unknown: colors.grey.darken3,
-    background: "#121212",
+    correct: colors.lightGreen.darken3,
+    misplaced: colors.amber.lighten2,
+    wrong: colors.lime.darken2,
+    unknown: colors.lime.lighten3,
+    background: colors.lime.accent1,
   },
 };
 
