@@ -11,7 +11,7 @@
       :key="letter.char"
       :class="'ml-1 px-0'"
     >
-      <LetterResult :letter="letter" :clickable="true" />
+      <LetterResult :letter="letter" :clickable="true" :is-keyboard="true" />
     </v-col>
   </v-row>
 </template>
@@ -19,7 +19,6 @@
 <script setup lang="ts">
 import { Game } from "~/scripts/game";
 import { Letter } from "~/scripts/letter";
-import { GameState } from "~/scripts/game";
 const game: Game = inject("GAME")!;
 
 const keyboardLetterRows = computed(() => {

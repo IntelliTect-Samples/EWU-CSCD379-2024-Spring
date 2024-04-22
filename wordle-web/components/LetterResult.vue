@@ -2,13 +2,7 @@
   <v-card
     :height="boxSize"
     :width="
-      clickable
-        ? letter.char.length > 2
-          ? boxSize * 1.25
-          : boxSize / 1.65
-        : letter.char.length < 2
-        ? boxSize
-        : boxSize * 1.5
+      isKeyboard ? (letter.char.length > 2 ? keySize * 2.5 : keySize) : boxSize
     "
     elevation="4"
     flat
@@ -34,16 +28,18 @@ const props = withDefaults(
   defineProps<{
     letter: Letter;
     clickable?: boolean;
+    isKeyboard?: boolean;
   }>(),
   {
     clickable: false,
+    isKeyboard: false,
   }
 );
 
 const game: Game | undefined = inject("GAME", undefined);
 const boxSize = ref(60);
 const display = useDisplay();
-
+const keySize = ref(40);
 function onClicked() {
   if (!game) return;
 
@@ -69,15 +65,21 @@ function correctState(letterState: LetterState) {
   }
 }
 
-watch([display.sm, display.xs, display.md], () => {
-  if (display.xs.value) {
-    boxSize.value = 30;
-  } else if (display.sm.value) {
-    boxSize.value = 40;
-  } else {
-    boxSize.value = 60;
-  }
-});
+watch(
+  [display.sm, display.xs, display.md],
+  () => {
+    if (display.xs.value) {
+      boxSize.value = 45;
+      keySize.value = 30;
+    } else if (display.sm.value) {
+      boxSize.value = 60;
+    } else {
+      boxSize.value = 60;
+      keySize.value = 60;
+    }
+  },
+  { immediate: true }
+);
 </script>
 
 <style scoped>
