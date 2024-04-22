@@ -21,14 +21,14 @@
       </v-app-bar>
 
       <!-- Navigation Drawer for the About section -->
-      <v-navigation-drawer v-model="drawer" right absolute temporary>
+      <v-navigation-drawer v-model="drawer" location="right">
         <v-list>
           <v-list-item @click="router.push('/about')" class="text-center">About</v-list-item>
         </v-list>
       </v-navigation-drawer>
 
       <!-- Navigation Drawer for settings and theme changes -->
-      <v-navigation-drawer v-model="settingsDrawer" right absolute temporary>
+      <v-navigation-drawer v-model="settingsDrawer" location="right">
         <v-list>
           <v-list-item class="text-center">Choose Your Theme!</v-list-item>
           <v-list-item @click="setTheme('White')" class="text-center">White Wizard</v-list-item>
