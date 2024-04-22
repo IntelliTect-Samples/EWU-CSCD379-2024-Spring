@@ -33,12 +33,14 @@
       <v-btn @click="game.submitGuess()" class="mb-5" color="primary">
         Guess!
       </v-btn>
+      <WordListDialog :valid-words="game.validWords" @word-selected="game.addGuess" />
     </v-card>
   </v-container>
 </template>
 
 <script setup lang="ts">
 import { Game, GameState } from "../scripts/game";
+import WordListDialog from '../components/WordListDialog';
 const game: Game = reactive(new Game());
 
 provide("GAME", game);
