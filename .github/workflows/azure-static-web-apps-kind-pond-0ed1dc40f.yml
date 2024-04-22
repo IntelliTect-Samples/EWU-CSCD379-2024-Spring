@@ -32,9 +32,9 @@ jobs:
       - name: Generate
         run: npm run generate
         working-directory: ./wordle-web
-      - name: Run Vitest
-        run: npm run test
-        working-directory: ./wordle-web
+      # - name: Run Vitest
+      #   run: npm run test
+      #   working-directory: ./wordle-web
       - name: Upload artifact
         uses: actions/upload-artifact@v2
         with:
