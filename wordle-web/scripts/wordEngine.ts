@@ -1,7 +1,10 @@
-import { LetterState } from "./letter";
 import { WordList } from "./wordList";
+import { Game } from '~/scripts/game';
+import { Letter, LetterState } from '~/scripts/letter';
+import { Word } from '~/scripts/word';
 
 export class WordEngine {
+    
   static validGuessedWords(currentGuess: string, states: LetterState[]): string[] {
     return WordList.filter(word => {
       let isValid = true;
