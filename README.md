@@ -1,5 +1,5 @@
 # EWU-CSCD378-2024-Spring
-
+Link to site: https://orange-field-027091610.5.azurestaticapps.net/
 ## Assignment 2
 
 The purpose of this assignment is to solidify your learning of:
