@@ -13,6 +13,7 @@
             mdi-lightbulb-on-outline
           </v-icon>
         </v-app-bar-title>
+        <v-btn icon="mdi-weather-night" @click="toggleTheme" />
       </v-app-bar>
       
       <v-navigation-drawer
