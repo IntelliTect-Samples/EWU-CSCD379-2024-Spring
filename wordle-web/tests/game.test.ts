@@ -1,28 +1,53 @@
-// @vitest-environment nuxt
-import { expect, test } from "vitest";
-import { Game } from "~/scripts/game";
-import { LetterState } from "~/scripts/letter";
+import { describe, expect, it, beforeEach } from 'vitest';
+import { Game, GameState } from '~/scripts/game';
+import { LetterState } from '~/scripts/letter';
 
-test("game", () => {
-  // create game and check if it's created
-  const game = new Game("autos");
-  expect(game.wordToGuess.length).toBe(5);
-});
+describe('Game', () => {
+  let game: Game;
 
-test("guess-word", () => {
-  const game = new Game("autos");
-  game.guess("tangs");
-  expect(game.guesses[0].letters[0].state).toBe(LetterState.Misplaced);
-  expect(game.guesses[0].letters[1].state).toBe(LetterState.Misplaced);
-  expect(game.guesses[0].letters[2].state).toBe(LetterState.Wrong);
-  expect(game.guesses[0].letters[3].state).toBe(LetterState.Wrong);
-  expect(game.guesses[0].letters[4].state).toBe(LetterState.Correct);
+  beforeEach(() => {
+    game = new Game(6);
+    game.secretWord = 'MAGIC'; // Set the secretWord for test predictability
+  });
 
-  game.guess("autos");
-  expect(game.guesses[1].letters[0].state).toBe(LetterState.Correct);
-  expect(game.guesses[1].letters[1].state).toBe(LetterState.Correct);
-  expect(game.guesses[1].letters[2].state).toBe(LetterState.Correct);
-  expect(game.guesses[1].letters[3].state).toBe(LetterState.Correct);
-  expect(game.guesses[1].letters[4].state).toBe(LetterState.Correct);
+  it('initializes with a secret word "MAGIC"', () => {
+    expect(game.secretWord).toBe('MAGIC');
+  });
 
+  it('starts with the correct number of guesses', () => {
+    expect(game.guesses).toHaveLength(game.maxAttempts);
+  });
+
+  it('allows letters to be added to a guess', () => {
+    game.addLetter('M');
+    game.addLetter('A');
+    const expectedLetters = ['M', 'A', '', '', ''].map(char => ({ char: char, state: LetterState.Unknown }));
+    expect(game.guess.letters).toEqual(expectedLetters);
+  });
+
+  it('identifies a guess as filled when all letters are added', () => {
+    'MAGIC'.split('').forEach(char => game.addLetter(char));
+    expect(game.guess.isFilled()).toBe(true);
+  });
+
+  it('correctly processes a correct guess', () => {
+    'MAGIC'.split('').forEach(char => game.addLetter(char));
+    game.submitGuess();
+    expect(game.gameState).toBe(GameState.Won);
+  });
+
+  it('correctly processes an incorrect guess', () => {
+    'WRONG'.split('').forEach(char => game.addLetter(char));
+    game.submitGuess();
+    expect(game.gameState).toBe(GameState.Playing);
+    expect(game.guessIndex).toBe(1);
+  });
+
+  it('ends the game as lost after the maximum number of incorrect guesses', () => {
+    for (let i = 0; i < game.maxAttempts; i++) {
+      'WRONG'.split('').forEach(char => game.addLetter(char));
+      game.submitGuess();
+    }
+    expect(game.gameState).toBe(GameState.Lost);
+  });
 });
