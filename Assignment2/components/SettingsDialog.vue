@@ -52,6 +52,18 @@
               >
             </v-col>
           </v-row>
+
+          <v-divider />
+      <v-card-actions>
+        <v-spacer></v-spacer>
+
+        <v-btn
+          color="secondary"
+          variant="tonal"
+          text="Close"
+          @click="modelValue = false"
+        />
+      </v-card-actions>
         </v-container>
       </v-card-text>
     </v-card>
