@@ -25,7 +25,7 @@
         </v-list-item>
       </v-list>
     </v-navigation-drawer>
-    <v-main>
+    <v-main class="mt-5">
       <slot />
     </v-main>
     <HelpDialog v-model="showHelpDialog" />
