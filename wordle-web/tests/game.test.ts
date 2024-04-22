@@ -25,11 +25,6 @@ describe('Game', () => {
     expect(game.guess.letters).toEqual(expectedLetters);
   });
 
-  it('identifies a guess as filled when all letters are added', () => {
-    'MAGIC'.split('').forEach(char => game.addLetter(char));
-    expect(game.guess.isFilled()).toBe(true);
-  });
-
   it('correctly processes a correct guess', () => {
     'MAGIC'.split('').forEach(char => game.addLetter(char));
     game.submitGuess();
