@@ -13,7 +13,7 @@
         <HelpDialog v-model="showHelpDialog" />
         <v-btn @click="toggleDrawer" icon = "mdi-menu"></v-btn>
       </v-app-bar>
-      <v-navigation-drawer v-model="drawer"  location="right">
+      <v-navigation-drawer v-model="drawer"  location="right" disable-resize-watcher>
         <v-list>
           <v-list-item @click="router.push('/About')" class="text-center">About</v-list-item>
         </v-list>
