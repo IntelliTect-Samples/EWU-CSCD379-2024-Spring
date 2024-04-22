@@ -70,14 +70,38 @@ const toggleMenu = () => {
   menuOpen.value = !menuOpen.value;
 }
 
-function toggleTheme() {
-  if (theme.global.name.value === "light") {
+function isDark(): boolean {
+  const last4Letters = theme.global.name.value.substring(theme.global.name.value.length - 4).toLowerCase();
+  return last4Letters === "dark";
+}
+
+
+
+function toggleTheme(){
+  let changed: boolean = false;
+  if(theme.global.name.value === "light"){
     theme.global.name.value = "dark";
-  } else {
+    changed = true;
+  }
+  else if(theme.global.name.value === "dark") {
     theme.global.name.value = "light";
+    changed = true;
+  }
+  
+  if(!changed){
+    const darkMode: boolean = isDark();
+    let themeName: string = theme.global.name.value;
+    if(darkMode){
+      themeName = themeName.substring(0, themeName.length - 4);
+      theme.global.name.value = themeName + "Light";
+    }
+    else {
+      themeName = themeName.substring(0, themeName.length - 5);
+      theme.global.name.value = themeName + "Dark";
+    }
   }
 
-  nuxtStorage.localStorage.setData("theme", theme.global.name.value);
+  nuxtStorage.localStorage.setData("theme", theme.global.name.value);  
 }
 </script>
 

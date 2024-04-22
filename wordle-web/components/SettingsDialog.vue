@@ -15,7 +15,7 @@
           color="secondary"
           v-model="chosenTheme"
           label="Choose a Theme"
-          :items="['Standard', 'Mystic Meadow']"
+          :items="['Standard', 'Mystic Meadow', 'Enchanted Eclipse']"
         ></v-select>
         <v-btn color="secondary" @click="changeTheme" class="mb-6" type="submit">Activate</v-btn>
       </v-sheet>
@@ -33,33 +33,65 @@ const chosenTheme = ref('Standard');
 
 
 function changeTheme() {
-  //is light change meadow
-  if(theme.global.name.value == "light" || theme.global.name.value == "mysticMeadowLight" && chosenTheme == "Mystic Meadow"){
-    theme.global.name.value = "mysticMeadowLight";
+  const darkMode: boolean = isDark();
+  if(chosenTheme.value === "Mystic Meadow"){
+    if(darkMode){
+      theme.global.name.value = "mysticMeadowDark";
+    }
+    else {
+      theme.global.name.value = "mysticMeadowLight";
+    }
   }
-  //is dark change meadow
-  if(theme.global.name.value == "dark" || theme.global.name.value == "mysticMeadowDark" && chosenTheme == "Mystic Meadow"){
-    theme.global.name.value = "mysticMeadowDark";
+  if(chosenTheme.value === "Enchanted Eclipse"){
+    if(darkMode){
+      theme.global.name.value = "enchantedEclipseDark";
+    }
+    else {
+      theme.global.name.value = "enchantedEclipseLight";
+    }
   }
-  //is light change standard
-  if(theme.global.name.value === "light" || theme.global.name.value === "mysticMeadowLight" && chosenTheme === "Standard"){
-    theme.global.name.value = "light";
+  if(chosenTheme.value === "Standard"){
+    if(darkMode){
+      theme.global.name.value = "dark";
+    }
+    else {
+      theme.global.name.value = "light"
+    }
   }
-  //is dark change standard
-  if(theme.global.name.value === "dark" || theme.global.name.value === "mysticMeadowDark" && chosenTheme === "Standard"){
-    theme.global.name.value = "dark";
-  }
+  nuxtStorage.localStorage.setData("theme", theme.global.name.value);
+}
+
+function isDark(): boolean {
+  const last4Letters = theme.global.name.value.substring(theme.global.name.value.length - 4).toLowerCase();
+  return last4Letters === "dark";
 }
 
 
 
 function toggleTheme(){
+  let changed: boolean = false;
   if(theme.global.name.value === "light"){
     theme.global.name.value = "dark";
+    changed = true;
   }
-  else {
+  else if(theme.global.name.value === "dark") {
     theme.global.name.value = "light";
+    changed = true;
   }
+  
+  if(!changed){
+    const darkMode: boolean = isDark();
+    let themeName: string = theme.global.name.value;
+    if(darkMode){
+      themeName = themeName.substring(0, themeName.length - 4);
+      theme.global.name.value = themeName + "Light";
+    }
+    else {
+      themeName = themeName.substring(0, themeName.length - 5);
+      theme.global.name.value = themeName + "Dark";
+    }
+  }
+
   nuxtStorage.localStorage.setData("theme", theme.global.name.value);  
 }
 </script>

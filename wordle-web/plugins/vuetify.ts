@@ -47,12 +47,14 @@ export default defineNuxtPlugin((app) => {
             warning: "#FFCF5C",
             correct: "#5AC995",
             misplaced: "#FFCF5C",
-            wrong: "#7C7C7C",
-            unknown: "#A5A5A5"
+            wrong: "#afafaf",
+            unknown: "#d6d6d6"
           },
         },
         mysticMeadowDark: {
           colors: {
+            background: "#000000",
+            surface: "#212121",
             primary: "#41713c",
             secondary: "#E6883B",
             error: "#C53F3F",
@@ -61,8 +63,38 @@ export default defineNuxtPlugin((app) => {
             warning: "#E5A73B",
             correct: "#45A66E",
             misplaced: "#E5A73B",
-            wrong: "#4D4D4D",
-            unknown: "#707070"
+            wrong: "#616161",
+            unknown: "#424242"
+          },
+        },
+        enchantedEclipseLight: {
+          colors: {
+            primary: "#ffb84d",
+            secondary: "#8969d7",
+            error: "#FF6f6f",
+            info: "#5b9ee8",
+            success: "#76ce7d",
+            warning: "#FFd54f",
+            correct: "#76ce7d",
+            misplaced: "#ffd54f",
+            wrong: "#afafaf",
+            unknown: "#d6d6d6"
+          },
+        },
+        enchantedEclipseDark: {
+          colors: {
+            background: "#000000",
+            surface: "#212121",
+            primary: "#d6872e" ,
+            secondary: "#5d45a6",
+            error: "#ab3030",
+            info: "#3a74ad",
+            success: "#4f8b58",
+            warning: "#d8a331",
+            correct: "#4f8b58",
+            misplaced: "#d8a331",
+            wrong: "#616161",
+            unknown: "#424242"
           },
         },
       },
