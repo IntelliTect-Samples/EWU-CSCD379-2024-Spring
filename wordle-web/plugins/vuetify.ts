@@ -20,12 +20,33 @@ const DeepSeaDive: ThemeDefinition = {
   },
 };
 
+const EmeraldIsle: ThemeDefinition = {
+  dark: true,
+  colors: {
+    primary: "#8bc34a",
+    secondary: "#ffeb3b",
+    accent: "#ffc107",
+    error: "#ff5722",
+    warning: "#e91e63",
+    info: "#03a9f4",
+    success: "#4caf50",
+    lose: colors.red.lighten1,
+    win: colors.green.accent3,
+    correct: colors.green.accent4,
+    misplaced: colors.yellow.darken1,
+    wrong: colors.grey.darken2,
+    unknown: colors.grey.darken3,
+    background: "#121212",
+  },
+};
+
 export default defineNuxtPlugin((app) => {
   const vuetify = createVuetify({
     theme: {
       defaultTheme: "dark",
       themes: {
         DeepSeaDive,
+        EmeraldIsle,
         light: {
           dark: false,
           colors: {
