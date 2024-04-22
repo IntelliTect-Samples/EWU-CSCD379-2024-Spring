@@ -4,7 +4,7 @@ on:
   push:
     branches:
       - main
-      - Assignment2
+      - Assignment2 - Cole Stewart
     paths:
         - "wordle-web/**"
   pull_request:
