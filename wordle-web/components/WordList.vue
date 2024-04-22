@@ -10,7 +10,7 @@
       >
       </v-autocomplete>
       <v-btn
-        height="40px"
+        height="50px"
         class="align-center d-flex justify-center"
         v-for="word in pagedWords"
         :key="word"
@@ -52,7 +52,7 @@ const pagedWords = computed(() => {
 
 function validWords(): string[] {
   return words.filter((word) => {
-    for (let i = 0; i < game.guesses; i++) {
+    for (let i = 0; i < game.guessedLetters.length; i++) {
       const letterObj = game.guessedLetters[i];
       const letterChar = letterObj.char.toLowerCase();
 
