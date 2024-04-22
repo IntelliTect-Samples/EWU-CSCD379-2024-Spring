@@ -23,12 +23,12 @@
       <v-navigation-drawer expand-on-hover rail>
         <v-list>
           <v-list-item
-            prepend-avatar="https://randomuser.me/api/portraits/women/86.jpg"
+            prepend-avatar="https://i.ibb.co/kx64H0R/Picture1.jpg"
             subtitle="Webdev"
             title="Cynthia"
           ></v-list-item>
           <v-list-item
-            prepend-avatar="https://randomuser.me/api/portraits/men/88.jpg"
+            prepend-avatar="https://i.ibb.co/nfJtk1n/Picture2.jpg"
             subtitle="Webdev"
             title="Hadi"
           ></v-list-item>
