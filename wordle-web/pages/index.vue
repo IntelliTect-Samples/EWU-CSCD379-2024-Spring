@@ -27,14 +27,14 @@
       :key="i"
       :guess="guess"
     />
-    <div class="d-flex justify-center ma-3">
+    <div class="d-flex justify-center my-3">
       <v-btn
         v-if="game.gameState !== GameState.Playing"
         @click="isGameOn = true"
         color="primary"
         text="RESULTS"
-        height="50px"
-        width="200px"
+        height="40px"
+        width="120px"
       />
     </div>
 
