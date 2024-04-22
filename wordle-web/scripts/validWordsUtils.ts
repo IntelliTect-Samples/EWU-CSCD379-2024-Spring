@@ -13,7 +13,7 @@ export class ValidWordsUtils {
     this.wordList = wordList;
     this.partialWord = Array.from({ length: 5 }, (v, k) => undefined);
     this.letters = Array.from({ length: 26 }, (v, k) => {
-      let character = String.fromCharCode(97 + k);
+      let character = String.fromCharCode(65 + k);
       return new LetterHelper(character);
     });
   }
@@ -27,7 +27,7 @@ export class ValidWordsUtils {
     let characters = wordListWord.split('');
     for (let index = 0; index < characters.length; index++) {
       let character = characters[index];
-      let lettersIndex = character.charCodeAt(0) - 97;
+      let lettersIndex = character.charCodeAt(0) - 65;
       let letterHelper = this.letters[lettersIndex];
       if (!letterHelper.isValidForIndex[index]) {
         return false;
@@ -38,6 +38,9 @@ export class ValidWordsUtils {
 
   setup(game: Game) {
     game.guesses.forEach(guess => {
+      if (!guess.isFilled) {
+        return;
+      }
       let lettersArray = guess.letters;
       for (let index = 0; index < lettersArray.length; index++) {
         if (lettersArray[index].state === LetterState.Correct) {
