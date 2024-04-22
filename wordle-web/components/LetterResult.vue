@@ -64,17 +64,25 @@ function correctState(letterState: LetterState) {
       return "unkown-letter";
   }
 }
+watch([display.sm, display.xs, display.md], () => {
+  updateSize();
+});
 
-onMounted(() => {
+function updateSize() {
   if (display.xs.value) {
     boxSize.value = 45;
     keySize.value = 30;
   } else if (display.sm.value) {
     boxSize.value = 60;
+    keySize.value = 40;
   } else {
     boxSize.value = 60;
     keySize.value = 60;
   }
+}
+
+onMounted(() => {
+  updateSize();
 });
 </script>
 
