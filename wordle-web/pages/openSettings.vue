@@ -1,19 +1,38 @@
-<template><v-dialog max-width="500">
-  <template v-slot:default="{ isActive }">
-    <v-card title="Dialog">
+<template>
+  <v-dialog v-model="settingsDialog" max-width="500">
+    <v-card>
+      <v-sheet color="primary">
+        <v-card-text> SETTINGS </v-card-text>
+      </v-sheet>
       <v-card-text>
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+        <v-container class="button-container">
+          <v-btn @click="themeSettings('light')">Light Mode</v-btn>
+          <v-btn @click="themeSettings('dark')" >Dark Mode</v-btn>
+          <v-btn @click="themeSettings('bCasual')" >Business Casual</v-btn>
+          <v-btn @click="themeSettings('hillBilly')" >Hill Billy</v-btn>
+        </v-container>
       </v-card-text>
-
-      <v-card-actions>
-        <v-spacer></v-spacer>
-
-        <v-btn
-          text="Close Dialog"
-          @click="isActive.value = false"
-        ></v-btn>
-      </v-card-actions>
     </v-card>
-  </template>
-</v-dialog>
+  </v-dialog>
 </template>
+
+<script setup lang="ts">
+import { useTheme } from "vuetify/framework";
+import nuxtStorage from "nuxt-storage";
+import { ref } from "vue";
+
+const settingsDialog = ref(false);
+const theme = useTheme();
+
+function themeSettings(item: string) {
+  theme.global.name.value = item;
+  nuxtStorage.localStorage.setData("themes", theme.global.name.value);
+}
+</script>
+
+<style scoped>
+.button-container {
+  display: flex;
+  justify-content: space-between;
+}
+</style>

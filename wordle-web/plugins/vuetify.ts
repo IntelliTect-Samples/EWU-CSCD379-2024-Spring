@@ -40,7 +40,7 @@ export default defineNuxtPlugin((app) => {
         dark: {
           colors: {
             primary: "#1BF0BE",
-            secondary: "#FFE605",
+            secondary: "#424242",
             error: "#FF5252",
             info: "#2196F3",
             success: "#4CAF50",

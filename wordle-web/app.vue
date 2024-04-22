@@ -31,27 +31,28 @@
         </v-list>
 
         <v-divider></v-divider>
-
         <v-list density="compact" nav>
           <v-list-item prepend-icon="mdi-home" title="Home" @click="router.push('/')"></v-list-item>
-          <v-list-item prepend-icon="mdi-cog-outline" title="Settings" @click="router.push('/openSettings')"></v-list-item>
+          <v-list-item prepend-icon="mdi-cog-outline" title="Settings" @click="settingsDialog = true"></v-list-item>
           <v-list-item prepend-icon="mdi-help-circle" title="About" @click="showHelpDialog = router.push('/aboutPage')"></v-list-item>
         </v-list>
       </v-navigation-drawer>
 
-      <v-dialog v-model="openSettingsDialog">
+      <!-- Settings Dialog -->
+      <v-dialog v-model="settingsDialog" max-width="500">
         <v-card>
+          <v-sheet color="primary">
+            <v-card-text> Settings </v-card-text>
+          </v-sheet>
+          <v-card-text>
+            <v-container>
+              <v-btn @click="themeSettings('light')">Light Mode</v-btn>
+              <v-btn @click="themeSettings('dark')">Dark Mode</v-btn>
+              <v-btn @click="themeSettings('bCasual')">Business Casual</v-btn>
+              <v-btn @click="themeSettings('hillBilly')">Hill Billy</v-btn>
+            </v-container>
+          </v-card-text>
         </v-card>
-        <v-card-text>
-        <v-switch v-model="darkMode" label="Dark Mode"/>
-        <v-switch v-model="hillBilly" label="Hill Billy Mode"/>
-        <v-switch v-model="bCasual" label="Business Casual"/>
-        </v-card-text>
-
-        <v-card-actions>
-          <v-btn color="primary" @click="saveSettings">Save</v-btn>
-          <v-btn @click="closeSettingsDial()">close</v-btn>
-        </v-card-actions>
       </v-dialog>
       
       <v-main>
@@ -61,9 +62,6 @@
   </NuxtLayout>
 </template>
 
-
-
-
 <script setup lang="ts">
 import { useTheme } from "vuetify";
 import nuxtStorage from 'nuxt-storage';
@@ -72,45 +70,26 @@ import { ref } from "vue";
 const router = useRouter();
 const theme = useTheme();
 const showHelpDialog = ref(false);
-var menuOpen= ref(false);
-const settings = ref(false);
-const darkMode=ref(false);
-const selected=ref(null);
-
-
-const themes= [
-  {name: "default",value: "default"},
-  {name: "hill Billy", value: "hillBilly"},
-  {name: "business Casual", value: "bCasual"},
-  {name: "dark", value:"dark"},
-]
+const settingsDialog = ref(false);
+const darkMode = ref(false);
+const selected = ref(null);
 
 onMounted(() => {
   var defaultTheme = nuxtStorage.localStorage.getData("theme");
   theme.global.name.value = defaultTheme ?? "dark";
 });
 
-
 function toggleTheme() {
-  if (theme.global.name.value === "light") {
-    theme.global.name.value = "dark";
-  } else {
-    theme.global.name.value = "light";
-  }
+  theme.global.name.value = theme.global.name.value === "light" ? "dark" : "light";
   nuxtStorage.localStorage.setData("theme", theme.global.name.value);
 }
 
-  const openSettingsDialog = () => {
-  settings.value = true;
-}; 
+function themeSettings(item: string) {
+  theme.global.name.value = item;
+  nuxtStorage.localStorage.setData("themes", theme.global.name.value);
+}
 
-const closeSettingsDialog = () => {
-  settings.value = false;
-};
-
-const saveSettings = () => {
-  nuxtStorage.localStorage.setData("selectedTheme", selected.value);
-   closeSettingsDialog();
-};
-
+function closeSettingsDialog() {
+  settingsDialog.value = false;
+}
 </script>
