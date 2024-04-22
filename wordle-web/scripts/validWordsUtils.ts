@@ -20,10 +20,9 @@ export class ValidWordsUtils {
 
   validWords(game: Game): Array<string> {
     this.setup(game);
-    let result = myWordList.filter(wordListWord =>
+    let result = this.wordList.filter(wordListWord =>
       this.filterWordList(wordListWord)
     );
-    console.log(result.length);
     return result.filter(wordListWord => {
       let lettersEntered = game.guesses[game.guessIndex].letters;
       let lettersLength = lettersEntered.length;
@@ -31,7 +30,6 @@ export class ValidWordsUtils {
       while (count < lettersLength && lettersEntered[count].char !== '') {
         debugger;
         if (wordListWord[count].toUpperCase() !== lettersEntered[count].char) {
-          console.log(wordListWord[count] + ' ' + lettersEntered[count].char);
           return false;
         }
         count++;
@@ -46,7 +44,11 @@ export class ValidWordsUtils {
       let character = characters[index];
       let lettersIndex = character.charCodeAt(0) - 65;
       let letterHelper = this.letters[lettersIndex];
-      if (!letterHelper.isValidForIndex[index]) {
+      if (
+        !letterHelper.isValidForIndex[index] ||
+        (this.partialWord[index] !== undefined &&
+          this.partialWord[index] !== character)
+      ) {
         return false;
       }
     }

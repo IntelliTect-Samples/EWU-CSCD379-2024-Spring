@@ -3,126 +3,106 @@ import { Game } from '~/scripts/game';
 import { myWordList } from '~/scripts/wordList';
 import { ValidWordsUtils } from '~/scripts/validWordsUtils';
 
-test('validWords', () => {
-  let game = new Game();
-  game.secretWord = 'ABACA';
+const wordList = [
+  'AARGH',
+  'ABACA',
+  'HELLO',
+  'THINK',
+  'PEACH',
+  'BEACH',
+  'WHICH',
+];
 
-  let utils = new ValidWordsUtils();
-  game.addLetter('A');
-  game.addLetter('A');
-  game.addLetter('R');
-  game.addLetter('G');
-  game.addLetter('H');
-  game.submitGuess();
-  let validWords = utils.validWords(game);
-  expect(validWords[0].toUpperCase()).toBe('ABACA');
+describe('validWords_enteredLettersIn_returnsCorrectWordAndLength', () => {
+  it('enteredA_returnsFirstTwoWords', () => {
+    let game = new Game();
+    game.secretWord = 'HELLO';
+    game.addLetter('A');
+    let utils = new ValidWordsUtils(wordList);
+    let validWords = utils.validWords(game);
+    expect(validWords.length).toBe(2);
+    expect(validWords[0]).toBe('AARGH');
+    expect(validWords[1]).toBe('ABACA');
+  });
+  it('enteredAA_returnsAARGH', () => {
+    let game = new Game();
+    game.secretWord = 'HELLO';
+    game.addLetter('A');
+    game.addLetter('A');
+    let utils = new ValidWordsUtils(wordList);
+    let validWords = utils.validWords(game);
+    expect(validWords.length).toBe(1);
+    expect(validWords[0]).toBe('AARGH');
+  });
+  it('noLettersEntered_returnsFullList', () => {
+    let game = new Game();
+    game.secretWord = 'HELLO';
+    let utils = new ValidWordsUtils(wordList);
+    let validWords = utils.validWords(game);
+    expect(validWords.length).toBe(7);
+  });
+  it('submittedGuessAndEnteredLetters', () => {
+    let game = new Game();
+    game.secretWord = 'THINK';
+    let utils = new ValidWordsUtils(wordList);
+    game.addLetter('H');
+    game.addLetter('E');
+    game.addLetter('L');
+    game.addLetter('L');
+    game.addLetter('O');
+    game.submitGuess();
+    game.addLetter('A');
+    let validWords = utils.validWords(game);
+    expect(validWords.length).toBe(2);
+    expect(validWords[0]).toBe('AARGH');
+    expect(validWords[1]).toBe('ABACA');
+  });
 });
 
-test('validWords_wrongGuess_firstResultIsAARGH', () => {
-  let game = new Game();
-  game.secretWord = 'AARGH';
-
-  let utils = new ValidWordsUtils();
-  game.addLetter('A');
-  game.addLetter('A');
-  game.addLetter('R');
-  game.addLetter('F');
-  game.addLetter('F');
-  let testWords = utils.validWords(game);
-  expect(testWords[0].toUpperCase()).toBe('AARGH');
-});
-describe("validated words with validWords method and wordlist", () => {
-  it("the test should match aargh to aargh", () => {
-    let game = new Game(6);
-    game.secretWord = 'aargh';
-
-    let utils = new ValidWordsUtils();
-    game.addLetter('a');
-    game.addLetter('a');
-    game.addLetter('r');
-    game.addLetter('f');
-    game.addLetter('f');
-    let testWords = utils.validWords(game);
-    expect(testWords[0]).toBe('aargh');
-  })
-  it("catch should not match with aargh but should match with aargh", () => {
-    let game = new Game(6);
-    game.secretWord = 'aargh';
-
-    let utils = new ValidWordsUtils();
-    game.addLetter('c');
-    game.addLetter('a');
-    game.addLetter('t');
-    game.addLetter('c');
-    game.addLetter('h');
-    let testWords = utils.validWords(game);
-    expect(testWords[0]).toBe('aargh');
-    expect(testWords[0]).not.toBe('catch');
-  })
-  it("Guess should match index 1 on array of guesses", () => {
-    let game = new Game(6);
-    const guessArray = ["catch", "aargh", "apple", "beets"];
-    game.secretWord = 'aargh';
-
-    let utils = new ValidWordsUtils();
-    game.addLetter('a');
-    game.addLetter('a');
-    game.addLetter('r');
-    game.addLetter('f');
-    game.addLetter('f');
-    let testWords = utils.validWords(game);
-    expect(testWords[0]).toBe('aargh');
-    expect(testWords[0]).toBe(guessArray[1]);
-  })
-  it("Guess should match index 1 on array of guesses and not index 0 of guess array", () => {
-    let game = new Game(6);
-    const guessArray = ["catch", "aargh", "apple", "beets"];
-    game.secretWord = 'aargh';
-
-    let utils = new ValidWordsUtils();
-    game.addLetter('a');
-    game.addLetter('a');
-    game.addLetter('r');
-    game.addLetter('f');
-    game.addLetter('f');
-    let testWords = utils.validWords(game);
-    expect(testWords[0]).toBe('aargh');
-    expect(testWords[0]).not.toBe(guessArray[0]);
-    expect(testWords[0]).toBe(guessArray[1]);
-  })
-  it("Check that the fourth 4 in the wordList is not our secrect word", () => {
-    let game = new Game(6);
-    game.secretWord = 'aargh';
-  
-    let utils = new ValidWordsUtils();
-    let testWords = utils.validWords(game);
-    expect(testWords[4]).not.toBe(game.secretWord);
-  })
-  it("checks a split word with the the guessed word", () => {
-    let game = new Game(6);
-    game.secretWord = 'aargh';
-    const str= 'aargh';
-    const guessedLetters = str.split('');
-    let utils = new ValidWordsUtils();
-    let testWords = utils.validWords(game);
-    expect(testWords[0].charAt(0)).toBe(guessedLetters[0]);
-    expect(testWords[0].charAt(1)).toBe(guessedLetters[1]);
-    expect(testWords[0].charAt(2)).toBe(guessedLetters[2]);
-    expect(testWords[0].charAt(3)).toBe(guessedLetters[3]);
-    expect(testWords[0].charAt(4)).toBe(guessedLetters[4]);
-  })
-  it("this is another match of aargh to aaragh with splitting", () => {
-    let game = new Game(6);
-    game.secretWord = 'aargh';
-
-    let utils = new ValidWordsUtils();
-
-    let testWords = utils.validWords(game);
-    expect(testWords[0].charAt(0)).toBe('a');
-    expect(testWords[0].charAt(1)).toBe('a');
-    expect(testWords[0].charAt(2)).toBe('r');
-    expect(testWords[0].charAt(3)).toBe('g');
-    expect(testWords[0].charAt(4)).toBe('h');
-  })
-
+describe('validWords_submittedGuess_returnsCorrectWordAndLength', () => {
+  it('wrongLetterEliminatesAllOtherWordListWords', () => {
+    let game = new Game();
+    game.secretWord = 'ABACA';
+    let utils = new ValidWordsUtils(wordList);
+    game.addLetter('A');
+    game.addLetter('A');
+    game.addLetter('R');
+    game.addLetter('G');
+    game.addLetter('H');
+    game.submitGuess();
+    let validWords = utils.validWords(game);
+    expect(validWords[0]).toBe('ABACA');
+    expect(validWords.length).toBe(1);
+  });
+  it('misplacedLetterLeavesTwoWords', () => {
+    let game = new Game();
+    game.secretWord = 'THINK';
+    let utils = new ValidWordsUtils(wordList);
+    game.addLetter('H');
+    game.addLetter('E');
+    game.addLetter('L');
+    game.addLetter('L');
+    game.addLetter('O');
+    game.submitGuess();
+    let validWords = utils.validWords(game);
+    expect(validWords.length).toBe(4);
+    expect(validWords[0]).toBe('AARGH');
+    expect(validWords[1]).toBe('ABACA');
+    expect(validWords[2]).toBe('THINK');
+    expect(validWords[3]).toBe('WHICH');
+  });
+  it('correctLetterLeavesOneWord', () => {
+    let game = new Game();
+    game.secretWord = 'AARGH';
+    let utils = new ValidWordsUtils(wordList);
+    game.addLetter('A');
+    game.addLetter('B');
+    game.addLetter('A');
+    game.addLetter('C');
+    game.addLetter('A');
+    game.submitGuess();
+    let validWords = utils.validWords(game);
+    expect(validWords.length).toBe(1);
+    expect(validWords[0]).toBe('AARGH');
+  });
 });
