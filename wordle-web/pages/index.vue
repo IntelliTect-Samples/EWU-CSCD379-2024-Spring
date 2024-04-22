@@ -40,7 +40,10 @@
 
     <Keyboard />
 
-    <WordList v-model="showWordsList" />
+    <WordList
+      v-if="game.gameState === GameState.Playing"
+      v-model="showWordsList"
+    />
   </v-container>
 </template>
 

@@ -1,5 +1,9 @@
 <template>
-  <v-dialog v-model="modelValue" max-width="800" max-height="600" class="pa-2">
+  <v-bottom-sheet
+    v-model="modelValue"
+    max-height="600"
+    class="pa-2 d-flex flex-wrap justify-center align-center"
+  >
     <v-card>
       <v-autocomplete
         v-model="selectedWord"
@@ -26,8 +30,7 @@
         />
       </v-card-item>
     </v-card>
-  </v-dialog>
-
+  </v-bottom-sheet>
   <v-btn
     position="fixed"
     location="bottom right"
