@@ -1,7 +1,7 @@
 import { LetterState, type Letter } from "./letter";
 import { Word } from "./word";
 import { WordList } from "./wordList";
-import { ValidWordList } from "./ValidWordList";
+import { findValidWords } from "./ValidWordList";
 
 
 export class Game {
@@ -83,7 +83,7 @@ export class Game {
 
     const isCorrect = this.guess.compare(this.secretWord);
     this.updateGuessedLetters();
-    findValidWords(guess, this.validWordList);
+    findValidWords(this.guesses, this.guessIndex, this.validWordList);
 
 
     if (isCorrect) {
