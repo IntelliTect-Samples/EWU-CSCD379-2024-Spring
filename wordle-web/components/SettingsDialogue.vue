@@ -8,7 +8,7 @@
         <v-label>Theme</v-label>
         <v-select
           v-model="selctedTheme"
-          :items="['Light', 'Dark', 'Deep See Dive', 'Emerald Isle']"
+          :items="['Light', 'Dark', 'Sapphire Deep Sea Dive', 'Emerald Isle','Amethyst Twilight Mist']"
         />
       </v-card-item>
       <v-divider />
@@ -52,6 +52,9 @@ function updateTheme() {
       break;
     case "Emerald Isle":
       theme.global.name.value = "EmeraldIsle";
+      break;
+    case "Amethyst Twilight Mist":
+      theme.global.name.value = "AmethystTwilightMist";
       break;
   }
 

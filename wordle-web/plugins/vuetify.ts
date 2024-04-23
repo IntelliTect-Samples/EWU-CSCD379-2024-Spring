@@ -39,6 +39,26 @@ const EmeraldIsle: ThemeDefinition = {
     background: colors.lime.accent1,
   },
 };
+const AmethystTwilightMist: ThemeDefinition = {
+  dark: false,
+  colors: {
+    primary: "#8bc34a",
+    secondary: "#ffeb3b",
+    accent: "#ffc107",
+    error: "#ff5722",
+    warning: "#e91e63",
+    info: "#03a9f4",
+    success: "#4caf50",
+    lose: colors.red.lighten1,
+    win: colors.green.accent3,
+    correct: colors.lightGreen.darken3,
+    misplaced: colors.amber.lighten2,
+    wrong: colors.lime.darken2,
+    unknown: colors.lime.lighten3,
+    background: colors.lime.accent1,
+  },
+};
+
 
 export default defineNuxtPlugin((app) => {
   const vuetify = createVuetify({
@@ -47,6 +67,7 @@ export default defineNuxtPlugin((app) => {
       themes: {
         DeepSeaDive,
         EmeraldIsle,
+        AmethystTwilightMist,
         light: {
           dark: false,
           colors: {
