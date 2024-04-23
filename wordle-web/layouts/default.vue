@@ -3,7 +3,7 @@
     <v-app-bar color="primary" :elevation="2">
       <v-app-bar-title @click="$router.push('/')" style="cursor: pointer">
         <v-icon> mdi-flower-poppy </v-icon>
-        Ascetic Wordle</v-app-bar-title
+        Aesthetic Wordle</v-app-bar-title
       >
 
       <v-btn icon="mdi-help-circle" @click="showHelpDialog = true" />
