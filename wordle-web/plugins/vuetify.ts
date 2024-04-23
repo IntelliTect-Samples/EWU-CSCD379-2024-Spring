@@ -52,6 +52,7 @@ export default defineNuxtPlugin((app) => {
           colors: {
             primary: colors.pink.accent2,
             secondary: colors.pink.accent1,
+            accent: colors.pink.accent3,
             lose: colors.red.lighten1,
             win: colors.green.accent3,
             correct: colors.green.accent4,
@@ -66,6 +67,7 @@ export default defineNuxtPlugin((app) => {
           colors: {
             primary: colors.pink.accent2,
             secondary: colors.pink.accent1,
+            accent: colors.pink.accent3,
             lose: colors.red.lighten1,
             win: colors.green.accent3,
             correct: colors.green.accent4,
