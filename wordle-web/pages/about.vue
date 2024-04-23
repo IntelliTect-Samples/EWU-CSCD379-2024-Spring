@@ -7,22 +7,22 @@
     >
       <v-card-text class="text-center">
         <v-card-title
-          class="font-weight-bold"
-          style="color: #ffffff; font-size: 24px"
+          class="text-h3"
+          style="color: #ffffff; font-size: 24px; margin-bottom: 20px"
         >
           About
         </v-card-title>
         <v-card-text
           class="font-italic"
-          style="color: #ffffff; font-size: 20px"
+          style="color: #ffffff; font-size: 20px; padding-top:20px"
         >
           This class project is about exploring more of Vue and Vuetify features
           and styling our wordle website more! We are adding more pages and
           creating more features for users on the website, while also creating
-          more features with our game, like word lists and keyboard on the UI.
+          more features with our game, like word lists and a keyboard on the UI.
           Meg is amazing and someone I look up to as a women in CS! She does a
-          great job explaing things in class, and I don't know what I would do
-          without her! #MEGFORPRESIDENT
+          great job explaining things in class, and I really appreciate her immense knowledge! 
+          #MEGFORPRESIDENT
         </v-card-text>
       </v-card-text>
       <v-spacer />
