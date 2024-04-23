@@ -10,11 +10,9 @@ export class ValidWordsUtils {
   public count: number;
   public game: Game;
   public lastIndexSetup: number;
-  public requiredLetters: Array<LetterHelper>;
 
   constructor(game: Game, wordList: Array<string> = myWordList) {
     this.lastIndexSetup = -1;
-    this.requiredLetters = new Array<LetterHelper>();
     this.game = game;
     this.count = 0;
     this.wordList = wordList;
@@ -25,19 +23,7 @@ export class ValidWordsUtils {
     });
   }
 
-  validWords(): Array<string> {
-    this.setup();
-    let result = this.wordList.filter(wordListWord => {
-      let metCondition = this.filterWordList(wordListWord);
-      for (
-        let lettersIndex = 0;
-        lettersIndex < this.letters.length;
-        lettersIndex++
-      ) {
-        this.letters[lettersIndex].runningTotalDiscovered = 0;
-      }
-      return metCondition;
-    });
+  setRunningTotalForAllLettersToZero() {
     for (
       let lettersIndex = 0;
       lettersIndex < this.letters.length;
@@ -45,6 +31,17 @@ export class ValidWordsUtils {
     ) {
       this.letters[lettersIndex].runningTotalDiscovered = 0;
     }
+  }
+
+  validWords(): Array<string> {
+    this.setup();
+    // Eliminate words based off of previous guesses
+    let result = this.wordList.filter(wordListWord => {
+      let metCondition = this.filterWordList(wordListWord);
+      this.setRunningTotalForAllLettersToZero();
+      return metCondition;
+    });
+    // Eliminate words based off of current letters typed in to guess (not submitted)
     result = result.filter(wordListWord => {
       let lettersEntered = this.game.guesses[this.game.guessIndex].letters;
       let lettersLength = lettersEntered.length;
@@ -60,13 +57,16 @@ export class ValidWordsUtils {
     return result;
   }
 
+  // Helper method to eliminate words based off of previous guesses
   filterWordList(wordListWord: string): boolean {
     let characters = wordListWord.toUpperCase().split('');
+    // Checks if it's valid for current index, based off of previous guess results
     for (let index = 0; index < characters.length; index++) {
       let character = characters[index];
       let lettersIndex = character.charCodeAt(0) - 65;
       let letterHelper = this.letters[lettersIndex];
       letterHelper.runningTotalDiscovered++;
+      // Also checks if correct letters are found in the word
       if (
         (this.partialWord[index] !== undefined &&
           this.partialWord[index] !== character) ||
@@ -75,6 +75,7 @@ export class ValidWordsUtils {
         return false;
       }
     }
+    // Makes sure there's at least however many letters already discovered (through misplaced and correct letters) in current word list word
     for (
       let lettersIndex = 0;
       lettersIndex < this.letters.length;
@@ -88,6 +89,7 @@ export class ValidWordsUtils {
     return true;
   }
 
+  // Set up valid for index, number found, number discovered based on current guesses
   setup() {
     for (
       let guessesIndex = 0;
@@ -95,17 +97,12 @@ export class ValidWordsUtils {
       guessesIndex++
     ) {
       let guess = this.game.guesses[guessesIndex];
-      for (
-        let lettersIndex = 0;
-        lettersIndex < this.letters.length;
-        lettersIndex++
-      ) {
-        this.letters[lettersIndex].runningTotalDiscovered = 0;
-      }
+      this.setRunningTotalForAllLettersToZero();
       if (!guess.isFilled) {
         return;
       }
       let lettersArray = guess.letters;
+      // Adjust letter helpers based on correct, misplaced, or wrong states
       for (let index = 0; index < lettersArray.length; index++) {
         let lettersIndex = lettersArray[index].char.charCodeAt(0) - 65;
         if (lettersArray[index].state === LetterState.Correct) {
@@ -131,6 +128,7 @@ export class ValidWordsUtils {
           }
         }
       }
+      // Update total discovered in word
       for (
         let lettersIndex = 0;
         lettersIndex < this.letters.length;
@@ -144,6 +142,7 @@ export class ValidWordsUtils {
   }
 }
 
+// Helper class to keep track of data for each letter
 class LetterHelper {
   public isValidForIndex: boolean[];
   public character: string;

@@ -24,6 +24,12 @@
           <v-list-item-title> About </v-list-item-title>
         </v-list-item>
         <v-divider />
+        <v-list-item @click="router.push('/')">
+          <v-list-item-title>
+            <v-icon>mdi-alpha-w</v-icon>Whurdle
+          </v-list-item-title>
+        </v-list-item>
+        <v-divider />
         <v-list-item @click="showSettingsDialog = true">
           <v-list-item-title>
             <v-icon>mdi-cog</v-icon>

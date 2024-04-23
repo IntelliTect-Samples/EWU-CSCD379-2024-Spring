@@ -1,12 +1,11 @@
 <template>
   <v-dialog v-model="show">
-    <v-card class="ma-auto" min-width="500">
+    <v-card class="ma-auto" min-width="300">
       <v-sheet :color="validWords.length === 0 ? 'unknown' : 'secondary'">
         <v-card-title class="text-center"
           >Valid Words
           <v-btn
-            v-slot:append
-            color="secondary"
+            :color="validWords.length === 0 ? 'unknown' : 'secondary'"
             elevation="0"
             @click="show = !show"
             icon="mdi-close"
@@ -18,8 +17,8 @@
         :height="300"
         :items="output"
         mode="manual"
-        :onLoad="load">
-        <template v-for="(item, index) in output" :key="item">
+        @load="load">
+        <template v-for="(item, index) in output" :key="index">
           <v-btn class="pa-2" height="50" @click="$emit('chooseWord', item)">
             {{ item }}
           </v-btn>
@@ -50,16 +49,19 @@ const validWordsCount = defineModel<number>('validWordsCount', {
 defineEmits(['chooseWord']);
 const utils = new ValidWordsUtils(props.game);
 let validWords = utils.validWords();
-watch([props.game], () => {
-  output = new Array<string>();
-  index = 0;
-  localGuessIndex = props.game.guessIndex;
-  validWords = utils.validWords();
-  validWordsCount.value = validWords.length;
-});
 let index = 0;
 let localGuessIndex = 0;
-let output = getNextTenWords();
+// let output = getNextTenWords();
+let output = new Array<string>();
+const isEmpty = ref(false);
+
+watch([props.game], () => {
+  validWords = utils.validWords();
+  index = 0;
+  localGuessIndex = props.game.guessIndex;
+  validWordsCount.value = validWords.length;
+  output = getNextTenWords();
+});
 
 async function api(): Promise<string[]> {
   return new Promise(resolve => {
@@ -70,13 +72,23 @@ async function api(): Promise<string[]> {
 }
 
 function getNextTenWords() {
-  let result = validWords.slice(index, index + 10);
-  index += 10;
+  let numberToGet = 10;
+  // if (index + 10 > validWords.length) {
+  //   numberToGet = validWords.length - index;
+  //   console.log('ITS HAPPENING ' + numberToGet);
+  // }
+  let result = validWords.slice(index, index + numberToGet);
+  index += numberToGet;
   return result;
 }
+
 async function load({ done }: { done: any }) {
   // Perform API call
   const res = await api();
+  if (res.length === 0) {
+    done('empty');
+    return;
+  }
   res.forEach(item => {
     output.push(item);
   });
