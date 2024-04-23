@@ -23,19 +23,29 @@
       </div>
 
       <v-btn @click="game.submitGuess()" class="mb-5" color="primary">
-        Guess!
+        Guess! {{ validWords.length }}
       </v-btn>
     </v-card>
   </v-container>
 </template>
 
 <script setup lang="ts">
-import { Game, GameState } from "../scripts/game";
+import { Game, GameState} from "../scripts/game";
+import { findValidWords } from "~/scripts/ValidWordList";
 const game: Game = reactive(new Game());
 
 provide("GAME", game);
 
 const myGuess = ref("");
+
+const validWords = computed(() => {
+  return findValidWords(game);
+});
+
+/*watch(game.guessedLetters, () => {
+  findValidWords(game);
+  console.log(validWordList().length);
+});*/
 
 onMounted(() => {
   window.addEventListener("keyup", onKeyup);
