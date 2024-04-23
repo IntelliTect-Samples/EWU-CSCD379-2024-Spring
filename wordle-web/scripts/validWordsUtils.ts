@@ -10,8 +10,11 @@ export class ValidWordsUtils {
   public count: number;
   public game: Game;
   public lastIndexSetup: number;
+  public requiredLetters: Array<LetterHelper>;
+
   constructor(game: Game, wordList: Array<string> = myWordList) {
     this.lastIndexSetup = -1;
+    this.requiredLetters = new Array<LetterHelper>();
     this.game = game;
     this.count = 0;
     this.wordList = wordList;
@@ -24,10 +27,25 @@ export class ValidWordsUtils {
 
   validWords(): Array<string> {
     this.setup();
-    let result = this.wordList.filter(wordListWord =>
-      this.filterWordList(wordListWord)
-    );
-    return result.filter(wordListWord => {
+    let result = this.wordList.filter(wordListWord => {
+      let metCondition = this.filterWordList(wordListWord);
+      for (
+        let lettersIndex = 0;
+        lettersIndex < this.letters.length;
+        lettersIndex++
+      ) {
+        this.letters[lettersIndex].runningTotalDiscovered = 0;
+      }
+      return metCondition;
+    });
+    for (
+      let lettersIndex = 0;
+      lettersIndex < this.letters.length;
+      lettersIndex++
+    ) {
+      this.letters[lettersIndex].runningTotalDiscovered = 0;
+    }
+    result = result.filter(wordListWord => {
       let lettersEntered = this.game.guesses[this.game.guessIndex].letters;
       let lettersLength = lettersEntered.length;
       let count = 0;
@@ -39,6 +57,7 @@ export class ValidWordsUtils {
       }
       return true;
     });
+    return result;
   }
 
   filterWordList(wordListWord: string): boolean {
@@ -47,6 +66,7 @@ export class ValidWordsUtils {
       let character = characters[index];
       let lettersIndex = character.charCodeAt(0) - 65;
       let letterHelper = this.letters[lettersIndex];
+      letterHelper.runningTotalDiscovered++;
       if (
         (this.partialWord[index] !== undefined &&
           this.partialWord[index] !== character) ||
@@ -55,17 +75,33 @@ export class ValidWordsUtils {
         return false;
       }
     }
+    for (
+      let lettersIndex = 0;
+      lettersIndex < this.letters.length;
+      lettersIndex++
+    ) {
+      let letter = this.letters[lettersIndex];
+      if (letter.runningTotalDiscovered < letter.numberDiscoveredInWord) {
+        return false;
+      }
+    }
     return true;
   }
 
   setup() {
-    // let index = 0;
-    // if (this.game.guessIndex - 1 === this.lastIndexSetup) {
-    //   index = this.game.guessIndex;
-    //   this.lastIndexSetup = this.game.guessIndex;
-    // }
-    for (let index = 0; index < this.game.guessIndex; index++) {
-      let guess = this.game.guesses[index];
+    for (
+      let guessesIndex = 0;
+      guessesIndex < this.game.guessIndex;
+      guessesIndex++
+    ) {
+      let guess = this.game.guesses[guessesIndex];
+      for (
+        let lettersIndex = 0;
+        lettersIndex < this.letters.length;
+        lettersIndex++
+      ) {
+        this.letters[lettersIndex].runningTotalDiscovered = 0;
+      }
       if (!guess.isFilled) {
         return;
       }
@@ -75,8 +111,10 @@ export class ValidWordsUtils {
         if (lettersArray[index].state === LetterState.Correct) {
           this.partialWord[index] = lettersArray[index].char;
           this.letters[lettersIndex].numberFound++;
+          this.letters[lettersIndex].runningTotalDiscovered++;
         } else if (lettersArray[index].state === LetterState.Misplaced) {
           this.letters[lettersIndex].isValidForIndex[index] = false;
+          this.letters[lettersIndex].runningTotalDiscovered++;
         } else if (lettersArray[index].state === LetterState.Wrong) {
           let letterHelper = this.letters[lettersIndex];
           if (letterHelper.numberFound === letterHelper.numberInSecretWord) {
@@ -93,6 +131,15 @@ export class ValidWordsUtils {
           }
         }
       }
+      for (
+        let lettersIndex = 0;
+        lettersIndex < this.letters.length;
+        lettersIndex++
+      ) {
+        this.letters[lettersIndex].numberDiscoveredInWord =
+          this.letters[lettersIndex].runningTotalDiscovered;
+        this.letters[lettersIndex].runningTotalDiscovered = 0;
+      }
     }
   }
 }
@@ -102,9 +149,13 @@ class LetterHelper {
   public character: string;
   public numberInSecretWord: number;
   public numberFound: number;
+  public numberDiscoveredInWord: number;
+  public runningTotalDiscovered: number;
 
   constructor(character: string, game: Game) {
     this.isValidForIndex = [true, true, true, true, true];
+    this.numberDiscoveredInWord = 0;
+    this.runningTotalDiscovered = 0;
     this.character = character;
     let secretWord = game.secretWord;
     this.numberInSecretWord = 0;

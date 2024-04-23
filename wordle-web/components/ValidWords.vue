@@ -31,7 +31,7 @@ const validWordsCount = defineModel<number>('validWordsCount', {
   required: true,
 });
 defineEmits(['chooseWord']);
-const utils = new ValidWordsUtils();
+const utils = new ValidWordsUtils(props.game);
 // const gameGuessIndex = computed(() => {
 //   return props.game.guessIndex;
 // });
@@ -40,9 +40,8 @@ watch([props.game], () => {
   output = new Array<string>();
   index = 0;
   localGuessIndex = props.game.guessIndex;
-  validWords = utils.validWords(props.game);
+  validWords = utils.validWords();
   validWordsCount.value = validWords.length;
-  console.log('ITS HAPPENING');
 });
 let output = new Array<string>();
 let index = 0;
@@ -75,7 +74,7 @@ function getNextTenWords() {
     localGuessIndex = props.game.guessIndex;
   }
   let array = new Array<string>();
-  let validWords = ref(utils.validWords(props.game));
+  let validWords = ref(utils.validWords());
   validWordsCount.value = validWords.value.length;
   const maxIndex = index + 10;
   while (index < maxIndex) {
