@@ -2,6 +2,7 @@
   <v-card
     :height="boxSize"
     :width="boxSize"
+    :elevation="4"
     flat
     :class="[
       clickable ? '' : 'no-pointer',
