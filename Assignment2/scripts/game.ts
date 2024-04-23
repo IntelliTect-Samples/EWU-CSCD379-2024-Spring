@@ -23,7 +23,7 @@ export class Game {
     // Get random word from word list
     this.secretWord =
       WordList[Math.floor(Math.random() * WordList.length)].toUpperCase();
-    console.log(this.secretWord);
+    console.log("The secret word is: " + this.secretWord);
 
     // Populate guesses with the correct number of empty words
     this.guesses = [];
