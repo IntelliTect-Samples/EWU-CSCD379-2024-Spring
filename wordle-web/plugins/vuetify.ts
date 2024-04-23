@@ -24,8 +24,8 @@ export default defineNuxtPlugin(app => {
             misplacedGradient: '#FFE082',
             wrong: '#BDBDBD',
             wrongGradient: '#E0E0E0',
-            unknown: '#d6d6d6',
-            unknownGradient: '#e5e5e5',
+            unknown: '#e5e5e5',
+            unknownGradient: '#f2f2f2',
           },
         },
         regularDark: {
@@ -62,8 +62,8 @@ export default defineNuxtPlugin(app => {
             misplacedGradient: '#FFE082',
             wrong: '#BDBDBD',
             wrongGradient: '#E0E0E0',
-            unknown: '#d6d6d6',
-            unknownGradient: '#e5e5e5',
+            unknown: '#e5e5e5',
+            unknownGradient: '#f2f2f2',
           },
         },
         jungleDark: {
@@ -100,8 +100,8 @@ export default defineNuxtPlugin(app => {
             misplacedGradient: '#FFE082',
             wrong: '#BDBDBD',
             wrongGradient: '#E0E0E0',
-            unknown: '#d6d6d6',
-            unknownGradient: '#e5e5e5',
+            unknown: '#e5e5e5',
+            unknownGradient: '#f2f2f2',
           },
         },
         flamingoDark: {
