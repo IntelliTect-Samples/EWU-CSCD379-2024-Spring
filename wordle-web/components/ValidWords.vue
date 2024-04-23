@@ -1,12 +1,11 @@
 <template>
   <v-dialog v-model="show">
-    <v-card>
-      <v-card-title>
-        Valid Words
-        <v-btn @click="reload">Reload</v-btn></v-card-title
-      >
+    <v-card class="ma-auto" min-width="500">
+      <v-sheet :color="validWords.length === 0 ? 'dark' : 'secondary'">
+        <v-card-title class="text-center">Valid Words</v-card-title>
+      </v-sheet>
       <v-infinite-scroll
-        v-if="!isReloading"
+        v-if="validWords.length !== 0"
         :height="300"
         :items="output"
         :onLoad="load">
@@ -15,7 +14,15 @@
             {{ item }}
           </v-btn>
         </template>
+        <template v-slot:empty>
+          <v-alert type="warning">No more words!</v-alert>
+        </template>
       </v-infinite-scroll>
+      <template v-if="validWords.length === 0">
+        <v-alert tile color="secondary" class="text-center"
+          >No matches found!</v-alert
+        >
+      </template>
     </v-card>
   </v-dialog>
 </template>
@@ -32,10 +39,7 @@ const validWordsCount = defineModel<number>('validWordsCount', {
 });
 defineEmits(['chooseWord']);
 const utils = new ValidWordsUtils(props.game);
-// const gameGuessIndex = computed(() => {
-//   return props.game.guessIndex;
-// });
-let validWords = new Array<string>();
+let validWords = utils.validWords();
 watch([props.game], () => {
   output = new Array<string>();
   index = 0;
@@ -46,7 +50,6 @@ watch([props.game], () => {
 let output = new Array<string>();
 let index = 0;
 let localGuessIndex = 0;
-let isReloading = ref(false);
 
 async function api(): Promise<string[]> {
   return new Promise(resolve => {
@@ -56,37 +59,10 @@ async function api(): Promise<string[]> {
   });
 }
 
-async function reload() {
-  isReloading.value = true;
-  const res = await api();
-  res.forEach(item => {
-    output.push(item);
-  });
-  setTimeout(() => {
-    isReloading.value = false;
-  }, 750);
-}
-
 function getNextTenWords() {
-  if (props.game.guessIndex !== localGuessIndex) {
-    output = new Array<string>();
-    index = 0;
-    localGuessIndex = props.game.guessIndex;
-  }
-  let array = new Array<string>();
-  let validWords = ref(utils.validWords());
-  validWordsCount.value = validWords.value.length;
-  const maxIndex = index + 10;
-  while (index < maxIndex) {
-    const item = validWords.value[index];
-    if (item !== undefined) {
-      array.push(item);
-      index++;
-    } else {
-      break;
-    }
-  }
-  return array;
+  let result = validWords.slice(index, index + 10);
+  index += 10;
+  return result;
 }
 async function load({ done }: { done: any }) {
   // Perform API call

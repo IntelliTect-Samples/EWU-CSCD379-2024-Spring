@@ -18,7 +18,7 @@
       <HelpDialog v-model="showHelpDialog" />
       <v-app-bar-nav-icon @click.stop="showDrawer = !showDrawer" />
     </v-app-bar>
-    <v-navigation-drawer app v-model="showDrawer" location="right">
+    <v-navigation-drawer v-model="showDrawer" location="right">
       <v-list>
         <v-list-item @click="router.push('/about')">
           <v-list-item-title> About </v-list-item-title>
@@ -43,7 +43,4 @@ const router = useRouter();
 const showHelpDialog = ref(false);
 const showSettingsDialog = ref(false);
 const showDrawer = ref(false);
-watch(showDrawer, () => {
-  console.log(showDrawer.value);
-});
 </script>

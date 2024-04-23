@@ -32,12 +32,15 @@
       <v-btn @click="game.submitGuess()" class="mb-5" color="primary">
         Guess!
       </v-btn>
-      <v-btn @click="showDialog = !showDialog"
+      <v-btn
+        class="mb-5 ml-5"
+        color="secondary"
+        @click="showDialog = !showDialog"
         >{{ validWordsCount }} possible words!</v-btn
       >
       <ValidWords
         v-model:show="showDialog"
-        v-model:valid-words-count="validWordsCount"
+        v-model:validWordsCount="validWordsCount"
         :game="game"
         @chooseWord="word => selectWord(word)" />
     </v-card>
