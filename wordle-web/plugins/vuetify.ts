@@ -23,8 +23,8 @@ const DeepSeaDive: ThemeDefinition = {
 const EmeraldIsle: ThemeDefinition = {
   dark: false,
   colors: {
-    primary: "#8bc34a",
-    secondary: "#ffeb3b",
+    primary: "#388E3C",
+    secondary: "#8bc34a",
     accent: "#ffc107",
     error: "#ff5722",
     warning: "#e91e63",
@@ -56,7 +56,7 @@ const RubyRoyale: ThemeDefinition = {
     misplaced: colors.amber.lighten2,
     wrong: colors.red.darken2,
     unknown: colors.red.lighten3,
-    background: colors.red.accent1,
+    background: colors.red.lighten3,
   },
 };
 const AmethystTwilightMist: ThemeDefinition = {
