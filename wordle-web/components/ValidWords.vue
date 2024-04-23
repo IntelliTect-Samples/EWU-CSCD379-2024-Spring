@@ -8,6 +8,7 @@
         v-if="validWords.length !== 0"
         :height="300"
         :items="output"
+        mode="manual"
         :onLoad="load">
         <template v-for="(item, index) in output" :key="index">
           <v-btn class="pa-2" height="50" @click="$emit('chooseWord', item)">
