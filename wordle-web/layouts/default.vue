@@ -5,7 +5,7 @@
         <div class="text-h5 ml-5">
           <v-icon
             color="secondary"
-            @click="router.push('/index')"
+            @click="router.push('/')"
             class="cursor-pointer"
             >mdi-alpha-w</v-icon
           >
@@ -22,6 +22,12 @@
       <v-list>
         <v-list-item @click="router.push('/about')">
           <v-list-item-title> About </v-list-item-title>
+        </v-list-item>
+        <v-divider />
+        <v-list-item @click="router.push('/')">
+          <v-list-item-title>
+            <v-icon>mdi-alpha-w</v-icon>Whurdle
+          </v-list-item-title>
         </v-list-item>
         <v-divider />
         <v-list-item @click="showSettingsDialog = true">

@@ -4,8 +4,11 @@
       <v-card-title> About </v-card-title>
     </v-sheet>
     <v-card-text>
-      Meg is super cool. She knows all the colors and has a cool GitKraken
-      profile picture :D
+      This class project is wordle! Except we renamed it to Whurdle because it's
+      a hurdle you'll have to jump over. There's a cheat you can do to look at
+      the possible words based on your previous guesses and the current letters
+      that are typed in. There's also three color themes :) Meg is super cool.
+      She knows all the colors and has a cool GitKraken profile picture :D
     </v-card-text>
     <v-btn @click="router.go(-1)" class="ma-4" color="secondary">Back</v-btn>
   </v-card>
