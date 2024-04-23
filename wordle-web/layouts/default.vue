@@ -5,7 +5,7 @@
         <div class="text-h5 ml-5">
           <v-icon
             color="secondary"
-            @click="router.push('/index')"
+            @click="router.push('/')"
             class="cursor-pointer"
             >mdi-alpha-w</v-icon
           >
