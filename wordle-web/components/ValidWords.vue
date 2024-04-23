@@ -2,7 +2,16 @@
   <v-dialog v-model="show">
     <v-card class="ma-auto" min-width="500">
       <v-sheet :color="validWords.length === 0 ? 'dark' : 'secondary'">
-        <v-card-title class="text-center">Valid Words</v-card-title>
+        <v-card-title class="text-center"
+          >Valid Words
+          <v-btn
+            v-slot:append
+            color="secondary"
+            elevation="0"
+            @click="show = !show"
+            icon="mdi-close"
+            class="cursor-pointer"
+        /></v-card-title>
       </v-sheet>
       <v-infinite-scroll
         v-if="validWords.length !== 0"
@@ -10,7 +19,7 @@
         :items="output"
         mode="manual"
         :onLoad="load">
-        <template v-for="(item, index) in output" :key="index">
+        <template v-for="(item, index) in output" :key="item">
           <v-btn class="pa-2" height="50" @click="$emit('chooseWord', item)">
             {{ item }}
           </v-btn>
@@ -48,9 +57,9 @@ watch([props.game], () => {
   validWords = utils.validWords();
   validWordsCount.value = validWords.length;
 });
-let output = new Array<string>();
 let index = 0;
 let localGuessIndex = 0;
+let output = getNextTenWords();
 
 async function api(): Promise<string[]> {
   return new Promise(resolve => {
