@@ -22,7 +22,13 @@ const isShaking = ref(false);
 watch(
   () => props.guess.isFilled,
   () => {
-    if (!props.guess.isFilled) {
+    let count = 0;
+    for (let index = 0; index < props.guess.letters.length; index++) {
+      if (props.guess.letters[index].char !== '') {
+        count++;
+      }
+    }
+    if (count === 0) {
       isShaking.value = true;
       setTimeout(() => {
         isShaking.value = false;

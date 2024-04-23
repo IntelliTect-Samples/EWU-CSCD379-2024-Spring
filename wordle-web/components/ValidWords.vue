@@ -1,7 +1,7 @@
 <template>
   <v-dialog v-model="show">
     <v-card class="ma-auto" min-width="500">
-      <v-sheet :color="validWords.length === 0 ? 'dark' : 'secondary'">
+      <v-sheet :color="validWords.length === 0 ? 'unknown' : 'secondary'">
         <v-card-title class="text-center"
           >Valid Words
           <v-btn
