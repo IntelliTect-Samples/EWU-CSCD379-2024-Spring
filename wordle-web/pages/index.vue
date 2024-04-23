@@ -1,6 +1,6 @@
 <template>
   <v-container>
-    <v-card class="text-center">
+    <v-card class="text-center" elevation="0">
       <v-alert
         v-if="game.gameState != GameState.Playing"
         :color="game.gameState == GameState.Won ? 'success' : 'error'"
