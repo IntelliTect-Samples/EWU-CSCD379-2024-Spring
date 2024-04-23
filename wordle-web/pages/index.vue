@@ -57,7 +57,11 @@ const validWordsCount = ref(myWordList.length);
 
 const myGuess = ref('');
 console.log(game.secretWord);
-
+function playAudio(): any {
+  const audio = new Audio('/clicker.mp3');
+  audio.volume = 0.9;
+  audio.play();
+};
 onMounted(() => {
   window.addEventListener('keyup', onKeyup);
 });
@@ -68,10 +72,13 @@ onUnmounted(() => {
 
 function onKeyup(event: KeyboardEvent) {
   if (event.key === 'Enter') {
+    playAudio();
     game.submitGuess();
   } else if (event.key == 'Backspace') {
+    playAudio();
     game.removeLastLetter();
   } else if (event.key.match(/[A-z]/) && event.key.length === 1) {
+    playAudio();
     game.addLetter(event.key.toUpperCase());
   }
 }
