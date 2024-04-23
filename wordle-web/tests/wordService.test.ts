@@ -5,42 +5,42 @@ import { LetterState } from "~/scripts/letter";
 import { WordService } from "~/scripts/wordService";
 
 test('WordService test full word', ()=> {
-  const guess = 'aargh';
-  const states = [
+  const guess = ['aargh'];
+  const states = [[
     LetterState.Correct,
     LetterState.Correct,
     LetterState.Correct,
     LetterState.Correct,
     LetterState.Correct,
-  ];
+  ]];
 
   const validWords = WordService.validGuessedWords(guess, states);
   expect(validWords).toEqual(['aargh']);
 });
 
 test('WordService test partial word', ()=> {
-  const guess = 'aarg';
-  const states = [
+  const guess = ['aarg'];
+  const states = [[
     LetterState.Correct,
     LetterState.Correct,
     LetterState.Correct,
     LetterState.Correct,
     LetterState.Unknown,
-  ];
+  ]];
 
   const validWords = WordService.validGuessedWords(guess, states);
   expect(validWords).toEqual(['aargh']);
 })
 
 test('WordService test partial word, results in multiple words', ()=> {
-  const guess = 'abac';
-  const states = [
+  const guess = ['abac'];
+  const states = [[
     LetterState.Correct,
     LetterState.Correct,
     LetterState.Correct,
     LetterState.Correct,
     LetterState.Unknown,
-  ];
+  ]];
 
   const validWords = WordService.validGuessedWords(guess, states);
   expect(validWords[0]).toEqual('abaca');
@@ -49,14 +49,14 @@ test('WordService test partial word, results in multiple words', ()=> {
 });
 
 test('WordService test wrongplaced letters full word, results in aargh', ()=> {
-  const guess = "aragh";
-  const states = [
+  const guess = ["aragh"];
+  const states = [[
     LetterState.Correct,
     LetterState.Misplaced,
     LetterState.Misplaced,
     LetterState.Correct,
     LetterState.Correct,
-  ];
+  ]];
 
   const validWords = WordService.validGuessedWords(guess, states);
   expect(validWords).toEqual(['aargh']);
