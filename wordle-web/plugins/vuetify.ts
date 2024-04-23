@@ -42,8 +42,8 @@ const EmeraldIsle: ThemeDefinition = {
 const AmethystTwilightMist: ThemeDefinition = {
   dark: false,
   colors: {
-    primary: "#8bc34a",
-    secondary: "#ffeb3b",
+    primary: "#4A148C",
+    secondary: "#AA00FF",
     accent: "#ffc107",
     error: "#ff5722",
     warning: "#e91e63",
@@ -55,7 +55,7 @@ const AmethystTwilightMist: ThemeDefinition = {
     misplaced: colors.amber.lighten2,
     wrong: colors.lime.darken2,
     unknown: colors.lime.lighten3,
-    background: colors.lime.accent1,
+    background: colors.purple.lighten4,
   },
 };
 

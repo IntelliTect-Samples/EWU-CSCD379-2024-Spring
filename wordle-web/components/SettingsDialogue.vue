@@ -47,7 +47,7 @@ function updateTheme() {
     case "Dark":
       theme.global.name.value = "dark";
       break;
-    case "Deep See Dive":
+    case "Sapphire Deep Sea Dive":
       theme.global.name.value = "DeepSeaDive";
       break;
     case "Emerald Isle":
