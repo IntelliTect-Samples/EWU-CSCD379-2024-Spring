@@ -23,34 +23,6 @@ export default defineNuxtPlugin((app) => {
             unknown: "#d6d6d6"
           },
         },
-        lightrainbow: {
-          colors: {
-            primary: "#E91E63",
-            secondary: "#03A9F4",
-            error: "#FF5252",
-            info: "#00BCD4",
-            success: "#8BC34A",
-            warning: "#FFEB3B",
-            correct:"#8BC34A",
-            misplaced:"#FFEB3B",
-            wrong:"#F44336",
-            unknown: "#BDBDBD"
-          },
-        },
-        lightnoir: {
-          colors: {
-            primary: "#9E9E9E",
-            secondary: "#757575",
-            error: "#E53935",
-            info: "#607D8B",
-            success: "#43A047",
-            warning: "#FB8C00",
-            correct:"#FFFFFF",
-            misplaced:"#BDBDBD",
-            wrong:"#424242",
-            unknown: "#E0E0E0"
-          },
-        },
         dark: {
           colors: {
             primary: "#673AB7",
@@ -64,34 +36,6 @@ export default defineNuxtPlugin((app) => {
             wrong:"#616161",
             unknown: "#424242"
           },
-        },
-        darkrainbow: {
-          colors: {
-            primary: "#9C27B0",
-            secondary: "#2196F3",
-            error: "#E91E63",
-            info: "#00BCD4",
-            success: "#4CAF50",
-            warning: "#CDDC39",
-            correct:"#8BC34A",
-            misplaced:"#FFC107",
-            wrong:"#FF5722",
-            unknown: "#607D8B"
-          },
-        },
-        darknoir: {
-          colors: {
-            primary: "#616161",
-            secondary: "#9E9E9E",
-            error: "#D32F2F",
-            info: "#455A64",
-            success: "#388E3C",
-            warning: "#FFA000",
-            correct:"#EEEEEE",
-            misplaced:"#757575",
-            wrong:"#212121",
-            unknown: "#424242"
-          }
         },
         pastelLight: {
           colors: {

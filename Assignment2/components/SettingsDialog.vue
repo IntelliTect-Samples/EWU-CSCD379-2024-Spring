@@ -81,26 +81,4 @@ function menuItemClicked(item: string) {
   theme.global.name.value = item;
   nuxtStorage.localStorage.setData("theme", theme.global.name.value);
 }
-
-// function menuItemClicked(item: number){
-//   if(item == 1){
-//     theme.global.name.value = "light";
-//   }
-//   else if(item == 2){
-//     theme.global.name.value = "dark";
-//   }
-//   else if(item == 3){
-//     theme.global.name.value = "lightrainbow";
-//   }
-//   else if(item == 4){
-//     theme.global.name.value = "lightnoir";
-//   }
-//   else if(item == 5){
-//     theme.global.name.value = "darkrainbow";
-//   }
-//   else if(item == 6){
-//     theme.global.name.value = "darknoir";
-//   }
-//   nuxtStorage.localStorage.setData("theme", theme.global.name.value);
-// }
 </script>

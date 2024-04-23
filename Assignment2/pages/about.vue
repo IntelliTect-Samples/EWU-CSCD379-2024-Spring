@@ -1,12 +1,4 @@
 <template>
-	<!-- <v-card>
-		<v-card-title>About</v-card-title>
-		<v-card-text>
-			<p> Wow this project is so amazing I definitely haven't stressed about it and lost sleep over it</p>
-			<p> To be fair though meg is a nice teacher, it just seems like everything it very fast</p>
-		</v-card-text>
-	</v-card> -->
-
 	<v-container class="ma-auto">
 		<v-row justify="center">
 			<v-col cols="12" md="8">
