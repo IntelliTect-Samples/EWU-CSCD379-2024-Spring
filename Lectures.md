@@ -115,13 +115,16 @@
 - What is MVC and why are we doing a SPA
   - Quick Intro to ASP.NET MVC
 - Starting an ASP.NET API Project
+  - Build the Word of the Day API endpoint
   - Creating a simple API
   - Program.cs
   - Controllers
   - Basic Routing
   - Services (DI)
+- CORS
 
 ### Lecture 8. 4/25: 🟣
+- DevOps
 - More ASP.NET and EF and homework 3 material
 - Unit Testing the API
   - Basic Unit Testing
