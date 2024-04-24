@@ -3,7 +3,7 @@
     <v-menu>
         <template v-slot:activator="{ props }">
             <v-btn v-bind="props" >
-                available words
+                available words: {{ validWords.length }}
             </v-btn>
         </template>
         <v-list>
