@@ -1,17 +1,19 @@
 <template>
-  <v-row
+  <v-row style="background-color: thistle;"
+    elevation="10"
     class="justify-center"
     v-for="(keyboardRow, rowIndex) in keyboardLetterRows"
     :key="rowIndex"
     dense
   >
-    <v-col
+    <v-col style="outline-style: double outset; outline-width: 0.001vmax; outline-color: burlywood;"
+      elevation="10"
       cols="auto"
       v-for="letter in keyboardRow"
       :key="letter.char"
       :class="'ml-1 px-0'"
     >
-      <LetterResult :letter="letter" :clickable="true" />
+      <LetterResult :letter="letter" :clickable="true" style="color: blue;"/>
     </v-col>
   </v-row>
 </template>

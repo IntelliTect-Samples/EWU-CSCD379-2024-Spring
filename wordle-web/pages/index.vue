@@ -1,6 +1,6 @@
 <template>
   <v-container>
-    <v-card class="text-center">
+    <v-card class="text-center" style="background-color: maroon;">
       <v-alert
         v-if="game.gameState != GameState.Playing"
         :color="game.gameState == GameState.Won ? 'success' : 'error'"
@@ -18,7 +18,7 @@
           <v-icon size="large" class="mr-2"> mdi-restart </v-icon> Restart Game
         </v-btn>
       </v-alert>
-      <v-card-title v-else>Wordle</v-card-title>
+      <v-card-title v-else style="color: salmon; font-size: xx-large;">Wordle</v-card-title>
 
       <GameBoardGuess
         v-for="(guess, i) of game.guesses"
