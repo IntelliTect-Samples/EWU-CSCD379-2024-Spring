@@ -1,6 +1,6 @@
 <template>
   <NuxtLayout>
-    <v-app class="myFont">
+    <v-app class="myFontDefault">
       <v-app-bar color="primary">
         
         <v-app-bar-title>Pentagram</v-app-bar-title>
@@ -40,6 +40,7 @@ import nuxtStorage from "nuxt-storage";
 const router = useRouter();
 const theme = useTheme();
 const showHelpDialog = ref(false);
+let font = changeFont();
 const themes = [
   { name: "default", theme: "dark"},
   { name: "sans", theme: "sansDark"},
@@ -47,17 +48,19 @@ const themes = [
 ];
 onMounted(() => {
   var defaultTheme = nuxtStorage.localStorage.getData('theme');
-  theme.global.name.value = defaultTheme ?? "dark";
+  var defaultFont = nuxtStorage.localStorage.getData('font');
 });
 
 function changeTheme(themeName: string) {
   theme.global.name.value = themeName;
-  nuxtStorage.localStorage.setData('theme', themeName);
+  changeFont();
+  nuxtStorage.localStorage.setData('theme', themeName)
+  nuxtStorage.localStorage.setData('font', font)
 }
 
 function toggleTheme() {
   if (theme.global.name.value === "dark") {
-    changeTheme("light");
+    changeTheme("light");   
   } else if(theme.global.name.value === "sansLight") {
     changeTheme("sansDark");
   } else if(theme.global.name.value === "sansDark") {
@@ -70,10 +73,26 @@ function toggleTheme() {
     changeTheme("dark");
   }
 }
-
+function changeFont():string {
+  if (theme.global.name.value === "dark" || theme.global.name.value === "light") {
+    return "myFontDefault";  
+  } else if(theme.global.name.value === "sansLight" || theme.global.name.value === "sansDark") {
+    return  "myFontSans";
+  } else if(theme.global.name.value === "jaringLight" || theme.global.name.value === "jaringDark") {
+    return "myFontJaring";
+  } else {
+    return "myFontDefault";
+  }
+}
 </script>
 <style>
-.myFont {
-  font-family: 'Pentagram';
+.myFontSans {
+  font-family: 'comic sans ms';
+}
+.myFontDefault {
+  font-family: 'pentagram';
+}
+.myFontJaring{
+  font-family: 'default';
 }
 </style>

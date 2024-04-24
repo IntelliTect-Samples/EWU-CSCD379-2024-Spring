@@ -2,8 +2,8 @@
 <template>
     <v-menu>
         <template v-slot:activator="{ props }">
-            <v-btn v-bind="props" icon>
-                <v-icon>mdi-view-list</v-icon>
+            <v-btn v-bind="props" >
+                available words
             </v-btn>
         </template>
         <v-list>

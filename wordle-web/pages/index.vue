@@ -1,5 +1,5 @@
 <template>
-  <v-container>
+  <v-container class="myFontDefault">
     <v-card class="text-center">
       <v-alert v-if="game.gameState != GameState.Playing" :color="game.gameState == GameState.Won ? 'success' : 'error'"
         class="mb-5" tile>
@@ -42,7 +42,7 @@
       </div>
 
       <v-btn @click="game.submitGuess()" class="mb-5" color="primary">
-        Guess! {{ validWords.length }}
+        Guess!
       </v-btn>
     </v-card>
   </v-container>
