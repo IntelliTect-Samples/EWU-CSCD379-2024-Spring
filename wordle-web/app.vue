@@ -32,8 +32,8 @@
           <v-list-item prepend-icon="mdi-home" title="Home" @click="router.push('/')"/>
           <v-list-item prepend-icon="mdi-cog-outline" title="Settings" @click="settingsDialog = true"/>
           <v-list-item prepend-icon="mdi-help-circle" title="About" @click="router.push('/aboutPage')"/>
-          <v-list-item prepend-icon="mdi-weather-night" @click="toggleTheme()"/>
-          <v-list-item  prepend-icon="mdi-help" @click="showHelpDialog = true" />
+          <v-list-item prepend-icon="mdi-weather-night" title="Light vs Dark"@click="toggleTheme()"/>
+          <v-list-item  prepend-icon="mdi-help" title="Help" @click="showHelpDialog = true" />
         </v-list>
       </v-navigation-drawer>
       
