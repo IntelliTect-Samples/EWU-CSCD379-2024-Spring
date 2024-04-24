@@ -3,10 +3,6 @@
   
     <v-app>
       <v-app-bar color="primary" :elevation="2">
-        
-        <template v-slot:prepend>
-         
-        </template>
         <v-app-bar-title @click="router.push('/')">
           Wordle Web
           <v-icon @click="router.push('/')">
@@ -62,7 +58,9 @@
       </v-dialog>
 
     
+      <v-main>
         <NuxtPage />
+      </v-main>
 
     </v-app>
   </NuxtLayout>
