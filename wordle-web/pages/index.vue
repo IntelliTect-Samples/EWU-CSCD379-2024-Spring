@@ -36,9 +36,8 @@
     </v-card>
     <v-card color="primary" dark>
       <v-container>
-        <v-btn prepend-icon="mdi-engine" color="secondary" dark @click="engine = !engine"
-          >Word Engine</v-btn
-        >
+        
+        
         <ValidGuess
           v-model="engine"
           :game="game"
