@@ -1,6 +1,6 @@
 <template>
   <NuxtLayout>
-    <v-app>
+    <v-app class="myFont">
       <v-app-bar color="primary">
         
         <v-app-bar-title>Pentagram</v-app-bar-title>
@@ -72,3 +72,8 @@ function toggleTheme() {
 }
 
 </script>
+<style>
+.myFont {
+  font-family: 'Pentagram';
+}
+</style>
