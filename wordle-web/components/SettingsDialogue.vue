@@ -7,9 +7,11 @@
       <v-card-item>
         <v-switch
           v-model="isDarkMode"
-          :label="isDarkMode ? 'Dark' : 'Light'"
+          :label="isDarkMode ? 'Dark Mode' : 'Light Mode'"
           color="primary"
           base-color="primary"
+          default-value="true"
+          :append-icon="isDarkMode ? 'mdi-weather-night' : 'mdi-weather-sunny'"
           inset
         />
 
@@ -17,8 +19,7 @@
         <v-select
           v-model="selctedTheme"
           :items="[
-            'Light',
-            'Dark',
+            'Standard',
             'Sapphire Deep Sea Dive',
             'Emerald Isle',
             'Amethyst Twilight Mist',
@@ -56,13 +57,18 @@ const theme = useTheme();
 const selctedTheme = ref();
 const isDarkMode = ref(false);
 
+watch(isDarkMode, () => {
+  if (isDarkMode.value) {
+    theme.global.name.value = "dark";
+  } else {
+    theme.global.name.value = "light";
+  }
+});
+
 function updateTheme() {
   switch (selctedTheme.value) {
-    case "Light":
+    case "Standard":
       theme.global.name.value = "light";
-      break;
-    case "Dark":
-      theme.global.name.value = "dark";
       break;
     case "Sapphire Deep Sea Dive":
       theme.global.name.value = "DeepSeaDive";
