@@ -54,6 +54,21 @@ const showWordsList = ref(false);
 const isGameOn = ref(false);
 
 provide("GAME", game);
+function playSound(): any {
+  const audio = new Audio('/click.mp3');
+  audio.volume = 0.9;
+  audio.play();
+}
+function playSound1(): any {
+  const audio = new Audio('/success.mp3');
+  audio.volume = 0.9;
+  audio.play();
+}
+function playSound2(): any {
+  const audio = new Audio('/won.mp3');
+  audio.volume = 0.9;
+  audio.play();
+}
 
 onMounted(() => {
   window.addEventListener("keyup", onKeyup);
@@ -69,16 +84,30 @@ function onKeyup(event: KeyboardEvent) {
   }
 
   if (event.key === "Enter") {
+    playSound1();
     game.submitGuess();
   } else if (event.key == "Backspace") {
+    playSound();
     game.removeLastLetter();
   } else if (event.key.match(/[A-z]/) && event.key.length === 1) {
+    playSound();
     game.addLetter(event.key.toUpperCase());
+
   }
 }
 
 watch(game, () => {
   if (game.gameState !== GameState.Playing) {
+    isGameOn.value = true;
+  } else {
+    isGameOn.value = false;
+  }
+});
+watch(() => game.gameState, (newState) => {
+  if (newState === GameState.Won) {
+    playSound2();
+    isGameOn.value = true;
+  } else if (newState !== GameState.Playing) {
     isGameOn.value = true;
   } else {
     isGameOn.value = false;
