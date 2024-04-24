@@ -5,6 +5,14 @@
         <v-card-title> Settings </v-card-title>
       </v-sheet>
       <v-card-item>
+        <v-switch
+          v-model="isDarkMode"
+          :label="isDarkMode ? 'Dark' : 'Light'"
+          color="primary"
+          base-color="primary"
+          inset
+        />
+
         <v-label>Theme</v-label>
         <v-select
           v-model="selctedTheme"
@@ -46,6 +54,7 @@ import { useTheme } from "vuetify";
 import nuxtStorage from "nuxt-storage";
 const theme = useTheme();
 const selctedTheme = ref();
+const isDarkMode = ref(false);
 
 function updateTheme() {
   switch (selctedTheme.value) {
