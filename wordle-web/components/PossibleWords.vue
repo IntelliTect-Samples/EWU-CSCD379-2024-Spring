@@ -2,10 +2,11 @@
   <div>
     <v-select
       clearable
-      label="Possible Words: "
-      v-model="selectedWord";
+      :label="labelText"
+      v-model="selectedWord"
       :items="wordList"
       variant="solo-filled"
+      :menu-props="{ bottom: true }"
     ></v-select>
   </div>
 </template>
@@ -13,32 +14,42 @@
 
 <script setup lang="ts">
 import { WordService } from "~/scripts/wordService";
-import { ref, onMounted } from "vue";
+import { ref, onMounted, watch, inject, computed } from "vue";
 import { Letter, LetterState } from "~/scripts/letter";
 import { Word } from "~/scripts/word";
 import { Game } from "~/scripts/game";
 
+const labelText = "Possible Words: 10000";
+
+const game = inject("GAME") as Game;
+
+const { emit } = defineEmits(["selectedWord"]);
+
 const wordList = ref<string[]>([]);
-let currentGuess: Word | null = null;
-let currentGuessStates: LetterState[];
 let selectedWord = ref<string | null>(null);
 
-onMounted(()=> {
-  if(Game.guesses && Game.guesses.length > 0 && Game.guessIndex !== undefined && Game.secretWord){
-    currentGuess = Game.guesses[Game.guessIndex];
-    currentGuessStates = currentGuess.compare(Game.secretWord);
-    populateWordList();
+watch(() => game?.guesses, (newGuesses) => {
+  if (newGuesses){
+    const stateArray = getStateArray(newGuesses);
+    wordList.value = WordService.validGuessedWords(newGuesses, stateArray);
   }
 });
 
-const populateWordList = () => {
-  if(currentGuess && currentGuessStates){
-    const list = WordService.validGuessedWords(currentGuess, currentGuessStates);
-    console.log(list);
-    wordList.value = list;
+onMounted(()=> {
+  if(game?.guesses){
+    const stateArray = getStateArray(game.guesses);
+    wordList.value = WordService.validGuessedWords(game.guesses, stateArray);
   }
-};
+});
 
+function getStateArray(guesses: string[]): LetterState[][] {
+  return guesses.map(word => {
+    return word.letters.map(letter => {
+      console.log(letter.state);
+      return letter ? letter.state : LetterState.Unknown;
+    });
+  });
+}
 
 </script>
 

@@ -63,4 +63,5 @@ function onKeyup(event: KeyboardEvent) {
     game.addLetter(event.key.toUpperCase());
   }
 }
+
 </script>
