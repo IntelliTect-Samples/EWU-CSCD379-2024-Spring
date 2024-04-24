@@ -55,7 +55,7 @@ const OpalOpulence: ThemeDefinition = {
   },
 };
 const OpalOpulenceDark: ThemeDefinition = {
-  dark: false,
+  dark: true,
   colors: {
     primary: colors.blue.lighten4,
     secondary: colors.pink.lighten4,
@@ -95,7 +95,7 @@ const EmeraldIsle: ThemeDefinition = {
   },
 };
 const EmeraldIsleDark: ThemeDefinition = {
-  dark: false,
+  dark: true,
   colors: {
     primary: "#388E3C",
     secondary: "#8bc34a",
@@ -134,7 +134,7 @@ const RubyRoyale: ThemeDefinition = {
   },
 };
 const RubyRoyaleDark: ThemeDefinition = {
-  dark: false,
+  dark: true,
   colors: {
     primary: "#D50000",
     secondary: "#C62828",
@@ -172,7 +172,7 @@ const AmethystTwilightMist: ThemeDefinition = {
   },
 };
 const AmethystTwilightMistDark: ThemeDefinition = {
-  dark: false,
+  dark: true,
   colors: {
     primary: "#4A148C",
     secondary: "#AA00FF",
