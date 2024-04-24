@@ -15,6 +15,9 @@
           inset
         />
 
+        <v-list v-for="(themes, themeValue) in theme.themes.value">
+          <v-list-item> {{ themes.dark }} {{ themeValue }}</v-list-item>
+        </v-list>
         <v-label>Theme</v-label>
         <v-select
           v-model="selctedTheme"
