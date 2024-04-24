@@ -92,15 +92,6 @@ export class Game {
       sound.play();
     }
 
-    function playingSound() {
-      var sound = new Audio("/playing.mp3");
-      if(!sound.ended){
-        sound.pause()
-      }
-      else{
-        sound.play();
-      }
-    }
 
     if (isCorrect) {
       this.gameState = GameState.Won;
@@ -111,7 +102,6 @@ export class Game {
         lostSound();
       } else {
         this.guessIndex++;
-        playingSound();
       }
     }
   }
