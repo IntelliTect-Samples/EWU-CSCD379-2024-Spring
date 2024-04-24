@@ -25,6 +25,7 @@ export default defineNuxtPlugin((app) => {
         },
         default: {
           colors: {
+            backgoundColor:"#1BF0BA",
             primary: "#1BF0BE",
             secondary: "#FFE605",
             error: "#FF5252",

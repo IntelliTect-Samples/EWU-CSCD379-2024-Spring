@@ -46,14 +46,17 @@
       <v-dialog v-model="settingsDialog" max-width="500">
         <v-card>
           <v-sheet color="primary">
-            <v-card-text> Settings </v-card-text>
+            <v-card-text style="text-align: center; font-size:1.75em; font-family:'Courier New'"> Settings </v-card-text>
           </v-sheet>
           <v-card-text>
             <v-container>
-              <v-btn @click="themeSettings('light')">Light Mode</v-btn>
-              <v-btn @click="themeSettings('dark')">Dark Mode</v-btn>
-              <v-btn @click="themeSettings('bCasual')">Business Casual</v-btn>
-              <v-btn @click="themeSettings('hillBilly')">Hill Billy</v-btn>
+              <v-btn class="buttonClass" @click="themeSettings('light')">Light Mode</v-btn>
+              &nbsp;&nbsp;&nbsp;
+              <v-btn class="buttonClass" @click="themeSettings('dark')">Dark Mode</v-btn>
+              &nbsp;&nbsp;&nbsp;
+              <v-btn class="buttonClass" @click="themeSettings('bCasual')">Business Casual</v-btn>
+              &nbsp;&nbsp;&nbsp;
+              <v-btn class="buttonClass" @click="themeSettings('hillBilly')">Hill Billy</v-btn>
             </v-container>
           </v-card-text>
         </v-card>
@@ -112,3 +115,11 @@ function closeSettingsDialog() {
   settingsDialog.value = false;
 }
 </script>
+<style>
+.buttonClass{
+  display: flex;
+  justify-content: center;
+  border: 2px;
+  margin-bottom: 10px;
+}
+</style>
