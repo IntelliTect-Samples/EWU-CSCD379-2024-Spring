@@ -82,16 +82,30 @@ export class Game {
     const isCorrect = this.guess.compare(this.secretWord);
     this.updateGuessedLetters();
 
+    function wonSound() {
+      var sound = new Audio("/win.mp3");
+      sound.play();
+    }
+
+    function lostSound() {
+      var sound = new Audio("/loose.mp3");
+      sound.play();
+    }
+
     if (isCorrect) {
       this.gameState = GameState.Won;
+      wonSound();
     } else {
       if (this.guessIndex === this.maxAttempts - 1) {
         this.gameState = GameState.Lost;
+        lostSound();
       } else {
         this.guessIndex++;
       }
     }
   }
+  
+
 }
 
 export enum GameState {

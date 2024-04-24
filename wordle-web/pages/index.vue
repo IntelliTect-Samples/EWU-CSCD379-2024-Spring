@@ -57,6 +57,24 @@ provide("GAME", game);
 const myGuess = ref("");
 const engine = ref(false);
 
+function enterSound() 
+{
+  var sound = new Audio('/click.mp3');
+  sound.play();
+}
+
+function backspaceSound() 
+{
+  var sound = new Audio('/backspace.mp3');
+  sound.play();
+}
+
+function clickSound() 
+{
+  var sound = new Audio('/clicking.mp3');
+  sound.play();
+}
+
 onMounted(() => {
   window.addEventListener("keyup", onKeyup);
 });
@@ -67,10 +85,13 @@ onUnmounted(() => {
 
 function onKeyup(event: KeyboardEvent) {
   if (event.key === "Enter") {
+    enterSound();
     game.submitGuess();
   } else if (event.key == "Backspace") {
+    backspaceSound();
     game.removeLastLetter();
   } else if (event.key.match(/[A-z]/) && event.key.length === 1) {
+    clickSound();
     game.addLetter(event.key.toUpperCase());
   }
 }
