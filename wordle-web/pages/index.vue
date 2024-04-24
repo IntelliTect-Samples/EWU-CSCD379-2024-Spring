@@ -69,7 +69,11 @@ function playSound2(): any {
   audio.volume = 0.9;
   audio.play();
 }
-
+function playSound3(): any {
+  const audio = new Audio('/lose.mp3');
+  audio.volume = 0.9;
+  audio.play();
+}
 onMounted(() => {
   window.addEventListener("keyup", onKeyup);
 });
@@ -105,11 +109,12 @@ watch(game, () => {
 });
 watch(() => game.gameState, (newState) => {
   if (newState === GameState.Won) {
-    playSound2();
+    playSound2(); 
     isGameOn.value = true;
-  } else if (newState !== GameState.Playing) {
+  } else if (newState === GameState.Lost) {
+    playSound3(); 
     isGameOn.value = true;
-  } else {
+  } else if (newState === GameState.Playing) {
     isGameOn.value = false;
   }
 });
