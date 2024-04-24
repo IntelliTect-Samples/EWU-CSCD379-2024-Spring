@@ -3,13 +3,13 @@ import { expect, test } from "vitest";
 import { Game } from "~/scripts/game";
 import { LetterState } from "~/scripts/letter";
 
-/*test("game", () => {
+test("game", () => {
   // create game and check if it's created
-  const game = new Game("autos");
-  expect(game.wordToGuess.length).toBe(5);
+  /*const game = new Game("autos");
+  expect(game.wordToGuess.length).toBe(5);*/
 });
 
-test("guess-word", () => {
+/*test("guess-word", () => {
   const game = new Game("autos");
   game.guess("tangs");
   expect(game.guesses[0].letters[0].state).toBe(LetterState.Misplaced);
