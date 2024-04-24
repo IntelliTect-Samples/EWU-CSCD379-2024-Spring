@@ -13,9 +13,9 @@
             mdi-lightbulb-on-outline
           </v-icon>
         </v-app-bar-title>
-        <v-btn icon="mdi-weather-night" @click="toggleTheme()" />
-        <v-btn icon="mdi-help" @click="showHelpDialog = true" />
-        <v-btn icon="mdi-engine" @click="wordEngineDialog = true" />
+        <v-btn icon="mdi-weather-night" @click="toggleTheme()" elevation="5"/>
+        <v-btn  icon="mdi-help" @click="showHelpDialog = true" elevation="5" />
+        <v-btn icon="mdi-engine" @click="wordEngineDialog = true" elevation="5"/>
       </v-app-bar>
 
       <HelpDialog v-model="showHelpDialog" />
@@ -92,8 +92,6 @@ const router = useRouter();
 const theme = useTheme();
 const showHelpDialog = ref(false);
 const settingsDialog = ref(false);
-const darkMode = ref(false);
-const selected = ref(null);
 const wordEngineDialog = ref(false);
 
 onMounted(() => {
@@ -111,9 +109,7 @@ function themeSettings(item: string) {
   nuxtStorage.localStorage.setData("themes", theme.global.name.value);
 }
 
-function closeSettingsDialog() {
-  settingsDialog.value = false;
-}
+
 </script>
 <style>
 .buttonClass{

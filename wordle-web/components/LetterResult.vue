@@ -6,7 +6,7 @@
     flat
     :class="[
       clickable ? '' : 'no-pointer',
-      'align-center d-flex justify-center',
+      'align-center d-flex justify-center', 'elevation-5',
     ]"
     @click="onClicked()"
   >

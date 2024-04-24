@@ -1,5 +1,5 @@
 <template>
-  <v-row style="background-color: thistle;"
+  <v-row 
     elevation="10"
     class="justify-center"
     v-for="(keyboardRow, rowIndex) in keyboardLetterRows"
