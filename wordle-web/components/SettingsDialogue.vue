@@ -16,7 +16,7 @@
         />
 
         <v-label>Theme</v-label>
-        <v-select v-model="selctedTheme" :items="themes" />
+        <v-select v-model="selectedTheme" :items="themes" />
       </v-card-item>
       <v-divider />
 
@@ -32,56 +32,36 @@
           color="secondary"
           variant="tonal"
           text="Close"
-          @click="modelValue = false"
+          @click="closeDialog"
         />
+        
       </v-card-actions>
     </v-card>
   </v-dialog>
 </template>
 
 <script setup lang="ts">
-const modelValue = defineModel<boolean>({ default: false });
+import { ref, computed } from 'vue';
 import { useTheme } from "vuetify";
 import nuxtStorage from "nuxt-storage";
+
+const modelValue = ref(false);
 const theme = useTheme();
 const themesListMaster = theme.themes.value;
-const selctedTheme = ref();
-const isDarkMode = ref(false);
+const selectedTheme = ref();
+const isDarkMode = ref(true);
 
 const themes = computed(() => {
-  if (isDarkMode.value) {
-    return Object.entries(themesListMaster)
-      .filter(([key, value]) => value.dark)
-      .map(([key]) => key);
-  } else {
-    return Object.entries(themesListMaster)
-      .filter(([key, value]) => !value.dark)
-      .map(([key]) => key);
-  }
+  return Object.entries(themesListMaster)
+    .filter(([key, value]) => isDarkMode.value ? value.dark : !value.dark)
+    .map(([key]) => key);
 });
 
 function updateTheme() {
-  switch (selctedTheme.value) {
-    case "Standard":
-      theme.global.name.value = "light";
-      break;
-    case "Sapphire Deep Sea Dive":
-      theme.global.name.value = "DeepSeaDive";
-      break;
-    case "Emerald Isle":
-      theme.global.name.value = "EmeraldIsle";
-      break;
-    case "Amethyst Twilight Mist":
-      theme.global.name.value = "AmethystTwilightMist";
-      break;
-    case "Ruby Royale":
-      theme.global.name.value = "RubyRoyale";
-      break;
-    case "Opal Opulence":
-      theme.global.name.value = "OpalOpulence";
-      break;
-  }
-
+  theme.global.name.value = selectedTheme.value.replace(/\s+/g, '');
   nuxtStorage.localStorage.setData("theme", theme.global.name.value);
+}
+function closeDialog() {
+  modelValue.value = false;
 }
 </script>

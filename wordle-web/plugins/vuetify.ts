@@ -19,6 +19,21 @@ const DeepSeaDive: ThemeDefinition = {
     background: colors.blue.lighten4,
   },
 };
+const DeepSeaDiveDark: ThemeDefinition = {
+  dark: true,
+  colors: {
+    primary: colors.indigo.accent2,
+    secondary: colors.indigo.accent1,
+    lose: colors.red.lighten1,
+    win: colors.green.accent3,
+    correct: colors.blue.darken1,
+    misplaced: colors.cyan.darken1,
+    wrong: colors.teal.lighten1,
+    unknown: colors.lightBlue.lighten3,
+    background: "#121212",
+  },
+};
+
 
 const OpalOpulence: ThemeDefinition = {
   dark: false,
@@ -39,6 +54,26 @@ const OpalOpulence: ThemeDefinition = {
     background: colors.blueGrey.lighten5,
   },
 };
+const OpalOpulenceDark: ThemeDefinition = {
+  dark: false,
+  colors: {
+    primary: colors.blue.lighten4,
+    secondary: colors.pink.lighten4,
+    accent: "#ffc107",
+    error: "#ff5722",
+    warning: "#e91e63",
+    info: "#03a9f4",
+    success: "#4caf50",
+    lose: colors.red.lighten1,
+    win: colors.green.accent3,
+    correct: colors.green.accent1,
+    misplaced: colors.amber.lighten4,
+    wrong: colors.red.lighten4,
+    unknown: colors.pink.lighten5,
+    background: "#121212",
+  },
+};
+
 
 const EmeraldIsle: ThemeDefinition = {
   dark: false,
@@ -57,6 +92,25 @@ const EmeraldIsle: ThemeDefinition = {
     wrong: colors.lime.darken2,
     unknown: colors.lime.lighten3,
     background: colors.lime.accent1,
+  },
+};
+const EmeraldIsleDark: ThemeDefinition = {
+  dark: false,
+  colors: {
+    primary: "#388E3C",
+    secondary: "#8bc34a",
+    accent: "#ffc107",
+    error: "#ff5722",
+    warning: "#e91e63",
+    info: "#03a9f4",
+    success: "#4caf50",
+    lose: colors.red.lighten1,
+    win: colors.green.accent3,
+    correct: colors.lightGreen.darken3,
+    misplaced: colors.amber.lighten2,
+    wrong: colors.lime.darken2,
+    unknown: colors.lime.lighten3,
+    background: "#121212",
   },
 };
 
@@ -79,6 +133,25 @@ const RubyRoyale: ThemeDefinition = {
     background: colors.red.lighten3,
   },
 };
+const RubyRoyaleDark: ThemeDefinition = {
+  dark: false,
+  colors: {
+    primary: "#D50000",
+    secondary: "#C62828",
+    accent: "#ffc107",
+    error: "#ff5722",
+    warning: "#e91e63",
+    info: "#03a9f4",
+    success: "#4caf50",
+    lose: colors.red.lighten1,
+    win: colors.green.accent3,
+    correct: colors.lightGreen.darken3,
+    misplaced: colors.amber.lighten2,
+    wrong: colors.red.darken2,
+    unknown: colors.red.lighten3,
+    background: "#121212",
+  },
+};
 const AmethystTwilightMist: ThemeDefinition = {
   dark: false,
   colors: {
@@ -98,6 +171,26 @@ const AmethystTwilightMist: ThemeDefinition = {
     background: colors.purple.lighten4,
   },
 };
+const AmethystTwilightMistDark: ThemeDefinition = {
+  dark: false,
+  colors: {
+    primary: "#4A148C",
+    secondary: "#AA00FF",
+    accent: "#ffc107",
+    error: "#ff5722",
+    warning: "#e91e63",
+    info: "#03a9f4",
+    success: "#4caf50",
+    lose: colors.red.lighten1,
+    win: colors.green.accent3,
+    correct: colors.lightGreen.darken3,
+    misplaced: colors.amber.lighten2,
+    wrong: colors.purple.darken2,
+    unknown: colors.purple.lighten3,
+    background: "#121212",
+  },
+};
+
 
 export default defineNuxtPlugin((app) => {
   const vuetify = createVuetify({
