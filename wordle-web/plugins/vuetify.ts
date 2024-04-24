@@ -20,6 +20,26 @@ const DeepSeaDive: ThemeDefinition = {
   },
 };
 
+const OpalOpulence: ThemeDefinition = {
+  dark: false,
+  colors: {
+    primary: colors.blue.lighten4,
+    secondary: colors.pink.lighten4,
+    accent: "#ffc107",
+    error: "#ff5722",
+    warning: "#e91e63",
+    info: "#03a9f4",
+    success: "#4caf50",
+    lose: colors.red.lighten1,
+    win: colors.green.accent3,
+    correct: colors.green.accent1,
+    misplaced: colors.amber.lighten4,
+    wrong: colors.red.lighten4,
+    unknown: colors.pink.lighten5,
+    background: colors.blueGrey.lighten5,
+  },
+};
+
 const EmeraldIsle: ThemeDefinition = {
   dark: false,
   colors: {
@@ -88,6 +108,7 @@ export default defineNuxtPlugin((app) => {
         EmeraldIsle,
         AmethystTwilightMist,
         RubyRoyale,
+        OpalOpulence,
         light: {
           dark: false,
           colors: {
