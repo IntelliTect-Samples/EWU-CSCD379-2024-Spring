@@ -47,4 +47,8 @@ const router = useRouter();
   right: 47%
   
 }
+
+    .div-1 {
+        background-color: #fde05e;
+    }
 </style>

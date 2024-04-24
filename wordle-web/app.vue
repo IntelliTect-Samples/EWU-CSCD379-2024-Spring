@@ -13,9 +13,6 @@
             mdi-lightbulb-on-outline
           </v-icon>
         </v-app-bar-title>
-        <v-btn icon="mdi-weather-night" @click="toggleTheme()" elevation="5"/>
-        <v-btn  icon="mdi-help" @click="showHelpDialog = true" elevation="5" />
-        <v-btn icon="mdi-engine" @click="wordEngineDialog = true" elevation="5"/>
       </v-app-bar>
 
       <HelpDialog v-model="showHelpDialog" />
@@ -36,9 +33,11 @@
 
         <v-divider></v-divider>
         <v-list density="compact" nav>
-          <v-list-item prepend-icon="mdi-home" title="Home" @click="router.push('/')"></v-list-item>
-          <v-list-item prepend-icon="mdi-cog-outline" title="Settings" @click="settingsDialog = true"></v-list-item>
-          <v-list-item prepend-icon="mdi-help-circle" title="About" @click="router.push('/aboutPage')"></v-list-item>
+          <v-list-item prepend-icon="mdi-home" title="Home" @click="router.push('/')"/>
+          <v-list-item prepend-icon="mdi-cog-outline" title="Settings" @click="settingsDialog = true"/>
+          <v-list-item prepend-icon="mdi-help-circle" title="About" @click="router.push('/aboutPage')"/>
+          <v-list-item prepend-icon="mdi-weather-night" @click="toggleTheme()"/>
+          <v-list-item  prepend-icon="mdi-help" @click="showHelpDialog = true" />
         </v-list>
       </v-navigation-drawer>
       
@@ -61,24 +60,10 @@
           </v-card-text>
         </v-card>
       </v-dialog>
-      
-      <!-- Word Engine Dialog -->
-      <v-dialog v-model="wordEngineDialog" max-width="500">
-        <v-card>
-          <v-sheet color="secondry">
-            <v-card-text>Available Words Mechanic Still inprogress</v-card-text>
-          </v-sheet>
-          <v-card-text>
-            <v-container>
-              
-            </v-container>
-          </v-card-text>
-        </v-card>
-      </v-dialog>
 
-      <v-main>
+    
         <NuxtPage />
-      </v-main>
+
     </v-app>
   </NuxtLayout>
 </template>
