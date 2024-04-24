@@ -20,7 +20,7 @@
 
       <HelpDialog v-model="showHelpDialog" />
 
-      <v-navigation-drawer expand-on-hover rail>
+      <v-navigation-drawer expand-on-hover rail location="right">
         <v-list>
           <v-list-item
             prepend-avatar="https://i.ibb.co/kx64H0R/Picture1.jpg"
