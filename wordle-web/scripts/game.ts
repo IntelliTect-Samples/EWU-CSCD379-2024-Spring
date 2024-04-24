@@ -43,6 +43,11 @@ export class Game {
       this.guess.removeLastLetter();
     }
   }
+  public playSound1(): any {
+    const audio = new Audio('/success.mp3');
+    audio.volume = 0.9;
+    audio.play();
+  }
 
   public addLetter(letter: string) {
     if (this.gameState === GameState.Playing) {
@@ -91,6 +96,7 @@ export class Game {
         this.guessIndex++;
       }
     }
+    this.playSound1();
   }
 }
 

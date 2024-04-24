@@ -59,11 +59,7 @@ function playSound(): any {
   audio.volume = 0.9;
   audio.play();
 }
-function playSound1(): any {
-  const audio = new Audio('/success.mp3');
-  audio.volume = 0.9;
-  audio.play();
-}
+
 function playSound2(): any {
   const audio = new Audio('/won.mp3');
   audio.volume = 0.9;
@@ -88,7 +84,6 @@ function onKeyup(event: KeyboardEvent) {
   }
 
   if (event.key === "Enter") {
-    playSound1();
     game.submitGuess();
   } else if (event.key == "Backspace") {
     playSound();
