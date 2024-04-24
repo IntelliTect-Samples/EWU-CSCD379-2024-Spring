@@ -15,21 +15,8 @@
           inset
         />
 
-        <v-list v-for="(themes, themeValue) in theme.themes.value">
-          <v-list-item> {{ themes.dark }} {{ themeValue }}</v-list-item>
-        </v-list>
         <v-label>Theme</v-label>
-        <v-select
-          v-model="selctedTheme"
-          :items="[
-            'Standard',
-            'Sapphire Deep Sea Dive',
-            'Emerald Isle',
-            'Amethyst Twilight Mist',
-            'Ruby Royale',
-            'Opal Opulence',
-          ]"
-        />
+        <v-select v-model="selctedTheme" :items="themes" />
       </v-card-item>
       <v-divider />
 
@@ -57,14 +44,19 @@ const modelValue = defineModel<boolean>({ default: false });
 import { useTheme } from "vuetify";
 import nuxtStorage from "nuxt-storage";
 const theme = useTheme();
+const themesListMaster = theme.themes.value;
 const selctedTheme = ref();
 const isDarkMode = ref(false);
 
-watch(isDarkMode, () => {
+const themes = computed(() => {
   if (isDarkMode.value) {
-    theme.global.name.value = "dark";
+    return Object.entries(themesListMaster)
+      .filter(([key, value]) => value.dark)
+      .map(([key]) => key);
   } else {
-    theme.global.name.value = "light";
+    return Object.entries(themesListMaster)
+      .filter(([key, value]) => !value.dark)
+      .map(([key]) => key);
   }
 });
 
