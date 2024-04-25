@@ -1,6 +1,6 @@
 <template>
   <v-dialog v-model="modelValue" max-width="500">
-    <v-card style="background-color: peru">
+    <v-card style="background-color: myFunction()">
       <v-sheet color="primary">
         <v-card-text
           style="text-align: center; font-size: larger"
@@ -12,9 +12,9 @@
       </v-sheet>
       <v-card-actions>
         <v-btn
-          style="box-shadow: inset; background-color: black"
+          style="box-shadow: inset;"
           color="red"
-          variant="outlined"
+          variant="flat"
           text="Close"
           @click="modelValue = false"
         />
@@ -73,6 +73,9 @@
 <script setup lang="ts">
 import { Letter, LetterState } from "~/scripts/letter";
 import { Word } from "~/scripts/word";
+import { useTheme } from "vuetify";
+import nuxtStorage from 'nuxt-storage';
+import { ref } from "vue";
 
 const modelValue = defineModel<boolean>({ default: false });
 
@@ -91,4 +94,9 @@ const key = {
     new Letter("Wrong", LetterState.Wrong),
   ],
 };
+function myFunction() {
+  document.body.style.backgroundColor = theme.global.name.value;
+  nuxtStorage.localStorage.setData("themes", theme.global.name.value);;
+}
 </script>
+
