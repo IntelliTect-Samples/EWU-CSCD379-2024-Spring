@@ -29,13 +29,22 @@
         <Keyboard />
       </div>
 
-      <v-btn @click="game.submitGuess()" class="mb-5" color="primary">
+      <v-btn
+        @click="
+          game.submitGuess();
+          playAudio();
+        "
+        class="mb-5"
+        color="primary">
         Guess!
       </v-btn>
       <v-btn
         class="mb-5 ml-5"
         color="secondary"
-        @click="showDialog = !showDialog"
+        @click="
+          showDialog = !showDialog;
+          playAudio();
+        "
         >{{ validWordsCount }} possible words!</v-btn
       >
       <ValidWords
@@ -61,7 +70,7 @@ function playAudio(): any {
   const audio = new Audio('/clicker.mp3');
   audio.volume = 0.9;
   audio.play();
-};
+}
 onMounted(() => {
   window.addEventListener('keyup', onKeyup);
 });

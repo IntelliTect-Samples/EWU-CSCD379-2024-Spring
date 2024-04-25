@@ -12,6 +12,7 @@
       :key="letter.char"
       :class="[`ml-1`, `px-0`]">
       <LetterResult
+        @click="playAudio"
         :letter="letter"
         :clickable="true"
         width-percent-of-height="80" />
@@ -24,6 +25,12 @@ import { Game } from '~/scripts/game';
 import { Letter } from '~/scripts/letter';
 
 const game: Game = inject('GAME')!;
+
+function playAudio(): any {
+  const audio = new Audio('/clicker.mp3');
+  audio.volume = 0.9;
+  audio.play();
+}
 
 const keyboardLetterRows = computed(() => {
   let keyboardLetterRows: Letter[][] = [];
