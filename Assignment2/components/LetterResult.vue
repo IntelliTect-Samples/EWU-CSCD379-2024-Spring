@@ -61,16 +61,6 @@ function updateBoxSize() {
 watch([display.sm, display.xs, display.md], () => {
   updateBoxSize();
 });
-
-// watch([display.sm, display.xs, display.md], () => {
-//   if(display.xs.value){
-//     boxSize.value = 30;
-//   }else if (display.sm.value) {
-//     boxSize.value = 40;
-//   } else {
-//     boxSize.value = 60;
-//   }
-// });
 </script>
 
 <style scoped>

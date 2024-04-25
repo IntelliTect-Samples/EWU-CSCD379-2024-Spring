@@ -46,6 +46,7 @@ import {WordList} from "wordList.ts";
 <script setup lang="ts">
 import { Game, GameState } from "../scripts/game";
 const game: Game = reactive(new Game());
+const availableWords = ref(5);
 
 provide("GAME", game);
 
