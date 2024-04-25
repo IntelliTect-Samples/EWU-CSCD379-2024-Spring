@@ -6,6 +6,7 @@ export function filterValidWords(game: Game): string[] {
   return WordList.filter((word) => {
     for (const letterObj of game.guessedLetters) {
       const letterChar = letterObj.char.toLowerCase();
+      const wordLowerCase = word.toLowerCase();
       const isLetterInWord = word.includes(letterChar);
       const isLetterCorrect = letterObj.state === LetterState.Correct;
       const isLetterMisplaced = letterObj.state === LetterState.Misplaced;

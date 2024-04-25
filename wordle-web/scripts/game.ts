@@ -88,7 +88,7 @@ export class Game {
     }
 
     function lostSound() {
-      var sound = new Audio("/loose.mp3");
+      var sound = new Audio("/lose.mp3");
       sound.play();
     }
 
