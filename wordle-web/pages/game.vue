@@ -1,53 +1,22 @@
 <template>
-    <v-card elevation="16" min-width="344">
-        <v-card-title>Hello Welcome to Pentagram</v-card-title>
-        <v-card-subtitle> This is our super basic wordle game called Pentagram. Penta for five, and gram for letter</v-card-subtitle>
+  <v-container>
+    <v-card>
+      <v-card-title>Hello, Welcome to Pentagram</v-card-title>
+      <v-card-subtitle> This is our super basic wordle game called Pentagram. Penta for five, and gram for letter
+      </v-card-subtitle>
+      <v-card-text>
+        This website was built for a school project. we are using vuetify and nuxt to build this website.
+        The assignment is to recreate the wordle app: https://www.nytimes.com/games/wordle/index.html
+      </v-card-text>
+      <v-card-text>One of our instructors is Meghan Woodford, 
+        She has been very helpful in teaching the basics and giving us the knowledge to build this website.
+        I have never built a website before, so this is all new to me.
+      </v-card-text>
+      <v-btn color ="primary" @click="router.push('/')">Home</v-btn>
     </v-card>
-    <v-card class="mx-auto my-8" elevation="16" min-width="344">
-        <v-card-item>
-          <v-card-title> Pentagram </v-card-title>
-        </v-card-item>
-
-        <v-card-text>
-          Hint: {{ game.wordToGuess }}
-          <br />
-          My Guess: {{ myGuess }}
-          <v-text-field
-            v-model="myGuess"
-            label="Enter your guess"
-            outlined
-            clearable
-          />
-        </v-card-text>
-
-        <v-card-text>
-          <div v-for="(guess, i) of game.guesses" :key="i">
-            Guess: {{ guess.letters.map(x => x.char).join("") }}
-          </div>
-        </v-card-text>
-
-        <v-card-actions>
-          <v-spacer />
-          <v-btn
-            color="pink"
-            variant="elevated"
-            elevation="8"
-            @click="submitGuess()"
-          >
-            Click Me!
-          </v-btn>
-        </v-card-actions>
-      </v-card>
+  </v-container>
 </template>
 
 <script setup lang="ts">
-import { Game } from "../scripts/game";
-const game: Game = reactive(new Game("JUMBO"));
-
-const myGuess = ref("");
-
-function submitGuess() {
-  game.guess(myGuess.value.toUpperCase());
-  myGuess.value = "";
-}
+const router = useRouter();
 </script>

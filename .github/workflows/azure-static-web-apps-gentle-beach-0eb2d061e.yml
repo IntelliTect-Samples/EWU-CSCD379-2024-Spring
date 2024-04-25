@@ -3,13 +3,13 @@ name: Azure Static Web Apps CI/CD
 on:
   push:
     branches:
-      - Assignment1
+      - Assignment2
     paths:
       - "wordle-web/**"
   pull_request:
     types: [opened, synchronize, reopened, closed]
     branches:
-      - Assignment1
+      - Assignment2
   workflow_dispatch:
 
 jobs:

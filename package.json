@@ -1,0 +1,5 @@
+{
+  "dependencies": {
+    "nuxt-storage": "^1.2.2"
+  }
+}
