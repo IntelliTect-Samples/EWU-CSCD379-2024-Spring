@@ -7,6 +7,11 @@ on:
   push:
     branches:
       - main
+    paths:
+      - Wordle.Api/**
+  pull_request:
+    paths:
+      - Wordle.Api/**
   workflow_dispatch:
 
 jobs:
@@ -26,16 +31,17 @@ jobs:
         run: dotnet build --configuration Release
 
       - name: dotnet publish
-        run: dotnet publish -c Release -o ${{env.DOTNET_ROOT}}/myapp
+        run: dotnet publish -c Release -o ${{runner.temp}}/myapp
 
       - name: Upload artifact for deployment job
         uses: actions/upload-artifact@v3
         with:
           name: .net-app
-          path: ${{env.DOTNET_ROOT}}/myapp
+          path: ${{runner.temp}}/myapp
 
   deploy:
     runs-on: windows-latest
+    if: (github.ref == 'refs/heads/main' || github.event_name == 'workflow_dispatch')
     needs: build
     environment:
       name: 'Production'
