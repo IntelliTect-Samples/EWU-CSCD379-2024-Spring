@@ -32,7 +32,7 @@ test("wordList init", () => {
 
 test("none right", () => {
   const game = new Game(6);
-  game.secretWord = "hello";
+  game.secretWord = "HELLO";
   game.guess.addLetter("A");
   game.guess.addLetter("P");
   game.guess.addLetter("A");
@@ -55,26 +55,24 @@ test("none right", () => {
 
 test("some right", () => {
   const game = new Game(6);
-  game.secretWord = "elder";
-  game.guess.addLetter("E");
-  game.guess.addLetter("D");
-  game.guess.addLetter("G");
-  game.guess.addLetter("E");
-  game.guess.addLetter("S");
+  game.secretWord = "TRAPS";
+  game.guess.addLetter("P");
+  game.guess.addLetter("A");
+  game.guess.addLetter("R");
+  game.guess.addLetter("T");
+  game.guess.addLetter("Y");
   game.submitGuess();
 
-  expect(updateValidWords(game)).not.toContain("edges");
-  expect(updateValidWords(game)).not.toContain("doges");
-  expect(updateValidWords(game)).not.toContain("traps");
+  expect(updateValidWords(game)).not.toContain("buggy");
+  expect(updateValidWords(game)).not.toContain("phlox");
+  expect(updateValidWords(game)).not.toContain("pants");
 
-  expect(updateValidWords(game)).toContain("elder");
-  expect(updateValidWords(game)).toContain("ember");
-  expect(updateValidWords(game)).toContain("egger");
+  expect(updateValidWords(game)).toContain("traps");
 });
 
 test("most right", () => {
   const game = new Game(6);
-  game.secretWord = "elder";
+  game.secretWord = "ELDER";
   game.guess.addLetter("E");
   game.guess.addLetter("M");
   game.guess.addLetter("B");
@@ -82,7 +80,7 @@ test("most right", () => {
   game.guess.addLetter("R");
   game.submitGuess();
 
-  expect(updateValidWords(game)).not.toContain("hands");
+  expect(updateValidWords(game)).not.toContain("boomy");
   expect(updateValidWords(game)).not.toContain("snare");
   expect(updateValidWords(game)).not.toContain("traps");
 
