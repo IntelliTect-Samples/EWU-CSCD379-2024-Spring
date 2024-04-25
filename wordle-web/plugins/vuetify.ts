@@ -54,7 +54,7 @@ export default defineNuxtPlugin((app) => {
         },
         hadi: {
           colors: {
-            primary: "#CD853F,
+            primary: "#CD853F",
             secondary: "#800080",
             error: "#FF5252",
             info: "#2196F3",
