@@ -5,7 +5,7 @@ import colors from "vuetify/lib/util/colors"; // Corrected import path
 import "vuetify/styles";
 import { createVuetify, type ThemeDefinition } from "vuetify";
 
-const DeepSeaDive: ThemeDefinition = {
+const SapphireDeepSeaDive: ThemeDefinition = {
   dark: false,
   colors: {
     primary: colors.indigo.accent2,
@@ -19,7 +19,7 @@ const DeepSeaDive: ThemeDefinition = {
     background: colors.blue.lighten4,
   },
 };
-const DeepSeaDiveDark: ThemeDefinition = {
+const SapphireDeepSeaDiveDark: ThemeDefinition = {
   dark: true,
   colors: {
     primary: colors.indigo.accent2,
@@ -194,12 +194,12 @@ export default defineNuxtPlugin((app) => {
     theme: {
       defaultTheme: "dark",
       themes: {
-        DeepSeaDive,
+        SapphireDeepSeaDive,
         EmeraldIsle,
         AmethystTwilightMist,
         RubyRoyale,
         OpalOpulence,
-        DeepSeaDiveDark,
+        SapphireDeepSeaDiveDark,
         EmeraldIsleDark,
         AmethystTwilightMistDark,
         RubyRoyaleDark,

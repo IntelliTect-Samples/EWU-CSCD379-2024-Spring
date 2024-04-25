@@ -51,7 +51,7 @@ const isDarkMode = ref(true);
 
 const themes = computed(() => {
   return Object.entries(themesListMaster)
-    .filter(([key, value]) => (isDarkMode.value ? value.dark : !value.dark))
+    .filter(([key, value]) => !value.dark)
     .map(([key]) => key.replace(/([A-Z])/g, " $1").trim());
 });
 
@@ -67,7 +67,11 @@ watch(isDarkMode, () => {
 });
 
 function updateTheme() {
-  theme.global.name.value = selectedTheme.value.replace(/\s+/g, "");
+  if (isDarkMode.value) {
+    theme.global.name.value = selectedTheme.value.replace(/\s/g, "") + "Dark";
+  } else {
+    theme.global.name.value = selectedTheme.value.replace(/\s/g, "");
+  }
   nuxtStorage.localStorage.setData("theme", theme.global.name.value);
 }
 </script>
