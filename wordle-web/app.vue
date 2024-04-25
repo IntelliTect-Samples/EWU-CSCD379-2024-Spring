@@ -52,6 +52,8 @@
               <v-btn class="buttonClass" @click="themeSettings('bCasual')">Business Casual</v-btn>
               &nbsp;&nbsp;&nbsp;
               <v-btn class="buttonClass" @click="themeSettings('hillBilly')">Hill Billy</v-btn>
+              &nbsp;&nbsp;&nbsp;
+              <v-btn class="buttonClass" @click="themeSettings('hadi')">Hadi's Choice</v-btn>
             </v-container>
           </v-card-text>
         </v-card>
