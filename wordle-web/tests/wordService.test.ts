@@ -4,60 +4,57 @@ import {WordList } from "~/scripts/wordList";
 import { LetterState } from "~/scripts/letter";
 import { WordService } from "~/scripts/wordService";
 
-test('WordService test full word', ()=> {
-  const guess = ['aargh'];
-  const states = [[
-    LetterState.Correct,
-    LetterState.Correct,
-    LetterState.Correct,
-    LetterState.Correct,
-    LetterState.Correct,
-  ]];
+const wordService = new WordService();
 
-  const validWords = WordService.validGuessedWords(guess, states);
-  expect(validWords).toEqual(['aargh']);
+
+// guess right, gives back word
+test('WordService single guess test results in word', () => {
+  const game = new Game();
+  game.secretWord = "aargh";
+
+  game.guess.addLetter("a");
+  game.guess.addLetter("a");
+  game.guess.addLetter("r");
+  game.guess.addLetter("g");
+  game.guess.addLetter("h");
+  game.submitGuess();
+
+  expect(wordService.getValidWords(game)).toContain("aargh");
 });
 
-test('WordService test partial word', ()=> {
-  const guess = ['aarg'];
-  const states = [[
-    LetterState.Correct,
-    LetterState.Correct,
-    LetterState.Correct,
-    LetterState.Correct,
-    LetterState.Unknown,
-  ]];
+// guess wrong, gets rid of word
+test('WordService single wrong guess test results in word removed', () => {
+  const game = new Game();
+  game.secretWord = "aargh";
 
-  const validWords = WordService.validGuessedWords(guess, states);
-  expect(validWords).toEqual(['aargh']);
-})
+  game.guess.addLetter("a");
+  game.guess.addLetter("b");
+  game.guess.addLetter("a");
+  game.guess.addLetter("c");
+  game.guess.addLetter("a");
+  game.submitGuess();
 
-test('WordService test partial word, results in multiple words', ()=> {
-  const guess = ['abac'];
-  const states = [[
-    LetterState.Correct,
-    LetterState.Correct,
-    LetterState.Correct,
-    LetterState.Correct,
-    LetterState.Unknown,
-  ]];
-
-  const validWords = WordService.validGuessedWords(guess, states);
-  expect(validWords[0]).toEqual('abaca');
-  expect(validWords[1]).toEqual('abaci');
-  expect(validWords[2]).toEqual('aback');
+  expect(wordService.getValidWords(game)).not.toContain("abaca");
 });
 
-test('WordService test wrongplaced letters full word, results in aargh', ()=> {
-  const guess = ["aragh"];
-  const states = [[
-    LetterState.Correct,
-    LetterState.Misplaced,
-    LetterState.Misplaced,
-    LetterState.Correct,
-    LetterState.Correct,
-  ]];
+// guesses words around it, returns correct since its the only option left
+test('WordService guess two words similar, contains word', () => {
+  const game = new Game();
+  game.secretWord = "abaca";
 
-  const validWords = WordService.validGuessedWords(guess, states);
-  expect(validWords).toEqual(['aargh']);
+  game.guess.addLetter("a");
+  game.guess.addLetter("b");
+  game.guess.addLetter("a");
+  game.guess.addLetter("c");
+  game.guess.addLetter("i");
+  game.submitGuess();
+
+  game.guess.addLetter("a");
+  game.guess.addLetter("b");
+  game.guess.addLetter("a");
+  game.guess.addLetter("c");
+  game.guess.addLetter("k");
+  game.submitGuess();
+
+  expect(wordService.getValidWords(game)).toContain("abaca");
 });

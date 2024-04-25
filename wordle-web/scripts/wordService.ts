@@ -1,8 +1,27 @@
 import { LetterState } from "./letter";
 import { WordList } from "./wordList";
 
+
 export class WordService {
-  static validGuessedWords(guesses: string[], stateArray: LetterState[][]): string[] {
+  getValidWords(game: Game): string[] {
+    return WordList.filter(word => this.validWords(word, game));
+  }
+
+  private validWords(word: string, game: Game): boolean {
+    for (const { char, state } of game.guessedLetters) {
+      const letter = char.toLowerCase();
+
+      if(word.includes(letter) && state === LetterState.Wrong) return false;
+      if(!word.includes(letter) && (state === LetterState.Correct || state === LetterState.Misplaced)) return false;
+      if(word.includes(letter) && (state === LetterState.Correct || state === LetterState.Misplaced) && word.indexOf(letter) !== game.secretWord.toLowerCase().indexOf(letter)) return false;
+    }
+    return true;
+  }
+}
+
+
+
+  /*static validGuessedWords(guesses: string[], stateArray: LetterState[][]): string[] {
     const validWords = new Set<string>();
 
     for(let j = 0; j < guesses.length; j++){
@@ -37,5 +56,5 @@ export class WordService {
       isValidWord.forEach(word => validWords.add(word));
     }
     return Array.from(validWords);
-  }
-}
+  }*/
+

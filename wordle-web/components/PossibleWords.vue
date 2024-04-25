@@ -18,37 +18,27 @@ import { ref, onMounted, watch, inject, computed } from "vue";
 import { Letter, LetterState } from "~/scripts/letter";
 import { Word } from "~/scripts/word";
 import { Game } from "~/scripts/game";
+import { WordList } from "~/scripts/wordList";
 
-const labelText = "Possible Words: 10000";
+const labelText = "Possible Words: ";
 
 const game = inject("GAME") as Game;
 
-const { emit } = defineEmits(["selectedWord"]);
+const wordService = new WordService();
 
 const wordList = ref<string[]>([]);
 let selectedWord = ref<string | null>(null);
 
-watch(() => game?.guesses, (newGuesses) => {
-  if (newGuesses){
-    const stateArray = getStateArray(newGuesses);
-    wordList.value = WordService.validGuessedWords(newGuesses, stateArray);
-  }
+onMounted(() => {
+  updateWordList();
 });
 
-onMounted(()=> {
-  if(game?.guesses){
-    const stateArray = getStateArray(game.guesses);
-    wordList.value = WordService.validGuessedWords(game.guesses, stateArray);
-  }
-});
+watch(() => game.guessedLetters, () => {
+    updateWordList();
+}, { deep: true });
 
-function getStateArray(guesses: string[]): LetterState[][] {
-  return guesses.map(word => {
-    return word.letters.map(letter => {
-      console.log(letter.state);
-      return letter ? letter.state : LetterState.Unknown;
-    });
-  });
+function updateWordList() {
+  wordList.value = wordService.getValidWords(game);
 }
 
 </script>
