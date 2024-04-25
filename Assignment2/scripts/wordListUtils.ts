@@ -8,6 +8,7 @@ export function updateValidWords(game: Game): string[] {
             var guessedLetterObj = game.guessedLetters[i];
             var guessedLetterChar = guessedLetterObj.char.toLowerCase();
             var guessedLetterState = guessedLetterObj.state;
+            //Issue when guess/secret word have multiple of the same letter
             var indexInWord = word.indexOf(guessedLetterChar);
             var indexInSecretWord = game.secretWord.toLowerCase().indexOf(guessedLetterChar);
             if (word.includes(guessedLetterChar)){
