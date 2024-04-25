@@ -74,27 +74,7 @@
 - Functions
 - Conditional Rendering: https://vuejs.org/guide/essentials/conditional.html
 - Events: https://vuejs.org/guide/essentials/event-handling.html
-
-### Next Time
-- Input: https://vuejs.org/guide/essentials/forms.html
-- Grid System
-- Display and sizing
-- Icons
-- Theming
-- Elevation
-- Height and width (h- & w-"
 - Spacing (padding and margins) (CSS Box Model)
-- Components: Containment
-  - Buttons
-  - Cards
-  - Chips
-  - Lists
-- Components: Tables
-- Components: Form Inputs
-  - Selects
-  - Switches
-  - Text: Fields and Areas
-  - Combos
 
 
 ## Week 3
@@ -107,30 +87,60 @@
 - Watchers: https://vuejs.org/guide/essentials/watchers.html
 - Transitions: https://vuejs.org/guide/built-ins/transition.html
 
-
-### Lecture 6. 4/18: ASP.NET Intro 🟣
-- Starting an ASP.NET API Project
-- Creating a simple API
-- Unit Testing the API
-- Program.cs
-- Controllers
-- Services (DI)
+### Lecture 6. 4/18: More components 🟣
+- Grid System
+- Display and sizing
+- Icons
+- Theming
+- Elevation
+- Height and width (h- & w-"
+- Components: Containment
+  - Buttons
+  - Cards
+  - Chips
+  - Lists
+- Animation
 
 
 ## Week 4
-### Lecture 7. 4/23: Entity Framework Intro 🟢🟣
+### Lecture 7. 4/23: Wrap up UI and ASP.NET Intro 🟢🟣
+- Input: https://vuejs.org/guide/essentials/forms.html
+- Components: Tables
+- Components: Form Inputs
+  - Selects
+  - Switches
+  - Text: Fields and Areas
+  - Combos
+- Slots and Emits
+- What is MVC and why are we doing a SPA
+  - Quick Intro to ASP.NET MVC
+- Starting an ASP.NET API Project
+  - Build the Word of the Day API endpoint
+  - Creating a simple API
+  - Program.cs
+  - Controllers
+  - Basic Routing
+  - Services (DI)
+- CORS
+
+### Lecture 8. 4/25: 🟣
+- DevOps
+- More ASP.NET and EF and homework 3 material
+- Unit Testing the API
+  - Basic Unit Testing
+  - Unit testing with services
+  - Unit testing with WebApplicationFactory
+- Unit vs Integration Testing
+
+
+## Week 5
+### Lecture 9. 3/30: 🟢
+- What is EF
 - Creating a context
 - Creating models
 - Migrations
 - Deployment (Site and Database)
 
-
-### Lecture 8. 4/25: 🟣
-- More ASP.NET and EF and homework 3 material
-
-
-## Week 5
-### Lecture 9. 3/30: 🟢
 - Initial EF Context
 - Word object
 - Word migration
