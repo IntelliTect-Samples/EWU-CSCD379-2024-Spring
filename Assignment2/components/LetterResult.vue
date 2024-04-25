@@ -67,4 +67,15 @@ watch([display.sm, display.xs, display.md], () => {
 .no-pointer {
   pointer-events: none;
 }
+
+/* Gradient for Letters and Keys based on light and dark themes */
+.v-card {
+  background: linear-gradient(
+    45deg,
+    rgba(255, 255, 255, 0.0),
+    rgba(255, 255, 255, 0.3)
+  );
+}
+
+
 </style>
