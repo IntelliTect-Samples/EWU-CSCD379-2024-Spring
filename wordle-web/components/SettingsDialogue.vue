@@ -32,20 +32,18 @@
           color="secondary"
           variant="tonal"
           text="Close"
-          @click="closeDialog"
+          @click="modelValue = false"
         />
-        
       </v-card-actions>
     </v-card>
   </v-dialog>
 </template>
 
 <script setup lang="ts">
-import { ref, computed } from 'vue';
+const modelValue = defineModel<boolean>({ default: false });
 import { useTheme } from "vuetify";
 import nuxtStorage from "nuxt-storage";
 
-const modelValue = ref(false);
 const theme = useTheme();
 const themesListMaster = theme.themes.value;
 const selectedTheme = ref();
@@ -53,15 +51,23 @@ const isDarkMode = ref(true);
 
 const themes = computed(() => {
   return Object.entries(themesListMaster)
-    .filter(([key, value]) => isDarkMode.value ? value.dark : !value.dark)
-    .map(([key]) => key);
+    .filter(([key, value]) => (isDarkMode.value ? value.dark : !value.dark))
+    .map(([key]) => key.replace(/([A-Z])/g, " $1").trim());
+});
+
+watch(isDarkMode, () => {
+  if (isDarkMode.value) {
+    theme.global.name.value = theme.global.name.value + "Dark";
+  } else {
+    theme.global.name.value = theme.global.name.value.substring(
+      0,
+      theme.global.name.value.length - 4
+    );
+  }
 });
 
 function updateTheme() {
-  theme.global.name.value = selectedTheme.value.replace(/\s+/g, '');
+  theme.global.name.value = selectedTheme.value.replace(/\s+/g, "");
   nuxtStorage.localStorage.setData("theme", theme.global.name.value);
-}
-function closeDialog() {
-  modelValue.value = false;
 }
 </script>

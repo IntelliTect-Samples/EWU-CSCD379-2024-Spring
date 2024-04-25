@@ -34,7 +34,6 @@ const DeepSeaDiveDark: ThemeDefinition = {
   },
 };
 
-
 const OpalOpulence: ThemeDefinition = {
   dark: false,
   colors: {
@@ -73,7 +72,6 @@ const OpalOpulenceDark: ThemeDefinition = {
     background: "#121212",
   },
 };
-
 
 const EmeraldIsle: ThemeDefinition = {
   dark: false,
@@ -191,7 +189,6 @@ const AmethystTwilightMistDark: ThemeDefinition = {
   },
 };
 
-
 export default defineNuxtPlugin((app) => {
   const vuetify = createVuetify({
     theme: {
@@ -202,6 +199,11 @@ export default defineNuxtPlugin((app) => {
         AmethystTwilightMist,
         RubyRoyale,
         OpalOpulence,
+        DeepSeaDiveDark,
+        EmeraldIsleDark,
+        AmethystTwilightMistDark,
+        RubyRoyaleDark,
+        OpalOpulenceDark,
         light: {
           dark: false,
           colors: {
