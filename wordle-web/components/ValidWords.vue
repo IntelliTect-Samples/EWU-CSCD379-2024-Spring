@@ -51,8 +51,7 @@ const utils = new ValidWordsUtils(props.game);
 let validWords = utils.validWords();
 let index = 0;
 let localGuessIndex = 0;
-// let output = getNextTenWords();
-let output = new Array<string>();
+let output = getNextTenWords();
 const isEmpty = ref(false);
 
 watch([props.game], () => {
