@@ -52,24 +52,11 @@ import { Game, GameState } from "../scripts/game";
 const game: Game = reactive(new Game());
 const showWordsList = ref(false);
 const isGameOn = ref(false);
+import SoundUtils from '../scripts/soundUtils';
+const soundUtils = new SoundUtils();
 
 provide("GAME", game);
-function playSound(): any {
-  const audio = new Audio('/click.mp3');
-  audio.volume = 0.9;
-  audio.play();
-}
 
-function playSound2(): any {
-  const audio = new Audio('/won.mp3');
-  audio.volume = 0.9;
-  audio.play();
-}
-function playSound3(): any {
-  const audio = new Audio('/lose.mp3');
-  audio.volume = 0.9;
-  audio.play();
-}
 onMounted(() => {
   window.addEventListener("keyup", onKeyup);
 });
@@ -86,10 +73,10 @@ function onKeyup(event: KeyboardEvent) {
   if (event.key === "Enter") {
     game.submitGuess();
   } else if (event.key == "Backspace") {
-    playSound();
+    soundUtils.playClickSound();
     game.removeLastLetter();
   } else if (event.key.match(/[A-z]/) && event.key.length === 1) {
-    playSound();
+    soundUtils.playClickSound();
     game.addLetter(event.key.toUpperCase());
 
   }
@@ -104,10 +91,10 @@ watch(game, () => {
 });
 watch(() => game.gameState, (newState) => {
   if (newState === GameState.Won) {
-    playSound2(); 
+    soundUtils.playWinSound(); 
     isGameOn.value = true;
   } else if (newState === GameState.Lost) {
-    playSound3(); 
+    soundUtils.playLoseSound(); 
     isGameOn.value = true;
   } else if (newState === GameState.Playing) {
     isGameOn.value = false;
