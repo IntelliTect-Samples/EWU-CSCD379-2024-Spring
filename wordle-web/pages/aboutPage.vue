@@ -1,12 +1,12 @@
 <template>
   <div class="about-container">
     <div class="about-content" style="text-decoration-line:underline;">
-      <h1 style="font-size:2em; font-family: Georgia">
+      <h1 style="font-size:2em;">
       Welcome to the About Page
     </h1>
     </div>
   </div>
-  <p class="about-container" style="text-align:justify; font-family: Georgia">
+  <p class="about-container" style="text-align:justify; ">
     <br>
     This project is for EWU's 379 course. We're building on the wordle
     that we started in class, and making it more functional.<br> For example, 
@@ -15,7 +15,7 @@
     <br>
     Meg rocks and makes coding fun and easy to follow. 
     Thanks Meg!
-    <p style="text-align: center; font-family: Georgia;">Click below to go back home</p>
+    <p style="text-align: center; "><br>Click below to go back home</p>
   </p>
 
 
