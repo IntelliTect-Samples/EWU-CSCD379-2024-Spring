@@ -8,10 +8,10 @@ on:
     branches:
       - main
     paths:
-      - Wordle.Api/**
+      - Wordle.API/**
   pull_request:
     paths:
-      - Wordle.Api/**
+      - Wordle.API/**
   workflow_dispatch:
 
 jobs:
