@@ -12,7 +12,7 @@ export default defineNuxtPlugin((app) => {
         light: {
           colors: {
             primary: "#1BF0BE",
-            secondary: "#FFE605",
+            secondary: "#1BF0BE",
             error: "#FF5252",
             info: "#2196F3",
             success: "#4CAF50",
@@ -27,7 +27,7 @@ export default defineNuxtPlugin((app) => {
           colors: {
             backgoundColor:"#1BF0BA",
             primary: "#1BF0BE",
-            secondary: "#FFE605",
+            secondary: "#1BF0BE",
             error: "#FF5252",
             info: "#2196F3",
             success: "#4CAF50",
@@ -42,20 +42,7 @@ export default defineNuxtPlugin((app) => {
           colors: {
             primary: "#1BF0BE",
             secondary: "#424242",
-            error: "#FF5252",
-            info: "#2196F3",
-            success: "#4CAF50",
-            warning: "#FFC107",
-            correct:"#4CAF50",
-            misplaced:"#FFC107",
-            wrong:"#616161",
-            unknown: "#424242"
-          },
-        },
-        hadi: {
-          colors: {
-            primary: "#CD853F",
-            secondary: "#800080",
+            background: "",
             error: "#FF5252",
             info: "#2196F3",
             success: "#4CAF50",
@@ -69,7 +56,38 @@ export default defineNuxtPlugin((app) => {
         hadiDark: {
           colors: {
             primary: "#CD853F",
-            secondary: "#424242",
+            secondary: "#800080",
+            background:"#800080",
+            error: "#FF5252",
+            info: "#2196F3",
+            success: "#4CAF50",
+            warning: "#FFC107",
+            correct:"#4CAF50",
+            misplaced:"#FFC107",
+            wrong:"#616161",
+            unknown: "#424242"
+          },
+        },
+        hadi: {
+          colors: {
+            primary: "#CD853F",
+            secondary: "#e5cce5",
+            background: "#e5cce5",
+            error: "#FF5252",
+            info: "#2196F3",
+            success: "#4CAF50",
+            warning: "#FFC107",
+            correct:"#4CAF50",
+            misplaced:"#FFC107",
+            wrong:"#616161",
+            unknown: "#424242"
+          },
+        },
+        hillBillyDark: {
+          colors: {
+            primary: "#800000",
+            secondary: "#FFC107",
+            background: "#00008B",
             error: "#FF5252",
             info: "#2196F3",
             success: "#4CAF50",
@@ -83,21 +101,8 @@ export default defineNuxtPlugin((app) => {
         hillBilly: {
           colors: {
             primary: "#006400",
-            secondary: "#FFE605",
-            error: "#FF5252",
-            info: "#2196F3",
-            success: "#4CAF50",
-            warning: "#FFC107",
-            correct:"#4CAF50",
-            misplaced:"#FFC107",
-            wrong:"#616161",
-            unknown: "#424242"
-          },
-        },
-        hillBillyDark: {
-          colors: {
-            primary: "#006400",
-            secondary: "#424242",
+            secondary: "#FFC107",
+            background: "#FFC107",
             error: "#FF5252",
             info: "#2196F3",
             success: "#4CAF50",
@@ -126,6 +131,7 @@ export default defineNuxtPlugin((app) => {
           colors: {
             primary: "#00008B",
             secondary: "#424242",
+            background: "#424242",
             error: "#FF5252",
             info: "#2196F3",
             success: "#4CAF50",

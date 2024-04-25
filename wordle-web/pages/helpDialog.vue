@@ -1,7 +1,7 @@
 <template>
-    <v-alert>
-      <v-card>
-        <v-sheet color="primary">
+    <v-alert style="background-color: secondary ">
+      <v-card color="secondary">
+        <v-sheet color="secondary">
           <v-card-text> How to Play </v-card-text>
         </v-sheet>
         <v-card-text>
