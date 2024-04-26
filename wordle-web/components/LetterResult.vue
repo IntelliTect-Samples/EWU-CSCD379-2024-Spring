@@ -59,4 +59,6 @@ watch([display.sm, display.xs, display.md], () => {
 .no-pointer {
   pointer-events: none;
 }
+
+
 </style>

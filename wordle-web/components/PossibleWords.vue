@@ -6,7 +6,6 @@
       v-model="selectedWord"
       :items="wordList"
       variant="solo-filled"
-      :menu-props="{ bottom: true }"
       @input="populateGuess"
     ></v-select>
     <v-label>
@@ -18,7 +17,6 @@
 
 <script setup lang="ts">
 import { WordService } from "~/scripts/wordService";
-import { ref, onMounted, watch, inject, computed } from "vue";
 import { Letter, LetterState } from "~/scripts/letter";
 import { Word } from "~/scripts/word";
 import { Game } from "~/scripts/game";
@@ -61,7 +59,3 @@ function populateGuess(){
 }
 
 </script>
-
-
-<style>
-</style>

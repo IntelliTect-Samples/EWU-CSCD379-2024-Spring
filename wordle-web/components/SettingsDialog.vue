@@ -15,9 +15,8 @@
           color="secondary"
           v-model="chosenTheme"
           label="Choose a Theme"
-          :items="['Standard', 'Mystic Meadow', 'Enchanted Eclipse']"
-        ></v-select>
-        <v-btn color="secondary" @click="changeTheme" class="mb-6" type="submit">Activate</v-btn>
+          :items="['Standard', 'Mystic Meadow', 'Enchanted Eclipse']" />
+        <v-btn color="secondary" @click="changeTheme" class="mb-6" text="Activate"/>
       </v-sheet>
     </v-card>
   </v-dialog>
@@ -33,30 +32,16 @@ const chosenTheme = ref('Standard');
 
 
 function changeTheme() {
-  const darkMode: boolean = isDark();
-  if(chosenTheme.value === "Mystic Meadow"){
-    if(darkMode){
-      theme.global.name.value = "mysticMeadowDark";
-    }
-    else {
-      theme.global.name.value = "mysticMeadowLight";
-    }
-  }
-  if(chosenTheme.value === "Enchanted Eclipse"){
-    if(darkMode){
-      theme.global.name.value = "enchantedEclipseDark";
-    }
-    else {
-      theme.global.name.value = "enchantedEclipseLight";
-    }
-  }
-  if(chosenTheme.value === "Standard"){
-    if(darkMode){
-      theme.global.name.value = "dark";
-    }
-    else {
-      theme.global.name.value = "light"
-    }
+  switch (chosenTheme.value){
+    case "Mystic Meadow":
+      theme.global.name.value = "mysticMeadow" + (isDark() ? "Dark" : "Light");
+      break;
+    case "Enchanted Eclipse":
+      theme.global.name.value = "enchantedEclipse" + (isDark() ? "Dark" : "Light");
+      break;
+    case "Standard":
+      theme.global.name.value = isDark() ? "dark" : "light";
+      break;
   }
   nuxtStorage.localStorage.setData("theme", theme.global.name.value);
 }
