@@ -1,23 +1,15 @@
 <template>
-   <v-card
-    :height="boxHeight"
-    :width="boxWidth"
+  <v-card
+    :height="boxSize"
+    :width="boxSize"
     :color="letter.color"
     flat
     :class="[
       clickable ? '' : 'no-pointer',
       'align-center d-flex justify-center',
-      `elevation-10`,
     ]"
-    :style="{
-      'background-image':
-        'radial-gradient(rgb(var(--v-theme-' +
-        letter.color +
-        ')) 40%, rgb(var(--v-theme-' +
-        letter.colorGradient +
-        ')) 95%)',
-    }"
-    @click="onClicked()">
+    @click="onClicked()"
+  >
     {{ letter.char }}
   </v-card>
 </template>
