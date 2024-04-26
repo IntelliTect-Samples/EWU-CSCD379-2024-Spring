@@ -16,7 +16,7 @@
           The word was: <strong>{{ game.secretWord }}</strong>
         </v-card-text>
         <v-card-actions class="mx-auto">
-          <v-btn variant="outlined" @click="game.startNewGame()">
+          <v-btn variant="outlined" @click="closeGameDialog">
             <v-icon size="large" class="mr-2"> mdi-restart </v-icon> Play Again
           </v-btn>
         </v-card-actions>
@@ -90,14 +90,24 @@ watch(game, () => {
   }
 });
 watch(() => game.gameState, (newState) => {
-  if (newState === GameState.Won) {
-    soundUtils.playWinSound(); 
-    isGameOn.value = true;
-  } else if (newState === GameState.Lost) {
-    soundUtils.playLoseSound(); 
-    isGameOn.value = true;
-  } else if (newState === GameState.Playing) {
-    isGameOn.value = false;
+  switch (newState) {
+    case GameState.Won:
+      soundUtils.playWinSound();  
+      isGameOn.value = true;      
+      break;
+    case GameState.Lost:
+      soundUtils.playLoseSound(); 
+      isGameOn.value = true;      
+      break;
+    case GameState.Playing:
+      isGameOn.value = false; 
+      break;
   }
 });
+function closeGameDialog() {
+  isGameOn.value = false;
+  setTimeout(() => {
+    game.startNewGame();
+  }, 300);
+}
 </script>
