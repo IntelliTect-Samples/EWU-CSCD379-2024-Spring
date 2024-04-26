@@ -43,7 +43,7 @@
 
         <v-btn
           color="secondary"
-          variant="tonal"
+          variant="flat"
           text="Close"
           @click="modelValue = false"
         />

@@ -23,13 +23,13 @@
         <v-spacer />
         <v-btn
           color="secondary"
-          variant="tonal"
+          variant="flat"
           text="Apply"
           @click="updateTheme"
         />
         <v-btn
           color="secondary"
-          variant="tonal"
+          variant="flat"
           text="Close"
           @click="modelValue = false"
         />

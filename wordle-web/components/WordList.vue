@@ -26,7 +26,7 @@
         />
       </v-card-item>
       <v-card-actions class="mx-auto">
-        <v-btn @click="modelValue = false" color="secondary" variant="tonal">
+        <v-btn @click="modelValue = false" color="secondary" variant="flat">
           <v-icon class="mr-2" icon="mdi-close" />
           Close
         </v-btn>
