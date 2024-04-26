@@ -33,6 +33,7 @@
           variant="flat"
           text="Apply"
           @click="updateTheme"
+          :disabled="!selectedTheme"
         />
         <v-btn
           color="secondary"
@@ -97,7 +98,9 @@ watch(isDarkMode, () => {
       : (theme.global.name.value = "light");
   } else {
     theme.global.name.value = isDarkMode.value
-      ? theme.global.name.value + "Dark"
+      ? theme.global.name.value.includes("Dark")
+        ? theme.global.name.value
+        : theme.global.name.value + "Dark"
       : theme.global.name.value.replace(/Dark$/, "");
   }
   nuxtStorage.localStorage.setData("theme", theme.global.name.value);
