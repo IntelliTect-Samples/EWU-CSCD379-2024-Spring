@@ -21,6 +21,7 @@
             isDarkMode ? (theme) => theme.dark : (theme) => theme.light
           "
           :item-title="(theme) => theme.name"
+          placeholder="Select a theme"
         />
       </v-card-item>
       <v-divider />
@@ -84,7 +85,7 @@ const themes = [
 
 const theme = useTheme();
 const selectedTheme = ref();
-const isDarkMode = ref(true);
+const isDarkMode = ref();
 
 watch(isDarkMode, () => {
   if (

@@ -128,7 +128,7 @@ const RubyRoyale: ThemeDefinition = {
     misplaced: colors.amber.lighten2,
     wrong: colors.red.darken2,
     unknown: colors.red.lighten3,
-    background: colors.red.lighten3,
+    background: colors.red.lighten2,
   },
 };
 const RubyRoyaleDark: ThemeDefinition = {
