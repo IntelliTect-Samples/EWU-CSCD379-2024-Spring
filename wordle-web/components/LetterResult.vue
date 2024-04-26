@@ -60,5 +60,12 @@ watch([display.sm, display.xs, display.md], () => {
   pointer-events: none;
 }
 
+.v-card {
+  background: linear-gradient(
+    45deg,
+    rgba(255, 255, 255, 0.0),
+    rgba(255, 255, 255, 0.3)
+  );
+}
 
 </style>
