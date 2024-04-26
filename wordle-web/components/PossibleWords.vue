@@ -2,12 +2,16 @@
   <div>
     <v-select
       clearable
-      :label="labelText"
+      label="Select a Word: "
       v-model="selectedWord"
       :items="wordList"
       variant="solo-filled"
       :menu-props="{ bottom: true }"
+      @input="populateGuess"
     ></v-select>
+    <v-label>
+      Possible Words: {{ wordList.length }}
+    </v-label>
   </div>
 </template>
 
@@ -37,8 +41,23 @@ watch(() => game.guessedLetters, () => {
     updateWordList();
 }, { deep: true });
 
+watch(selectedWord, (newValue) => {
+  if(newValue){
+    populateGuess();
+  }
+});
+
 function updateWordList() {
   wordList.value = wordService.getValidWords(game);
+}
+
+function populateGuess(){
+  game.guess.clear();
+  if(selectedWord.value){
+    for (let i = 0; i < selectedWord.value.length; i++){
+      game.addLetter(selectedWord.value[i].toUpperCase());
+    }
+  }
 }
 
 </script>
