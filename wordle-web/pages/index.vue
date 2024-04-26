@@ -52,7 +52,7 @@ import { Game, GameState } from "../scripts/game";
 const game: Game = reactive(new Game());
 const showWordsList = ref(false);
 const isGameOn = ref(false);
-import SoundUtils from '../scripts/soundUtils';
+import SoundUtils from "../scripts/soundUtils";
 const soundUtils = new SoundUtils();
 
 provide("GAME", game);
@@ -78,7 +78,6 @@ function onKeyup(event: KeyboardEvent) {
   } else if (event.key.match(/[A-z]/) && event.key.length === 1) {
     soundUtils.playClickSound();
     game.addLetter(event.key.toUpperCase());
-
   }
 }
 
@@ -89,21 +88,24 @@ watch(game, () => {
     isGameOn.value = false;
   }
 });
-watch(() => game.gameState, (newState) => {
-  switch (newState) {
-    case GameState.Won:
-      soundUtils.playWinSound();  
-      isGameOn.value = true;      
-      break;
-    case GameState.Lost:
-      soundUtils.playLoseSound(); 
-      isGameOn.value = true;      
-      break;
-    case GameState.Playing:
-      isGameOn.value = false; 
-      break;
+watch(
+  () => game.gameState,
+  (newState) => {
+    switch (newState) {
+      case GameState.Won:
+        soundUtils.playWinSound();
+        isGameOn.value = true;
+        break;
+      case GameState.Lost:
+        soundUtils.playLoseSound();
+        isGameOn.value = true;
+        break;
+      case GameState.Playing:
+        isGameOn.value = false;
+        break;
+    }
   }
-});
+);
 function closeGameDialog() {
   isGameOn.value = false;
   setTimeout(() => {

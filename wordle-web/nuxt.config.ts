@@ -10,7 +10,6 @@ export default defineNuxtConfig({
       interval: 100,
     },
   },
-  devtools: { enabled: true },
   modules: [
     "@nuxt/test-utils/module",
     (_options, nuxt) => {

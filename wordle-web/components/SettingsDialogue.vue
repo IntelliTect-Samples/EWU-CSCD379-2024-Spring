@@ -14,14 +14,13 @@
           :append-icon="isDarkMode ? 'mdi-weather-night' : 'mdi-weather-sunny'"
           inset
         />
-
-        <v-label>Theme</v-label>
+        <v-label text="Theme" />
         <v-select v-model="selectedTheme" :items="themes" />
       </v-card-item>
       <v-divider />
 
       <v-card-actions>
-        <v-spacer></v-spacer>
+        <v-spacer />
         <v-btn
           color="secondary"
           variant="tonal"

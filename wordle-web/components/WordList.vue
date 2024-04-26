@@ -11,8 +11,8 @@
         :items="validWords()"
         placeholder="Enter a Word!"
         @update:modelValue="updatePage"
-      >
-      </v-autocomplete>
+      />
+
       <v-btn
         height="40px"
         class="align-center d-flex justify-center"
@@ -29,10 +29,12 @@
           :length="totalPages"
         />
       </v-card-item>
-      <v-btn class="ml-2" icon @click="modelValue = false" style="width: auto;">
-      <v-icon class="align-end" color = "primary">mdi-close</v-icon>
-      <v-btn-text color="primary">Close</v-btn-text>
-    </v-btn>
+      <v-card-actions class="mx-auto pa43">
+        <v-btn @click="modelValue = false" color="secondary" variant="tonal">
+          <v-icon class="mr-2" icon="mdi-close" />
+          Close
+        </v-btn>
+      </v-card-actions>
     </v-card>
   </v-bottom-sheet>
   <v-btn
