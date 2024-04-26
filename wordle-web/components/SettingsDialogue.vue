@@ -10,12 +10,18 @@
           :label="isDarkMode ? 'Dark Mode' : 'Light Mode'"
           color="primary"
           base-color="primary"
-          default-value="true"
           :append-icon="isDarkMode ? 'mdi-weather-night' : 'mdi-weather-sunny'"
           inset
         />
         <v-label text="Theme" />
-        <v-select v-model="selectedTheme" :items="themes" />
+        <v-select
+          v-model="selectedTheme"
+          :items="themes"
+          :item-value="
+            isDarkMode ? (theme) => theme.dark : (theme) => theme.light
+          "
+          :item-title="(theme) => theme.name"
+        />
       </v-card-item>
       <v-divider />
 
@@ -43,17 +49,42 @@ const modelValue = defineModel<boolean>({ default: false });
 import { useTheme } from "vuetify";
 import nuxtStorage from "nuxt-storage";
 
+const themes = [
+  {
+    name: "Standard",
+    light: "light",
+    dark: "dark",
+  },
+  {
+    name: "Sapphire Deep Sea Dive",
+    light: "SapphireDeepSeaDive",
+    dark: "SapphireDeepSeaDiveDark",
+  },
+  {
+    name: "Emerald Isle",
+    light: "EmeraldIsle",
+    dark: "EmeraldIsleDark",
+  },
+  {
+    name: "Amethyst Twilight Mist",
+    light: "AmethystTwilightMist",
+    dark: "AmethystTwilightMistDark",
+  },
+  {
+    name: "Ruby Royale",
+    light: "RubyRoyale",
+    dark: "RubyRoyaleDark",
+  },
+  {
+    name: "Opal Opulence",
+    light: "OpalOpulence",
+    dark: "OpalOpulenceDark",
+  },
+];
+
 const theme = useTheme();
 const selectedTheme = ref();
 const isDarkMode = ref(true);
-const themes: string[] = [
-  "Standard",
-  "Sapphire Deep Sea Dive",
-  "Emerald Isle",
-  "Amethyst Twilight Mist",
-  "Ruby Royale",
-  "Opal Opulence",
-];
 
 watch(isDarkMode, () => {
   if (
@@ -72,14 +103,7 @@ watch(isDarkMode, () => {
 });
 
 function updateTheme() {
-  if (selectedTheme.value == "Standard") {
-    theme.global.name.value = isDarkMode.value ? "light" : "dark";
-  } else {
-    theme.global.name.value = selectedTheme.value.replace(/\s/g, "");
-    if (isDarkMode.value) {
-      theme.global.name.value = theme.global.name.value + "Dark";
-    }
-  }
+  theme.global.name.value = selectedTheme.value;
   nuxtStorage.localStorage.setData("theme", theme.global.name.value);
 }
 </script>
