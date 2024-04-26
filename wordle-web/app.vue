@@ -39,27 +39,27 @@
       
       <!-- Settings Dialog -->
       <v-dialog v-model="settingsDialog" max-width="500">
-        <v-card>
+        <v-card style="outline-style: inset;" color="primary">
           <v-sheet color="secondary">
             <v-card-text style="text-align: center; font-size:1.75em; font-family:'Courier New'"> Settings </v-card-text>
           </v-sheet>
           <v-card-text>
             <v-container>
-              <v-btn class="buttonClass" @click="themeSettings('light')">Light Mode</v-btn>
+              <v-btn class="buttonClass" @click="themeSettings('light')" style="outline-style: outset;" color="primary">Light Mode</v-btn>
               &nbsp;&nbsp;&nbsp;
-              <v-btn class="buttonClass" @click="themeSettings('dark')">Dark Mode</v-btn>
+              <v-btn class="buttonClass" @click="themeSettings('dark')" style="outline-style: outset;" color="primary">Dark Mode</v-btn>
               &nbsp;&nbsp;&nbsp;
-              <v-btn class="buttonClass" @click="themeSettings('bCasual')">Business Casual</v-btn>
+              <v-btn class="buttonClass" @click="themeSettings('bCasual')" style="outline-style: outset;" color="primary">Business Casual</v-btn>
               &nbsp;&nbsp;&nbsp;
-              <v-btn class="buttonClass" @click="themeSettings('bCasualDark')">Business Casual -- DARK</v-btn>
+              <v-btn class="buttonClass" @click="themeSettings('bCasualDark')" style="outline-style: outset;" color="primary">Business Casual -- DARK</v-btn>
               &nbsp;&nbsp;&nbsp;
-              <v-btn class="buttonClass" @click="themeSettings('hillBilly')">Luigi</v-btn>
+              <v-btn class="buttonClass" @click="themeSettings('hillBilly')" style="outline-style: outset;" color="primary">Luigi</v-btn>
               &nbsp;&nbsp;&nbsp;
-              <v-btn class="buttonClass" @click="themeSettings('hillBillyDark')">Mario</v-btn>
+              <v-btn class="buttonClass" @click="themeSettings('hillBillyDark')" style="outline-style: outset;" color="primary">Mario</v-btn>
               &nbsp;&nbsp;&nbsp;
-              <v-btn class="buttonClass" @click="themeSettings('hadi')">Hadi's Choice</v-btn>
+              <v-btn class="buttonClass" @click="themeSettings('hadi')" style="outline-style: outset;" color="primary">Hadi's Choice</v-btn>
               &nbsp;&nbsp;&nbsp;
-              <v-btn class="buttonClass" @click="themeSettings('hadiDark')">Hadi's Choice -- DARK</v-btn>
+              <v-btn class="buttonClass" @click="themeSettings('hadiDark')" style="outline-style: outset;" color="primary">Hadi's Choice -- DARK</v-btn>
             </v-container>
           </v-card-text>
         </v-card>

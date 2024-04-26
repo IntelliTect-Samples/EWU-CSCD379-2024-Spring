@@ -1,6 +1,6 @@
 <template>
   <v-dialog v-model="modelValue" max-width="500">
-    <v-card style="background-color: myFunction()">
+    <v-card style="background-color: myFunction()" color = "secondary">
       <v-sheet color="primary">
         <v-card-text
           style="text-align: center; font-size: larger"
