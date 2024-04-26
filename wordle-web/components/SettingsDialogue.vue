@@ -103,6 +103,8 @@ watch(isDarkMode, () => {
         : theme.global.name.value + "Dark"
       : theme.global.name.value.replace(/Dark$/, "");
   }
+  selectedTheme.value = theme.global.name.value;
+
   nuxtStorage.localStorage.setData("theme", theme.global.name.value);
 });
 
