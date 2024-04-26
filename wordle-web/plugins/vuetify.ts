@@ -65,11 +65,10 @@ const OpalOpulenceDark: ThemeDefinition = {
     success: "#4caf50",
     lose: colors.red.lighten1,
     win: colors.green.accent3,
-    correct: colors.green.accent1,
-    misplaced: colors.amber.lighten4,
-    wrong: colors.red.lighten4,
-    unknown: colors.pink.lighten5,
-    background: "#121212",
+    correct: colors.green.accent3,
+    misplaced: colors.amber.lighten2,
+    wrong: colors.red.lighten2,
+    unknown: colors.pink.lighten4,
   },
 };
 

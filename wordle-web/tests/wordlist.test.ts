@@ -2,7 +2,6 @@ import { expect, test } from "vitest";
 import { Game } from "~/scripts/game";
 import { WordList } from "~/scripts/wordList";
 import { filterValidWords } from "~/scripts/wordListUtils";
-import SoundUtils from "~/scripts/soundUtils";
 
 test("filterValidWords init contains all wordlist", () => {
   const game = new Game(6);

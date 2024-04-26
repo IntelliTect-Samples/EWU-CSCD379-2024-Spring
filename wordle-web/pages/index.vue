@@ -52,8 +52,11 @@ import { Game, GameState } from "../scripts/game";
 const game: Game = reactive(new Game());
 const showWordsList = ref(false);
 const isGameOn = ref(false);
-import SoundUtils from "../scripts/soundUtils";
-const soundUtils = new SoundUtils();
+import {
+  playClickSound,
+  playLoseSound,
+  playWinSound,
+} from "../scripts/soundUtils";
 
 provide("GAME", game);
 
@@ -73,10 +76,10 @@ function onKeyup(event: KeyboardEvent) {
   if (event.key === "Enter") {
     game.submitGuess();
   } else if (event.key == "Backspace") {
-    soundUtils.playClickSound();
+    playClickSound();
     game.removeLastLetter();
   } else if (event.key.match(/[A-z]/) && event.key.length === 1) {
-    soundUtils.playClickSound();
+    playClickSound();
     game.addLetter(event.key.toUpperCase());
   }
 }
@@ -93,11 +96,11 @@ watch(
   (newState) => {
     switch (newState) {
       case GameState.Won:
-        soundUtils.playWinSound();
+        playWinSound();
         isGameOn.value = true;
         break;
       case GameState.Lost:
-        soundUtils.playLoseSound();
+        playLoseSound();
         isGameOn.value = true;
         break;
       case GameState.Playing:

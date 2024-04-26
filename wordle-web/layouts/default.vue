@@ -43,6 +43,6 @@ const showSettingsDialog = ref(false);
 const drawer = ref(false);
 onMounted(() => {
   var defaultTheme = nuxtStorage.localStorage.getData("theme");
-  theme.global.name.value = defaultTheme ?? "dark";
+  theme.global.name.value = defaultTheme ?? "light";
 });
 </script>

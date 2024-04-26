@@ -1,9 +1,7 @@
 import { LetterState, type Letter } from "./letter";
 import { Word } from "./word";
 import { WordList } from "./wordList";
-import SoundUtils from './soundUtils';
-const soundUtils = new SoundUtils();
-
+import { playEnterSound } from "./soundUtils";
 
 export class Game {
   public maxAttempts: number;
@@ -12,7 +10,6 @@ export class Game {
   public guessIndex: number = 0;
   public gameState: GameState = GameState.Playing;
   public guessedLetters: Letter[] = [];
-
 
   constructor(maxAttempts: number = 6) {
     this.maxAttempts = maxAttempts;
@@ -38,7 +35,6 @@ export class Game {
     }
   }
 
-
   public get guess() {
     return this.guesses[this.guessIndex];
   }
@@ -48,7 +44,6 @@ export class Game {
       this.guess.removeLastLetter();
     }
   }
-
 
   public addLetter(letter: string) {
     if (this.gameState === GameState.Playing) {
@@ -94,11 +89,10 @@ export class Game {
       if (this.guessIndex === this.maxAttempts - 1) {
         this.gameState = GameState.Lost;
       } else {
-        soundUtils.playEnterSound();
+        playEnterSound();
         this.guessIndex++;
       }
     }
-  
   }
 }
 
