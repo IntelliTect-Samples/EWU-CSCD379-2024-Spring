@@ -11,7 +11,6 @@
 
       <v-btn
         height="40px"
-        class="align-center d-flex justify-center"
         v-for="word in pagedWords"
         :key="word"
         @click="addGuess(word)"
@@ -50,7 +49,6 @@
 <script setup lang="ts">
 import { WordList } from "~/scripts/wordList";
 import { Game } from "~/scripts/game";
-import { LetterState } from "~/scripts/letter";
 import { filterValidWords } from "~/scripts/wordListUtils";
 const game: Game = inject("GAME")!;
 
