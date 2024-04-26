@@ -29,6 +29,10 @@
           :length="totalPages"
         />
       </v-card-item>
+      <v-btn class="ml-2" icon @click="modelValue = false" style="width: auto;">
+      <v-icon class="align-end" color = "primary">mdi-close</v-icon>
+      <v-btn-text color="primary">Close</v-btn-text>
+    </v-btn>
     </v-card>
   </v-bottom-sheet>
   <v-btn
