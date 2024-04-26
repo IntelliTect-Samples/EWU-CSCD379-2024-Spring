@@ -1,9 +1,5 @@
 <template>
-  <v-bottom-sheet
-    v-model="modelValue"
-    max-height="600"
-    class="pa-2 d-flex flex-wrap justify-center align-center"
-  >
+  <v-bottom-sheet v-model="modelValue">
     <v-card>
       <v-autocomplete
         v-model="selectedWord"
@@ -19,6 +15,7 @@
         v-for="word in pagedWords"
         :key="word"
         @click="addGuess(word)"
+        flat
       >
         {{ word.toUpperCase() }}
       </v-btn>
@@ -29,7 +26,7 @@
           :length="totalPages"
         />
       </v-card-item>
-      <v-card-actions class="mx-auto pa43">
+      <v-card-actions class="mx-auto">
         <v-btn @click="modelValue = false" color="secondary" variant="tonal">
           <v-icon class="mr-2" icon="mdi-close" />
           Close
