@@ -2,7 +2,7 @@
 
 public class WordOfTheDayService
 {
-    private readonly List<string> words = LoadWordList();
+    public List<string> words { get; } = LoadWordList();
 
     public string GetRandomWord()
     {
