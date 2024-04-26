@@ -45,32 +45,41 @@ import { useTheme } from "vuetify";
 import nuxtStorage from "nuxt-storage";
 
 const theme = useTheme();
-const themesListMaster = theme.themes.value;
 const selectedTheme = ref();
 const isDarkMode = ref(true);
-
-const themes = computed(() => {
-  return Object.entries(themesListMaster)
-    .filter(([key, value]) => !value.dark)
-    .map(([key]) => key.replace(/([A-Z])/g, " $1").trim());
-});
+const themes: string[] = [
+  "Standard",
+  "Sapphire Deep Sea Dive",
+  "Emerald Isle",
+  "Amethyst Twilight Mist",
+  "Ruby Royale",
+  "Opal Opulence",
+];
 
 watch(isDarkMode, () => {
-  if (isDarkMode.value) {
-    theme.global.name.value = theme.global.name.value + "Dark";
+  if (
+    selectedTheme.value == "Standard" ||
+    new RegExp("^light$|^dark$").test(theme.global.name.value)
+  ) {
+    theme.global.name.value = isDarkMode.value
+      ? "dark"
+      : (theme.global.name.value = "light");
   } else {
-    theme.global.name.value = theme.global.name.value.substring(
-      0,
-      theme.global.name.value.length - 4
-    );
+    theme.global.name.value = isDarkMode.value
+      ? theme.global.name.value + "Dark"
+      : theme.global.name.value.replace(/Dark$/, "");
   }
+  nuxtStorage.localStorage.setData("theme", theme.global.name.value);
 });
 
 function updateTheme() {
-  if (isDarkMode.value) {
-    theme.global.name.value = selectedTheme.value.replace(/\s/g, "") + "Dark";
+  if (selectedTheme.value == "Standard") {
+    theme.global.name.value = isDarkMode.value ? "light" : "dark";
   } else {
     theme.global.name.value = selectedTheme.value.replace(/\s/g, "");
+    if (isDarkMode.value) {
+      theme.global.name.value = theme.global.name.value + "Dark";
+    }
   }
   nuxtStorage.localStorage.setData("theme", theme.global.name.value);
 }
