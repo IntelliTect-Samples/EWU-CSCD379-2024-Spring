@@ -54,6 +54,7 @@ const showWordsList = ref(false);
 const isGameOn = ref(false);
 import {
   playClickSound,
+  playEnterSound,
   playLoseSound,
   playWinSound,
 } from "../scripts/soundUtils";
@@ -74,7 +75,11 @@ function onKeyup(event: KeyboardEvent) {
   }
 
   if (event.key === "Enter") {
+    let currentGuessIndex = game.guessIndex;
     game.submitGuess();
+    if (currentGuessIndex !== game.guessIndex) {
+      playEnterSound();
+    }
   } else if (event.key == "Backspace") {
     playClickSound();
     game.removeLastLetter();

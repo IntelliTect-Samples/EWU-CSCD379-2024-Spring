@@ -1,7 +1,6 @@
 import { LetterState, type Letter } from "./letter";
 import { Word } from "./word";
 import { WordList } from "./wordList";
-import { playEnterSound } from "./soundUtils";
 
 export class Game {
   public maxAttempts: number;
@@ -89,7 +88,6 @@ export class Game {
       if (this.guessIndex === this.maxAttempts - 1) {
         this.gameState = GameState.Lost;
       } else {
-        playEnterSound();
         this.guessIndex++;
       }
     }
