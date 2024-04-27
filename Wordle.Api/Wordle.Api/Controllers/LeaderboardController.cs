@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Wordle.Api.Services;
 
 namespace Wordle.Api.Controllers;
 
@@ -9,17 +10,8 @@ public class LeaderboardController : ControllerBase
 	[HttpGet(Name = "GetScores")]
 	public List<string> Get()
 	{
-		return new List<string> {
-			"1",
-			"2",
-			"3",
-			"4",
-			"5",
-			"6",
-			"7",
-			"8",
-			"9",
-			"10"
-		};
+		var service = new LeaderboardService();
+
+		return service.GetTopScores();
 	}
 }
