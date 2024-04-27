@@ -18,18 +18,17 @@ public class LeaderboardService
 
 	public async Task<Player> PostScore(PlayerRequest request)
 	{
-		if (request.PlayerId is not null)
+		Player? foundPlayer = _context.Players.FirstOrDefault(p => request.Name.Equals(p.Name));
+		if (foundPlayer is not null)
 		{
-			Player foundPlayer = _context.Players.First(p => request.PlayerId == p.PlayerId); // Using .First because I am assuming front end will not give bad player id
 			foundPlayer.AverageAttempts = request.AverageAttempts;
 			foundPlayer.GameCount = request.GameCount;
-			foundPlayer.Name = request.Name;
 			await _context.SaveChangesAsync();
 			return foundPlayer;
 		}
 		else
 		{
-			Player addedPlayer = new Player()
+			Player addedPlayer = new()
 			{
 				AverageAttempts = request.AverageAttempts,
 				GameCount = request.GameCount,

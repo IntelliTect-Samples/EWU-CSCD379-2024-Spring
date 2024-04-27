@@ -2,6 +2,7 @@
 using Wordle.Api.Data;
 using Wordle.Api.Services;
 using Wordle.Api.Requests;
+using Wordle.Api.Dtos;
 
 namespace Wordle.Api.Controllers;
 
@@ -22,8 +23,14 @@ public class LeaderboardController : ControllerBase
 	}
 
 	[HttpPost(Name = "PostScore")]
-	public async Task<Player> Post(PlayerRequest request)
+	public async Task<PlayerDto> Post(PlayerRequest request)
 	{
-		return await _service.PostScore(request);
+		Player player = await _service.PostScore(request);
+		return new PlayerDto
+		{
+			Name = player.Name,
+			GameCount = player.GameCount,
+			AverageAttempts = player.AverageAttempts
+		};
 	}
 }

@@ -1,6 +1,6 @@
-﻿namespace Wordle.Api.Requests;
+﻿namespace Wordle.Api.Dtos;
 
-public class PlayerRequest
+public class PlayerDto
 {
 	public string Name { get; set; }
 	public int GameCount { get; set; }
