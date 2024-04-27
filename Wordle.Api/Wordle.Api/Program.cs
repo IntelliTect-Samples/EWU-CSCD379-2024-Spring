@@ -1,3 +1,5 @@
+using Microsoft.EntityFrameworkCore;
+using Wordle.Api.Data;
 using Wordle.Api.Services;
 
 var AllOrigins = "AllOrigins";
@@ -21,6 +23,11 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 builder.Services.AddScoped<WordOfTheDayService>();
+var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
+builder.Services.AddDbContext<AppDbContext>(options =>
+{
+    options.UseSqlServer(connectionString);
+});
 
 var app = builder.Build();
 
