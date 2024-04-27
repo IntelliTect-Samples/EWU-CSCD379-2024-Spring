@@ -25,10 +25,12 @@
         </v-list-item>
         <v-divider />
         <v-list-item @click="router.push('/')">
-          <v-list-item-title>
-            <v-icon>mdi-alpha-w</v-icon>Whurdle
-          </v-list-item-title>
+          <v-list-item-title> Whurdle </v-list-item-title>
         </v-list-item>
+        <v-divider />
+        <v-list-item @click="router.push('/leaderboard')"
+          >Leaderboard</v-list-item
+        >
         <v-divider />
         <v-list-item @click="showSettingsDialog = true">
           <v-list-item-title>
