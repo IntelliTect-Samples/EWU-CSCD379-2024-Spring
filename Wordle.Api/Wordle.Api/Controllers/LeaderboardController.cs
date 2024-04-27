@@ -1,5 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Wordle.Api.Data;
 using Wordle.Api.Services;
+using Wordle.Api.Requests;
 
 namespace Wordle.Api.Controllers;
 
@@ -7,11 +9,21 @@ namespace Wordle.Api.Controllers;
 [Route("[controller]")]
 public class LeaderboardController : ControllerBase
 {
-	[HttpGet(Name = "GetScores")]
-	public List<string> Get()
+	private readonly LeaderboardService _service;
+	public LeaderboardController(LeaderboardService service)
 	{
-		var service = new LeaderboardService();
+		_service = service;
+	}
+	
+	[HttpGet(Name = "GetScores")]
+	public List<Player> Get()
+	{
+		return _service.GetTopScores();
+	}
 
-		return service.GetTopScores();
+	[HttpPost(Name = "PostScore")]
+	public async Task<Player> Post(PlayerRequest request)
+	{
+		return await _service.PostScore(request);
 	}
 }

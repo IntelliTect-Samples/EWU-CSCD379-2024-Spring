@@ -5,7 +5,7 @@
 namespace Wordle.Api.Migrations
 {
     /// <inheritdoc />
-    public partial class InitialAppDb : Migration
+    public partial class InitialCreate : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)

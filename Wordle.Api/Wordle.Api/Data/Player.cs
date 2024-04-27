@@ -2,8 +2,8 @@
 
 public class Player
 {
-    public int PlayerId { get; private set; }
-    public string Name { get; private set; }
-    public int GameCount { get; private set; }
-    public double AverageAttempts { get; private set; }
+    public int PlayerId { get; set; }
+    public string Name { get; set; }
+    public int GameCount { get; set; }
+    public double AverageAttempts { get; set; }
 }
