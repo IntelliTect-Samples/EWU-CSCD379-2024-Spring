@@ -52,6 +52,7 @@
         v-model:validWordsCount="validWordsCount"
         :game="game"
         @chooseWord="word => selectWord(word)" />
+      <NameDialog v-model:show="nameDialog" v-model:name="name"></NameDialog>
     </v-card>
   </v-container>
 </template>
@@ -63,6 +64,8 @@ const game: Game = reactive(new Game());
 provide('GAME', game);
 const showDialog = ref(false);
 const validWordsCount = ref(myWordList.length);
+const name = ref('');
+const nameDialog = ref(name.value === '');
 
 const myGuess = ref('');
 console.log(game.secretWord);
