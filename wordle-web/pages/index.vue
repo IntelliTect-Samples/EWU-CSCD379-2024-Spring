@@ -1,6 +1,7 @@
 <template>
   <v-container>
     <v-card class="text-center" elevation="0">
+      <v-sheet> <v-card-title>Name:</v-card-title> </v-sheet>
       <v-alert
         v-if="game.gameState != GameState.Playing"
         :color="game.gameState == GameState.Won ? 'success' : 'error'"
@@ -83,6 +84,8 @@ onUnmounted(() => {
 });
 
 function onKeyup(event: KeyboardEvent) {
+  // client side error: Uncaught (in promise) TypeError: Cannot read properties of null (reading 'parentNode')
+  // if (!nameDialog.value) {
   if (event.key === 'Enter') {
     playAudio();
     game.submitGuess();
@@ -93,6 +96,12 @@ function onKeyup(event: KeyboardEvent) {
     playAudio();
     game.addLetter(event.key.toUpperCase());
   }
+  // }
+  // else {
+  //   if (event.key === 'Enter') {
+  //     nameDialog.value = false;
+  //   }
+  // }
 }
 
 function selectWord(selected: string) {

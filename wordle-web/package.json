@@ -14,7 +14,7 @@
     "@mdi/font": "^7.4.47",
     "nuxt": "^3.11.1",
     "nuxt-storage": "^1.2.2",
-    "vue": "^3.4.21",
+    "vue": "^3.3.8",
     "vue-router": "^4.3.0"
   },
   "devDependencies": {
