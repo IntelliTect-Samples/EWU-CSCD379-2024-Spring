@@ -4,7 +4,7 @@
       <v-app-bar color="primary" :elevation="2">
         <template v-slot:prepend>
           <v-btn icon @click="router.push('/')">
-            <v-icon color="#FFFFFF">mdi-wizard-hat</v-icon> <!-- Wizard hat icon -->
+            <v-icon color="deep-purple">mdi-wizard-hat</v-icon> <!-- Wizard hat icon -->
           </v-btn>
           <v-btn @click="router.push('/')">
             Welcome to LexiQuest
