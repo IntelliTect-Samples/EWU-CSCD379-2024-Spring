@@ -1,7 +1,16 @@
 <template>
   <v-container>
     <v-card class="text-center" elevation="0">
-      <v-sheet> <v-card-title>Name:</v-card-title> </v-sheet>
+      <v-sheet>
+        <v-container height="150px">
+          <v-sheet
+            @click="showNameDialog = !showNameDialog"
+            class="pa-2 mx-2 mt-2 cursor-pointer"
+            color="secondary">
+            {{ username }}
+          </v-sheet>
+        </v-container>
+      </v-sheet>
       <v-alert
         v-if="game.gameState != GameState.Playing"
         :color="game.gameState == GameState.Won ? 'success' : 'error'"
@@ -19,7 +28,7 @@
         </v-btn>
       </v-alert>
 
-      <div class="mt-10">
+      <div class="mt-5">
         <GameBoardGuess
           v-for="(guess, i) of game.guesses"
           :key="i"
@@ -43,17 +52,19 @@
         class="mb-5 ml-5"
         color="secondary"
         @click="
-          showDialog = !showDialog;
+          showValidWordsDialog = !showValidWordsDialog;
           playAudio();
         "
         >{{ validWordsCount }} possible words!</v-btn
       >
       <ValidWords
-        v-model:show="showDialog"
+        v-model:show="showValidWordsDialog"
         v-model:validWordsCount="validWordsCount"
         :game="game"
         @chooseWord="word => selectWord(word)" />
-      <NameDialog v-model:show="nameDialog" v-model:name="name"></NameDialog>
+      <NameDialog
+        v-model:show="showNameDialog"
+        v-model:name="username"></NameDialog>
     </v-card>
   </v-container>
 </template>
@@ -61,12 +72,13 @@
 <script setup lang="ts">
 import { Game, GameState } from '../scripts/game';
 import { myWordList } from '~/scripts/wordList';
+import nuxtStorage from 'nuxt-storage';
 const game: Game = reactive(new Game());
 provide('GAME', game);
-const showDialog = ref(false);
+const showValidWordsDialog = ref(false);
 const validWordsCount = ref(myWordList.length);
-const name = ref('');
-const nameDialog = ref(name.value === '');
+const username = ref(' ');
+const showNameDialog = ref(false);
 
 const myGuess = ref('');
 console.log(game.secretWord);
@@ -77,6 +89,9 @@ function playAudio(): any {
 }
 onMounted(() => {
   window.addEventListener('keyup', onKeyup);
+  var defaultName = nuxtStorage.localStorage.getData('name');
+  showNameDialog.value = defaultName ? false : true;
+  username.value = showNameDialog.value ? 'Guest' : defaultName;
 });
 
 onUnmounted(() => {
@@ -84,24 +99,27 @@ onUnmounted(() => {
 });
 
 function onKeyup(event: KeyboardEvent) {
-  // client side error: Uncaught (in promise) TypeError: Cannot read properties of null (reading 'parentNode')
-  // if (!nameDialog.value) {
-  if (event.key === 'Enter') {
-    playAudio();
-    game.submitGuess();
-  } else if (event.key == 'Backspace') {
-    playAudio();
-    game.removeLastLetter();
-  } else if (event.key.match(/[A-z]/) && event.key.length === 1) {
-    playAudio();
-    game.addLetter(event.key.toUpperCase());
+  if (showNameDialog.value) {
+    if (event.key === 'Enter') {
+      showNameDialog.value = false;
+      if (username.value === ' ') {
+        username.value = 'Guest';
+      } else {
+        nuxtStorage.localStorage.setData('name', username.value);
+      }
+    }
+  } else {
+    if (event.key === 'Enter') {
+      playAudio();
+      game.submitGuess();
+    } else if (event.key == 'Backspace') {
+      playAudio();
+      game.removeLastLetter();
+    } else if (event.key.match(/[A-z]/) && event.key.length === 1) {
+      playAudio();
+      game.addLetter(event.key.toUpperCase());
+    }
   }
-  // }
-  // else {
-  //   if (event.key === 'Enter') {
-  //     nameDialog.value = false;
-  //   }
-  // }
 }
 
 function selectWord(selected: string) {

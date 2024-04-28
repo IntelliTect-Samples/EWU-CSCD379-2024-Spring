@@ -1,33 +1,33 @@
 <template>
-  <v-dialog v-model="showModel" max-width="350">
+  <v-dialog v-model="showModel" max-width="350" persistent>
     <v-card>
       <v-sheet color="secondary">
-        <v-card-title>Enter your name to play:</v-card-title>
+        <v-card-title>Enter your name:</v-card-title>
       </v-sheet>
-      <v-responsive hide-details="auto" class="mx-auto" width="350">
-        <v-text-field label="Name" v-model="nameModel"></v-text-field>
-      </v-responsive>
-      <v-btn @click="showModel = !showModel">Submit</v-btn>
+      <v-form>
+        <v-responsive hide-details="auto" width="350">
+          <v-text-field
+            append-inner-icon="mdi-arrow-right-bold-circle"
+            label="Name"
+            v-model="nameModel"
+            @click:append-inner="enterName"></v-text-field>
+        </v-responsive>
+      </v-form>
     </v-card>
   </v-dialog>
 </template>
 
 <script setup lang="ts">
-const showModel = defineModel<boolean>('show');
+import nuxtStorage from 'nuxt-storage';
+const showModel = defineModel<boolean>('show', { default: true });
 const nameModel = defineModel<string>('name');
 
-// Vue throwing error when removing component before unmount
-// onMounted(() => {
-//   window.addEventListener('keyup', onKeyup);
-// });
-
-// onUnmounted(() => {
-//   window.removeEventListener('keyup', onKeyup);
-// });
-
-// function onKeyup(event: KeyboardEvent) {
-//   if (showModel.value && event.key === 'Enter') {
-//     showModel.value = false;
-//   }
-// }
+function enterName() {
+  showModel.value = !showModel.value;
+  if (nameModel.value === '') {
+    nameModel.value = 'Guest';
+  } else {
+    // nuxtStorage.localStorage.setData('name', nameModel.value);
+  }
+}
 </script>
