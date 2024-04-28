@@ -3,7 +3,6 @@
     :height="boxSize"
     :width="boxSize"
     :color="letter.color"
-    flat
     :class="[
       clickable ? '' : 'no-pointer',
       'align-center d-flex justify-center',
@@ -58,5 +57,13 @@ watch([display.sm, display.xs, display.md], () => {
 <style scoped>
 .no-pointer {
   pointer-events: none;
+}
+
+.v-card {
+  background: linear-gradient(
+    0deg,
+    rgba(255, 255, 255, 0.0),
+    rgba(255, 255, 255, 1)
+  );
 }
 </style>
