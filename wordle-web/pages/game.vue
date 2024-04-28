@@ -33,7 +33,7 @@
       <v-btn @click="game.submitGuess()" class="mb-5" color="primary">
         Guess!
       </v-btn>
-      <WordListDialog :valid-words="game.validWords" @word-selected="game.addGuess" />
+      <WordListDialog :valid-words="game.validWords" @word-selected="handleWordSelected" />
     </v-card>
   </v-container>
 </template>
@@ -54,6 +54,11 @@ onMounted(() => {
 onUnmounted(() => {
   window.removeEventListener("keyup", onKeyup);
 });
+
+function handleWordSelected(word) {
+  // Use the word passed from the event to add the guess
+  game.addGuess(word);
+}
 
 function onKeyup(event: KeyboardEvent) {
   if (event.key === "Enter") {
