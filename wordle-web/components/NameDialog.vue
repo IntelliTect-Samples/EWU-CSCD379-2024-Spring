@@ -27,7 +27,7 @@ function enterName() {
   if (nameModel.value === '') {
     nameModel.value = 'Guest';
   } else {
-    // nuxtStorage.localStorage.setData('name', nameModel.value);
+    nuxtStorage.localStorage.setData('name', nameModel.value);
   }
 }
 </script>

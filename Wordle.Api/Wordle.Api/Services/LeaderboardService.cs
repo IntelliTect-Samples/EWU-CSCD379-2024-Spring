@@ -21,8 +21,9 @@ public class LeaderboardService
 		Player? foundPlayer = _context.Players.FirstOrDefault(p => request.Name.Equals(p.Name));
 		if (foundPlayer is not null)
 		{
-			foundPlayer.AverageAttempts = request.AverageAttempts;
+			double attempts = foundPlayer.AverageAttempts * foundPlayer.GameCount + request.Attempts;
 			foundPlayer.GameCount = request.GameCount;
+			foundPlayer.AverageAttempts = attempts / foundPlayer.GameCount;
 			await _context.SaveChangesAsync();
 			return foundPlayer;
 		}
@@ -30,7 +31,7 @@ public class LeaderboardService
 		{
 			Player addedPlayer = new()
 			{
-				AverageAttempts = request.AverageAttempts,
+				AverageAttempts = request.Attempts,
 				GameCount = request.GameCount,
 				Name = request.Name,
 			};
