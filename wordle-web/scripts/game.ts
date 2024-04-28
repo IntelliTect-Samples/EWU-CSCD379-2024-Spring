@@ -88,11 +88,17 @@ export class Game {
     return WordList.filter(word => this.guesses.every(guess => guess.isCompatibleWith(word)));
   }
 
-  public addGuess(word: string): void {
-    if (this.gameState === GameState.Playing && word.length === this.secretWord.length) {
-      this.currentGuess.fill(word.toUpperCase());
-    }
+public addGuess(word: string): void {
+  console.log('Adding guess:', word);
+  if (this.gameState !== GameState.Playing) return;
+  this.currentGuess.clear();
+  for (let i = 0; i < word.length; i++){
+    this.addLetter(word[i].toUpperCase());
   }
+}
+
+
+
 
   public updateGuessedLetters(): void {
     for (const letter of this.currentGuess.letters) {
@@ -109,8 +115,6 @@ export class Game {
     }
   }
 }
-
-// Create a reactive instance of Game to be used across the application
 const gameInstance = reactive(new Game());
 
 export function useGame() {
