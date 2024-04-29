@@ -1,8 +1,8 @@
 <!--create an object that shows a list of valid words from the avalible guesses using ValidWordList-->
 <template>
     <v-menu>
-        <template v-slot:activator="{ props }">
-            <v-btn v-bind="props" >
+        <template v-slot:activator="{ props }" color="secondary">
+            <v-btn v-bind="props" color="secondary">
                 available words: {{ validWords.length }}
             </v-btn>
         </template>

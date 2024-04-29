@@ -18,9 +18,9 @@
 
       <GameBoardGuess v-for="(guess, i) of game.guesses" :key="i" :guess="guess" />
 
-      <h3>
+      <div class="my-5">
         <ValidWord />
-      </h3>
+      </div>
       
         <!--<h3>
           <v-menu>

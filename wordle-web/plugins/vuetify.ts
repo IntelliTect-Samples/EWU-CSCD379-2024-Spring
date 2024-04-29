@@ -68,7 +68,7 @@ export default defineNuxtPlugin((app) => {
           colors:{
             //background: "#516D2F",
             primary: "#263527",
-            secondary: "#ff3ac6",
+            secondary: "#B64833",
             error: "#FF1a00",
             info: "#64B5F6",
             success: "#EF5C59",
@@ -83,7 +83,7 @@ export default defineNuxtPlugin((app) => {
           colors:{
             //background: "#516D2F",
             primary: "#263527",
-            secondary: "#ff3ac6",
+            secondary: "#B64833",
             error: "#FF1a00",
             info: "#64B5F6",
             success: "#EF5C59",
