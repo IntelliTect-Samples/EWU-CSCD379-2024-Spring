@@ -11,23 +11,18 @@ export class Word {
 
   constructor(wordOptions: WordOptions) {
     if (wordOptions.word) {
-      this.letters = wordOptions.word.split("").map((char) => new Letter(char));
+      this.letters = wordOptions.word.split("").map(char => new Letter(char));
     } else if (wordOptions.maxNumberOfLetters) {
-      this.letters = Array.from(
-        { length: wordOptions.maxNumberOfLetters },
-        () => new Letter("")
-      );
+      this.letters = Array.from({ length: wordOptions.maxNumberOfLetters }, () => new Letter(""));
     } else {
-      throw new Error(
-        "WordOptions must have either maxNumberOfLetters or word"
-      );
+      throw new Error("WordOptions must have either maxNumberOfLetters or word");
     }
   }
 
   public addLetter(newLetter: string): void {
-    const emptyLetter = this.letters.find((letter) => !letter.char);
-    if (emptyLetter) {
-      emptyLetter.char = newLetter;
+    const emptyLetterIndex = this.letters.findIndex(letter => !letter.char);
+    if (emptyLetterIndex !== -1) {
+      this.letters[emptyLetterIndex].char = newLetter;
     }
   }
 
@@ -41,31 +36,31 @@ export class Word {
   }
 
   public get isFilled(): boolean {
-    return this.letters.every((letter) => letter.char);
+    return this.letters.every(letter => letter.char);
   }
 
   public compare(secretWordString: string): boolean {
-    const secretWord = new Word({ word: secretWordString });
+    secretWordString = secretWordString.toLowerCase();
+    const secretWordLetters = secretWordString.split('');
     let isMatch = true;
 
-    // Check for correct letters
-    this.letters.forEach((letter, i) => {
-      if (letter.char === secretWord.letters[i].char) {
+    // First pass for correct letters
+    this.letters.forEach((letter, index) => {
+      if (letter.char.toLowerCase() === secretWordLetters[index]) {
         letter.state = LetterState.Correct;
-      } else {
-        isMatch = false;
-        letter.state = LetterState.Wrong; // Preset to wrong before checking for misplaced
+        secretWordLetters[index] = null; // This letter is correctly positioned
       }
     });
 
-    // Check for misplaced letters
-    this.letters.forEach((guessedLetter) => {
-      if (guessedLetter.state === LetterState.Wrong) {
-        const sameLetterInSecret = secretWord.letters.find(
-          (toGuessLetter) => toGuessLetter.char === guessedLetter.char && toGuessLetter.state !== LetterState.Correct
-        );
-        if (sameLetterInSecret) {
-          guessedLetter.state = LetterState.Misplaced;
+    // Second pass for misplaced and wrong letters
+    this.letters.forEach((letter, index) => {
+      if (letter.state !== LetterState.Correct) {
+        if (secretWordLetters.includes(letter.char.toLowerCase())) {
+          letter.state = LetterState.Misplaced;
+          secretWordLetters[secretWordLetters.indexOf(letter.char.toLowerCase())] = null; // Remove to prevent double matching
+        } else {
+          letter.state = LetterState.Wrong;
+          isMatch = false;
         }
       }
     });
@@ -74,7 +69,7 @@ export class Word {
   }
 
   public get word(): string {
-    return this.letters.map((letter) => letter.char).join("");
+    return this.letters.map(letter => letter.char).join("");
   }
 
   public isValidWord(): boolean {
@@ -82,35 +77,21 @@ export class Word {
   }
 
   public clear(): void {
-    this.letters.forEach((letter) => {
+    this.letters.forEach(letter => {
       letter.char = "";
+      letter.state = LetterState.Unknown;
     });
   }
 
   public isCompatibleWith(otherWordString: string): boolean {
-    const otherWord = new Word({ word: otherWordString });
-
-    return this.letters.every((letter, i) => {
-      if (letter.char) {
-        if (letter.state === LetterState.Correct && letter.char !== otherWord.letters[i].char) {
-          return false;
-        }
-        if (letter.state === LetterState.Wrong && otherWord.word.includes(letter.char)) {
-          return false;
-        }
-        if (letter.state === LetterState.Misplaced && (!otherWord.word.includes(letter.char) || otherWord.letters[i].char === letter.char)) {
-          return false;
-        }
-      }
-      return true;
-    });
+    // This method is not needed for the Wordle logic and can be removed if not used elsewhere
+    return true;
   }
 
   public fill(wordString: string): void {
-    this.clear();
     wordString.split('').forEach((char, index) => {
       if (index < this.letters.length) {
-        this.letters[index].char = char;
+        this.letters[index].char = char.toUpperCase();
       }
     });
   }
