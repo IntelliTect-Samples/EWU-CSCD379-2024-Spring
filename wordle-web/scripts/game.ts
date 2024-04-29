@@ -100,19 +100,21 @@ public validWords(): string[] {
   }
 
   public updateGuessedLetters(): void {
-    this.currentGuess.letters.forEach((letter) => {
-      const existingLetterIndex = this.guessedLetters.findIndex(l => l.char === letter.char);
-      if (existingLetterIndex !== -1) {
-        if (letter.state > this.guessedLetters[existingLetterIndex].state) {
-          this.guessedLetters[existingLetterIndex] = new Letter(letter.char, letter.state);
+    this.guesses[this.guessIndex].letters.forEach((letter) => {
+      const existingLetter = this.guessedLetters.find(l => l.char === letter.char);
+      if (existingLetter) {
+        if (letter.state === LetterState.Correct && existingLetter.state !== LetterState.Correct) {
+          existingLetter.state = LetterState.Correct;
+        } else if (letter.state === LetterState.Misplaced && existingLetter.state !== LetterState.Correct) {
+          existingLetter.state = LetterState.Misplaced;
+        } else if (letter.state === LetterState.Wrong) {
+          existingLetter.state = LetterState.Wrong;
         }
       } else {
         this.guessedLetters.push(new Letter(letter.char, letter.state));
       }
     });
-    this.guessedLetters = [...this.guessedLetters]; // Force reactivity
   }
-}
 
 const gameInstance = reactive(new Game());
 
