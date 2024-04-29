@@ -1,6 +1,7 @@
 
 using System.Net.Http.Json;
 using Microsoft.AspNetCore.Mvc.Testing;
+using Wordle.Api.Dtos;
 
 namespace Wordle.Api.Tests;
 
@@ -17,7 +18,7 @@ public class LeaderboardControllerTests
 
 		// Act
 		var response = await client.GetAsync("/leaderboard");
-		var content = await response.Content.ReadFromJsonAsync<List<string>>();
+		var content = await response.Content.ReadFromJsonAsync<List<PlayerDto>>();
 
 		// Assert
 		Assert.IsNotNull(content);
