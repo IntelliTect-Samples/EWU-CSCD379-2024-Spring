@@ -5,8 +5,6 @@ name: Build and deploy ASP.Net Core app to Azure Web App - wordlewebapijoshua
 
 on:
   push:
-    branches:
-      - main
     paths:
       - Wordle.Api/**
   pull_request:

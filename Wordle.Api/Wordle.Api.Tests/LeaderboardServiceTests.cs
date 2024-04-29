@@ -6,7 +6,6 @@ public class LeaderboardServiceTests
 {
 	//TODO: figure out how to test with databases (test db? check grant's repo)
 
-
 	//private readonly LeaderboardService _service;
 
 	
