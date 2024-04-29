@@ -1,7 +1,7 @@
-import { computed, ComputedRef, reactive, toRefs  } from 'vue';
-import { LetterState, Letter } from "./letter";
-import { WordList } from "./wordList";
-import { Word } from "./word";
+import { computed, reactive, toRefs } from 'vue';
+import { LetterState, Letter } from './letter';
+import { WordList } from './wordList';
+import { Word } from './word';
 
 export enum GameState {
   Playing,
@@ -10,43 +10,28 @@ export enum GameState {
 }
 
 export class Game {
-  public maxAttempts: number;
-  public guesses: Word[];
-  public secretWord: string;
-  public guessIndex: number;
-  public gameState: GameState;
-  public guessedLetters: Letter[];
+  maxAttempts: number = 6;
+  guesses: Word[] = [];
+  secretWord: string = '';
+  guessIndex: number = 0;
+  gameState: GameState = GameState.Playing;
+  guessedLetters: Letter[] = [];
 
   constructor(maxAttempts: number = 6) {
     this.maxAttempts = maxAttempts;
-    this.secretWord = '';
-    this.guessIndex = 0;
-    this.gameState = GameState.Playing;
-    this.guessedLetters = [];
-    this.guesses = [];
     this.startNewGame();
   }
 
-  public startNewGame() {
+  startNewGame() {
     this.guessIndex = 0;
     this.gameState = GameState.Playing;
     this.guessedLetters = [];
-
-    // Get random word from word list
-    this.secretWord =
-      WordList[Math.floor(Math.random() * WordList.length)].toUpperCase();
-    console.log(this.secretWord);
-
-    // Populate guesses with the correct number of empty words
-    this.guesses = [];
-    for (let i = 0; i < this.maxAttempts; i++) {
-      this.guesses.push(
-        new Word({ maxNumberOfLetters: this.secretWord.length })
-      );
-    }
+    this.secretWord = WordList[Math.floor(Math.random() * WordList.length)].toUpperCase();
+    this.guesses = Array.from({ length: this.maxAttempts }, () => new Word({ maxNumberOfLetters: this.secretWord.length }));
+    console.log("Secret word: ", this.secretWord);
   }
 
-  public get currentGuess(): Word {
+  get currentGuess(): Word {
     return this.guesses[this.guessIndex];
   }
 
@@ -59,14 +44,18 @@ export class Game {
   public addLetter(letter: string): void {
     if (this.gameState === GameState.Playing && letter.length === 1) {
       this.currentGuess.addLetter(letter);
+      let existingLetterIndex = this.guessedLetters.findIndex(l => l.char.toUpperCase() === letter.toUpperCase());
+      if (existingLetterIndex !== -1) {
+        this.guessedLetters[existingLetterIndex].state = LetterState.Unknown;
+      } else {
+        this.guessedLetters.push(new Letter(letter, LetterState.Unknown));
+      }
+      this.guessedLetters = [...this.guessedLetters]; // Ensure reactive update
     }
   }
 
   public submitGuess(): void {
-    if (this.gameState !== GameState.Playing) return;
-    if (!this.currentGuess.isFilled) return;
-    if (!this.currentGuess.isValidWord()) {
-      this.currentGuess.clear();
+    if (this.gameState !== GameState.Playing || !this.currentGuess.isFilled || !this.currentGuess.isValidWord()) {
       return;
     }
 
@@ -75,54 +64,65 @@ export class Game {
 
     if (isCorrect) {
       this.gameState = GameState.Won;
+    } else if (this.guessIndex >= this.maxAttempts - 1) {
+      this.gameState = GameState.Lost;
     } else {
-      if (this.guessIndex >= this.maxAttempts - 1) {
-        this.gameState = GameState.Lost;
-      } else {
-        this.guessIndex++;
-      }
+      this.guessIndex++;
     }
   }
 
-  get validWords(): string[] {
-    return WordList.filter(word => this.guesses.every(guess => guess.isCompatibleWith(word)));
-  }
+public validWords(): string[] {
+  console.log("Recalculating valid words...");
+  return WordList.filter((word) => {
+    word = word.toLowerCase();
 
-public addGuess(word: string): void {
-  console.log('Adding guess:', word);
-  if (this.gameState !== GameState.Playing) return;
-  this.currentGuess.clear();
-  for (let i = 0; i < word.length; i++){
-    this.addLetter(word[i].toUpperCase());
-  }
+    // Words are invalidated if they have a 'Wrong' letter or if they lack a 'Correct' or 'Misplaced' letter
+    const isInvalid = this.guessedLetters.some((guessedLetter) => {
+      const letter = guessedLetter.char.toLowerCase();
+      const index = this.guessedLetters.indexOf(guessedLetter);
+      const isCorrect = guessedLetter.state === LetterState.Correct && word[index] !== letter;
+      const isMisplaced = guessedLetter.state === LetterState.Misplaced && (!word.includes(letter) || word[index] === letter);
+      const isWrong = guessedLetter.state === LetterState.Wrong && word.includes(letter);
+
+      return isCorrect || isMisplaced || isWrong;
+    });
+
+    return !isInvalid;
+  });
 }
 
 
-
+  public addGuess(word: string): void {
+    if (this.gameState !== GameState.Playing) return;
+    this.currentGuess.fill(word.toUpperCase());
+    this.submitGuess();
+    this.guesses = [...this.guesses]; // Ensure reactivity
+  }
 
   public updateGuessedLetters(): void {
-    for (const letter of this.currentGuess.letters) {
-      const index = this.guessedLetters.findIndex(
-        (existingLetter) => existingLetter.char === letter.char
-      );
-      if (index !== -1) {
-        if (letter.state !== LetterState.Correct) {
-          this.guessedLetters[index] = letter;
+    this.currentGuess.letters.forEach((letter) => {
+      const existingLetterIndex = this.guessedLetters.findIndex(l => l.char === letter.char);
+      if (existingLetterIndex !== -1) {
+        if (letter.state > this.guessedLetters[existingLetterIndex].state) {
+          this.guessedLetters[existingLetterIndex] = new Letter(letter.char, letter.state);
         }
       } else {
-        this.guessedLetters.push(letter);
+        this.guessedLetters.push(new Letter(letter.char, letter.state));
       }
-    }
+    });
+    this.guessedLetters = [...this.guessedLetters]; // Force reactivity
   }
 }
+
 const gameInstance = reactive(new Game());
 
 export function useGame() {
-  // Create reactive references for the game instance properties and methods
+  const refs = toRefs(gameInstance);
+  const validWords = computed(() => gameInstance.validWords());
+
   return {
-    ...toRefs(gameInstance),
-    // Directly return the reactive reference for validWords
-    validWords: gameInstance.validWords,
+    ...refs,
+    validWords,
     addGuess: gameInstance.addGuess.bind(gameInstance),
     startNewGame: gameInstance.startNewGame.bind(gameInstance),
     submitGuess: gameInstance.submitGuess.bind(gameInstance),
