@@ -1,4 +1,5 @@
 ﻿using Wordle.Api.Data;
+using Wordle.Api.Dtos;
 using Wordle.Api.Requests;
 
 namespace Wordle.Api.Services;
@@ -10,10 +11,19 @@ public class LeaderboardService
 	{
 		_context = context;
 	}
-	public List<Player> GetTopScores()
+	public List<PlayerDto> GetTopScores()
 	{
-		return _context.Players.
+		List<Player> players = _context.Players.
 			OrderBy(player => player.AverageAttempts).ToList();
+		return players.Select(player =>
+		{
+			return new PlayerDto
+			{
+				Name = player.Name,
+				GameCount = player.GameCount,
+				AverageAttempts = player.AverageAttempts
+			};
+		}).ToList();
 	}
 
 	public async Task<Player> PostScore(PlayerRequest request)

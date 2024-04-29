@@ -74,6 +74,8 @@
 import { Game, GameState } from '../scripts/game';
 import { myWordList } from '~/scripts/wordList';
 import nuxtStorage from 'nuxt-storage';
+import axios from 'axios';
+
 const game: Game = reactive(new Game());
 provide('GAME', game);
 const showValidWordsDialog = ref(false);
@@ -99,11 +101,14 @@ onUnmounted(() => {
   window.removeEventListener('keyup', onKeyup);
 });
 
+// watch([game.gameState], () => {
+
+// });
+
 function onKeyup(event: KeyboardEvent) {
   // Check if text field automatically listens for 'Enter'
   if (showNameDialog.value) {
     if (event.key === 'Enter') {
-      console.log('helloooooooo');
       enterName();
     }
   } else {
@@ -132,6 +137,7 @@ function selectWord(selected: string) {
 
 function enterName() {
   if (username.value === '') {
+    console.log('hello');
     username.value = 'Guest';
   } else {
     nuxtStorage.localStorage.setData('name', username.value);
