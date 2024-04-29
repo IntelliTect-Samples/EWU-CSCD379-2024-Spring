@@ -64,7 +64,8 @@
         @chooseWord="word => selectWord(word)" />
       <NameDialog
         v-model:show="showNameDialog"
-        v-model:name="username"></NameDialog>
+        v-model:name="username"
+        @entered="enterName" />
     </v-card>
   </v-container>
 </template>
@@ -99,14 +100,11 @@ onUnmounted(() => {
 });
 
 function onKeyup(event: KeyboardEvent) {
+  // Check if text field automatically listens for 'Enter'
   if (showNameDialog.value) {
     if (event.key === 'Enter') {
-      showNameDialog.value = false;
-      if (username.value === ' ') {
-        username.value = 'Guest';
-      } else {
-        nuxtStorage.localStorage.setData('name', username.value);
-      }
+      console.log('helloooooooo');
+      enterName();
     }
   } else {
     if (event.key === 'Enter') {
@@ -130,5 +128,14 @@ function selectWord(selected: string) {
     game.addLetter(character);
     myGuess.value += character;
   });
+}
+
+function enterName() {
+  if (username.value === '') {
+    username.value = 'Guest';
+  } else {
+    nuxtStorage.localStorage.setData('name', username.value);
+  }
+  showNameDialog.value = !showNameDialog.value;
 }
 </script>
