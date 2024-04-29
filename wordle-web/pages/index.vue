@@ -66,6 +66,9 @@
         v-model:show="showNameDialog"
         v-model:name="username"
         @entered="enterName" />
+      <GuestSaveDialog
+        v-model="showGuestSaveDialog"
+        @saveGuestScore="postScore" />
     </v-card>
   </v-container>
 </template>
@@ -82,6 +85,8 @@ const showValidWordsDialog = ref(false);
 const validWordsCount = ref(myWordList.length);
 const username = ref(' ');
 const showNameDialog = ref(false);
+const showGuestSaveDialog = ref(false);
+const apiUrl = 'wordlewebapijoshua.azurewebsites.net';
 
 const myGuess = ref('');
 console.log(game.secretWord);
@@ -101,9 +106,18 @@ onUnmounted(() => {
   window.removeEventListener('keyup', onKeyup);
 });
 
-// watch([game.gameState], () => {
-
-// });
+watch(
+  () => game.gameState,
+  () => {
+    if (game.gameState == GameState.Won || game.gameState == GameState.Lost) {
+      if (username.value === 'Guest') {
+        showGuestSaveDialog.value = true;
+      } else {
+        postScore();
+      }
+    }
+  }
+);
 
 function onKeyup(event: KeyboardEvent) {
   // Check if text field automatically listens for 'Enter'
@@ -143,5 +157,19 @@ function enterName() {
     nuxtStorage.localStorage.setData('name', username.value);
   }
   showNameDialog.value = !showNameDialog.value;
+}
+
+function postScore() {
+  let attempts = 0;
+  if (game.gameState == GameState.Won) {
+    attempts = game.guessIndex + 1;
+  } else {
+    attempts = game.maxAttempts;
+  }
+  axios.post(apiUrl, {
+    Name: username.value,
+    GameCount: 1,
+    Attempts: attempts,
+  });
 }
 </script>

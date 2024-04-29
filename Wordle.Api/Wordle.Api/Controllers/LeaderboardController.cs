@@ -20,21 +20,21 @@ public class LeaderboardController : ControllerBase
 	[HttpGet(Name = "GetScores")]
 	public List<PlayerDto> Get()
 	{
-		//return _service.GetTopScores();
+		return _service.GetTopScores();
 		// for testing before setting up azure db
-		return [new PlayerDto() {
-			Name = "Joshua",
-			GameCount = 1,
-			AverageAttempts = 0
-		}, new PlayerDto() {
-			Name = "Jimbob",
-			GameCount = 10000,
-			AverageAttempts = 6
-		}, new PlayerDto() {
-			Name = "Jimbob Jr.",
-			GameCount = 5,
-			AverageAttempts = 4
-		}];
+		//return [new PlayerDto() {
+		//	Name = "Joshua",
+		//	GameCount = 1,
+		//	AverageAttempts = 0
+		//}, new PlayerDto() {
+		//	Name = "Jimbob",
+		//	GameCount = 10000,
+		//	AverageAttempts = 6
+		//}, new PlayerDto() {
+		//	Name = "Jimbob Jr.",
+		//	GameCount = 5,
+		//	AverageAttempts = 4
+		//}];
 	}
 
 	[HttpPost(Name = "PostScore")]
