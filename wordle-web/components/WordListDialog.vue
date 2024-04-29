@@ -2,7 +2,9 @@
   <div class="word-list-dialog">
     <v-dialog v-model="dialog" max-width="500px">
       <v-card>
-        <v-card-title>Known Incantations</v-card-title>
+        <v-card-title>
+          Known Incantations - {{ validWords.length }} Words Available
+        </v-card-title>
         <v-card-text>
           <v-virtual-scroll
             :height="300"
@@ -38,8 +40,11 @@ const { validWords, addGuess } = useGame();
 
 function selectWord(word) {
   console.log('Word selected:', word); // Log the selected word
+  addGuess(word); // Add guess to game logic
   emit('word-selected', word);
   dialog.value = false; // Close the dialog
+  // Remove the selected word from validWords
+  validWords.value = validWords.value.filter(w => w !== word);
 }
 </script>
 
