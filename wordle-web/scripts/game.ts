@@ -10,15 +10,20 @@ export enum GameState {
 }
 
 export class Game {
-  maxAttempts: number = 6;
-  guesses: Word[] = [];
-  secretWord: string = '';
-  guessIndex: number = 0;
-  gameState: GameState = GameState.Playing;
-  guessedLetters: Letter[] = [];
+  maxAttempts: number;
+  guesses: Word[];
+  secretWord: string;
+  guessIndex: number;
+  gameState: GameState;
+  guessedLetters: Letter[];
 
   constructor(maxAttempts: number = 6) {
     this.maxAttempts = maxAttempts;
+    this.guesses = [];
+    this.secretWord = '';
+    this.guessIndex = 0;
+    this.gameState = GameState.Playing;
+    this.guessedLetters = [];
     this.startNewGame();
   }
 
@@ -44,13 +49,7 @@ export class Game {
   public addLetter(letter: string): void {
     if (this.gameState === GameState.Playing && letter.length === 1) {
       this.currentGuess.addLetter(letter);
-      let existingLetterIndex = this.guessedLetters.findIndex(l => l.char.toUpperCase() === letter.toUpperCase());
-      if (existingLetterIndex !== -1) {
-        this.guessedLetters[existingLetterIndex].state = LetterState.Unknown;
-      } else {
-        this.guessedLetters.push(new Letter(letter, LetterState.Unknown));
-      }
-      this.guessedLetters = [...this.guessedLetters]; // Ensure reactive update
+      this.updateGuessedLetters();
     }
   }
 
@@ -71,50 +70,41 @@ export class Game {
     }
   }
 
-public validWords(): string[] {
-  console.log("Recalculating valid words...");
-  return WordList.filter((word) => {
-    word = word.toLowerCase();
+  public validWords(): string[] {
+    console.log("Recalculating valid words...");
+    return WordList.filter((word) => !this.isWordInvalid(word));
+  }
 
-    // Words are invalidated if they have a 'Wrong' letter or if they lack a 'Correct' or 'Misplaced' letter
-    const isInvalid = this.guessedLetters.some((guessedLetter) => {
+  private isWordInvalid(word: string): boolean {
+    word = word.toLowerCase();
+    return this.guessedLetters.some((guessedLetter) => {
       const letter = guessedLetter.char.toLowerCase();
-      const index = this.guessedLetters.indexOf(guessedLetter);
+      const index = this.guesses[this.guessIndex].letters.findIndex(l => l.char.toLowerCase() === letter);
       const isCorrect = guessedLetter.state === LetterState.Correct && word[index] !== letter;
       const isMisplaced = guessedLetter.state === LetterState.Misplaced && (!word.includes(letter) || word[index] === letter);
       const isWrong = guessedLetter.state === LetterState.Wrong && word.includes(letter);
-
       return isCorrect || isMisplaced || isWrong;
     });
-
-    return !isInvalid;
-  });
-}
-
+  }
 
   public addGuess(word: string): void {
     if (this.gameState !== GameState.Playing) return;
     this.currentGuess.fill(word.toUpperCase());
     this.submitGuess();
-    this.guesses = [...this.guesses]; // Ensure reactivity
   }
 
   public updateGuessedLetters(): void {
     this.guesses[this.guessIndex].letters.forEach((letter) => {
       const existingLetter = this.guessedLetters.find(l => l.char === letter.char);
-      if (existingLetter) {
-        if (letter.state === LetterState.Correct && existingLetter.state !== LetterState.Correct) {
-          existingLetter.state = LetterState.Correct;
-        } else if (letter.state === LetterState.Misplaced && existingLetter.state !== LetterState.Correct) {
-          existingLetter.state = LetterState.Misplaced;
-        } else if (letter.state === LetterState.Wrong) {
-          existingLetter.state = LetterState.Wrong;
-        }
-      } else {
+      if (existingLetter && letter.state > existingLetter.state) {
+        existingLetter.state = letter.state;
+      } else if (!existingLetter) {
         this.guessedLetters.push(new Letter(letter.char, letter.state));
       }
     });
+    this.guessedLetters = [...this.guessedLetters]; // Force update for reactivity
   }
+}
 
 const gameInstance = reactive(new Game());
 
