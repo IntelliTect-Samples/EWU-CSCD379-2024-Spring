@@ -43,21 +43,22 @@ export class Word {
     secretWordString = secretWordString.toLowerCase();
     const secretWordLetters = secretWordString.split('');
     let isMatch = true;
-
+  
     // First pass for correct letters
     this.letters.forEach((letter, index) => {
       if (letter.char.toLowerCase() === secretWordLetters[index]) {
         letter.state = LetterState.Correct;
-        secretWordLetters[index] = null; // This letter is correctly positioned
+        secretWordLetters[index] = ''; // Mark this letter as accounted for
       }
     });
-
+  
     // Second pass for misplaced and wrong letters
     this.letters.forEach((letter, index) => {
       if (letter.state !== LetterState.Correct) {
-        if (secretWordLetters.includes(letter.char.toLowerCase())) {
+        const letterIndexInSecret = secretWordLetters.indexOf(letter.char.toLowerCase());
+        if (letterIndexInSecret !== -1) {
           letter.state = LetterState.Misplaced;
-          secretWordLetters[secretWordLetters.indexOf(letter.char.toLowerCase())] = null; // Remove to prevent double matching
+          secretWordLetters[letterIndexInSecret] = ''; // Mark this letter as accounted for
         } else {
           letter.state = LetterState.Wrong;
           isMatch = false;
