@@ -1,3 +1,5 @@
+using Wordle.Api.Services;
+
 var AllOrigins = "AllOrigins";
 
 var builder = WebApplication.CreateBuilder(args);
@@ -5,17 +7,20 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 builder.Services.AddCors(options =>
 {
-options.AddPolicy(name: AllOrigins, policy => {
-    policy.WithOrigins("*");
-    policy.AllowAnyMethod();
-    policy.AllowAnyHeader();
-});
+    options.AddPolicy(name: AllOrigins, policy =>
+    {
+        policy.WithOrigins("*");
+        policy.AllowAnyMethod();
+        policy.AllowAnyHeader();
+    });
 });
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+
+builder.Services.AddScoped<WordOfTheDayService>();
 
 var app = builder.Build();
 
@@ -35,3 +40,5 @@ app.UseAuthorization();
 app.MapControllers();
 
 app.Run();
+
+public partial class Program { }
