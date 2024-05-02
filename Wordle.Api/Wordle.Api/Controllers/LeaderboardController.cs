@@ -48,4 +48,9 @@ public class LeaderboardController : ControllerBase
 			AverageAttempts = player.AverageAttempts
 		};
 	}
+	/*[HttpGet(Name = "GetTopScores")]
+	public async Task<IEnumerable<PlayerDto>> GetTopScores()
+	{
+		return _service.GetTopScores();
+	}*/
 }

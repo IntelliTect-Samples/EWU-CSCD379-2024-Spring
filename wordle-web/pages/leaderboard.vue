@@ -23,10 +23,9 @@
       </tr>
     </thead>
     <tbody>
-      <tr v-for="player in players" :key="player.id">
-        <td>{{ player.id }}</td>
+      <tr v-for="player in players" :key="player.id"> //replace players with LeaderPlayers
         <td>{{ player.name }}</td>
-        <td>{{ player.score }}</td>
+        <td>{{ player.gameCount }}</td>
         <td>{{ player.averageAttempts }}</td>
       </tr>
     </tbody>
@@ -39,9 +38,31 @@ import { ref } from "vue";
 import Axios from "axios";
 //replace later with actual data
 const players = [
-  { id: 1, name: "John Doe", score: 100, averageAttempts: 3 },
-  { id: 2, name: "Jane Doe", score: 200, averageAttempts: 2 },
-  { id: 3, name: "John Smith", score: 150, averageAttempts: 4 },
-  { id: 4, name: "Jane Smith", score: 250, averageAttempts: 1 },
+  { id: 1, name: "John Doe", gameCount: 100, averageAttempts: 3 },
+  { id: 2, name: "Jane Doe", gameCount: 200, averageAttempts: 2 },
+  { id: 3, name: "John Smith", gameCount: 150, averageAttempts: 4 },
+  { id: 4, name: "Jane Smith", gameCount: 250, averageAttempts: 1 },
 ];
+interface Players {
+  name: string;
+  gameCount: number;
+  averageAttempts: number;
+}
+
+const LeaderPlayers = ref<Players[]>();
+/*Axios.get("http://localhost:3000/leaderboard").then((response) => {
+  setTimeout(() => {}, 100)
+  console.log(response.data);
+  LeaderPlayers.value = response.data;
+}).catch((error) => {
+  console.log(error);
+});*/
+//need to make GET request to the server to get the leaderboard data
+Axios.get(`leaderboard/GetTopScores`).then((response) => {
+  setTimeout(() => {}, 100)
+  console.log(response.data);
+  LeaderPlayers.value = response.data;
+}).catch((error) => {
+  console.log(error);
+});
 </script>
