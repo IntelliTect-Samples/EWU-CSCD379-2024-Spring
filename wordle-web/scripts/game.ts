@@ -1,7 +1,6 @@
 import { LetterState, type Letter } from "./letter";
 import { Word } from "./word";
 import { WordList } from "./wordList";
-import Axios from 'axios';
 
 export class Game {
   public maxAttempts: number;
@@ -11,23 +10,21 @@ export class Game {
   public gameState: GameState = GameState.Playing;
   public guessedLetters: Letter[] = [];
 
-  constructor(maxAttempts: number = 6) {
+  constructor(secretWord: string, maxAttempts: number = 6) {
     this.maxAttempts = maxAttempts;
+    this.secretWord = secretWord;
     this.startNewGame();
   }
 
-  public async startNewGame() {
+  public startNewGame() {
     this.guessIndex = 0;
     this.gameState = GameState.Playing;
     this.guessedLetters = [];
-
-    // Get random word from word list
-    await this.getWordFromApi();
-
+    
     this.secretWord =
-      WordList[Math.floor(Math.random() * WordList.length)].toUpperCase();
+    WordList[Math.floor(Math.random() * WordList.length)].toUpperCase();
     console.log(this.secretWord);
-
+    
     // Populate guesses with the correct number of empty words
     this.guesses = [];
     for (let i = 0; i < this.maxAttempts; i++) {
@@ -35,13 +32,6 @@ export class Game {
         new Word({ maxNumberOfLetters: this.secretWord.length })
       );
     }
-  }
-
-  private async getWordFromApi() {
-    let wordUrl = "https://wordleapiewu.azurewebsites.net/word";
-
-    const response = await Axios.get(wordUrl);
-    console.log(response.data);
   }
 
   public get guess() {

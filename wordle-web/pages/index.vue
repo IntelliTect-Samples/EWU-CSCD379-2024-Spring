@@ -39,9 +39,15 @@
 
 <script setup lang="ts">
 import { Game, GameState } from "../scripts/game";
-const game: Game = reactive(new Game());
+import Axios from "axios";
 
-provide("GAME", game);
+const game: Ref<Game> = ref(new Game(""));
+// Get random word from word list
+getWordFromApi().then((word) => {
+  game.value = new Game(word);
+});
+
+provide("GAME", game.value);
 
 const myGuess = ref("");
 
@@ -53,13 +59,21 @@ onUnmounted(() => {
   window.removeEventListener("keyup", onKeyup);
 });
 
+async function getWordFromApi(): Promise<string> {
+  let wordUrl = "https://wordleapiewu.azurewebsites.net/word";
+
+  const response = await Axios.get(wordUrl);
+  console.log("Response from API: " + response.data);
+  return response.data;
+}
+
 function onKeyup(event: KeyboardEvent) {
   if (event.key === "Enter") {
-    game.submitGuess();
+    game.value?.submitGuess();
   } else if (event.key == "Backspace") {
-    game.removeLastLetter();
+    game.value?.removeLastLetter();
   } else if (event.key.match(/[A-z]/) && event.key.length === 1) {
-    game.addLetter(event.key.toUpperCase());
+    game.value?.addLetter(event.key.toUpperCase());
   }
 }
 </script>
