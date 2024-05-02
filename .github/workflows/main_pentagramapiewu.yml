@@ -33,7 +33,11 @@ jobs:
       - name: Build with dotnet
         run: dotnet build --configuration Release
 
+<<<<<<< HEAD
       - name: Test with dotnet
+=======
+      - name: test with dotnet
+>>>>>>> 167e82afa1dc8cc31c59494c6bcdbfe6810592c6
         run: dotnet test --no-build --no-restore
 
       - name: dotnet publish
