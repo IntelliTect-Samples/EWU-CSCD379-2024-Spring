@@ -8,9 +8,6 @@
   <v-table class="mt-7 mx-auto w-75">
     <thead>
       <tr>
-        <th class="Player ID">
-          Player ID
-        </th>
         <th class = "Name">
           Palyer Name
         </th>
@@ -44,6 +41,7 @@ const players = [
   { id: 4, name: "Jane Smith", gameCount: 250, averageAttempts: 1 },
 ];
 interface Players {
+  id: number; //key
   name: string;
   gameCount: number;
   averageAttempts: number;
@@ -65,4 +63,5 @@ Axios.get(`leaderboard/GetTopScores`).then((response) => {
 }).catch((error) => {
   console.log(error);
 });
+//note to self need to implement animate.css for the leaderboard extra credit
 </script>

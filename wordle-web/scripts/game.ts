@@ -25,7 +25,7 @@ export class Game {
     await this.getWordFromApi();
 
     this.secretWord =
-      myWordList[Math.floor(Math.random() * myWordList.length)].toUpperCase();
+      WordList[Math.floor(Math.random() * WordList.length)].toUpperCase();
 
     // Populate guesses with the correct number of empty words
     this.guesses = [];
@@ -107,9 +107,9 @@ export class Game {
     if (word == '') {
       return myList;
     }
-    for (let i = 0; i < myWordList.length; i++) {
-      if (myWordList[i].startsWith(word.toUpperCase())) {
-        myList.push(myWordList[i]);
+    for (let i = 0; i < WordList.length; i++) {
+      if (WordList[i].startsWith(word.toUpperCase())) {
+        myList.push(WordList[i]);
       }
     }
     return myList;

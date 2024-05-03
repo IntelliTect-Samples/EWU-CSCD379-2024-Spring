@@ -1,5 +1,5 @@
 // From: https://github.com/charlesreid1/five-letter-words/blob/master/sgb-words.txt
-export const myWordList = [
+export const WordList = [
   'aargh',
   'abaca',
   'abaci',

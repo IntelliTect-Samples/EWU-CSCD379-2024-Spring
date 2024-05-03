@@ -1,5 +1,5 @@
 import { Word } from '~/scripts/word';
-import { myWordList } from '~/scripts/wordList';
+import { WordList } from '~/scripts/wordList';
 import { Game } from '~/scripts/game';
 import { Letter, LetterState } from '~/scripts/letter';
 
@@ -11,7 +11,7 @@ export class ValidWordsUtils {
   public game: Game;
   public lastIndexSetup: number;
 
-  constructor(game: Game, wordList: Array<string> = myWordList) {
+  constructor(game: Game, wordList: Array<string> = WordList) {
     this.lastIndexSetup = -1;
     this.game = game;
     this.count = 0;

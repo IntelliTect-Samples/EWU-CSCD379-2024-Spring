@@ -75,21 +75,33 @@
 
 <script setup lang="ts">
 import { Game, GameState } from '../scripts/game';
-import { myWordList } from '~/scripts/wordList';
+import { WordList } from '~/scripts/wordList';
 import nuxtStorage from 'nuxt-storage';
-import axios from 'axios';
+import Axios from 'axios';
 
 const game: Game = reactive(new Game());
+//const game: Ref<Game> = ref(new Game());
 provide('GAME', game);
 const showValidWordsDialog = ref(false);
-const validWordsCount = ref(myWordList.length);
+const validWordsCount = ref(WordList.length);
 const username = ref(' ');
 const showNameDialog = ref(false);
 const showGuestSaveDialog = ref(false);
 const apiUrl = 'wordlewebapijoshua.azurewebsites.net';
 
+/*getWordFromApi().then((word) => {
+  //game.value = new Game(word);
+});
+async function getWordFromApi(): Promise<string> {
+  let wordUrl = "https://wordleapiewu.azurewebsites.net/word";
+
+  const response = await Axios.get(wordUrl);
+  console.log("Response from API: " + response.data);
+  return response.data;
+}*/
+
 const myGuess = ref('');
-console.log(game.secretWord);
+//console.log(game.secretWord);
 function playAudio(): any {
   const audio = new Audio('/clicker.mp3');
   audio.volume = 0.9;
@@ -166,7 +178,7 @@ function postScore() {
   } else {
     attempts = game.maxAttempts;
   }
-  axios.post(apiUrl, {
+  Axios.post(apiUrl, {
     Name: username.value,
     GameCount: 1,
     Attempts: attempts,

@@ -1,5 +1,5 @@
 import { Letter, LetterState } from './letter';
-import { myWordList } from './wordList';
+import { WordList } from './wordList';
 
 export class Word {
   public letters: Letter[];
@@ -78,7 +78,7 @@ export class Word {
   }
 
   public isValidWord() {
-    return myWordList.includes(this.word.toLowerCase());
+    return WordList.includes(this.word.toLowerCase());
   }
 
   public clear() {
