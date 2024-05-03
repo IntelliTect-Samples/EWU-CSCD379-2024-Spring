@@ -8,6 +8,7 @@
 
             <v-btn icon="mdi-help-circle" @click="showHelpDialog = true" />
             <v-btn icon="mdi-cog" @click="showSettingsDialog = true" />
+            <v-btn icon="mdi-account-edit" @click="showNameDialog = true" />
             <v-app-bar-nav-icon variant="text"
                                 @click="drawer = !drawer"></v-app-bar-nav-icon>
         </v-app-bar>
@@ -24,6 +25,7 @@
         <v-main class="mt-5">
             <slot />
         </v-main>
+        <NameDialog v-model="showNameDialog" />
         <HelpDialog v-model="showHelpDialog" />
         <SettingsDialogue v-model="showSettingsDialog" />
     </v-app>
@@ -36,6 +38,7 @@ import nuxtStorage from "nuxt-storage";
 const theme = useTheme();
 const showHelpDialog = ref(false);
 const showSettingsDialog = ref(false);
+const showNameDialog = ref(false);
 const drawer = ref(false);
 onMounted(() => {
   var defaultTheme = nuxtStorage.localStorage.getData("theme");
