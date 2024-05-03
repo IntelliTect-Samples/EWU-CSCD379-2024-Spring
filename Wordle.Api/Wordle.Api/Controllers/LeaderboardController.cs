@@ -48,10 +48,10 @@ public class LeaderboardController : ControllerBase
 			AverageAttempts = player.AverageAttempts
 		};
 	}
-	//this should work
-	[HttpGet("GetTopTenScores")]
-	public async Task<IEnumerable<Player>> GetTopTenScores()
-	{
-		return await _service.GetTopTenScores();
-	}
+	////this should work
+	//[HttpGet("GetTopTenScores")]
+	//public async Task<IEnumerable<Player>> GetTopTenScores()
+	//{
+	//	return await _service.GetTopScores();
+	//}
 }
