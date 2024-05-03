@@ -1,6 +1,7 @@
-import { LetterState, type Letter } from './letter';
-import { Word } from './word';
-import { myWordList } from './wordList';
+import { LetterState, type Letter } from "./letter";
+import { Word } from "./word";
+import { WordList } from "./wordList";
+import Axios from 'axios';
 
 export class Game {
   public maxAttempts: number;
@@ -15,12 +16,14 @@ export class Game {
     this.startNewGame();
   }
 
-  public startNewGame() {
+  public async startNewGame() {
     this.guessIndex = 0;
     this.gameState = GameState.Playing;
     this.guessedLetters = [];
 
     // Get random word from word list
+    await this.getWordFromApi();
+
     this.secretWord =
       myWordList[Math.floor(Math.random() * myWordList.length)].toUpperCase();
 
@@ -31,6 +34,13 @@ export class Game {
         new Word({ maxNumberOfLetters: this.secretWord.length })
       );
     }
+  }
+
+  private async getWordFromApi() {
+    let wordUrl = "https://wordleapiewu.azurewebsites.net/word";
+
+    const response = await Axios.get(wordUrl);
+    console.log(response.data);
   }
 
   public get guess() {
