@@ -1,4 +1,4 @@
-﻿namespace Wordle.Api.Data;
+﻿namespace Wordle.Api.Models;
 
 public class Player
 {

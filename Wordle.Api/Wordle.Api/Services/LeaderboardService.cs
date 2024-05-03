@@ -1,5 +1,6 @@
 ﻿using Wordle.Api.Data;
 using Wordle.Api.Dtos;
+using Wordle.Api.Models;
 using Wordle.Api.Requests;
 
 namespace Wordle.Api.Services;

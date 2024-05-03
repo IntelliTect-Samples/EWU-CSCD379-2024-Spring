@@ -1,9 +1,9 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Wordle.Api.Data;
 using Wordle.Api.Services;
 using Wordle.Api.Requests;
 using Wordle.Api.Dtos;
 using System.Numerics;
+using Wordle.Api.Models;
 
 namespace Wordle.Api.Controllers;
 
