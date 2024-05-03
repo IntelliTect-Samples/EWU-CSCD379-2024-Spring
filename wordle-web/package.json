@@ -12,7 +12,6 @@
   },
   "dependencies": {
     "@mdi/font": "^7.4.47",
-    "axios": "^1.6.8",
     "nuxt": "^3.11.1",
     "nuxt-storage": "^1.2.2",
     "vue": "^3.4.21",
@@ -21,6 +20,7 @@
   "devDependencies": {
     "@nuxt/test-utils": "^3.12.0",
     "@vue/test-utils": "^2.4.5",
+    "eslint": "^9.1.1",
     "happy-dom": "^13.10.1",
     "playwright-core": "^1.43.0",
     "vite-plugin-vuetify": "^2.0.3",
