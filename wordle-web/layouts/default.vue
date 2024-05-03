@@ -1,0 +1,44 @@
+<template>
+    <v-app>
+        <v-app-bar color="primary" :elevation="2">
+            <v-app-bar-title @click="$router.push('/')" style="cursor: pointer">
+                <v-icon> mdi-flower-poppy </v-icon>
+                Aesthetic Wordle
+            </v-app-bar-title>
+
+            <v-btn icon="mdi-help-circle" @click="showHelpDialog = true" />
+            <v-btn icon="mdi-cog" @click="showSettingsDialog = true" />
+            <v-app-bar-nav-icon variant="text"
+                                @click="drawer = !drawer"></v-app-bar-nav-icon>
+        </v-app-bar>
+        <v-navigation-drawer v-model="drawer"
+                             location="right"
+                             color="secondary"
+                             temporary>
+            <v-list v-for="item in ['About']" :key="item">
+                <v-list-item @click="$router.push('/' + item.toLowerCase())">
+                    <v-list-item-title> {{ item }} </v-list-item-title>
+                </v-list-item>
+            </v-list>
+        </v-navigation-drawer>
+        <v-main class="mt-5">
+            <slot />
+        </v-main>
+        <HelpDialog v-model="showHelpDialog" />
+        <SettingsDialogue v-model="showSettingsDialog" />
+    </v-app>
+</template>
+
+<script setup lang="ts">
+import { useTheme } from "vuetify";
+import nuxtStorage from "nuxt-storage";
+
+const theme = useTheme();
+const showHelpDialog = ref(false);
+const showSettingsDialog = ref(false);
+const drawer = ref(false);
+onMounted(() => {
+  var defaultTheme = nuxtStorage.localStorage.getData("theme");
+  theme.global.name.value = defaultTheme ?? "light";
+});
+</script>
