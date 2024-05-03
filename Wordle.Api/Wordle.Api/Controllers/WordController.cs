@@ -7,7 +7,7 @@ namespace Wordle.Api.Controllers
     [Route("[controller]")]
     public class WordController(WordOfTheDayService wordOfTheDayService) : ControllerBase
     {
-        [HttpGet(Name = "GetWord")]
+        [HttpGet("GetWord")]
         public string Get()
         {
             return wordOfTheDayService.GetRandomWord();
