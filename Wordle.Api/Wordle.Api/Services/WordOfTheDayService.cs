@@ -1,24 +1,56 @@
+using Microsoft.EntityFrameworkCore;
+using Wordle.Api.Models;
+using Wordle.Api.Data;
+
 namespace Wordle.Api.Services;
 
 public class WordOfTheDayService
 {
-    private readonly List<string> words = LoadWordList();
+	private readonly List<string> words = LoadWordList();
+	private static object _lock = new();
 
-    private static string? Word = null;
+	public AppDbContext Db { get; set; }
 
-    public string GetRandomWord()
-    {
-        if (Word == null)
-        {
-            Random random = new();
-            int index = random.Next(words.Count);
-            Word = words[index];
-        }
-        return Word;
-    }
+	public WordOfTheDayService(AppDbContext db)
+	{
+		Db = db;
+	}
 
-    #region WordList
-    public static List<string> LoadWordList()
+	public string GetRandomWord()
+	{
+		Random random = new();
+		int index = random.Next(words.Count);
+		return words[index];
+	}
+
+	public async Task<string> GetWordOfTheDay(DateOnly date)
+	{
+		WordOfTheDay? wordOfTheDay = await Db.WordsOfTheDays.FirstOrDefaultAsync(words => words.Date == date);
+
+		if (wordOfTheDay is null)
+		{
+			lock (_lock)
+			{
+				wordOfTheDay = Db.WordsOfTheDays.FirstOrDefault(words => words.Date == date);
+				if (wordOfTheDay is null)
+				{
+					wordOfTheDay = new()
+					{
+						Word = GetRandomWord(),
+						Date = date
+					};
+
+					Db.WordsOfTheDays.Add(wordOfTheDay);
+					Db.SaveChanges();
+				}
+			}
+		}
+
+		return wordOfTheDay.Word;
+	}
+
+	#region WordList
+	public static List<string> LoadWordList()
     {
         return [
     "aargh",
