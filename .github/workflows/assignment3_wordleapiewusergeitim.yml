@@ -9,6 +9,9 @@ on:
       - Assignment3
     paths:
       - Wordle.Api/**
+  pull_request:
+    branches:
+      - main
   workflow_dispatch:
 
 jobs:
@@ -41,6 +44,7 @@ jobs:
 
   deploy:
     runs-on: windows-latest
+    if: (github.ref == 'refs/heads/main' || github.event_name == 'workflow_dispatch')
     needs: build
     environment:
       name: 'Production'
