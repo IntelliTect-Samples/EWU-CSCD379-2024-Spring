@@ -32,7 +32,7 @@ jobs:
         run: dotnet build --configuration Release
 
       - name: dotnet test
-        run: dotnet test --no-build --no-restore
+        run: dotnet test
 
       - name: dotnet publish
         run: dotnet publish -c Release -o ${{runner.temp}}/myapp
