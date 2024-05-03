@@ -1,4 +1,3 @@
-
 namespace Wordle.Api.Tests;
 
 [TestClass]
@@ -9,7 +8,7 @@ public class LeaderboardServiceTests
 
 	//private readonly LeaderboardService _service;
 
-	
+
 	//[TestMethod]
 	//public void GetTopScores_ReturnsListOfSizeTen()
 	//{

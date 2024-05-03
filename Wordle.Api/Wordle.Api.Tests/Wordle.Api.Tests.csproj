@@ -23,8 +23,6 @@
 
   <ItemGroup>
     <Using Include="Microsoft.VisualStudio.TestTools.UnitTesting" />
-    <Using Include="Wordle.Api" />
-    <Using Include="Wordle.Api.Services" />
   </ItemGroup>
 
 </Project>
