@@ -22,13 +22,13 @@ jobs:
           node-version: 18
       - name: Install Packages
         run: npm ci
-        working-directory: ./Assignment2
+        working-directory: ./wordle-app
       - name: Generate
         run: npm run generate
-        working-directory: ./Assignment2
+        working-directory: ./wordle-app
       - name: Run Vitest
         run: npm run test
-        working-directory: ./Assignment2
+        working-directory: ./wordle-app
         
       - name: Build And Deploy
         id: builddeploy
