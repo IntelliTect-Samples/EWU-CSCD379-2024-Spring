@@ -51,7 +51,7 @@
 <script setup lang="ts">
 import { Game, GameState } from "../scripts/game";
 import { findValidWords } from "~/scripts/ValidWordList";
-const game: Game = reactive(new Game());
+import Axios from "axios" //npm install axios 
 
 const game: Ref<Game> = ref(new Game("GAMES"));
 provide("GAME", game.value);
@@ -59,7 +59,7 @@ provide("GAME", game.value);
 const myGuess = ref("");
 
 const validWords = computed(() => {
-  return findValidWords(game);
+  return findValidWords(game.value);
 });
 
 /*watch(game.guessedLetters, () => {
