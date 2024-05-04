@@ -15,7 +15,7 @@ public class WordControllerTests
 		var client = _factory.CreateClient();
 
 		// Act
-		var response = await client.GetAsync("/word");
+		var response = await client.GetAsync("/word/wordoftheday");
 
 		// Assert
 		Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
@@ -28,7 +28,7 @@ public class WordControllerTests
 		var client = _factory.CreateClient();
 
 		// Act
-		var response = await client.GetAsync("/word");
+		var response = await client.GetAsync("/word/wordoftheday");
 		var content = await response.Content.ReadAsStringAsync();
 
 		// Assert

@@ -2,7 +2,6 @@
 using Wordle.Api.Data;
 using Wordle.Api.Dtos;
 using Wordle.Api.Models;
-using Wordle.Api.Requests;
 
 namespace Wordle.Api.Services;
 
@@ -15,10 +14,11 @@ public class LeaderboardService
 	{
 		_context = context;
 	}
-	public async Task<List<PlayerDto>> GetTopScores()
+	public async Task<List<PlayerDto>> GetTopScoresAsync()
 	{
 		return await _context.Players.
 			OrderBy(player => player.AverageAttempts).
+			Take(10).
 			Select(player => new PlayerDto
 			{
 				Name = player.Name,
@@ -27,14 +27,14 @@ public class LeaderboardService
 			}).ToListAsync();
 	}
 
-	public async Task<Player> PostScore(PlayerRequest request)
+	public async Task<Player> PostScoreAsync(PlayerDto request)
 	{
-		Player? foundPlayer = await _context.Players.FirstOrDefaultAsync(player => request.Name.Equals(player.Name));
+		Player? foundPlayer = await _context.Players.FirstOrDefaultAsync(player => player.Name.Equals(request.Name));
 		if (foundPlayer is not null)
 		{
 			lock (_changingPlayerLock)
 			{
-				double attempts = foundPlayer.AverageAttempts * foundPlayer.GameCount + request.Attempts;
+				double attempts = foundPlayer.AverageAttempts * foundPlayer.GameCount + request.AverageAttempts;
 				foundPlayer.GameCount += request.GameCount;
 				foundPlayer.AverageAttempts = attempts / foundPlayer.GameCount;
 				_context.SaveChanges();
@@ -45,10 +45,10 @@ public class LeaderboardService
 		{
 			lock (_addingPlayerLock)
 			{
-				foundPlayer = _context.Players.FirstOrDefault(player => request.Name.Equals(player.Name));
+				foundPlayer = _context.Players.FirstOrDefault(player => player.Name.Equals(request.Name));
 				if (foundPlayer is not null)
 				{
-					double attempts = foundPlayer.AverageAttempts * foundPlayer.GameCount + request.Attempts;
+					double attempts = foundPlayer.AverageAttempts * foundPlayer.GameCount + request.AverageAttempts;
 					foundPlayer.GameCount += request.GameCount;
 					foundPlayer.AverageAttempts = attempts / foundPlayer.GameCount;
 					_context.SaveChanges();
@@ -58,7 +58,7 @@ public class LeaderboardService
 				{
 					Player addedPlayer = new()
 					{
-						AverageAttempts = request.Attempts,
+						AverageAttempts = request.AverageAttempts,
 						GameCount = request.GameCount,
 						Name = request.Name,
 					};

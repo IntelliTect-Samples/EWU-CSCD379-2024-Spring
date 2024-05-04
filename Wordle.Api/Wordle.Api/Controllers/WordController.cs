@@ -21,6 +21,6 @@ public class WordController(WordOfTheDayService wordOfTheDayService) : Controlle
 	public async Task<string> GetWordOfDay(double offsetInHours = -7.0)
 	{
 		DateOnly today = DateOnly.FromDateTime(DateTime.UtcNow.AddHours(offsetInHours));
-		return await wordOfTheDayService.GetWordOfTheDay(today);
+		return await wordOfTheDayService.GetWordOfTheDayAsync(today);
 	}
 }

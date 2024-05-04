@@ -1,37 +1,62 @@
+using System.Linq;
+using Microsoft.AspNetCore.Mvc.Testing;
+using Wordle.Api.Data;
+using Wordle.Api.Dtos;
+using Wordle.Api.Services;
+
 namespace Wordle.Api.Tests;
 
 [TestClass]
-public class LeaderboardServiceTests
+public class LeaderboardServiceTests : DatabaseTestBase
 {
-	//TODO: figure out how to test with databases (test db? check grant's repo)
+	private readonly WebApplicationFactory<Program> _factory = new();
+	private LeaderboardService _service = null!;
 
+	[TestInitialize]
+	public async Task Init()
+	{
+		var context = new AppDbContext(Options);
+		_service = new(context);
+		foreach (PlayerDto request in Requests)
+		{
+			await _service.PostScoreAsync(request);
+		}
+	}
 
-	//private readonly LeaderboardService _service;
+	[TestMethod]
+	public async Task GetTopScores_ReturnsListOfSizeTen()
+	{
+		// Arrange
 
+		// Act
+		var scores = await _service.GetTopScoresAsync();
 
-	//[TestMethod]
-	//public void GetTopScores_ReturnsListOfSizeTen()
-	//{
-	//	// Arrange
-	//	LeaderboardService service = new();
+		// Assert
+		Assert.AreEqual(10, scores.Count);
+	}
 
-	//	// Act
-	//	var scores = service.GetTopScores();
+	[TestMethod]
+	public async Task GetTopScoresAsync_SuccessfullyGetsWords()
+	{
+		// Arrange
 
-	//	// Assert
-	//	Assert.AreEqual(10, scores.Count);
-	//}
+		// Act
+		var scores = await _service.GetTopScoresAsync();
 
-	//[TestMethod]
-	//public void GetTopScores_ReturnsFullPlayers()
-	//{
-	//	// Arrange
-	//	LeaderboardService service = new();
+		// Assert
+		CollectionAssert.AllItemsAreNotNull(scores);
+	}
 
-	//	// Act
-	//	var scores = service.GetTopScores();
+	[TestMethod]
+	public async Task GetWordOfTheDay_ReturnsString()
+	{
+		// Arrange
 
-	//	// Assert
-	//	Assert.AreEqual(10, scores.Count);
-	//}
+		// Act
+		var scores = await _service.GetTopScoresAsync();
+
+		// Assert
+		CollectionAssert.Contains(scores, new PlayerDto { Name = "Jimbob Sr III", AverageAttempts = 2, GameCount = 1 });
+	}
+
 }

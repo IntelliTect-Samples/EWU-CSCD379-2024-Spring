@@ -23,7 +23,7 @@ public class WordOfTheDayService
 		return words[index];
 	}
 
-	public async Task<string> GetWordOfTheDay(DateOnly date)
+	public async Task<string> GetWordOfTheDayAsync(DateOnly date)
 	{
 		WordOfTheDay? wordOfTheDay = await Db.WordsOfTheDays.FirstOrDefaultAsync(words => words.Date == date);
 

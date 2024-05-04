@@ -1,8 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Wordle.Api.Services;
-using Wordle.Api.Requests;
 using Wordle.Api.Dtos;
-using System.Numerics;
 using Wordle.Api.Models;
 
 namespace Wordle.Api.Controllers;
@@ -20,13 +18,13 @@ public class LeaderboardController : ControllerBase
 	[HttpGet("GetScores")]
 	public async Task<List<PlayerDto>> Get()
 	{
-		return await _service.GetTopScores();
+		return await _service.GetTopScoresAsync();
 	}
 
 	[HttpPost("PostScore")]
-	public async Task<PlayerDto> Post(PlayerRequest request)
+	public async Task<PlayerDto> Post(PlayerDto request)
 	{
-		Player player = await _service.PostScore(request);
+		Player player = await _service.PostScoreAsync(request);
 		return new PlayerDto
 		{
 			Name = player.Name,
