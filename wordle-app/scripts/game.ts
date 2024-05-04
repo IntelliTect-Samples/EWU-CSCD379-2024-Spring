@@ -1,6 +1,7 @@
 import { LetterState, type Letter } from "./letter";
 import { Word } from "./word";
 import { WordList } from "./wordList";
+import Axios from "axios";
 
 export class Game {
   public maxAttempts: number;
@@ -21,9 +22,9 @@ export class Game {
     this.guessedLetters = [];
 
     // Get random word from word list
-    this.secretWord =
-      WordList[Math.floor(Math.random() * WordList.length)].toUpperCase();
-    console.log("The secret word is: " + this.secretWord);
+    let wordUrl = "https://localhost:7108/word";
+
+
 
     // Populate guesses with the correct number of empty words
     this.guesses = [];
