@@ -23,6 +23,7 @@
     "@vue/test-utils": "^2.4.5",
     "happy-dom": "^13.10.1",
     "playwright-core": "^1.43.0",
+    "std-env": "^3.7.0",
     "vite-plugin-vuetify": "^2.0.3",
     "vitest": "^1.4.0",
     "vuetify": "^3.5.14"

@@ -17,7 +17,7 @@
             
         }
 
-        public async Task<string> GetWordOfTheDay(DateOnly date)
+        public string GetWordOfTheDay()
         {
             return "Word of the day";
         }

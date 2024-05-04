@@ -1,3 +1,4 @@
+import { describe } from "vitest";
 import { LetterState, type Letter } from "./letter";
 import { Word } from "./word";
 import { WordList } from "./wordList";
@@ -16,13 +17,13 @@ export class Game {
     this.startNewGame();
   }
 
-  public startNewGame() {
+  public async startNewGame() {
     this.guessIndex = 0;
     this.gameState = GameState.Playing;
     this.guessedLetters = [];
 
     // Get random word from word list
-    let wordUrl = "https://localhost:7108/word";
+    await this.getWordFromApi();
 
 
 
@@ -33,6 +34,12 @@ export class Game {
         new Word({ maxNumberOfLetters: this.secretWord.length })
       );
     }
+  }
+
+  private async getWordFromApi() {
+    let wordUrl = "https://wordleapiewusergeitim.azurewebsites.net/word";
+    const response = await Axios.get(wordUrl);
+    console.log("Secret word from API: " + response);
   }
 
   public get guess() {
