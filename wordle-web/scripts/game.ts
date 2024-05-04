@@ -22,9 +22,6 @@ export class Game {
     this.gameState = GameState.Playing;
     this.guessedLetters = [];
 
-    this.secretWord =
-      WordList[Math.floor(Math.random() * WordList.length)].toUpperCase();
-
     // Populate guesses with the correct number of empty words
     this.guesses = [];
     for (let i = 0; i < this.maxAttempts; i++) {
