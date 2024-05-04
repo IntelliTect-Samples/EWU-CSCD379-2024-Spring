@@ -1,5 +1,12 @@
 ﻿<template>
     <v-container>
+        <v-row class="d-flex justify-end">
+      <v-col cols="auto">
+        <v-card>
+            <v-card-text class="primary--text font-weight-bold">Player name: {{ playerName }}</v-card-text>
+        </v-card>
+      </v-col>
+    </v-row>
         <v-dialog v-model="isGameOn" class="mx-auto" max-width="500">
             <v-card :color="game.gameState == GameState.Won ? 'win' : 'lose'"
                     tile
@@ -44,6 +51,9 @@
     const game: Game = reactive(new Game());
     const showWordsList = ref(false);
     const isGameOn = ref(false);
+    const typedName = ref(''); 
+    const playerName = ref(''); 
+
     import {
         playClickSound,
         playEnterSound,
@@ -80,7 +90,11 @@
             game.addLetter(event.key.toUpperCase());
         }
     }
-
+/*
+function updatePlayerName() {
+  playerName.value = typedName.value;
+}
+*/
     watch(game, () => {
         if (game.gameState !== GameState.Playing) {
             isGameOn.value = true;

@@ -34,12 +34,14 @@
 <script setup lang="ts">
 import { useTheme } from "vuetify";
 import nuxtStorage from "nuxt-storage";
+import { ref } from 'vue';
 
 const theme = useTheme();
 const showHelpDialog = ref(false);
 const showSettingsDialog = ref(false);
-const showNameDialog = ref(false);
+const showNameDialog = ref(true);
 const drawer = ref(false);
+
 onMounted(() => {
   var defaultTheme = nuxtStorage.localStorage.getData("theme");
   theme.global.name.value = defaultTheme ?? "light";

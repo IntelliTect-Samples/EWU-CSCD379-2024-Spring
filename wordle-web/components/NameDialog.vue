@@ -6,7 +6,7 @@
             </v-sheet>
             <v-card-text>
                 <div class="mt-6 mb-8"> 
-                    Enter your name to track your progress:
+                    Enter your name to start the game and track your progress!
                 </div>
                 <v-text-field
                     v-model="playerName"
@@ -18,23 +18,36 @@
 
             <v-divider />
             <v-card-actions>
-                <v-btn color="secondary"
+                <v-btn color="primary"
                        variant="flat"
-                       text="Close"
+                       text="Don't Set Name"
                        @click="modelValue = false" />
-                <v-btn color="primary" @click="setName">Set Name</v-btn> <!-- Moved Set Name button -->
+                <v-btn color="primary"
+                       variant="flat"
+                       text="Set Name"
+                       @click="modelValue = false"</v-btn> 
             </v-card-actions>
         </v-card>
     </v-dialog>
 </template>
 
 <script setup lang="ts">
-    import { ref, defineModel } from 'vue';
+    import { ref, defineModel, watch } from 'vue';
+    import nuxtStorage from "nuxt-storage";
+
 
     const modelValue = defineModel<boolean>({ default: false });
     const playerName = ref<string>(''); 
 
     const setName = () => {
-        console.log("Player name set:", playerName.value);
-    };
+    console.log("Player name set:", playerName.value);
+    localStorage.setItem('playerName', playerName.value); 
+    modelValue = false; 
+    emit('nameSet', playerName.value); 
+};
+
+onMounted(() => {
+    const savedName = localStorage.getItem('playerName') || 'guest';
+    playerName.value = savedName;
+});
 </script>
