@@ -1,8 +1,16 @@
+using Microsoft.EntityFrameworkCore;
+using Wordle.Api.Models;
 using Wordle.Api.Services;
 
 var AllOrigins = "AllOrigins";
 
 var builder = WebApplication.CreateBuilder(args);
+
+var connectionString = builder.Configuration.GetConnectionString("DefaultConnection") ?? throw new InvalidOperationException("Connection string");
+builder.Services.AddDbContext<WordleDbContext>(options =>
+{
+    options.UseSqlServer(connectionString);
+});
 
 // Add services to the container.
 builder.Services.AddCors(options =>

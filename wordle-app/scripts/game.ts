@@ -23,7 +23,7 @@ export class Game {
     this.guessedLetters = [];
 
     // Get random word from word list
-    //await this.getWordFromApi();
+    // await this.getWordFromApi();
     this.secretWord =
     WordList[Math.floor(Math.random() * WordList.length)].toUpperCase();
     console.log(this.secretWord);
@@ -38,11 +38,10 @@ export class Game {
     }
   }
 
-  private async getWordFromApi() {
-    let wordUrl = "https://wordleapiewusergeitim.azurewebsites.net/word";
-    const response = await Axios.get(wordUrl);
-    console.log("Secret word from API: " + response);
-  }
+  // private async getWordFromApi() {
+  //   const { data: word } = await useFetch("https://wordleapiewusergeitim.azurewebsites.net/word");
+  //   console.log("Secret word from API: " + word.value);
+  // }
 
   public get guess() {
     return this.guesses[this.guessIndex];
