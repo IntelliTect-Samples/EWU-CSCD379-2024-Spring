@@ -30,8 +30,6 @@
 
 <script setup lang="ts">
     import { ref, defineModel } from 'vue';
-    import { Letter, LetterState } from "~/scripts/letter";
-    import { Word } from "~/scripts/word";
 
     const modelValue = defineModel<boolean>({ default: false });
     const playerName = ref<string>(''); 
