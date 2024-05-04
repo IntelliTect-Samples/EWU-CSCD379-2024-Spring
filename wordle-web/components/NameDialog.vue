@@ -1,50 +1,54 @@
 <template>
-  <v-app>
-   
-    <v-main>
-      
-      <v-dialog v-model="modelValue" max-width="500" persistent>
-        <v-card>
-          <v-sheet color="primary"> </v-sheet>
-          <v-card-text color="primary" class="text-h6 mb-3 pa-6 text-center">
-            Enter your name to start the game and track your progress!
-            <v-text-field
-              class="pa-6"
-              v-model="playerName"
-              label="Your Name"
-              outlined
-              dense
-            ></v-text-field>
-          </v-card-text>
+  <v-dialog v-model="modelValue" max-width="500" persistent>
+    <v-card>
+      <v-sheet color="primary">
+        <v-card-title>Player Name</v-card-title>
+      </v-sheet>
+      <v-card-text>
+        Enter your name to start playing and save your progress!
+      </v-card-text>
+      <v-card-item>
+        <v-text-field v-model="playerName" label="Your Name"></v-text-field>
+      </v-card-item>
 
-          <v-divider />
-          <v-card-actions>
-            <v-btn color="primary" @click="modelValue = false">
-              Don't Set Name
-            </v-btn>
-            <v-btn color="primary" @click="setName; modelValue = false"> Set Name </v-btn>
-          </v-card-actions>
-        </v-card>
-      </v-dialog>
-    </v-main>
-  </v-app>
+      <v-divider />
+
+      <v-card-actions>
+        <v-spacer></v-spacer>
+        <v-btn
+          color="secondary"
+          variant="flat"
+          text="Don't Set Name"
+          @click="modelValue = false"
+        >
+        </v-btn>
+        <v-btn
+          color="secondary"
+          variant="flat"
+          text="Set Name"
+          @click="modelValue = false"
+        >
+        </v-btn>
+      </v-card-actions>
+    </v-card>
+  </v-dialog>
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted, defineComponent } from 'vue';
+import { ref } from "vue";
+import { Letter, LetterState } from "~/scripts/letter";
+import { Word } from "~/scripts/word";
+import GameBoardGuess from "~/components/GameBoardGuess.vue"; // Ensure this import if the component is used
 
-const modelValue = ref(false);
-const playerName = ref('guest');
+const modelValue = defineModel<boolean>({ default: false });
 
-const setName = () => {
-  console.log("Player name set:", playerName.value);
-  localStorage.setItem("playerName", playerName.value);
-};
+const playerName = ref("");
 
-onMounted(() => {
-  const savedName = localStorage.getItem("playerName");
-  if (savedName) {
-    playerName.value = savedName;
+function closeDialog(save: boolean) {
+  if (save) {
+    console.log("Saving name:", playerName.value); // Here you could actually save the name to a store or localStorage
+    // localStorage.setItem('playerName', playerName.value); Uncomment or modify according to your context
   }
-});
+  modelValue.value = false;
+}
 </script>

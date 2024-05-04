@@ -1,6 +1,5 @@
 ﻿<template>
   <v-container>
-   
     <v-dialog v-model="isGameOn" class="mx-auto" max-width="500">
       <v-card
         :color="game.gameState == GameState.Won ? 'win' : 'lose'"
