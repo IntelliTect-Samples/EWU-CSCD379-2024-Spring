@@ -1,14 +1,6 @@
 ﻿<template>
   <v-container>
-    <v-row class="d-flex justify-end">
-      <v-col cols="auto">
-        <v-card color="primary">
-          <v-card-text class="font-weight-bold"
-            >Player name: {{ playerName }}</v-card-text
-          >
-        </v-card>
-      </v-col>
-    </v-row>
+   
     <v-dialog v-model="isGameOn" class="mx-auto" max-width="500">
       <v-card
         :color="game.gameState == GameState.Won ? 'win' : 'lose'"
