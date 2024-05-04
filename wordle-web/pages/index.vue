@@ -79,7 +79,7 @@ import { WordList } from '~/scripts/wordList';
 import nuxtStorage from 'nuxt-storage';
 import Axios from 'axios';
 
-const game: Ref<Game> = ref(new Game(''));
+const game: Ref<Game> = ref(new Game(' '));
 // Get random word from word list
 getWordFromApi().then(word => {
   game.value = new Game(word);
@@ -93,7 +93,8 @@ const showGuestSaveDialog = ref(false);
 const apiUrl = 'https://wordlewebapijoshua.azurewebsites.net';
 
 async function getWordFromApi(): Promise<string> {
-  let wordUrl = apiUrl + '/word/wordoftheday';
+  let wordUrl =
+    'https://wordlewebapijoshua.azurewebsites.net/word/wordoftheday';
   const response = await Axios.get(wordUrl);
   console.log('Response from API: ' + response.data);
   return response.data;
