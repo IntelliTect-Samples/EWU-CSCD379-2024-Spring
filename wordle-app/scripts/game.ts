@@ -17,14 +17,16 @@ export class Game {
     this.startNewGame();
   }
 
-  public async startNewGame() {
+  public startNewGame() {
     this.guessIndex = 0;
     this.gameState = GameState.Playing;
     this.guessedLetters = [];
 
     // Get random word from word list
-    // await this.getWordFromApi();
-
+    //await this.getWordFromApi();
+    this.secretWord =
+    WordList[Math.floor(Math.random() * WordList.length)].toUpperCase();
+    console.log(this.secretWord);
 
 
     // Populate guesses with the correct number of empty words

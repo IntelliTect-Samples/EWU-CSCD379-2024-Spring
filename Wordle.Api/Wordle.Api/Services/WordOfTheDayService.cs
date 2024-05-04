@@ -17,11 +17,6 @@
             
         }
 
-        public string GetWordOfTheDay()
-        {
-            return "Word of the day";
-        }
-
         #region WordList
         public static List<string> LoadWordList()
         {
