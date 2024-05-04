@@ -11,6 +11,9 @@ var builder = WebApplication.CreateBuilder(args);
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection") ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
 builder.Services.AddDbContext<WordleDbContext>(options =>
     options.UseSqlServer(connectionString));
+
+builder.Services.AddDbContext<PlayerDBContext>(options =>
+    options.UseSqlServer(connectionString));
 //builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
 // Add services to the container.
