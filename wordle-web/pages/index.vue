@@ -79,35 +79,38 @@ import { WordList } from '~/scripts/wordList';
 import nuxtStorage from 'nuxt-storage';
 import Axios from 'axios';
 
-const game: Game = reactive(new Game());
-//const game: Ref<Game> = ref(new Game());
-provide('GAME', game);
+const game: Ref<Game> = ref(new Game(''));
+// Get random word from word list
+getWordFromApi().then(word => {
+  game.value = new Game(word);
+});
+provide('GAME', game.value);
 const showValidWordsDialog = ref(false);
 const validWordsCount = ref(WordList.length);
 const username = ref(' ');
 const showNameDialog = ref(false);
 const showGuestSaveDialog = ref(false);
-const apiUrl = 'wordlewebapijoshua.azurewebsites.net';
+const apiUrl = 'https://wordlewebapijoshua.azurewebsites.net';
 
-/*getWordFromApi().then((word) => {
-  //game.value = new Game(word);
-});
 async function getWordFromApi(): Promise<string> {
-  let wordUrl = "https://wordleapiewu.azurewebsites.net/word";
-
+  let wordUrl = apiUrl + '/word/wordoftheday';
   const response = await Axios.get(wordUrl);
-  console.log("Response from API: " + response.data);
+  console.log('Response from API: ' + response.data);
   return response.data;
-}*/
+}
 
 const myGuess = ref('');
-//console.log(game.secretWord);
 function playAudio(): any {
   const audio = new Audio('/clicker.mp3');
   audio.volume = 0.9;
   audio.play();
 }
 onMounted(() => {
+  // Get random word from word list
+  getWordFromApi().then(word => {
+    game.value = new Game(word);
+  });
+
   window.addEventListener('keyup', onKeyup);
   var defaultName = nuxtStorage.localStorage.getData('name');
   showNameDialog.value = defaultName ? false : true;
@@ -119,9 +122,12 @@ onUnmounted(() => {
 });
 
 watch(
-  () => game.gameState,
+  () => game.value.gameState,
   () => {
-    if (game.gameState == GameState.Won || game.gameState == GameState.Lost) {
+    if (
+      game.value.gameState == GameState.Won ||
+      game.value.gameState == GameState.Lost
+    ) {
       if (username.value === 'Guest') {
         showGuestSaveDialog.value = true;
       } else {
@@ -140,23 +146,23 @@ function onKeyup(event: KeyboardEvent) {
   } else {
     if (event.key === 'Enter') {
       playAudio();
-      game.submitGuess();
+      game.value.submitGuess();
     } else if (event.key == 'Backspace') {
       playAudio();
-      game.removeLastLetter();
+      game.value.removeLastLetter();
     } else if (event.key.match(/[A-z]/) && event.key.length === 1) {
       playAudio();
-      game.addLetter(event.key.toUpperCase());
+      game.value.addLetter(event.key.toUpperCase());
     }
   }
 }
 
 function selectWord(selected: string) {
-  game.guess.clear();
+  game.value.guess.clear();
   myGuess.value = '';
   selected.split('').forEach(character => {
     character = character.toUpperCase();
-    game.addLetter(character);
+    game.value.addLetter(character);
     myGuess.value += character;
   });
 }
@@ -173,12 +179,12 @@ function enterName() {
 
 function postScore() {
   let attempts = 0;
-  if (game.gameState == GameState.Won) {
-    attempts = game.guessIndex + 1;
+  if (game.value.gameState == GameState.Won) {
+    attempts = game.value.guessIndex + 1;
   } else {
-    attempts = game.maxAttempts;
+    attempts = game.value.maxAttempts;
   }
-  Axios.post(apiUrl, {
+  Axios.post(apiUrl + '/leaderboard/postscore', {
     Name: username.value,
     GameCount: 1,
     Attempts: attempts,
