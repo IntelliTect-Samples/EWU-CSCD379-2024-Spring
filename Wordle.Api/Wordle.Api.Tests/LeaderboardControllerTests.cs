@@ -1,6 +1,9 @@
 
+using System.Net;
 using System.Net.Http.Json;
+using System.Text;
 using Microsoft.AspNetCore.Mvc.Testing;
+using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using Wordle.Api.Dtos;
 
@@ -38,8 +41,9 @@ public class LeaderboardControllerTests
 		var client = _factory.CreateClient();
 		foreach (PlayerDto dto in DatabaseTestBase.Requests)
 		{
-			var stringContent = new StringContent(dto.ToString());
-			await client.PostAsync("/leaderboard/postscore", stringContent);
+			var stringContent = new StringContent(JsonConvert.SerializeObject(dto), Encoding.UTF8, "application/json");
+			var response1 = await client.PostAsync("/leaderboard/postscore", stringContent);
+			Assert.AreEqual(HttpStatusCode.OK, response1.StatusCode);
 		}
 
 		// Act
