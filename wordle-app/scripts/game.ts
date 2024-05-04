@@ -23,7 +23,7 @@ export class Game {
     this.guessedLetters = [];
 
     // Get random word from word list
-    await this.getWordFromApi();
+    // await this.getWordFromApi();
 
 
 
