@@ -15,12 +15,14 @@ public class WordOfTheDayServiceTests
         CollectionAssert.Contains(WordOfTheDayService.LoadWordList(), "yules");
     }
 
-    [TestMethod]
-    public void GetWordOfTheDay_SameWord()
-    {
-        WordOfTheDayService service = new();
-        var word = service.GetRandomWord();
-        CollectionAssert.Equals(word, service.GetRandomWord());
-    }
+
+    // TODO: Add a database to test with!
+    //[TestMethod]
+    //public void GetWordOfTheDay_SameWord()
+    //{
+    //    WordOfTheDayService service = new();
+    //    var word = service.GetRandomWord();
+    //    CollectionAssert.Equals(word, service.GetRandomWord());
+    //}
 
 }
