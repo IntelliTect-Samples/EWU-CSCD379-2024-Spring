@@ -1,53 +1,42 @@
 <template>
-    <v-dialog v-model="modelValue" max-width="500" persistent>
-        <v-card>
-            <v-sheet color="primary">
-                <v-card-title> Game Player Name </v-card-title>
-            </v-sheet>
-            <v-card-text>
-                <div class="mt-6 mb-8"> 
-                    Enter your name to start the game and track your progress!
-                </div>
-                <v-text-field
-                    v-model="playerName"
-                    label="Your Name"
-                    outlined
-                    dense
-                ></v-text-field>
-            </v-card-text>
+  <v-dialog v-model="modelValue" max-width="500" persistent>
+    <v-card>
+      <v-sheet color="primary"> </v-sheet>
+      <v-card-text color="primary" class="text-h6 mb-3 pa-6 text-center">
+        Enter your name to start the game and track your progress!
+        <v-text-field
+          class="pa-6"
+          v-model="playerName"
+          label="Your Name"
+          outlined
+          dense
+        ></v-text-field>
+      </v-card-text>
 
-            <v-divider />
-            <v-card-actions>
-                <v-btn color="primary"
-                       variant="flat"
-                       text="Don't Set Name"
-                       @click="modelValue = false" />
-                <v-btn color="primary"
-                       variant="flat"
-                       text="Set Name"
-                       @click="modelValue = false"</v-btn> 
-            </v-card-actions>
-        </v-card>
-    </v-dialog>
+      <v-divider />
+      <v-card-actions>
+        <v-btn color="primary" @click="modelValue = false">
+          Don't Set Name
+        </v-btn>
+        <v-btn color="primary" @click="modelValue = false"> Set Name </v-btn>
+      </v-card-actions>
+    </v-card>
+  </v-dialog>
 </template>
 
 <script setup lang="ts">
-    import { ref, defineModel, watch } from 'vue';
-    import nuxtStorage from "nuxt-storage";
+import { ref, defineModel, watch } from "vue";
 
+const modelValue = defineModel<boolean>({ default: false });
+const playerName = ref<string>("");
 
-    const modelValue = defineModel<boolean>({ default: false });
-    const playerName = ref<string>(''); 
-
-    const setName = () => {
-    console.log("Player name set:", playerName.value);
-    localStorage.setItem('playerName', playerName.value); 
-    modelValue = false; 
-    emit('nameSet', playerName.value); 
+const setName = () => {
+  console.log("Player name set:", playerName.value);
+  localStorage.setItem("playerName", playerName.value);
 };
 
 onMounted(() => {
-    const savedName = localStorage.getItem('playerName') || 'guest';
-    playerName.value = savedName;
+  const savedName = localStorage.getItem("playerName") || "guest";
+  playerName.value = savedName;
 });
 </script>
