@@ -17,15 +17,17 @@ public class LeaderboardService
         Db = db;
     }
 
-    public async Task<string[]> GetTopTenScores()
+    public async Task<string[,]> GetTopTenScores()
     {
-        string[] scores = new string[10];
+        string[,] scores = new string[10, 3];
 
         List<Player> players = await Db.Players.OrderByDescending(player => player.AverageAttempts).ToListAsync();
 
         for(int i = 0; i < 10 && i < players.Count; i++)
         {
-            scores[i] = players[i].Name + "\n" + players[i].AverageAttempts + "\n" + players[i].GameCount;
+            scores[i, 0] = players[i].Name;
+            scores[i, 1] = "" + players[i].AverageAttempts;
+            scores[i, 2] = "" + players[i].GameCount;
         }
 
         return scores;
