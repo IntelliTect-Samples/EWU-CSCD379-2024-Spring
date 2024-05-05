@@ -21,7 +21,6 @@
 
 <script setup lang="ts">
 import Axios from "axios" //npm install axios 
-import { s } from "vitest/dist/reporters-P7C2ytIv";
 const router = useRouter();
 
 onMounted(() => {

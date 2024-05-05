@@ -2,7 +2,7 @@
   <v-container class="myFontDefault">
     <v-card class="text-center">
       <v-alert v-if="game.gameState != GameState.Playing" :color="game.gameState == GameState.Won ? 'success' : 'error'"
-        class="mb-5" tile>
+        class="mb-5" tile >
         <h3>
           You've
           {{ game.gameState == GameState.Won ? "Won" : "Lost" }}
@@ -36,7 +36,7 @@
 import { Game, GameState } from "../scripts/game";
 import { findValidWords } from "~/scripts/ValidWordList";
 import Axios from "axios" //npm install axios 
-
+const userName = inject("userName");
 
 const game: Ref<Game> = ref(new Game("GAMES"));
 provide("GAME", game.value);
@@ -88,4 +88,29 @@ function onKeyup(event: KeyboardEvent) {
   }
 
 }
+function calcAttempts(){
+  var attempts = 0;
+  if(game.value.gameState == GameState.Won){
+    attempts = game.value.guesses.length;
+  }else{
+    attempts = game.value.guesses.length + 5;
+  }
+  return attempts;
+}
+function postScore(userName: string, attempts: number, time: number){
+  let postScoreUrl ="LeaderBoard/PostScore";
+  Axios.post(postScoreUrl, {
+    userName: userName,
+    attempts: attempts,
+    time: time
+  }).then((response) => {
+    console.log("response from api " + response.data);
+  });
+}
+
+watch([game.value.gameState], ([newGameState]) => {
+  if(newGameState == GameState.Won){
+    postScore((userName as string), calcAttempts(), 0);
+  }
+});
 </script>
