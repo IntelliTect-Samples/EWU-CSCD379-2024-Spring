@@ -188,7 +188,7 @@ function postScore() {
   Axios.post(apiUrl + '/leaderboard/postscore', {
     Name: username.value,
     GameCount: 1,
-    Attempts: attempts,
+    AverageAttempts: attempts,
   });
 }
 </script>
