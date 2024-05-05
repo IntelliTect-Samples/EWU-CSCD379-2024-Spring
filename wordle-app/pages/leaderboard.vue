@@ -13,11 +13,11 @@
 						</tr>
 					</thead>
 					<tbody>
-						<tr v-for="(player, index) in players" :key="player.id">
+						<tr v-for="(player, index) in players" :key="player.playerId">
 							<td>{{ index + 1 }}</td>
-							<td>{{ player.name }}</td>
+							<td>{{ player.playerId }}</td>
 							<td>{{ player.averageGuesses }}</td>
-							<td>{{ player.numberOfGames }}</td>
+							<td>{{ player.gamesPlayed }}</td>
 						</tr>
 					</tbody>
 				</v-table>
@@ -27,19 +27,29 @@
 </template>
 
 <script setup lang="ts">
+import Axios from "axios";
+
+const players = ref([]);
+
+// fetch the leaderboard data from the server
+onMounted(async () => {
+	const response = await Axios.get("https://localhost:7108/score/topscores");
+	players.value = response.data;
+	console.log("What is this: " + players.value);
+});
 
 // create a dummy data for the leaderboard
-const players = [
-	{ id: 1, name: "John", averageGuesses: 3, numberOfGames: 10 },
-	{ id: 2, name: "Alex", averageGuesses: 4, numberOfGames: 20 },
-	{ id: 3, name: "Alice", averageGuesses: 5, numberOfGames: 30 },
-	{ id: 4, name: "Bob", averageGuesses: 6, numberOfGames: 40 },
-	{ id: 5, name: "Charlie", averageGuesses: 7, numberOfGames: 50 },
-	{ id: 6, name: "David", averageGuesses: 8, numberOfGames: 60 },
-	{ id: 7, name: "Eve", averageGuesses: 9, numberOfGames: 70 },
-	{ id: 8, name: "Frank", averageGuesses: 10, numberOfGames: 80 },
-	{ id: 9, name: "Grace", averageGuesses: 11, numberOfGames: 90 },
-	{ id: 10, name: "Hank", averageGuesses: 12, numberOfGames: 100 },
-];
+// const players = [
+// 	{ id: 1, name: "John", averageGuesses: 3, numberOfGames: 10 },
+// 	{ id: 2, name: "Alex", averageGuesses: 4, numberOfGames: 20 },
+// 	{ id: 3, name: "Alice", averageGuesses: 5, numberOfGames: 30 },
+// 	{ id: 4, name: "Bob", averageGuesses: 6, numberOfGames: 40 },
+// 	{ id: 5, name: "Charlie", averageGuesses: 7, numberOfGames: 50 },
+// 	{ id: 6, name: "David", averageGuesses: 8, numberOfGames: 60 },
+// 	{ id: 7, name: "Eve", averageGuesses: 9, numberOfGames: 70 },
+// 	{ id: 8, name: "Frank", averageGuesses: 10, numberOfGames: 80 },
+// 	{ id: 9, name: "Grace", averageGuesses: 11, numberOfGames: 90 },
+// 	{ id: 10, name: "Hank", averageGuesses: 12, numberOfGames: 100 },
+// ];
 
 </script>
