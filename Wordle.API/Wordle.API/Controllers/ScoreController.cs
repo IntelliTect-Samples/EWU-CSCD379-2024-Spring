@@ -11,4 +11,8 @@ public class ScoreController(LeaderboardService leaderboardService) : Controller
     {
         return await leaderboardService.GetTopTenScores();
     }
+    public async Task<bool> UpdateScore(string playerName, int attempts, int time)
+    {
+        return await leaderboardService.UpdateScore(playerName, attempts, time);
+    }
 }
