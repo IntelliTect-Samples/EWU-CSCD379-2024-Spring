@@ -1,6 +1,9 @@
+import { Axios } from "axios";
 import { LetterState, type Letter } from "./letter";
 import { Word } from "./word";
 import { WordList } from "./wordList";
+import nameUserNameDialog from "../pages/index.vue"
+import stopwatch from "../pages/index.vue"
 
 export class Game {
   public maxAttempts: number;
@@ -80,6 +83,7 @@ export class Game {
 
     if (isCorrect) {
       this.gameState = GameState.Won;
+      this.postScore();
     } else {
       if (this.guessIndex === this.maxAttempts - 1) {
         this.gameState = GameState.Lost;
@@ -87,6 +91,21 @@ export class Game {
         this.guessIndex++;
       }
     }
+  }
+  public postScore() {
+    let attempts = 0;
+    if (this.gameState == GameState.Won) {
+      attempts = this.guessIndex + 1;
+    } else {
+      attempts = this.maxAttempts;
+    }
+    //TODO - INSERT API LINK
+    /*Axios.post(apiUrl + '/leaderboard/postscore', {
+      Name: nameUserNameDialog,
+      GameCount: 1,
+      AverageAttempts: attempts,
+      AverageSecondsPerGame: stopwatch.seconds.value
+    });*/
   }
 }
 

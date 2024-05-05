@@ -21,10 +21,7 @@
           <v-icon class="mr-2" > mdi-account </v-icon> {{ nameUserNameDialog }}
         </v-chip>
         <v-chip color="secondary" class="mr-2">
-          <v-icon class="mr-2"> mdi-timer </v-icon> 40s
-        </v-chip>
-        <v-chip color="secondary" class="mr-2">
-          <v-icon class="mr-2"> mdi-trophy </v-icon> 5
+          <v-icon class="mr-2"> mdi-timer </v-icon> {{ stopwatch.seconds }}
         </v-chip>
       </v-card-text>
 
@@ -57,11 +54,13 @@
 import { Game, GameState } from "../scripts/game";
 import nuxtStorage from "nuxt-storage";
 import Axios from 'axios'
+import { useStopwatch } from 'vue-timer-hook';
 
 const router = useRouter();
-
 const game: Ref<Game> = ref(new Game("GAMES"));
 provide("GAME", game.value);
+
+const stopwatch = useStopwatch(0,true);
 
 // User name dialog
 const showUserNameDialog = ref(false);
@@ -77,6 +76,7 @@ onMounted(() => {
   } else {
     Axios.defaults.baseURL = "https://wordleapiewu.azurewebsites.net/";
   }
+  stopwatch.reset;
 
   // Get random word from word list
   getWordFromApi().then((word) => {

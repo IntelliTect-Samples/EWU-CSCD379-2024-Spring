@@ -1,25 +1,36 @@
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using Wordle.Api.Models;
 using Wordle.Api.Services;
+using Wordle.Api.Dtos;
+using Wordle.Api.Models;
 
 namespace Wordle.Api.Controllers;
 
 [ApiController]
 [Route("[controller]")]
-public class ScoreController(ScoreService scoreService) : ControllerBase
+public class LeaderboardController : ControllerBase
 {
-    [HttpGet("TopScores")]
-    public async Task<Score[]> GetTopScores()
-    {
-        return await scoreService.GetTopScores();
-    }
-    
-    [HttpPost("AddScore")]
-    public async Task<Player> AddScore(Player player)
-    {
-        await scoreService.AddScore(player);
-        return player;
-    }
-    
+	private readonly ScoreService _scoreService;
+	public LeaderboardController(ScoreService scoreService)
+	{
+		_scoreService = scoreService;
+	}
+
+	[HttpGet("GetTopScores")]
+	public async Task<List<PlayerDTO>> Get()
+	{
+		return await _scoreService.GetTopScoresAsync();
+	}
+
+	[HttpPost("AddScore")]
+	public async Task<PlayerDTO> Post(PlayerDTO request)
+	{
+		Player player = await _scoreService.PostScoreAsync(request);
+		return new PlayerDTO
+		{
+			Name = player.Name,
+			GameCount = player.GameCount,
+			AverageAttempts = player.AverageAttempts
+            AverageSecondsPerGame = player.AverageSecondsPerGame;
+		};
+	}
 }
