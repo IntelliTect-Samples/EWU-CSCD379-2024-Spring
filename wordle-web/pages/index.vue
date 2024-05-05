@@ -15,28 +15,12 @@
         </v-btn>
       </v-alert>
       <v-card-title v-else>Wordle</v-card-title>
-
-      <GameBoardGuess v-for="(guess, i) of game.guesses" :key="i" :guess="guess" />
+      <GameBoardGuess v-for="(guess, i) of game.guesses" :key="i" :guess="guess"/>
 
       <h3>
         <ValidWord />
       </h3>
-      
-        <!--<h3>
-          <v-menu>
-          <template v-slot:activator="{ props }">
-            <v-btn v-bind="props" icon>
-              <v-icon>mdi-view-list</v-icon>
-            </v-btn>
-          </template>
-          <v-list>
-            <v-list-item v-for="word in validWords" :key="word">
-              <v-list-item-title>{{ word }}</v-list-item-title>
-            </v-list-item>
-          </v-list>
-        </v-menu>
-      </h3>
-      -->
+    
       <div class="my-10">
         <Keyboard />
       </div>
@@ -53,19 +37,16 @@ import { Game, GameState } from "../scripts/game";
 import { findValidWords } from "~/scripts/ValidWordList";
 import Axios from "axios" //npm install axios 
 
+
 const game: Ref<Game> = ref(new Game("GAMES"));
 provide("GAME", game.value);
-
+const showUserNameDialog  = inject("showUserNameDialog");
 const myGuess = ref("");
 
 const validWords = computed(() => {
   return findValidWords(game.value);
 });
 
-/*watch(game.guessedLetters, () => {
-  findValidWords(game);
-  console.log(validWordList().length);
-});*/
 
 onMounted(() => {
   if (
@@ -105,5 +86,6 @@ function onKeyup(event: KeyboardEvent) {
   } else if (event.key.match(/[A-z]/) && event.key.length === 1) {
     game.value?.addLetter(event.key.toUpperCase());
   }
+
 }
 </script>

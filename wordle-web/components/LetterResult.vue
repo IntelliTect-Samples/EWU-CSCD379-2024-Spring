@@ -52,6 +52,7 @@ const display = useDisplay();
 function onClicked() {
   if(!game) return;
 
+
   if (props.letter.char === "⌫ ") {
     game.removeLastLetter();
   } else {

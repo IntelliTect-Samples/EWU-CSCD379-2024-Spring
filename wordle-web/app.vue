@@ -9,9 +9,13 @@
             <v-icon size="x-large">mdi-pentagram</v-icon>
           </v-btn>
         </template>
+        <v-btn @click="showUserNameDialog = true">{{ userName }}</v-btn>
+        <UserNameDialog v-model="showUserNameDialog" />
         <v-btn @click="router.push('/')">Home</v-btn>
-        <v-btn @click="router.push('/game')">About</v-btn>
-        <!-- create dropdown menu to dispay all themes-->
+        <v-btn @click="router.push('/about')">About</v-btn>
+        <v-btn @click="router.push('/leaderBoard')">Leader board</v-btn>
+
+        <!-- create dropdown menu to display all themes-->
         <v-btn icon="mdi-theme-light-dark" @click="toggleTheme" />
         <v-menu>
           <template v-slot:activator="{ props }">
@@ -38,28 +42,34 @@
 <script setup lang="ts">
 import { useTheme } from "vuetify";
 import nuxtStorage from "nuxt-storage";
-
 const router = useRouter();
 const theme = useTheme();
 const showHelpDialog = ref(false);
-let font = changeFont();
+const showUserNameDialog = ref(false);
+const userName = ref("guest");
+
+provide("userName", userName);
+provide("showUserNameDialog", showUserNameDialog.value);
+
 const themes = [
   { name: "default", theme: "dark" },
   { name: "sans", theme: "sansDark" },
-  { name: "watermelon", theme: "jaringDark" },
+  { name: "watermelon", theme: "jarringDark" },
 ];
 onMounted(() => {
   var defaultTheme = nuxtStorage.localStorage.getData('theme');
-  var defaultFont = nuxtStorage.localStorage.getData('font');
+  if (defaultTheme) { changeTheme(defaultTheme); }
+
+  var userNameStored = nuxtStorage.localStorage.getData('userName');
+  if (userNameStored || userNameStored =="guest") { userName.value = userNameStored; }
+  if(userName.value == "guest"|| userName.value == undefined) { showUserNameDialog.value = true; }
+  console.log(userName.value);
 });
 
 function changeTheme(themeName: string) {
   theme.global.name.value = themeName;
-  changeFont();
   nuxtStorage.localStorage.setData('theme', themeName)
-  nuxtStorage.localStorage.setData('font', font)
 }
-
 function toggleTheme() {
   if (theme.global.name.value === "dark") {
     changeTheme("light");
@@ -67,36 +77,14 @@ function toggleTheme() {
     changeTheme("sansDark");
   } else if (theme.global.name.value === "sansDark") {
     changeTheme("sansLight");
-  } else if (theme.global.name.value === "jaringLight") {
-    changeTheme("jaringDark");
-  } else if (theme.global.name.value === "jaringDark") {
-    changeTheme("jaringLight");
+  } else if (theme.global.name.value === "jarringLight") {
+    changeTheme("jarringDark");
+  } else if (theme.global.name.value === "jarringDark") {
+    changeTheme("jarringLight");
   } else {
     changeTheme("dark");
   }
 }
-function changeFont(): string {
-  if (theme.global.name.value === "dark" || theme.global.name.value === "light") {
-    return "myFontDefault";
-  } else if (theme.global.name.value === "sansLight" || theme.global.name.value === "sansDark") {
-    return "myFontSans";
-  } else if (theme.global.name.value === "jaringLight" || theme.global.name.value === "jaringDark") {
-    return "myFontJaring";
-  } else {
-    return "myFontDefault";
-  }
-}
+
+
 </script>
-<style>
-.myFontSans {
-  font-family: 'comic sans ms';
-}
-
-.myFontDefault {
-  font-family: 'pentagram';
-}
-
-.myFontJaring {
-  font-family: 'default';
-}
-</style>

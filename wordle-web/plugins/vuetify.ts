@@ -63,7 +63,7 @@ export default defineNuxtPlugin((app) => {
                 unknown: "#424242"
               }
         },
-        jaringLight:{
+        jarringLight:{
           dark: false,
           colors:{
             //background: "#516D2F",
@@ -78,7 +78,7 @@ export default defineNuxtPlugin((app) => {
             unknown: "#a5bb9b"
           }
         },
-        jaringDark:{
+        jarringDark:{
           dark: true,
           colors:{
             //background: "#516D2F",
