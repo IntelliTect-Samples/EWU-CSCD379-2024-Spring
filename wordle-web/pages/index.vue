@@ -57,6 +57,15 @@
         "
         >{{ validWordsCount }} possible words!</v-btn
       >
+      <v-btn
+        @click="
+          $router.push('/leaderboard');
+          playAudio();
+        "
+        class="mb-5 mx-5"
+        color="primary">
+        Leaderboard
+      </v-btn>
       <ValidWords
         v-model:show="showValidWordsDialog"
         v-model:validWordsCount="validWordsCount"
