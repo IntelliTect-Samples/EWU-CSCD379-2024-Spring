@@ -11,6 +11,8 @@
 
       <v-btn icon="mdi-help-circle" @click="showHelpDialog = true" />
       <v-btn icon="mdi-cog" @click="showSettingsDialog = true" />
+      <v-btn icon="mdi-trophy-variant" @click="$router.push('/leaderboard')" />
+
       <v-app-bar-nav-icon
         variant="text"
         @click="drawer = !drawer"
