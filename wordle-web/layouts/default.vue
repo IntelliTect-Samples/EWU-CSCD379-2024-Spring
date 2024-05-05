@@ -24,7 +24,7 @@
       color="secondary"
       temporary
     >
-      <v-list v-for="item in ['About']" :key="item">
+      <v-list v-for="item in ['About','Leaderboard']" :key="item">
         <v-list-item @click="$router.push('/' + item.toLowerCase())">
           <v-list-item-title> {{ item }} </v-list-item-title>
         </v-list-item>
