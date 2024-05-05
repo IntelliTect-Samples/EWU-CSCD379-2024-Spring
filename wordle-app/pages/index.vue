@@ -1,13 +1,8 @@
-import {WordList} from "wordList.ts";
 <template>
   <v-container>
     <v-card class="text-center">
-      <v-alert
-        v-if="game.gameState != GameState.Playing"
-        :color="game.gameState == GameState.Won ? 'success' : 'error'"
-        class="mb-5"
-        tile
-      >
+      <v-alert v-if="game.gameState != GameState.Playing" :color="game.gameState == GameState.Won ? 'success' : 'error'"
+        class="mb-5" tile>
         <h3>
           You've
           {{ game.gameState == GameState.Won ? "Won! 🥳" : "Lost... 😭" }}
@@ -21,20 +16,13 @@ import {WordList} from "wordList.ts";
       </v-alert>
       <v-card-title v-else>Wordle</v-card-title>
 
-      <GameBoardGuess
-        v-for="(guess, i) of game.guesses"
-        :key="i"
-        :guess="guess"
-      />
+      <GameBoardGuess v-for="(guess, i) of game.guesses" :key="i" :guess="guess" />
 
       <div class="my-10">
         <Keyboard />
       </div>
 
-      <WordList
-      v-if="game.gameState === GameState.Playing"
-      v-model="showWordsList"
-    />
+      <WordList v-if="game.gameState === GameState.Playing" v-model="showWordsList" />
 
       <v-btn @click="game.submitGuess()" class="mb-5" color="primary">
         Guess!
@@ -45,16 +33,28 @@ import {WordList} from "wordList.ts";
 
 <script setup lang="ts">
 import { Game, GameState } from "../scripts/game";
-const game: Game = reactive(new Game());
-const availableWords = ref(5);
+import Axios from 'axois';
 
-provide("GAME", game);
+const game: Ref<Game> = ref(new Game("GAMES"));
+provide("GAME", game.value);
 
 const myGuess = ref("");
-var list = ref(false);
-var showWordsList = ref(false);
 
 onMounted(() => {
+  if (
+    window.location.hostname === "localhost" ||
+    window.location.hostname === "127.0.0.1"
+  ) {
+    Axios.defaults.baseURL = "https://localhost:7266/";
+  } else {
+    Axios.defaults.baseURL = "https://wordleapiewu.azurewebsites.net/";
+  }
+
+  // Get random word from word list
+  getWordFromApi().then((word) => {
+    game = reactive(new Game(word));
+  })
+
   window.addEventListener("keyup", onKeyup);
 });
 
@@ -62,6 +62,15 @@ onMounted(() => {
 onUnmounted(() => {
   window.removeEventListener("keyup", onKeyup);
 });
+
+async function getWordFromApi(): Promise<string> {
+  // const { data: word } = await useFetch("https://wordleapiewusergeitim.azurewebsites.net/word");
+  //let wordUrl = "https://wordleapiewusergeitim.azurewebsites.net/word";
+  let wordUrl = "word/wordOfTheDay";
+  const response = await Axios.get(wordUrl);
+  console.log("Secret word from API: " + response.data);
+  return response.data;
+}
 
 function onKeyup(event: KeyboardEvent) {
   if (event.key === "Enter") {

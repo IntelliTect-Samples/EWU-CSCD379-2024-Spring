@@ -7,10 +7,17 @@ namespace Wordle.Api.Controllers
     [Route("[controller]")]
     public class WordController(WordOfTheDayService wordOfTheDayService) : ControllerBase
     {
-        [HttpGet(Name = "GetWord")]
-        public string Get()
+        [HttpGet("RandomWord")]
+        public string GetRandomWord()
         {
             return wordOfTheDayService.GetRandomWord();
+        }
+
+        [HttpGet("WordOfTheDay")]
+        public async Task<string> GetWordOfDay(double offsetInHours = -7.0)
+        {
+            DateOnly today = DateOnly.FromDateTime(DateTime.UtcNow.AddHours(offsetInHours));
+            return await wordOfTheDayService.GetWordOfTheDay(today);
         }
     }
 }
