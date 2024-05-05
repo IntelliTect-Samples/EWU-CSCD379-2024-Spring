@@ -41,8 +41,6 @@ const topTenScores = ref<Player[]>();
 //need to make GET request to the server to get the leaderboard data
 Axios.get(apiUrl + '/leaderboard/GetScores')
   .then(response => {
-    setTimeout(() => {}, 100);
-    console.log(response.data);
     topTenScores.value = response.data;
   })
   .catch(error => {

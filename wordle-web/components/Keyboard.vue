@@ -24,7 +24,7 @@
 import { Game } from '~/scripts/game';
 import { Letter } from '~/scripts/letter';
 
-const game: Game = inject('GAME')!;
+const game: Ref<Game> = inject('GAME')!;
 
 function playAudio(): any {
   const audio = new Audio('/clicker.mp3');
@@ -47,7 +47,7 @@ const keyboardLetterRows = computed(() => {
     // For each key in each row, convert to a letter object
     for (let key of keyboardRow) {
       keyboardLetterRow.push(
-        game.guessedLetters.find(letter => letter.char === key) ??
+        game.value.guessedLetters.find(letter => letter.char === key) ??
           new Letter(key)
       );
     }

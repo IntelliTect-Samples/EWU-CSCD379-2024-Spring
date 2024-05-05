@@ -60,7 +60,7 @@
       <ValidWords
         v-model:show="showValidWordsDialog"
         v-model:validWordsCount="validWordsCount"
-        :game="game"
+        :game="ref(game)"
         @chooseWord="word => selectWord(word)" />
       <NameDialog
         v-model:show="showNameDialog"
@@ -79,12 +79,12 @@ import { WordList } from '~/scripts/wordList';
 import nuxtStorage from 'nuxt-storage';
 import Axios from 'axios';
 
-const game: Ref<Game> = ref(new Game(' '));
+const game = ref(new Game(' '));
 // Get random word from word list
 getWordFromApi().then(word => {
   game.value = new Game(word);
 });
-provide('GAME', game.value);
+provide('GAME', game);
 const showValidWordsDialog = ref(false);
 const validWordsCount = ref(WordList.length);
 const username = ref(' ');

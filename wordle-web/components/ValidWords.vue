@@ -40,26 +40,35 @@
 import { Game } from '~/scripts/game';
 import { ValidWordsUtils } from '~/scripts/validWordsUtils';
 const props = defineProps<{
-  game: Game;
+  game: Ref<Game>;
 }>();
+// let game: Ref<Game> | undefined = inject('GAME');
+// if (game === null || game === undefined) {
+//   throw new Error('injected game is null or undefined');
+// }
 const show = defineModel<boolean>('show', { required: true });
 const validWordsCount = defineModel<number>('validWordsCount', {
   required: true,
 });
 defineEmits(['chooseWord']);
-const utils = new ValidWordsUtils(props.game);
-let validWords = utils.validWords();
+const utils = ref(new ValidWordsUtils(props.game.value));
+let validWords = utils.value.validWords();
 let index = 0;
 let localGuessIndex = 0;
 let output = getNextTenWords();
 const isEmpty = ref(false);
 
-watch([props.game], () => {
-  validWords = utils.validWords();
+watch([props.game.value.guessedLetters], () => {
+  validWords = utils.value.validWords();
   index = 0;
-  localGuessIndex = props.game.guessIndex;
+  localGuessIndex = props.game.value.guessIndex;
+  console.log('ITS HAPPENING');
   validWordsCount.value = validWords.length;
   output = getNextTenWords();
+});
+
+watch([props.game.value.secretWord], () => {
+  utils.value = new ValidWordsUtils(props.game.value);
 });
 
 async function api(): Promise<string[]> {
