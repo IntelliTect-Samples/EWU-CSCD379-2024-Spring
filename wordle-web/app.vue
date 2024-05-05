@@ -56,6 +56,12 @@ const themes = [
   { name: "sans", theme: "sansDark" },
   { name: "watermelon", theme: "jarringDark" },
 ];
+
+const pages = [
+  { name: "Home", path: "/" },
+  { name: "About", path: "/about" },
+  { name: "Leader Board", path: "/leaderBoard" },
+];
 onMounted(() => {
   var defaultTheme = nuxtStorage.localStorage.getData('theme');
   if (defaultTheme) { changeTheme(defaultTheme); }

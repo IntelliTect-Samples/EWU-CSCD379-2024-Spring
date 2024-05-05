@@ -4,10 +4,13 @@
         <v-card-title class = "text-center">Leader Board</v-card-title>
         <v-card-text>
             <v-list>
-                <v-list-item v-for="score in scores" :key="score.id">
-                    <v-list-item-title>{{ score.userName }}</v-list-item-title>
-                    <v-list-item-subtitle>{{ score.score }}</v-list-item-subtitle>
-                </v-list-item>
+                <div v-for="score in getScores">
+                    <v-list-item v-for="score in parseScores" :key="score">
+                        <v-list-item-content >
+                            <v-list-item-title>{{ score }}</v-list-item-title>
+                        </v-list-item-content>
+                    </v-list-item>
+                </div>
             </v-list>
         </v-card-text>
         <v-card-actions>
@@ -18,6 +21,7 @@
 
 <script setup lang="ts">
 import Axios from "axios" //npm install axios 
+import { s } from "vitest/dist/reporters-P7C2ytIv";
 const router = useRouter();
 
 onMounted(() => {
@@ -32,8 +36,14 @@ onMounted(() => {
 })
 
 async function getScores() {
-    const response = await Axios.get("/api/leaderboard");
+    let scoreUrl = "Score/LeaderBoard";
+    const response = await Axios.get(scoreUrl);
+    console.log( "response from api " + response.data);
     return response.data;
+}
+function parseScores(scores: any) {
+        const splitScores = scores.split("\n")
+        return splitScores;
 }
 
 
