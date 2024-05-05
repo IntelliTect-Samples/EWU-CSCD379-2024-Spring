@@ -10,9 +10,9 @@ namespace Wordle.Api.Controllers;
 public class ScoreController(ScoreService scoreService) : ControllerBase
 {
     [HttpGet("TopScores")]
-    public async Task<Score[]> GetTopScores(Player player)
+    public async Task<Score[]> GetTopScores()
     {
-        return await scoreService.GetTopScores(player);
+        return await scoreService.GetTopScores();
     }
     
     [HttpPost("AddScore")]

@@ -30,6 +30,7 @@ builder.Services.AddSwaggerGen();
 
 builder.Services.AddScoped<WordOfTheDayService>();
 builder.Services.AddScoped<PlayerService>();
+builder.Services.AddScoped<ScoreService>();
 
 var app = builder.Build();
 

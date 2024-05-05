@@ -5,18 +5,18 @@ namespace Wordle.Api.Services;
 
 public class ScoreService
 {
-    public WordleDbContext Db { get; set; }
+    private WordleDbContext Db { get; set; }
     
     public ScoreService(WordleDbContext db)
     {
         Db = db;
     }
 
-    public async Task<Score[]> GetTopScores(Player player)
+    public async Task<Score[]> GetTopScores()
     {
         return await Db.Scores
-            .Where(s => s.PlayerId == player.PlayerId)
             .OrderByDescending(s => s.AverageGuesses)
+            .ThenBy(s => s.GamesPlayed)
             .Take(10)
             .ToArrayAsync();
     }
