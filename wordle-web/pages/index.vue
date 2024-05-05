@@ -37,10 +37,8 @@ import { Game, GameState } from "../scripts/game";
 import { findValidWords } from "~/scripts/ValidWordList";
 import Axios from "axios" //npm install axios 
 const userName = inject("userName");
-
 const game: Ref<Game> = ref(new Game("GAMES"));
 provide("GAME", game.value);
-const showUserNameDialog  = inject("showUserNameDialog");
 const myGuess = ref("");
 
 const validWords = computed(() => {
@@ -65,7 +63,7 @@ async function getWordFromApi(): Promise<string> {
   let wordUrl = "Word/WordOfTheDay?offsetInHours=-27";
 
   const response = await Axios.get(wordUrl);
-  console.log("Response from API: " + response.data);
+  console.log("Response from API : " + response.data);
   return response.data;
 }
 

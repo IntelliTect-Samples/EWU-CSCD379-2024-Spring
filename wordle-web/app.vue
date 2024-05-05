@@ -11,12 +11,19 @@
         </template>
         <v-btn @click="showUserNameDialog = true">{{ userName }}</v-btn>
         <UserNameDialog v-model="showUserNameDialog" />
-        <v-btn @click="router.push('/')">Home</v-btn>
-        <v-btn @click="router.push('/about')">About</v-btn>
-        <v-btn @click="router.push('/leaderBoard')">Leader board</v-btn>
+        <v-menu>
+          <template v-slot:activator="{ props }">
+            <v-btn icon v-bind="props">
+              <v-icon>mdi-menu</v-icon>
 
-        <!-- create dropdown menu to display all themes-->
-        <v-btn icon="mdi-theme-light-dark" @click="toggleTheme" />
+            </v-btn>
+          </template>
+          <v-list>
+            <v-list-item v-for="page in pages" :key="page.name" @click="router.push(page.path)">
+              <v-list-item-title>{{ page.name }}</v-list-item-title>
+            </v-list-item>
+          </v-list>
+        </v-menu>
         <v-menu>
           <template v-slot:activator="{ props }">
             <v-btn v-bind="props" icon>
@@ -29,6 +36,7 @@
             </v-list-item>
           </v-list>
         </v-menu>
+        <v-btn icon="mdi-theme-light-dark" @click="toggleTheme" />
         <v-btn icon="mdi-help-box" @click="showHelpDialog = true" />
         <HelpDialog v-model="showHelpDialog" />
       </v-app-bar>
@@ -67,8 +75,8 @@ onMounted(() => {
   if (defaultTheme) { changeTheme(defaultTheme); }
 
   var userNameStored = nuxtStorage.localStorage.getData('userName');
-  if (userNameStored || userNameStored =="guest") { userName.value = userNameStored; }
-  if(userName.value == "guest"|| userName.value == undefined) { showUserNameDialog.value = true; }
+  if (userNameStored || userNameStored == "guest") { userName.value = userNameStored; }
+  if (userName.value == "guest" || userName.value == undefined) { showUserNameDialog.value = true; }
   console.log(userName.value);
 });
 

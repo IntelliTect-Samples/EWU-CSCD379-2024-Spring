@@ -5,9 +5,9 @@
         <v-table>
             <tbody>
                 <tr v-for="score in scoresToDisplay" :key="score.userName">
-                    <td>{{ score.userName }}</td>
-                    <td>{{ score.aveAttempts }}</td>
-                    <td>{{ score.gameCount }}</td>
+                    <td v-if="score.userName">{{ score.userName }}</td>
+                    <td v-if="score.aveAttempts">{{ score.aveAttempts }}</td>
+                    <td v-if="score.gameCount">{{ score.gameCount }}</td>
                 </tr>
             </tbody>
         </v-table>
@@ -35,7 +35,7 @@ onMounted(() => {
 async function getScores(){
     let scoreUrl = "Score/LeaderBoard";
     const response = await Axios.get(scoreUrl);
-    console.log( "response from api " + response.data);
+    console.log( "response from api for scores" + response.data);
     scoresToDisplay.value = response.data;
 
 }
