@@ -1,26 +1,33 @@
 <template>
-  <v-card class="mt-7 mx-auto w-75">
+  <v-card class="my-7 mx-auto w-75">
     <v-sheet color="secondary">
       <v-card-title>Leaderboard</v-card-title>
     </v-sheet>
-  </v-card>
-  <v-card>
     <v-table class="mt-7 mx-auto w-75">
       <thead>
         <tr>
-          <th class="Name">Player Name</th>
-          <th class="GameCount">Game Count</th>
-          <th class="AverageAttempts">Average Guesses</th>
+          <th class="text-h6 text-center Name"><strong>Player Name</strong></th>
+          <th class="text-h6 text-center GameCount">
+            <strong>Game Count</strong>
+          </th>
+          <th class="text-center text-h6 AverageAttempts">
+            <strong>Average Guesses</strong>
+          </th>
         </tr>
       </thead>
       <tbody>
         <tr v-for="player in topTenScores" :key="player.name">
-          <td>{{ player.name }}</td>
-          <td>{{ player.gameCount }}</td>
-          <td>{{ player.averageAttempts }}</td>
+          <td class="text-center">{{ player.name }}</td>
+          <td class="text-center">{{ player.gameCount }}</td>
+          <td class="text-center">{{ player.averageAttempts }}</td>
         </tr>
       </tbody>
     </v-table>
+    <v-container class="text-center">
+      <v-btn color="secondary" class="mb-5" @click="$router.push('/')"
+        >Home</v-btn
+      >
+    </v-container>
   </v-card>
 </template>
 
