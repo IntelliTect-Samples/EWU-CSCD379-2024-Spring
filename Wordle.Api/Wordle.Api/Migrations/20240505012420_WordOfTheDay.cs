@@ -12,7 +12,7 @@ namespace Wordle.Api.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "WordsOfTheDays",
+                name: "WordOfTheDay",
                 columns: table => new
                 {
                     WordOfTheDayId = table.Column<int>(type: "int", nullable: false)
@@ -22,7 +22,7 @@ namespace Wordle.Api.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_WordsOfTheDays", x => x.WordOfTheDayId);
+                    table.PrimaryKey("PK_WordOfTheDay", x => x.WordOfTheDayId);
                 });
         }
 
@@ -30,7 +30,7 @@ namespace Wordle.Api.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "WordsOfTheDays");
+                name: "WordOfTheDay");
         }
     }
 }

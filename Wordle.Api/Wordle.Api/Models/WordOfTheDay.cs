@@ -1,5 +1,8 @@
-﻿namespace Wordle.Api.Models
+﻿using System.ComponentModel.DataAnnotations.Schema;
+
+namespace Wordle.Api.Models
 {
+    [Table("WordOfTheDay")]
     public class WordOfTheDay
     {
         public int WordOfTheDayId { get; set; }

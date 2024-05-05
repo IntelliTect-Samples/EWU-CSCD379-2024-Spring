@@ -39,7 +39,7 @@ namespace Wordle.Api.Migrations
 
                     b.HasKey("WordOfTheDayId");
 
-                    b.ToTable("WordsOfTheDays");
+                    b.ToTable("WordOfTheDay");
                 });
 #pragma warning restore 612, 618
         }

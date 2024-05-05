@@ -12,7 +12,7 @@ using Wordle.Api.Models;
 namespace Wordle.Api.Migrations
 {
     [DbContext(typeof(WordleDbContext))]
-    [Migration("20240504225404_WordOfTheDay")]
+    [Migration("20240505012420_WordOfTheDay")]
     partial class WordOfTheDay
     {
         /// <inheritdoc />
@@ -42,7 +42,7 @@ namespace Wordle.Api.Migrations
 
                     b.HasKey("WordOfTheDayId");
 
-                    b.ToTable("WordsOfTheDays");
+                    b.ToTable("WordOfTheDay");
                 });
 #pragma warning restore 612, 618
         }
