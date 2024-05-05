@@ -36,9 +36,18 @@
 
       <WordList v-if="game.gameState === GameState.Playing" v-model="showWordsList" />
 
-      <v-btn @click="game.submitGuess()" class="mb-5" color="primary">
+      <v-row justify="end">
+        <v-col cols="6">
+          <v-btn @click="game.submitGuess()" class="mb-5" color="primary">
         Guess!
       </v-btn>
+        </v-col >
+        <v-col cols="3">
+          <v-btn class="mb-5" color="primary" @click="router.push('/Leaderboard')">Leaderboard</v-btn>
+        </v-col>
+      </v-row>
+     
+      
     </v-card>
     <UserNameDialog v-model:show="showUserNameDialog" v-model:userName="nameUserNameDialog" />
   </v-container>
@@ -48,6 +57,8 @@
 import { Game, GameState } from "../scripts/game";
 import nuxtStorage from "nuxt-storage";
 import Axios from 'axios'
+
+const router = useRouter();
 
 const game: Ref<Game> = ref(new Game("GAMES"));
 provide("GAME", game.value);

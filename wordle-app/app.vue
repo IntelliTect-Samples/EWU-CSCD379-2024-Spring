@@ -17,6 +17,9 @@
         <v-list>
           <v-list-item @click="router.push('/About')" class="text-center">About</v-list-item>
         </v-list>
+        <v-list>
+          <v-list-item @click="router.push('/Leaderboard')" class="text-center">Leaderboard</v-list-item>
+        </v-list>
       </v-navigation-drawer>
       <v-main>
         <NuxtPage />
