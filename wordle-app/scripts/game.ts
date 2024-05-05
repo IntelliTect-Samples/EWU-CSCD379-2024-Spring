@@ -1,5 +1,6 @@
 import { LetterState, type Letter } from "./letter";
 import { Word } from "./word";
+import { WordList } from "./wordList";
 
 export class Game {
   public maxAttempts: number;
@@ -11,7 +12,7 @@ export class Game {
 
   constructor( secretWord: string, maxAttempts: number = 6) {
     this.maxAttempts = maxAttempts;
-    this.secretWord = secretWord;
+    this.secretWord = secretWord.toUpperCase();
     this.startNewGame();
   }
 

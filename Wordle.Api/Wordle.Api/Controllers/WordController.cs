@@ -13,6 +13,11 @@ namespace Wordle.Api.Controllers
             return wordOfTheDayService.GetRandomWord();
         }
 
+        /// <summary>
+        /// Get the word of the day.
+        /// </summary>
+        /// <param name="offsetInHours">Timezone offset in hours. Default to PST</param>
+        /// <returns></returns>
         [HttpGet("WordOfTheDay")]
         public async Task<string> GetWordOfDay(double offsetInHours = -7.0)
         {

@@ -33,26 +33,25 @@
 
 <script setup lang="ts">
 import { Game, GameState } from "../scripts/game";
-import Axios from 'axois';
+import Axios from 'axios'
 
 const game: Ref<Game> = ref(new Game("GAMES"));
 provide("GAME", game.value);
 
 const myGuess = ref("");
+var list = ref(false);
+var showWordsList = ref(false);
 
 onMounted(() => {
-  if (
-    window.location.hostname === "localhost" ||
-    window.location.hostname === "127.0.0.1"
-  ) {
-    Axios.defaults.baseURL = "https://localhost:7266/";
+  if (window.location.hostname === "localhost" || window.location.hostname === "127.0.0.1") {
+    Axios.defaults.baseURL = "https://localhost:7108/";
   } else {
     Axios.defaults.baseURL = "https://wordleapiewu.azurewebsites.net/";
   }
 
   // Get random word from word list
   getWordFromApi().then((word) => {
-    game = reactive(new Game(word));
+    game.value = new Game(word);
   })
 
   window.addEventListener("keyup", onKeyup);
@@ -74,11 +73,11 @@ async function getWordFromApi(): Promise<string> {
 
 function onKeyup(event: KeyboardEvent) {
   if (event.key === "Enter") {
-    game.submitGuess();
+    game.value.submitGuess();
   } else if (event.key == "Backspace") {
-    game.removeLastLetter();
+    game.value.removeLastLetter();
   } else if (event.key.match(/[A-z]/) && event.key.length === 1) {
-    game.addLetter(event.key.toUpperCase());
+    game.value.addLetter(event.key.toUpperCase());
   }
 }
 
