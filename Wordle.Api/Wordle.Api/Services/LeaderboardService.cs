@@ -21,9 +21,15 @@ public class LeaderboardService
     {
         string[][] scores = new string[10][];
 
+
         List<Player> players = await Db.Players.OrderByDescending(player => player.AverageAttempts).ToListAsync();
 
-        for(int i = 0; i < 10 && i < players.Count; i++)
+        for (int j = 0; j < players.Count; j++)
+        {
+            scores[j] = new string[3];
+        }
+
+        for (int i = 0; i < players.Count && i < 10; i++)
         {
             scores[i][0] = players[i].Name;
             scores[i][1] = "" + players[i].AverageAttempts;
