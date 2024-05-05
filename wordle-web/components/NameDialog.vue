@@ -7,7 +7,7 @@
       <v-form>
         <v-responsive hide-details="auto" width="350">
           <v-text-field
-            append-inner-icon="mdi-arrow-right-bold-circle"
+            append-inner-icon="mdi-arrow-right-bold"
             label="Name"
             v-model="nameModel"
             @keydown.enter

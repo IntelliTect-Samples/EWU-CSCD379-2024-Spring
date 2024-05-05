@@ -3,7 +3,7 @@
     <v-row>
       <v-col cols="12" class="d-flex justify-end">
         <v-sheet
-          class="pa-2 cursor-pointer mt-5"
+          class="pa-2 cursor-pointer mt-3"
           color="primary"
           style="
             min-width: 150px;
