@@ -1,6 +1,11 @@
 <template>
   <v-container>
-    <v-card class="text-center">
+    <v-progress-linear
+      v-if="game.gameState === GameState.Initializing"
+      color="primary"
+      indeterminate
+    />
+    <v-card v-else class="text-center">
       <v-alert
         v-if="game.gameState != GameState.Playing"
         :color="game.gameState == GameState.Won ? 'success' : 'error'"
@@ -39,19 +44,14 @@
 
 <script setup lang="ts">
 import { Game, GameState } from "../scripts/game";
-import Axios from "axios";
 
-const game: Ref<Game> = ref(new Game("GAMES"));
-provide("GAME", game.value);
+const game = reactive(new Game());
+game.startNewGame();
+provide("GAME", game);
 
 const myGuess = ref("");
 
 onMounted(() => {
-  // Get random word from word list
-  getWordFromApi().then((word) => {
-    game.value = new Game(word);
-  });
-
   window.addEventListener("keyup", onKeyup);
 });
 
@@ -59,21 +59,13 @@ onUnmounted(() => {
   window.removeEventListener("keyup", onKeyup);
 });
 
-async function getWordFromApi(): Promise<string> {
-  let wordUrl = "word/wordOfTheDay";
-
-  const response = await Axios.get(wordUrl);
-  console.log("Response from API: " + response.data);
-  return response.data;
-}
-
 function onKeyup(event: KeyboardEvent) {
   if (event.key === "Enter") {
-    game.value?.submitGuess();
+    game.submitGuess();
   } else if (event.key == "Backspace") {
-    game.value?.removeLastLetter();
+    game.removeLastLetter();
   } else if (event.key.match(/[A-z]/) && event.key.length === 1) {
-    game.value?.addLetter(event.key.toUpperCase());
+    game.addLetter(event.key.toUpperCase());
   }
 }
 </script>
