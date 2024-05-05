@@ -1,49 +1,27 @@
 <template>
-  <v-dialog v-model="modelValue" max-width="500" persistent>
+  <v-dialog v-model="showModel" max-width="350" persistent>
     <v-card>
-      <v-sheet color="primary">
-        <v-card-title>Player Name</v-card-title>
+      <v-sheet color="secondary">
+        <v-card-title>Enter your name to start playing!</v-card-title>
       </v-sheet>
-      <v-card-text>
-        Enter your name to start playing and save your progress!
-        <p>Current Name: {{ playerName }}</p>
-      </v-card-text>
-      <v-card-item>
-        <v-text-field
-          v-model="playerName"
-          label="Your Name"
-          clearable
-          solo
-        ></v-text-field>
-      </v-card-item>
-      <v-divider />
-      <v-card-actions>
-        <v-spacer></v-spacer>
-        <v-btn
-          color="secondary"
-          text="Don't Set Name"
-          @click="modelValue = false"
-          >Don't Set Name</v-btn
-        >
-        <v-btn color="secondary" text="Set Name" @click="modelValue = false"
-          >Set Name</v-btn
-        >
-      </v-card-actions>
+      <v-form>
+        <v-responsive hide-details="auto" width="350">
+          <v-text-field
+            append-inner-icon="mdi-arrow-right-bold-circle"
+            label="Name"
+            v-model="nameModel"
+            @keydown.enter
+            @click:append-inner="$emit('entered')"
+            @keydown.enter.prevent
+          ></v-text-field>
+        </v-responsive>
+      </v-form>
     </v-card>
   </v-dialog>
 </template>
 
 <script setup lang="ts">
-import { ref } from "vue";
-
-const modelValue = defineModel<boolean>({ default: false });
-const playerName = ref("");
-
-function closeDialog(save: boolean) {
-  modelValue.value = false;
-  if (save) {
-    console.log("Saving name:", playerName.value);
-    localStorage.setItem("playerName", playerName.value);
-  }
-}
+const showModel = defineModel<boolean>("show");
+const nameModel = defineModel<string>("name");
+defineEmits(["entered"]);
 </script>

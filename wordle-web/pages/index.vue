@@ -1,5 +1,41 @@
 ﻿<template>
   <v-container>
+    <v-row>
+      <v-col cols="12" class="d-flex justify-end">
+        <v-sheet
+          class="pa-2 cursor-pointer mt-5"
+          color="primary"
+          style="
+            min-width: 150px;
+            max-width: 300px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            white-space: nowrap;
+            overflow: hidden;
+          "
+          @click="showNameDialog = !showNameDialog"
+        >
+          <div
+            style="flex-shrink: 0; white-space: nowrap"
+            class="player-name-label"
+          >
+            Player Name:
+          </div>
+          <div
+            style="
+              flex-grow: 1;
+              text-align: right;
+              overflow: hidden;
+              text-overflow: ellipsis;
+              padding-left: 10px;
+            "
+          >
+            {{ playerName }}
+          </div>
+        </v-sheet>
+      </v-col>
+    </v-row>
     <v-dialog v-model="isGameOn" class="mx-auto" max-width="500">
       <v-card
         :color="game.gameState == GameState.Won ? 'win' : 'lose'"
@@ -44,17 +80,23 @@
       v-if="game.gameState === GameState.Playing"
       v-model="showWordsList"
     />
+    <NameDialog
+      v-model:show="showNameDialog"
+      v-model:name="playerName"
+      @entered="enterPlayerName"
+    />
   </v-container>
 </template>
 
 <script setup lang="ts">
 import { Game, GameState } from "../scripts/game";
+import nuxtStorage from "nuxt-storage";
+
 const game: Game = reactive(new Game());
 const showWordsList = ref(false);
 const isGameOn = ref(false);
-const typedName = ref("");
 const playerName = ref("");
-
+const showNameDialog = ref(false);
 import {
   playClickSound,
   playEnterSound,
@@ -66,6 +108,9 @@ provide("GAME", game);
 
 onMounted(() => {
   window.addEventListener("keyup", onKeyup);
+  var defaultName = nuxtStorage.localStorage.getData("name");
+  showNameDialog.value = defaultName ? false : true;
+  playerName.value = showNameDialog.value ? "Guest" : defaultName;
 });
 
 onUnmounted(() => {
@@ -73,29 +118,30 @@ onUnmounted(() => {
 });
 
 function onKeyup(event: KeyboardEvent) {
-  if (showWordsList.value) {
-    return;
-  }
-
-  if (event.key === "Enter") {
-    let currentGuessIndex = game.guessIndex;
-    game.submitGuess();
-    if (currentGuessIndex !== game.guessIndex) {
-      playEnterSound();
+  // if (showWordsList.value) {
+  //    return;
+  // }
+  if (showNameDialog.value) {
+    if (event.key === "Enter") {
+      enterPlayerName();
     }
-  } else if (event.key == "Backspace") {
-    playClickSound();
-    game.removeLastLetter();
-  } else if (event.key.match(/[A-z]/) && event.key.length === 1) {
-    playClickSound();
-    game.addLetter(event.key.toUpperCase());
+  } else {
+    if (event.key === "Enter") {
+      let currentGuessIndex = game.guessIndex;
+      game.submitGuess();
+      if (currentGuessIndex !== game.guessIndex) {
+        playEnterSound();
+      }
+    } else if (event.key == "Backspace") {
+      playClickSound();
+      game.removeLastLetter();
+    } else if (event.key.match(/[A-z]/) && event.key.length === 1) {
+      playClickSound();
+      game.addLetter(event.key.toUpperCase());
+    }
   }
 }
-/*
-function updatePlayerName() {
-  playerName.value = typedName.value;
-}
-*/
+
 watch(game, () => {
   if (game.gameState !== GameState.Playing) {
     isGameOn.value = true;
@@ -126,5 +172,14 @@ function closeGameDialog() {
   setTimeout(() => {
     game.startNewGame();
   }, 300);
+}
+
+function enterPlayerName() {
+  if (playerName.value === "") {
+    playerName.value = "Guest";
+  } else {
+    nuxtStorage.localStorage.setData("name", playerName.value);
+  }
+  showNameDialog.value = !showNameDialog.value;
 }
 </script>
