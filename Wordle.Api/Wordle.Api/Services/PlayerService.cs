@@ -19,11 +19,23 @@ public class PlayerService
     
     public async Task AddPlayer(Player player)
     {
-        if (!Db.Players.Contains(player))
+        
+        var existingPlayer = await Db.Players.FirstOrDefaultAsync(p => p.PlayerId == player.PlayerId);
+        if (existingPlayer != null)
+        {
+            Db.Entry(existingPlayer).CurrentValues.SetValues(player);
+        }
+        else
         {
             await Db.Players.AddAsync(player);
-            await Db.SaveChangesAsync();
         }
+        
+        await Db.SaveChangesAsync();
+        // if (!Db.Players.Contains(player))
+        // {
+        //     await Db.Players.AddAsync(player);
+        //     await Db.SaveChangesAsync();
+        // }
         
     }
 }
