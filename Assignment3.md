@@ -74,7 +74,6 @@ Add leaderboard to the application
 **6. Deploy site to Azure** ❌✅
 - Deploy API site with Github Action to Azure Web App ❌✅
 - Unit Tests should run on build ❌✅
-- Add API Base URL replacement to front end project via secret ❌✅
 
 
 ## Extra Credit
