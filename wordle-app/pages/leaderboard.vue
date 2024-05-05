@@ -15,9 +15,9 @@
 					<tbody>
 						<tr v-for="(player, index) in players" :key="player.playerId">
 							<td>{{ index + 1 }}</td>
-							<td>{{ player.playerId }}</td>
-							<td>{{ player.averageGuesses }}</td>
-							<td>{{ player.gamesPlayed }}</td>
+							<td>{{ player.name }}</td>
+							<td>{{ Math.round(player.averageAttempts) }}</td>
+							<td>{{ player.gameCount }}</td>
 						</tr>
 					</tbody>
 				</v-table>
@@ -29,11 +29,19 @@
 <script setup lang="ts">
 import Axios from "axios";
 
-const players = ref([]);
+const players = ref<Player[]>();
+
+interface Player {
+	playerId: number;
+	name: string;
+	gameCount: number;
+	averageAttempts: number;
+	averageSecondsPerGame: number;
+}
 
 // fetch the leaderboard data from the server
 onMounted(async () => {
-	const response = await Axios.get("https://localhost:7108/score/topscores");
+	const response = await Axios.get("https://localhost:7108/player/topplayers");
 	players.value = response.data;
 	console.log("What is this: " + players.value);
 });
