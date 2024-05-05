@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Wordle.Api.Models;
 
@@ -11,9 +12,11 @@ using Wordle.Api.Models;
 namespace Wordle.Api.Migrations
 {
     [DbContext(typeof(WordleDbContext))]
-    partial class WordleDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240505063158_Score")]
+    partial class Score
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -50,11 +53,11 @@ namespace Wordle.Api.Migrations
 
             modelBuilder.Entity("Wordle.Api.Models.Score", b =>
                 {
-                    b.Property<int>("ScoreId")
+                    b.Property<int>("Scoreid")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ScoreId"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Scoreid"));
 
                     b.Property<double>("AverageGuesses")
                         .HasColumnType("float");
@@ -62,10 +65,11 @@ namespace Wordle.Api.Migrations
                     b.Property<int>("GamesPlayed")
                         .HasColumnType("int");
 
-                    b.Property<int>("PlayerId")
-                        .HasColumnType("int");
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("ScoreId");
+                    b.HasKey("Scoreid");
 
                     b.ToTable("Scores");
                 });

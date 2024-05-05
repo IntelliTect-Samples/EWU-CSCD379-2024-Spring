@@ -1,6 +1,4 @@
-﻿using System.Data.Common;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.Identity.Client;
+﻿using Microsoft.EntityFrameworkCore;
 using Wordle.Api.Models;
 
 namespace Wordle.Api.Services
