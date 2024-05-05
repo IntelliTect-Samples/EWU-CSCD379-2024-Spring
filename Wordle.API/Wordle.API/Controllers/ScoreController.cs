@@ -7,7 +7,7 @@ namespace Wordle.Api.Controllers;
 public class ScoreController(LeaderboardService leaderboardService) : ControllerBase
 {
     [HttpGet("Leaderboard")]
-    public async Task<string[,]> GetTopTen()
+    public async Task<string[][]> GetTopTen()
     {
         return await leaderboardService.GetTopTenScores();
     }
