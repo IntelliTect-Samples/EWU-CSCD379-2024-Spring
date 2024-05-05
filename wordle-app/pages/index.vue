@@ -16,6 +16,18 @@
       </v-alert>
       <v-card-title v-else>Wordle</v-card-title>
 
+      <v-card-text class="d-flex  flex-row justify-end">
+        <v-chip color="secondary" class="mr-2" @click="showUserNameDialog=true">
+          <v-icon class="mr-2" > mdi-account </v-icon> {{ nameUserNameDialog }}
+        </v-chip>
+        <v-chip color="secondary" class="mr-2">
+          <v-icon class="mr-2"> mdi-timer </v-icon> 40s
+        </v-chip>
+        <v-chip color="secondary" class="mr-2">
+          <v-icon class="mr-2"> mdi-trophy </v-icon> 5
+        </v-chip>
+      </v-card-text>
+
       <GameBoardGuess v-for="(guess, i) of game.guesses" :key="i" :guess="guess" />
 
       <div class="my-10">
@@ -28,15 +40,21 @@
         Guess!
       </v-btn>
     </v-card>
+    <UserNameDialog v-model:show="showUserNameDialog" v-model:userName="nameUserNameDialog" />
   </v-container>
 </template>
 
 <script setup lang="ts">
 import { Game, GameState } from "../scripts/game";
+import nuxtStorage from "nuxt-storage";
 import Axios from 'axios'
 
 const game: Ref<Game> = ref(new Game("GAMES"));
 provide("GAME", game.value);
+
+// User name dialog
+const showUserNameDialog = ref(false);
+const nameUserNameDialog = ref("");
 
 const myGuess = ref("");
 var list = ref(false);
@@ -55,6 +73,15 @@ onMounted(() => {
   })
 
   window.addEventListener("keyup", onKeyup);
+
+  if(nuxtStorage.localStorage.getData("userName") != null){
+    nameUserNameDialog.value = nuxtStorage.localStorage.getData("userName");
+    showUserNameDialog.value = false;
+  }
+  else {
+    showUserNameDialog.value = true;
+  }
+  
 });
 
 
@@ -72,13 +99,16 @@ async function getWordFromApi(): Promise<string> {
 }
 
 function onKeyup(event: KeyboardEvent) {
-  if (event.key === "Enter") {
-    game.value.submitGuess();
-  } else if (event.key == "Backspace") {
-    game.value.removeLastLetter();
-  } else if (event.key.match(/[A-z]/) && event.key.length === 1) {
-    game.value.addLetter(event.key.toUpperCase());
+  if (!showUserNameDialog.value) {
+    if (event.key === "Enter") {
+      game.value.submitGuess();
+    } else if (event.key == "Backspace") {
+      game.value.removeLastLetter();
+    } else if (event.key.match(/[A-z]/) && event.key.length === 1) {
+      game.value.addLetter(event.key.toUpperCase());
+    }
   }
+
 }
 
 </script>
