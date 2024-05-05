@@ -17,11 +17,10 @@ export class Game {
     this.startNewGame();
   }
 
-  public async startNewGame() {
+  public startNewGame() {
     this.guessIndex = 0;
     this.gameState = GameState.Playing;
     this.guessedLetters = [];
-
     // Populate guesses with the correct number of empty words
     this.guesses = [];
     for (let i = 0; i < this.maxAttempts; i++) {
