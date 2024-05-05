@@ -8,7 +8,7 @@ export default defineNuxtPlugin(() => {
     ) {
       Axios.defaults.baseURL = "https://localhost:7266/";
     } else {
-      Axios.defaults.baseURL = "https://wordleapiewu.azurewebsites.net/";
+      Axios.defaults.baseURL = "https://pentagramapiewu.azurewebsites.net/";
     }
   }
 })
