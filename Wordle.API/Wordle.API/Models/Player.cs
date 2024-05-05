@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Wordle.Api.Models
 {
-    [Table("User")]
+    [Table("Player")]
     public class Player
     {
         public int PlayerId { get; set; }
