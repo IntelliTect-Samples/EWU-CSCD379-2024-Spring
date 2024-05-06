@@ -3,16 +3,14 @@
     <v-row>
       <v-col cols="12" class="d-flex justify-end">
         <v-sheet
-          class="pa-2 cursor-pointer mt-3 d-flex align-center justify-space-between no-wrap overflow-hidden"
+          class="pa-2 cursor-pointer mt-3 d-flex"
           color="primary"
           min-width="150"
-          max-width="300"
+          max-width="900"
           @click="showNameDialog = !showNameDialog"
         >
           <div class="shrink-0 no-wrap pr-4">Player Name:</div>
-          <div
-            class="grow-1 text-right pa-left-2 overflow-hidden text-no-wrap text-overflow-ellipsis"
-          >
+          <div>
             {{ playerName }}
           </div>
         </v-sheet>
