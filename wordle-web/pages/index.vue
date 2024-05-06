@@ -69,7 +69,6 @@
       <ValidWords
         v-model:show="showValidWordsDialog"
         v-model:validWordsCount="validWordsCount"
-        :game="ref(game)"
         @chooseWord="word => selectWord(word)" />
       <NameDialog
         v-model:show="showNameDialog"
