@@ -5,8 +5,6 @@ name: Build and deploy ASP.Net Core app to Azure Web App - WordleAPIHC
 
 on:
   push:
-    branches:
-      - Assignment3-Hadi_Cynthia
     paths:
       - Wordle.Api/**
   pull_request:
