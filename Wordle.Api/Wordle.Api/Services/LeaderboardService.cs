@@ -42,25 +42,25 @@ public class LeaderboardService
             }).ToListAsync();
     }
 
-    public async Task<bool> UpdateScore(string playerName, int attempts, int time)
+    public async Task<bool> UpdateScore(NewScore score)
     {
-        Player? player = await Db.Players.FirstOrDefaultAsync(player => player.Name == playerName);
+        Player? player = await Db.Players.FirstOrDefaultAsync(player => player.Name == score.playerName);
         if (player == null)
         {
             player = new()
             {
-                Name = playerName,
+                Name = score.playerName,
                 GameCount = 1,
-                AverageAttempts = attempts,
-                AverageSecondsPerGame = time
+                AverageAttempts = score.attempts,
+                AverageSecondsPerGame = score.time
             };
             Db.Players.Add(player);
         }
         else
         {
             player.GameCount += 1;
-            player.AverageAttempts = ((player.AverageAttempts * (player.GameCount-1)) + attempts) / (player.GameCount);
-            player.AverageSecondsPerGame = ((player.AverageSecondsPerGame * (player.GameCount - 1)) + time) / (player.GameCount);
+            player.AverageAttempts = ((player.AverageAttempts * (player.GameCount-1)) + score.attempts) / (player.GameCount);
+            player.AverageSecondsPerGame = ((player.AverageSecondsPerGame * (player.GameCount - 1)) + score.time) / (player.GameCount);
         }
         if(Db.SaveChanges() > 0)
         {
