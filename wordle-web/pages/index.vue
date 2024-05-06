@@ -1,35 +1,17 @@
-<template>
+﻿<template>
   <v-container>
     <v-row>
       <v-col cols="12" class="d-flex justify-end">
         <v-sheet
-          class="pa-2 cursor-pointer mt-3"
+          class="pa-2 cursor-pointer mt-3 d-flex align-center justify-space-between no-wrap overflow-hidden"
           color="primary"
-          style="
-            min-width: 150px;
-            max-width: 300px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            white-space: nowrap;
-            overflow: hidden;
-          "
+          min-width="150"
+          max-width="300"
           @click="showNameDialog = !showNameDialog"
         >
+          <div class="shrink-0 no-wrap pr-4">Player Name:</div>
           <div
-            style="flex-shrink: 0; white-space: nowrap"
-            class="player-name-label"
-          >
-            Player Name:
-          </div>
-          <div
-            style="
-              flex-grow: 1;
-              text-align: right;
-              overflow: hidden;
-              text-overflow: ellipsis;
-              padding-left: 10px;
-            "
+            class="grow-1 text-right pa-left-2 overflow-hidden text-no-wrap text-overflow-ellipsis"
           >
             {{ playerName }}
           </div>
