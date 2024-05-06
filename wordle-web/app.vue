@@ -50,14 +50,17 @@
 <script setup lang="ts">
 import { useTheme } from "vuetify";
 import nuxtStorage from "nuxt-storage";
+import { provide, ref, watch, onMounted, inject } from "vue";
 const router = useRouter();
 const theme = useTheme();
 const showHelpDialog = ref(false);
 const showUserNameDialog = ref(false);
 const userName = ref("guest");
 
+provide("userNameValue", userName.value);
 provide("userName", userName);
 provide("showUserNameDialog", showUserNameDialog.value);
+
 
 const themes = [
   { name: "default", theme: "dark" },
@@ -68,16 +71,21 @@ const themes = [
 const pages = [
   { name: "Home", path: "/" },
   { name: "About", path: "/about" },
-  { name: "Leader Board", path: "/leaderBoard" },
+  { name: "Leader Board", path: "/leaderboard" },
 ];
 onMounted(() => {
   var defaultTheme = nuxtStorage.localStorage.getData('theme');
   if (defaultTheme) { changeTheme(defaultTheme); }
 
   var userNameStored = nuxtStorage.localStorage.getData('userName');
-  if (userNameStored || userNameStored == "guest") { userName.value = userNameStored; }
-  if (userName.value == "guest" || userName.value == undefined) { showUserNameDialog.value = true; }
-  console.log(userName.value);
+  if (userNameStored) {
+    userName.value = userNameStored;
+    showUserNameDialog.value = false;
+  }
+  if (userName.value === "guest " || !userNameStored) {
+    showUserNameDialog.value = true;
+  }
+  
 });
 
 function changeTheme(themeName: string) {
@@ -99,6 +107,5 @@ function toggleTheme() {
     changeTheme("dark");
   }
 }
-
 
 </script>

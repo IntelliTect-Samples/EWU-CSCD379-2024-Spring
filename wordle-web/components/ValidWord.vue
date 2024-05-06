@@ -17,7 +17,6 @@
 <script setup lang="ts">
 import { Game } from "~/scripts/game";
 import { findValidWords } from "~/scripts/ValidWordList";
-import { Letter } from "~/scripts/letter";
 
 
 const game: Game | undefined = inject("GAME", undefined);

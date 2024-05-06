@@ -3,6 +3,7 @@
     <v-card class="text-center">
       <v-alert v-if="game.gameState != GameState.Playing" :color="game.gameState == GameState.Won ? 'success' : 'error'"
         class="mb-5" tile >
+        <div></div>
         <h3>
           You've
           {{ game.gameState == GameState.Won ? "Won" : "Lost" }}
@@ -36,15 +37,11 @@
 import { Game, GameState } from "../scripts/game";
 import { findValidWords } from "~/scripts/ValidWordList";
 import Axios from "axios" //npm install axios 
+
 const userName = inject("userName");
 const game: Ref<Game> = ref(new Game("GAMES"));
 provide("GAME", game.value);
-const myGuess = ref("");
-
-const validWords = computed(() => {
-  return findValidWords(game.value);
-});
-
+const showUserNameDialog = inject("showUserNameDialog");
 
 onMounted(() => {
   // Get random word from word list
@@ -80,26 +77,30 @@ function onKeyup(event: KeyboardEvent) {
 function calcAttempts(){
   var attempts = 0;
   if(game.value.gameState == GameState.Won){
-    attempts = game.value.guesses.length;
+    attempts = game.value.guessIndex + 1;
   }else{
     attempts = game.value.guesses.length + 5;
   }
   return attempts;
 }
-function postScore(userName: string, attempts: number, time: number){
-  let postScoreUrl ="LeaderBoard/PostScore";
+function postScore(playerNameIn: string, attemptsIn: number, timeIn: number){
+  console.log("score data " + playerNameIn + " " + attemptsIn + " " + 0);
+  let postScoreUrl ="Score/UpdateScore";
   Axios.post(postScoreUrl, {
-    userName: userName,
-    attempts: attempts,
-    time: time
+    playerName: playerNameIn,
+    attempts: attemptsIn,
+    time: timeIn
   }).then((response) => {
-    console.log("response from api " + response.data);
+    console.log("response from api " + response.data + " " + response.status);
   });
 }
-
-watch([game.value.gameState], ([newGameState]) => {
-  if(newGameState == GameState.Won){
-    postScore((userName as string), calcAttempts(), 0);
+watch(() => game.value.gameState, (value) => {
+  if(value == GameState.Won || value == GameState.Lost){
+    if(userName === "guest"){
+      showUserNameDialog.value = true;
+    }
+    
+    postScore(userName.value as string, calcAttempts(), 0);
   }
 });
 </script>
