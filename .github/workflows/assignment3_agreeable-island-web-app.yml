@@ -7,11 +7,19 @@ on:
   push:
     branches:
       - Assignment3
+    paths:
+      - Wordl.Api/**
+  pull_request:
+    branches:
+      - Assignment3
   workflow_dispatch:
 
 jobs:
   build:
     runs-on: windows-latest
+    defaults:
+      run:
+        working-directory: ./Wordle.Api
 
     steps:
       - uses: actions/checkout@v4
@@ -25,6 +33,9 @@ jobs:
       - name: Build with dotnet
         run: dotnet build --configuration Release
 
+      - name: Test with dotnet
+        run: dotnet test --no-build --no-restore
+
       - name: dotnet publish
         run: dotnet publish -c Release -o ${{env.DOTNET_ROOT}}/myapp
 
@@ -36,6 +47,7 @@ jobs:
 
   deploy:
     runs-on: windows-latest
+    if: (github.ref == 'refs/heads/main' || github.event_name == 'workflow_dispatch')
     needs: build
     environment:
       name: 'Production'
