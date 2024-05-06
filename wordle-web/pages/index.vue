@@ -41,12 +41,7 @@ import Axios from "axios" //npm install axios
 const userName = inject("userName");
 const game: Ref<Game> = ref(new Game("GAMES"));
 provide("GAME", game.value);
-const myGuess = ref("");
 const showUserNameDialog = inject("showUserNameDialog");
-const validWords = computed(() => {
-  return findValidWords(game.value);
-});
-
 
 onMounted(() => {
   // Get random word from word list

@@ -1,5 +1,4 @@
 import { Letter, LetterState } from "./letter";
-import { Word } from "./word";
 import { WordList } from "./wordList";
 import { Game, } from "./game";
 
