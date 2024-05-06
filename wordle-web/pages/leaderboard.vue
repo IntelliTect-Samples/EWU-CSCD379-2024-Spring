@@ -3,7 +3,7 @@
     <v-sheet color="secondary">
       <v-card-title>Leaderboard</v-card-title>
     </v-sheet>
-    <v-table class="mt-7 mx-auto w-75">
+    <v-table class="table mt-7 mx-auto w-75">
       <thead>
         <tr>
           <th class="text-h6 text-center Name"><strong>Player Name</strong></th>
@@ -55,3 +55,27 @@ Axios.get(apiUrl + '/leaderboard/GetScores')
   });
 //note to self need to implement animate.css for the leaderboard extra credit
 </script>
+<style>
+.table{
+  background-color: unknownGradient;
+  animation: colorChange 10s infinite;
+}
+@keyframes colorChange {
+  0% {
+    background-color: #b7afaf;
+  }
+  25% {
+    background-color: #FFD54F;
+  }
+  50% {
+    background-color: #9575CD;
+  }
+  75% {
+    background-color: #482e74;
+  }
+  100% {
+    background-color: #4f4f4f;
+  }
+}
+</style>
+
