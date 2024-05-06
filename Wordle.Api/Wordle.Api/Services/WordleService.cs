@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Wordle.Api.Models;
 
-namespace Wordle.Api.Service
+namespace Wordle.Api.Services
 {
   public class WordleService 
   {
