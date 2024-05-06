@@ -89,7 +89,7 @@ function calcAttempts(){
   return attempts;
 }
 function postScore(userName: string, attempts: number, time: number){
-  let postScoreUrl ="LeaderBoard/PostScore";
+  let postScoreUrl ="Score/UpdaterScore";
   Axios.post(postScoreUrl, {
     userName: userName,
     attempts: attempts,
@@ -101,7 +101,7 @@ function postScore(userName: string, attempts: number, time: number){
 watch(() => game.value.gameState, (value) => {
   if(value == GameState.Won || value == GameState.Lost){
     if(userName === "guest"){
-      showUserNameDialog.value = true;
+      //showUserNameDialog.value = true;
     }
     postScore(userName as string, calcAttempts(), 0);
   }
