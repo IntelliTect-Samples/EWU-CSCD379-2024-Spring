@@ -47,15 +47,6 @@ provide("GAME", game.value);
 const myGuess = ref("");
 
 onMounted(() => {
-  if (
-    window.location.hostname === "localhost" ||
-    window.location.hostname === "127.0.0.1"
-  ) {
-    Axios.defaults.baseURL = "https://localhost:7266/";
-  } else {
-    Axios.defaults.baseURL = "https://wordleapiewu.azurewebsites.net/";
-  }
-
   // Get random word from word list
   getWordFromApi().then((word) => {
     game.value = new Game(word);
