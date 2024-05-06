@@ -4,18 +4,12 @@
       <v-sheet color="secondary">
         <v-card-title>Enter your name to start playing!</v-card-title>
       </v-sheet>
-      <v-form>
-        <v-responsive hide-details="auto" width="350">
-          <v-text-field
-            append-inner-icon="mdi-arrow-right-bold"
-            label="Name"
-            v-model="nameModel"
-            @keydown.enter
-            @click:append-inner="$emit('entered')"
-            @keydown.enter.prevent
-          ></v-text-field>
-        </v-responsive>
-      </v-form>
+      <v-text-field
+        append-inner-icon="mdi-arrow-right-bold"
+        label="Name"
+        v-model="nameModel"
+        @click:append-inner="$emit('entered')"
+      ></v-text-field>
     </v-card>
   </v-dialog>
 </template>
