@@ -28,16 +28,17 @@
 
 <script setup lang="ts">
 import Axios from "axios";
+import type { Player } from "~/scripts/player";
 
 const players = ref<Player[]>();
 
-interface Player {
-	playerId: number;
-	name: string;
-	gameCount: number;
-	averageAttempts: number;
-	averageSecondsPerGame: number;
-}
+// interface Player {
+// 	playerId: number;
+// 	name: string;
+// 	gameCount: number;
+// 	averageAttempts: number;
+// 	averageSecondsPerGame: number;
+// }
 
 // fetch the leaderboard data from the server
 onMounted(async () => {

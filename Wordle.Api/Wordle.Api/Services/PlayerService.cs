@@ -11,6 +11,11 @@ public class PlayerService
     {
         Db = db;
     }
+
+    public async Task<Player?> GetPlayer(string playerName)
+    {
+        return await Db.Players.FirstOrDefaultAsync(p => p.Name == playerName);
+    }
     
     public async Task<Player[]> GetTopPlayers(int numberOfPlayers)
     {

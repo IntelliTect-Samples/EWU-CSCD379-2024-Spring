@@ -46,10 +46,10 @@
           <v-btn class="mb-5" color="primary" @click="router.push('/Leaderboard')">Leaderboard</v-btn>
         </v-col>
       </v-row>
-     
-      
     </v-card>
+
     <UserNameDialog v-model:show="showUserNameDialog" v-model:userName="nameUserNameDialog" />
+    
   </v-container>
 </template>
 
@@ -57,6 +57,7 @@
 import { Game, GameState } from "../scripts/game";
 import nuxtStorage from "nuxt-storage";
 import Axios from 'axios'
+import type { Player } from "../scripts/player";
 
 const router = useRouter();
 
@@ -67,8 +68,6 @@ provide("GAME", game.value);
 const showUserNameDialog = ref(false);
 const nameUserNameDialog = ref("");
 
-const myGuess = ref("");
-var list = ref(false);
 var showWordsList = ref(false);
 
 onMounted(() => {
@@ -85,13 +84,15 @@ onMounted(() => {
 
   window.addEventListener("keyup", onKeyup);
 
-  if(nuxtStorage.localStorage.getData("userName") != null){
-    nameUserNameDialog.value = nuxtStorage.localStorage.getData("userName");
-    showUserNameDialog.value = false;
-  }
-  else {
-    showUserNameDialog.value = true;
-  }
+
+  // Assignment 3 Task 2
+  // Check if user name is stored in local storage
+  localStorage.clear();
+  sessionStorage.clear();
+  checkUserNameLocalStorage();
+  checkUserName();
+
+  
   
 });
 
@@ -120,6 +121,24 @@ function onKeyup(event: KeyboardEvent) {
     }
   }
 
+}
+
+async function checkUserNameLocalStorage() {
+  
+  if(nuxtStorage.localStorage.getData("userName") != null){
+    nameUserNameDialog.value = nuxtStorage.localStorage.getData("userName");
+    showUserNameDialog.value = false;
+  }
+  else {
+    nameUserNameDialog.value = "Guest";
+    showUserNameDialog.value = true;
+  }
+
+}
+
+async function checkUserName() {
+  const response = await Axios.get("player/checkUserName/" + nameUserNameDialog.value);
+  console.log("Check user name response: " + response.data);
 }
 
 </script>
