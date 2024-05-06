@@ -11,21 +11,21 @@
         </v-app-bar-title>
       </v-app-bar>
 
-	<v-dialog v-model="dialogBox" max-width="500" persistent>
-		<v-card>
-			<v-sheet color="primary">
-				<v-card-text>UserName: </v-card-text>
-			</v-sheet>
-			<v-form class="mx-3 mt-5">
-				<v-text-field v-model="usersNameInput" label="user" variant="outlined" clearable required>
-			    </v-text-field>
-			</v-form>
-			<v-card-actions class="mx-4 mb-3">
-				<v-spacer></v-spacer>
-				<v-btn color="success" @click="userSaving">SAVE</v-btn>
-			</v-card-actions>
-		</v-card>
-	</v-dialog>
+      <v-dialog v-model="dialogBox" max-width="500" persistent>
+        <v-card>
+          <v-sheet color="primary">
+            <v-card-text>UserName: </v-card-text>
+          </v-sheet>
+          <v-form class="mx-3 mt-5">
+            <v-text-field v-model="usersNameInput" label="user" variant="outlined" clearable required @keyup.enter="saveUserName">
+              </v-text-field>
+          </v-form>
+          <v-card-actions class="mx-4 mb-3">
+            <v-spacer></v-spacer>
+            <v-btn color="success" @click="saveUserName"> PRESS HERE TO SAVE</v-btn>
+          </v-card-actions>
+        </v-card>
+      </v-dialog>
 
       <HelpDialog v-model="showHelpDialog" />
 
@@ -94,20 +94,10 @@
 import { useTheme } from "vuetify";
 import nuxtStorage from 'nuxt-storage';
 import { ref } from "vue";
+import { useRouter } from "vue-router";
 
 const dialogBox = ref<boolean>(true);
 const usersNameInput = ref<string>('');
-const userSaving = () => {
-    const userName = usersNameInput.value.trim();
-    if(userName !== ''){
-	nuxtStorage.localStorage.setData("userName", userName);
-	dialogBox.value = false;
-    }
-
-    else{
-        console.error("Cannot be empty")
-    }
-};
 const router = useRouter();
 const theme = useTheme();
 const showHelpDialog = ref(false);
@@ -129,8 +119,17 @@ function themeSettings(item: string) {
   nuxtStorage.localStorage.setData("themes", theme.global.name.value);
 }
 
-
+function saveUserName() {
+  if (dialogBox.value) { 
+    const userName = usersNameInput.value.trim();
+    if (userName !== '') {
+      nuxtStorage.localStorage.setData("userName", userName);
+      dialogBox.value = false;
+    } 
+  }
+}
 </script>
+
 <style>
 .buttonClass{
   display: flex;

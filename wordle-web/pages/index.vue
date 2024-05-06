@@ -19,6 +19,7 @@
         </v-btn>
       </v-alert>
       <v-card-title v-else style="font-size: xx-large;">Wordle</v-card-title>
+      <v-card-subtitle style="font-size: medium;">Welcome, {{ userName }}</v-card-subtitle>
 
       <GameBoardGuess
         v-for="(guess, i) of game.guesses"
@@ -50,12 +51,16 @@
 
 <script setup lang="ts">
 import { Game, GameState } from "../scripts/game";
+import { provide, ref } from "vue";
 const game: Game = reactive(new Game());
+import nuxtStorage from 'nuxt-storage';
+
 
 provide("GAME", game);
 
 const myGuess = ref("");
 const engine = ref(false);
+const userName = ref(nuxtStorage.localStorage.getData("userName") ?? '');
 
 function enterSound() 
 {
