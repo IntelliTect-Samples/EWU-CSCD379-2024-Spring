@@ -11,7 +11,7 @@
         </v-app-bar-title>
       </v-app-bar>
 
-      <v-dialog v-model="dialogBox" max-width="500" persistent>
+      <v-dialog v-model="userNameDialog" max-width="500" persistent>
         <v-card>
           <v-sheet color="primary">
             <v-card-text>UserName: </v-card-text>
@@ -96,7 +96,7 @@ import nuxtStorage from 'nuxt-storage';
 import { ref } from "vue";
 import { useRouter } from "vue-router";
 
-const dialogBox = ref<boolean>(true);
+const userNameDialog = ref<boolean>(true);
 const usersNameInput = ref<string>('');
 const router = useRouter();
 const theme = useTheme();
@@ -120,11 +120,11 @@ function themeSettings(item: string) {
 }
 
 function saveUserName() {
-  if (dialogBox.value) { 
+  if (userNameDialog.value) { 
     const userName = usersNameInput.value.trim();
     if (userName !== '') {
       nuxtStorage.localStorage.setData("userName", userName);
-      dialogBox.value = false;
+      userNameDialog.value = false;
     } 
   }
 }
