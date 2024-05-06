@@ -107,10 +107,5 @@ function toggleTheme() {
     changeTheme("dark");
   }
 }
-watch(showUserNameDialog, (value) => {
-  if (false === value) {
-    nuxtStorage.localStorage.setData('userName', userName.value);
-  }
-});
 
 </script>
