@@ -38,10 +38,12 @@
 </template>
 
 <script setup lang="ts">
+import { ref } from 'vue';
 import { Game, GameState } from "../scripts/game";
 import Axios from "axios";
 
 
+const api = ''
 
 const game: Ref<Game> = ref(new Game(""));
 // Get random word from word list
@@ -77,7 +79,21 @@ function onKeyup(event: KeyboardEvent) {
   } else if (event.key.match(/[A-z]/) && event.key.length === 1) {
     game.value?.addLetter(event.key.toUpperCase());
   }
-}
+    }
+
+function postScore() {
+    let attempts = 0;
+    if (game.value.gameState == GameState.Won) {
+        attempts = game.value.guessIndex + 1;
+    } else {
+        attempts = game.value.maxAttempts;
+    }
+    Axios.post(apiUrl + '/leaderboard/postscore', {
+        Name: nuxtStorage.localStorage.get(“userName”, userNameVariable),
+        GameCount: 1,
+        AverageAttempts: attempts,
+    });
+
 
 
 </script>
