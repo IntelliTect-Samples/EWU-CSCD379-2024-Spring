@@ -13,7 +13,7 @@ var connectionString = builder.Configuration.GetConnectionString("DefaultConnect
 builder.Services.AddDbContext<WordleDbContext>(options =>
     options.UseSqlServer(connectionString));
 
-builder.Services.AddDbContext<PlayerDBContext>(options =>
+builder.Services.AddDbContext<PlayerDbContext>(options =>
     options.UseSqlServer(connectionString));
 //builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
