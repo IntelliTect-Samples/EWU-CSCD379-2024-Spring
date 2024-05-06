@@ -1,5 +1,5 @@
 <template>
-  <v-container>
+  <v-container> 
     <v-card class="text-center">
       <v-alert
         v-if="game.gameState != GameState.Playing"
@@ -41,6 +41,8 @@
 import { Game, GameState } from "../scripts/game";
 import Axios from "axios";
 
+
+
 const game: Ref<Game> = ref(new Game(""));
 // Get random word from word list
 getWordFromApi().then((word) => {
@@ -76,4 +78,11 @@ function onKeyup(event: KeyboardEvent) {
     game.value?.addLetter(event.key.toUpperCase());
   }
 }
+
+
 </script>
+
+<style scoped>
+
+
+</style>

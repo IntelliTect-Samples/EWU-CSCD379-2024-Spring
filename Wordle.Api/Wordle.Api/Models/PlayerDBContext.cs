@@ -2,7 +2,7 @@
 
 namespace Wordle.Api.Models
 {
-    public class PlayerDBContext
+    public class PlayerDBContext : DbContext
     {
         public DbSet<Player> Players { get; set; }
 
