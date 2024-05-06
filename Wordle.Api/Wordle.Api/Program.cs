@@ -17,6 +17,7 @@ builder.Services.AddDbContext<PlayerDBContext>(options =>
     options.UseSqlServer(connectionString));
 //builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
+// add for push 
 // Add services to the container.
 builder.Services.AddCors(options =>
 {
