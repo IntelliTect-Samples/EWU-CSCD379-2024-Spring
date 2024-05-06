@@ -18,9 +18,9 @@
       <v-card-title v-else>Wordle</v-card-title>
       <GameBoardGuess v-for="(guess, i) of game.guesses" :key="i" :guess="guess"/>
 
-      <h3>
+      <div class="my-5">
         <ValidWord />
-      </h3>
+      </div>
     
       <div class="my-10">
         <Keyboard />
@@ -35,7 +35,6 @@
 
 <script setup lang="ts">
 import { Game, GameState } from "../scripts/game";
-import { findValidWords } from "~/scripts/ValidWordList";
 import Axios from "axios" //npm install axios 
 
 const userName = inject("userName");
@@ -98,9 +97,11 @@ watch(() => game.value.gameState, (value) => {
   if(value == GameState.Won || value == GameState.Lost){
     if(userName === "guest"){
       showUserNameDialog.value = true;
+      // it is not working I don't think it is updating the value on the app.vue page to show the dialog
     }
     
     postScore(userName.value as string, calcAttempts(), 0);
+    //I know userName is showing an error but the api only gets the data when its set up like that
   }
 });
 </script>
