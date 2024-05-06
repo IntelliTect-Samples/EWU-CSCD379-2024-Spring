@@ -34,18 +34,12 @@ onMounted(() => {
 
 async function getScores(){
     let scoreUrl = "Score/LeaderBoard";
-<<<<<<< Updated upstream
     const response = await Axios.get(scoreUrl).then((response) => {
         scoresToDisplay.value = response.data;
     })
     .catch((error) => {
         console.log(error);
     });
-=======
-    const response = await Axios.get(scoreUrl);
-    console.log( "response from api for scores " + response.data);
-    scoresToDisplay.value = response.data;
->>>>>>> Stashed changes
 
 }
 
