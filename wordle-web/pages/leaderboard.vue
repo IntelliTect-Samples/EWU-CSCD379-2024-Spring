@@ -3,6 +3,13 @@
     <v-card>
         <v-card-title class = "text-center">Leader Board</v-card-title>
         <v-table>
+            <thead>
+                <tr>
+                    <th>User Name</th>
+                    <th>Average Attempts</th>
+                    <th>Game Count</th>
+                </tr>
+            </thead>
             <tbody>
                 <tr v-for="score in scoresToDisplay" :key="score.userName">
                     <td v-if="score.userName">{{ score.userName }}</td>
