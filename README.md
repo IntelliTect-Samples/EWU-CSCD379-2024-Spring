@@ -1,71 +1,93 @@
-# EWU-CSCD378-2024-Spring
+# EWU-CSCD378-2022-Spring
 
-### Azure Static Site URL:
-
-[https://black-beach-03b41781e.5.azurestaticapps.net/](https://black-beach-03b41781e.5.azurestaticapps.net/)
-
-## Assignment 2
+## Assignment 3
 
 The purpose of this assignment is to solidify your learning of:
 
-- Front end component development
-- Using Vuetify's components
-- Building a new custom component
-- Creating new pages
+- Creating an API and deploying it to Azure
+- Calling the API from the client using Axios
+- Using Entity Framework to store data in SQL Server
+- Configuring SQL Server for localhost development and Azure
+- Entity Framework Migrations
+- Local storage
 
-## Due Dates
+## Feature
 
-- 100 points +5 EC points
-- Assigned: 4/11
-- Initial work complete: 4/21 11:59 pm
-  - 50% for running pipeline with passing unit test
-  - 50% for working website
-- Code Reviews Due by: 4/23 11:59 pm
-- Review in class: 4/25 2:00 pm
-- Final turn-in: 4/25 11:59 pm
+Add leaderboard to the application
+
+- Allow the user to play a game
+- At the end of the game get a name via a dialog
+- Save the name in local storage so we don't have to ask again
+- Call an API to save the data
+- Create a Leaderboard page which displays the top 10 scores
+- Determine a good algorithm for sorting scores
+
+## Turn in Process
+
+- On your fork, create an Assignment3 branch
+- Update this branch (Fetch upstream) from the Assignment3 branch in the class repo. [Assignment3 in class repo](https://github.com/IntelliTect-Samples/EWU-CSCD379-2022-Spring/tree/Assignment3)
+- Do your homework in your Assignment3 branch
+- Submit your pull request against Assignment3 in the class repo
+- Ask in Teams chat if you have questions or issues
 
 ## Instructions
 
-Note: Custom CSS can only be used where specified.
+**1. Create a leaderboard API Controller** ❌✅
 
-1. Create a custom component to show available words ❌✅
+- Create an endpoint that returns the top 10 scores (HttpGet) ❌✅
+  - Results should include Name, average guesses, and number of games played ❌✅
+- Create an endpoint that allows for posting a score (HttpPost) with data in the body ❌✅
+  - A new name should add a new record ❌✅
+  - An existing name should update that record ❌✅
+- Save and load all data with Entity Framework to an Azure SQL database or LocalDb for debugging ❌✅
+  - Class should be named "Player" and "Players" for the DbSet ❌✅
+  - Fields should be:
+    - int PlayerId ❌✅
+    - string Name ❌✅
+    - int GameCount ❌✅
+    - double AverageAttempts ❌✅
+    - int AverageSecondsPerGame ❌✅(OPTIONAL)
+- The logic should reside in a service that is injected via dependency injection into the controller ❌✅
+- Set up CORS (Cross Origin Resource Sharing) ❌✅
 
-- Create/extend a word list component with a method called validWords that returns an array of valid words based on current guesses ❌✅
-- Create unit tests for the validWords method ❌✅
-- Display the number of valid words based on the entered letters ❌✅
-- When the number is clicked, show a dialog with all the available words with scrolling if there are too many to show on the screen. ❌✅
-- When a word is clicked, the word should be entered as the guess but not submitted ❌✅
-- Add a hover over for the word so it is obvious that it can be clicked. (No CSS) ❌✅
+**2. Create a dialog for getting the user's name** ❌✅
 
-2. Convert the sidebar to an App Bar ❌✅
+- If we don't have the user's name, present the user with a dialog that allows them to type in their name ❌✅
+- The users current name should show on the game page (upper right) ❌✅
+  - This should be visible when setting/changing the name. It should change as the user types ❌✅
+- The user should be able to click on their name to change it (with the same dialog) ❌✅
+- Save the name in local storage and load it for the next game if it is set ❌✅
+- If the name is not set, display Guest as the name. ❌✅
+  - Clicking on this allows for preemptive setting of the name before the end of the game ❌✅
+- Dialog must be persistent, doesn't close by clicking off the dialog ❌✅
 
-- Name of the app on the left with an icon ❌✅
-- Choose an icon for the app (from Material Design or somewhere on the web) ❌✅
-- Clicking the name and icon of the app take you to the home page ❌✅
-- Hamburger menu on the right ❌✅
-- Menu option for an About page ❌✅
-  - Create an About page that has a few sentences about this class project and how great Meg is ❌✅
-  - Make sure this has a back button ❌✅
+**3. Save the Score and Seconds to complete** ❌✅
 
-3. Add a settings dialog ❌✅
+- Save the score and time to complete in seconds at the end of the game if we have a name. ❌✅
+- If the user hasn't set a name, save the score and seconds as "Guest". (Be sure to prompt first) ❌✅
+- Save should be done with an Axios Post ❌✅
 
-- Add a settings selection to the App Bar's menu with a gear icon. This should open this dialog regardless of where you are on the site ❌✅
-- Option for dark and light mode ❌✅
-- Develop two additional color schemes (with creative names) and allow the user to change to them. Schemes should look good in both light and dark mode ❌✅
-- The above two items must be implemented with built in Veutify features ❌✅
+**4. Create a Leaderboard Page** ❌✅
 
-4. Style the main game page ❌✅
+- Create a /leaderboard page in the application that shows the top scores ❌✅
+- Use Axios to call the leaderboard API ❌✅
+- Make a nice display of the returned data ❌✅
+- Add a link on the front page to access the leaderboard ❌✅
+- Add a link to the app bar to access the leaderboard ❌✅
 
-- Make it look like [wordle.com](https://www.nytimes.com/games/wordle/index.html) or the Wordle mobile app ❌✅
-- Add gradient to guesses blocks and keys (with CSS) ❌✅
-- Add drop shadow to keys (No CSS) ❌✅
-- Make the app responsive (No CSS) ❌✅
+**5. Unit testing** ❌✅ (OPTIONAL) (Not covered in class, but in instructor's repo: https://github.com/granterickson/EWU-CSCD379-2024-Spring)
 
-5. Include a link to your Azure App in your PR comments.
+- Tests for the service ❌✅ (OPTIONAL)
+- Integration tests for the controller ❌✅ (OPTIONAL)
+
+**6. Deploy site to Azure** ❌✅
+
+- Deploy API site with Github Action to Azure Web App ❌✅
+- Unit Tests should run on build ❌✅
 
 ## Extra Credit
 
-- Add an appropriate sound when the UI letter buttons are clicked (5 points)
-- Add creative styling following good UI/UX practices
-  - Look at products by Google or some of the vuetify components for good UX/UI ideas
-  - https://m2.material.io/design/guidelines-overview
+- Unit testing on the client side (3) ❌✅
+- Animate the leaderboard (3) ❌✅
+- Create a logo (3) ❌✅
+- Add Average Seconds to win in score (3) ❌✅
