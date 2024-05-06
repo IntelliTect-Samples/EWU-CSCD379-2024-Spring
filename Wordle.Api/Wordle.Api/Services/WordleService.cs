@@ -6,7 +6,7 @@ namespace Wordle.Api.Services
 {
   public class WordleService 
   {
-    private readonly ApplicationDbContext _context;
+    private readonly PlayerDbContext _context;
 
     public WordleService(ApplicationDbContext context)
     {

@@ -2,11 +2,11 @@
 
 namespace Wordle.Api.Models
 {
-    public class PlayerDBContext : DbContext
+    public class PlayerDbContext : DbContext
     {
         public DbSet<Player> Players { get; set; }
 
-        public WordleDbContext(DbContextOptions<WordleDbContext> options)
+        public PlayerDbContext(DbContextOptions<PlayerDbContext> options)
             : base(options)
         {
         }
