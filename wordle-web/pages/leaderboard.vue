@@ -11,13 +11,13 @@
                 </tr>
             </thead>
             <tbody>
-                <tr v-for="score in scoresToDisplay" :key="score.userName">
-                    <td v-if="score.userName">{{ score.userName }}</td>
-                    console.log(score.userName);
-                    <td v-if="score.aveAttempts">{{ score.aveAttempts }}</td>
-                    console.log(score.aveAttempts);
+                <tr v-for="score in scoresToDisplay" :key="score.name">
+                    <td v-if="score.name">{{ score.name }}</td>
+                    
+                    <td v-if="score.averageAttempts">{{ score.averageAttempts }}</td>
+                    
                     <td v-if="score.gameCount">{{ score.gameCount }}</td>
-                    console.log(score.gameCount);
+                    
                 </tr>
             </tbody>
         </v-table>
@@ -32,8 +32,8 @@ import Axios from "axios" //npm install axios
 const router = useRouter();
 
 interface Score {
-    userName: string;
-    aveAttempts: number;
+    name: string;
+    averageAttempts: number;
     gameCount: number;
 }
 const scoresToDisplay = ref<Score[]>();
