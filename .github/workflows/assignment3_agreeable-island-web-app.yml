@@ -8,7 +8,7 @@ on:
     branches:
       - Assignment3
     paths:
-      - Wordl.Api/**
+      - "Wordl.Api/**"
   pull_request:
     branches:
       - Assignment3
