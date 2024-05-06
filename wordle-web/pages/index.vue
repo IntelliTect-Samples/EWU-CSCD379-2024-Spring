@@ -38,7 +38,7 @@ import { Game, GameState } from "../scripts/game";
 import { findValidWords } from "~/scripts/ValidWordList";
 import Axios from "axios" //npm install axios 
 
-const userName = inject("userName");
+const userNameValue = inject("userNameValue");
 const game: Ref<Game> = ref(new Game("GAMES"));
 provide("GAME", game.value);
 const myGuess = ref("");
@@ -104,11 +104,11 @@ function postScore(playerNameIn: string, attemptsIn: number, timeIn: number){
 }
 watch(() => game.value.gameState, (value) => {
   if(value == GameState.Won || value == GameState.Lost){
-    if(userName === "guest"){
+    if(userNameValue === "guest"){
       //showUserNameDialog.value = true;
     }
-    console.log("score data " + userName + " " + calcAttempts() + " " + 0);
-    postScore(userName as string, calcAttempts(), 0);
+    console.log("score data " + userNameValue + " " + calcAttempts() + " " + 0);
+    postScore(userNameValue as string, calcAttempts(), 0);
   }
 });
 </script>
