@@ -3,6 +3,7 @@
     <v-card class="text-center">
       <v-alert v-if="game.gameState != GameState.Playing" :color="game.gameState == GameState.Won ? 'success' : 'error'"
         class="mb-5" tile >
+        <div></div>
         <h3>
           You've
           {{ game.gameState == GameState.Won ? "Won" : "Lost" }}
@@ -36,11 +37,12 @@
 import { Game, GameState } from "../scripts/game";
 import { findValidWords } from "~/scripts/ValidWordList";
 import Axios from "axios" //npm install axios 
+
 const userName = inject("userName");
 const game: Ref<Game> = ref(new Game("GAMES"));
 provide("GAME", game.value);
 const myGuess = ref("");
-
+const showUserNameDialog = inject("showUserNameDialog");
 const validWords = computed(() => {
   return findValidWords(game.value);
 });
@@ -96,10 +98,12 @@ function postScore(userName: string, attempts: number, time: number){
     console.log("response from api " + response.data);
   });
 }
-
-watch([game.value.gameState], ([newGameState]) => {
-  if(newGameState == GameState.Won){
-    postScore((userName as string), calcAttempts(), 0);
+watch(() => game.value.gameState, (value) => {
+  if(value == GameState.Won || value == GameState.Lost){
+    if(userName === "guest"){
+      showUserNameDialog.value = true;
+    }
+    postScore(userName as string, calcAttempts(), 0);
   }
 });
 </script>

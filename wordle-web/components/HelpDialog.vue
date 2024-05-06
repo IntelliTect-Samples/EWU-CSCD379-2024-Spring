@@ -1,5 +1,5 @@
 <template>
-  <v-dialog v-model="modelValue" max-width="500">
+  <v-dialog v-model="modelValue" max-width="500" persistent>
     <v-card>
       <v-sheet color="primary">
         <v-card-text> How to play Wordle </v-card-text>

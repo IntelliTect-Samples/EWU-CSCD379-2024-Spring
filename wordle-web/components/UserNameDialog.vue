@@ -1,6 +1,6 @@
 <!-- gets the username-->
 <template>
-    <v-dialog v-model="modelValue" max-width="500">
+    <v-dialog v-model="modelValue" max-width="500" persistent>
         <v-card>
             <v-sheet color="primary"></v-sheet>
             <v-card-title>Enter your user name current user is {{ userName }}</v-card-title>
@@ -16,16 +16,14 @@
 </template>
 
 <script setup lang="ts">
-import nuxtStorage from "nuxt-storage";
-
 const modelValue = defineModel<boolean>({ default: false });
 const userName = inject("userName");
 console.log(userName);
 function saveUserName() {
     const userNameString = userName;
-    nuxtStorage.localStorage.setData('userName', userNameString);
+    //nuxtStorage.localStorage.setData('userName', userNameString);
     modelValue.value = false;
-    console.log("UserNameDialog name " + userName);
+    console.log("UserNameDialog name " + userNameString);
 }
 
 
