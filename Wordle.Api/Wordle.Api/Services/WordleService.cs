@@ -15,11 +15,7 @@ namespace Wordle.Api.Service
 
     public List<Player> GetTop10Scores()
     {
-      return _context.Players
-        .OrderByDesending(p => p.AverageAttempts)
-        .ThenBy(p => p.GameCount)
-        .Take(10)
-        .ToList();
+      return _context.Players.OrderByDesending(p => p.AverageAttempts).ThenBy(p => p.GameCount).Take(10).ToList();
     }
 
     public void AddOrUpdatePlayer(Player player)
@@ -33,7 +29,7 @@ namespace Wordle.Api.Service
       }
       else 
       {
-        _context.Players.Add(player)
+        _context.Players.Add(player);
       }
       _context.SaveChanges();
     }
