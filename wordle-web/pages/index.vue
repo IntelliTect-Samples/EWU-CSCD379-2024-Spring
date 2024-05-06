@@ -82,24 +82,21 @@ function onKeyup(event: KeyboardEvent) {
 function calcAttempts(){
   var attempts = 0;
   if(game.value.gameState == GameState.Won){
-    for(var i = 0; i < game.value.guesses.length; i++){
-      if(game.value.guesses[i] != null){
-        attempts = i + 1;
-      }
-    }
+    attempts = game.value.guessIndex + 1;
   }else{
     attempts = game.value.guesses.length + 5;
   }
   return attempts;
 }
 function postScore(playerNameIn: string, attemptsIn: number, timeIn: number){
+  console.log("score data " + playerNameIn + " " + attemptsIn + " " + 0);
   let postScoreUrl ="Score/UpdateScore";
   Axios.post(postScoreUrl, {
     playerName: playerNameIn,
     attempts: attemptsIn,
     time: timeIn
   }).then((response) => {
-    console.log("response from api " + response.data);
+    console.log("response from api " + response.data + " " + response.status);
   });
 }
 watch(() => game.value.gameState, (value) => {
@@ -107,7 +104,7 @@ watch(() => game.value.gameState, (value) => {
     if(userName === "guest"){
       showUserNameDialog.value = true;
     }
-    console.log("score data " + userName.value + " " + calcAttempts() + " " + 0);
+    
     postScore(userName.value as string, calcAttempts(), 0);
   }
 });
