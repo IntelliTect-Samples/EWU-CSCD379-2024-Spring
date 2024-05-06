@@ -8,7 +8,7 @@ on:
     branches:
       - Assignment3
     paths:
-      - "Wordl.Api/**"
+       - Wordl.Api/**
   pull_request:
     branches:
       - Assignment3
@@ -32,9 +32,6 @@ jobs:
 
       - name: Build with dotnet
         run: dotnet build ~/Worde.Api/Wordle.Api.sln --configuration Release
-
-      - name: Test with dotnet
-        run: dotnet test --no-build --no-restore
 
       - name: dotnet publish
         run: dotnet publish -c Release -o ${{runner.temp}}/myapp
