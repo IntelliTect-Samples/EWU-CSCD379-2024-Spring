@@ -5,10 +5,8 @@ name: Build and deploy ASP.Net Core app to Azure Web App - agreeable-Island-web-
 
 on:
   push:
-    branches:
-      - Assignment3
     paths: 
-      - Wordle.Api/**
+        - Wordle.Api/**
   pull_request:
     branches:
       - Assignment3
