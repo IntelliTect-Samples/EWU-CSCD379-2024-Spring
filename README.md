@@ -1,5 +1,7 @@
 # EWU-CSCD378-2022-Spring
 
+Azure Site URL: https://lively-island-012d7ce1e.5.azurestaticapps.net
+
 ## Assignment 3
 
 The purpose of this assignment is to solidify your learning of:
