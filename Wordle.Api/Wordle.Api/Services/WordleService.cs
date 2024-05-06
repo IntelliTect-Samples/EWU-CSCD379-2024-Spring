@@ -8,7 +8,7 @@ namespace Wordle.Api.Services
   {
     private readonly PlayerDbContext _context;
 
-    public WordleService(ApplicationDbContext context)
+    public WordleService(PlayerDbContext context)
     {
       _context = context;
     }
