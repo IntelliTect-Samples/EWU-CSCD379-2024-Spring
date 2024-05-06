@@ -1,5 +1,5 @@
 using System.Collections.Generic;
-using System.Linq:
+using System.Linq;
 using Wordle.Api.Models;
 
 namespace Wordle.Api.Service
@@ -15,7 +15,7 @@ namespace Wordle.Api.Service
 
     public List<Player> GetTop10Scores()
     {
-      return _context.Players.OrderByDesending(p => p.AverageAttempts).ThenBy(p => p.GameCount).Take(10).ToList();
+      return _context.Players.OrderByDescending(p => p.AverageAttempts).ThenBy(p => p.GameCount).Take(10).ToList();
     }
 
     public void AddOrUpdatePlayer(Player player)
