@@ -1,6 +1,6 @@
 <template>
   <NuxtLayout>
-    <v-app class="myFontDefault">
+    <v-app>
       <v-app-bar color="primary">
 
         <v-app-bar-title>Pentagram</v-app-bar-title>
@@ -15,13 +15,13 @@
           <template v-slot:activator="{ props }">
             <v-btn icon v-bind="props">
               <v-icon>mdi-menu</v-icon>
-
             </v-btn>
           </template>
           <v-list>
             <v-list-item v-for="page in pages" :key="page.name" @click="router.push(page.path)">
               <v-list-item-title>{{ page.name }}</v-list-item-title>
             </v-list-item>
+            <v-list-item @click ="showHelpDialog  = true">Help</v-list-item>
           </v-list>
         </v-menu>
         <v-menu>
