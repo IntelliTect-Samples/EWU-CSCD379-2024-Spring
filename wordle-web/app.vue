@@ -11,6 +11,22 @@
         </v-app-bar-title>
       </v-app-bar>
 
+	<v-dialog v-model="dialogBox" max-width="500" persistent>
+		<v-card>
+			<v-sheet color="primary">
+				<v-card-text>UserName: </v-card-text>
+			</v-sheet>
+			<v-form class="mx-3 mt-5">
+				<v-text-field v-model="usersNameInput" label="user" variant="outlined" clearable required>
+			    </v-text-field>
+			</v-form>
+			<v-card-actions class="mx-4 mb-3">
+				<v-spacer></v-spacer>
+				<v-btn color="success" @click="userSaving">SAVE</v-btn>
+			</v-card-actions>
+		</v-card>
+	</v-dialog>
+
       <HelpDialog v-model="showHelpDialog" />
 
       <v-navigation-drawer expand-on-hover rail location="right">
@@ -79,6 +95,19 @@ import { useTheme } from "vuetify";
 import nuxtStorage from 'nuxt-storage';
 import { ref } from "vue";
 
+const dialogBox = ref<boolean>(true);
+const usersNameInput = ref<string>('');
+const userSaving = () => {
+    const userName = usersNameInput.value.trim();
+    if(userName !== ''){
+	nuxtStorage.localStorage.setData("userName", userName);
+	dialogBox.value = false;
+    }
+
+    else{
+        console.error("Cannot be empty")
+    }
+};
 const router = useRouter();
 const theme = useTheme();
 const showHelpDialog = ref(false);
