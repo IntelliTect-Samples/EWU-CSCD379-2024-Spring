@@ -3,9 +3,9 @@
     <v-app-bar color="primary" :elevation="2">
       <v-app-bar-title @click="$router.push('/')" style="cursor: pointer">
         <img
-          src="../public/logo.png"
+          src="../public/logoo.svg"
           alt="Logo"
-          style="height: 70px; width: auto"
+          style="height: 185px; width: auto"
         />
       </v-app-bar-title>
 
