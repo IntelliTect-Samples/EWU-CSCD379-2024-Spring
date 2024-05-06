@@ -70,7 +70,7 @@ const themes = [
 const pages = [
   { name: "Home", path: "/" },
   { name: "About", path: "/about" },
-  { name: "Leader Board", path: "/leaderBoard" },
+  { name: "Leader Board", path: "/leaderboard" },
 ];
 onMounted(() => {
   var defaultTheme = nuxtStorage.localStorage.getData('theme');

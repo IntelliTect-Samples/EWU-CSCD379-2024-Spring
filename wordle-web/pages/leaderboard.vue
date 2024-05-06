@@ -13,8 +13,11 @@
             <tbody>
                 <tr v-for="score in scoresToDisplay" :key="score.userName">
                     <td v-if="score.userName">{{ score.userName }}</td>
+                    console.log(score.userName);
                     <td v-if="score.aveAttempts">{{ score.aveAttempts }}</td>
+                    console.log(score.aveAttempts);
                     <td v-if="score.gameCount">{{ score.gameCount }}</td>
+                    console.log(score.gameCount);
                 </tr>
             </tbody>
         </v-table>
