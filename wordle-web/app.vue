@@ -57,7 +57,7 @@ const showHelpDialog = ref(false);
 const showUserNameDialog = ref(false);
 const userName = ref("guest");
 
-provide("userName", userName);
+provide("userName", userName.value);
 provide("showUserNameDialog", showUserNameDialog.value);
 
 

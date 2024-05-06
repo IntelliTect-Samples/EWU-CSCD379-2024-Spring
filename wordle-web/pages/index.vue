@@ -82,7 +82,11 @@ function onKeyup(event: KeyboardEvent) {
 function calcAttempts(){
   var attempts = 0;
   if(game.value.gameState == GameState.Won){
-    attempts = game.value.guesses.length;
+    for(var i = 0; i < game.value.guesses.length; i++){
+      if(game.value.guesses[i] != null){
+        attempts = i + 1;
+      }
+    }
   }else{
     attempts = game.value.guesses.length + 5;
   }
