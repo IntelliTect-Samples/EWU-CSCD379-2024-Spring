@@ -103,7 +103,7 @@ watch(() => game.value.gameState, (value) => {
     if(userName === "guest"){
       //showUserNameDialog.value = true;
     }
-    postScore(userName as string, calcAttempts(), 0);
+    postScore(userName.value as string, calcAttempts(), 0);
   }
 });
 </script>
