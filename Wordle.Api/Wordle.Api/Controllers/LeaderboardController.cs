@@ -1,6 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 using Wordle.Api.Models;
-using Wordle.Api.Services;
+using Wordle.Api.Service;
 
 namespace Wordle.Api.Controllers
 {
