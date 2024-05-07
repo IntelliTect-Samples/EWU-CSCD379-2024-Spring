@@ -67,7 +67,7 @@ onUnmounted(() => {
 });
 
 async function getWordFromApi(): Promise<string> {
-  let wordUrl = "https://wordleapiewu.azurewebsites.net/word";
+  let wordUrl = "https://agreeable-island-web-app.azurewebsites.net/word";
 
   const response = await Axios.get(wordUrl);
   console.log("Response from API: " + response.data);
@@ -91,7 +91,7 @@ function onKeyup(event: KeyboardEvent) {
         } else {
             attempts = game.value.maxAttempts;
         }
-        Axios.post(apiUrl + '/leaderboard/postscore', {
+        Axios.post('http://agreeable-island-web-app.azurewebsites.net/PostScore', {
             Name: nuxtStorage.localStorage.get("userName", userName.value),
             GameCount: 1,
             AverageAttempts: attempts,
