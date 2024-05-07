@@ -36,9 +36,9 @@
 <script setup>
 //SAMPLE DATA FOR NOW :(
 const leaderboard = ref([
-  {id: 1, name: 'Player 1', averageGuesses: 5, plays: 10 },
-  {id : 2, name: 'Player 2', averageGuesses: 4, plays: 15 },
-  {id : 3,name: 'Player 3', averageGuesses: 6, plays: 8 },
+  {id: 1, name: 'NPC1', averageGuesses: 5, plays: 10 },
+  {id : 2, name: 'NPC2', averageGuesses: 4, plays: 15 },
+  {id : 3,name: 'NPC3', averageGuesses: 6, plays: 8 },
 
 ]);
 </script>
