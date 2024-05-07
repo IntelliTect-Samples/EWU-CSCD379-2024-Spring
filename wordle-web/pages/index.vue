@@ -1,4 +1,4 @@
-﻿<template>
+<template>
   <v-container>
     <v-row>
       <v-col cols="12" class="d-flex justify-end">
@@ -87,6 +87,11 @@ import {
 provide("GAME", game);
 
 onMounted(() => {
+  // Get random word from word list
+  getWordFromApi().then((word) => {
+    game.value = new Game(word);
+  });
+
   window.addEventListener("keyup", onKeyup);
   var defaultName = nuxtStorage.localStorage.getData("name");
   showNameDialog.value = defaultName ? false : true;
