@@ -22,7 +22,7 @@ export class Game {
     this.gameState = GameState.Initializing;
   }
 
-  public async startNewGame() {
+  public async startNewGame(word?: string | undefined) {
     // Load the game
     this.gameState = GameState.Initializing;
 
@@ -31,7 +31,11 @@ export class Game {
     this.guessedLetters = [];
     
     // Get a word
-    await this.getWordOfTheDayFromApi();
+    if(!word){
+      this.secretWord = await this.getWordOfTheDayFromApi();
+    }else{
+      this.secretWord = word;
+    }
     
     // Populate guesses with the correct number of empty words
     this.guesses = [];
@@ -47,6 +51,14 @@ export class Game {
 
   public get guess() {
     return this.guesses[this.guessIndex];
+  }
+
+  public setGuessLetters(word: string){
+    // Loop through the word and add new letters
+    this.guess.clear();
+    for (let i = 0; i < word.length; i++) {
+      this.addLetter(word[i].toUpperCase());
+    }
   }
 
   public removeLastLetter() {
@@ -104,18 +116,18 @@ export class Game {
     }
   }
 
-  public async getWordOfTheDayFromApi() {
+  public async getWordOfTheDayFromApi(): Promise<string> {
     try {
       let wordUrl = "word/wordOfTheDay";
     
       const response = await Axios.get(wordUrl);
 
       console.log("Response from API: " + response.data);
-      this.secretWord = response.data;
       console.log("Secret Word: " + this.secretWord);
+      return response.data;
     } catch (error) {
       console.error("Error fetching word of the day:", error);
-      this.secretWord = "ERROR" // Probably best to print the error on screen, but this is kind of funny. :)
+      return "ERROR" // Probably best to print the error on screen, but this is kind of funny. :)
     }
   }
 }
