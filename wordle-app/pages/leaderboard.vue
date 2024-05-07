@@ -42,7 +42,7 @@ const players = ref<Player[]>();
 
 // fetch the leaderboard data from the server
 onMounted(async () => {
-	const response = await Axios.get("https://localhost:7108/player/topplayers");
+	const response = await Axios.get("http://localhost:5183/Player/TopPlayers?numberOfPlayers=10");
 	players.value = response.data;
 	console.log("What is this: " + players.value);
 });
