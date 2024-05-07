@@ -11,7 +11,20 @@
       elevation="4"
     >
       <v-card-title class="text-h3 mb-3">Leaderboard</v-card-title>
-      <v-data-table-server :items="players" />
+      <v-table>
+        <thead>
+          <tr>
+            <th class="text-left">Player</th>
+            <th>Games Played</th>
+            <th>Average Attempts</th>
+          </tr>
+        </thead>
+        <tr v-for="player in players" :key="player.playerId">
+          <td class="text-left">{{ player.name }}</td>
+          <td>{{ player.gameCount }}</td>
+          <td>{{ player.averageAttempts }}</td>
+        </tr>
+      </v-table>
 
       <v-spacer />
       <v-card-actions class="d-flex justify-center">
@@ -29,29 +42,27 @@
 <script setup lang="ts">
 import "../animations/fireworks.scss";
 import Axios from "axios";
-import { onMounted } from "vue";
 interface Player {
-  id: number;
+  playerId: number;
   name: string;
-  score: number;
-  attemps: number;
+  gameCount: number;
+  averageAttempts: number;
 }
 
-
-let players: Player[];
+const players: ref<Player[]> = ref([]);
 
 onMounted(() => {
   Axios.get("player/leaderboard")
     .then((res: { data: any }) => res.data)
     .then((data: any) =>
       data.map((player: any) => ({
-        id: player.id,
+        playerId: player.playerId,
         name: player.name,
-        score: player.score,
-        attemps: player.attemps,
+        gameCount: player.gameCount,
+        averageAttempts: player.averageAttempts,
       }))
     )
-    .then((playersData: Player[]) => (players = playersData));
+    .then((playersData: Player[]) => (players.value = playersData));
 });
 
 </script>
