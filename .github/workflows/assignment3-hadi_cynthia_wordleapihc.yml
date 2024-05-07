@@ -53,7 +53,7 @@ jobs:
         with:
           name: .net-app
 
-      - name: Deploy to Azure Web App
+      - name: Deploy to Azure Web App MEOW
         id: deploy-to-webapp
         uses: azure/webapps-deploy@v2
         with:
