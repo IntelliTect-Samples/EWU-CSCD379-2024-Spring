@@ -38,8 +38,8 @@ import { Game, GameState } from "../scripts/game";
 import Axios from "axios" //npm install axios 
 
 const userName = inject("userName");
-const game: Ref<Game> = ref(new Game("GAMES"));
-provide("GAME", game.value);
+const game = ref(new Game("GAMES"));
+//provide("GAME", game.value);
 const showUserNameDialog = inject("showUserNameDialog");
 
 onMounted(() => {
