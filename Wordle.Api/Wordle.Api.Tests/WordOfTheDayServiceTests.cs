@@ -17,19 +17,18 @@ public class WordOfTheDayServiceTests : DatabaseTestBase
         CollectionAssert.Contains(WordOfTheDayService.LoadWordList(), "yules");
     }
 
-
-    // TODO: Add a database to test with!
     [TestMethod]
     public void GetWordOfTheDay_SameWord()
     {
         // Arrange
         using var context = new WordleDbContext(Options);
         WordOfTheDayService service = new(context);
+        DateOnly date = DateOnly.FromDateTime(DateTime.UtcNow);
 
         // Act
-        var word = service.GetRandomWord();
+        var word = service.GetWordOfTheDay(date);
 
         // Assert
-        Equals(word, service.GetRandomWord());
+        Equals(word, service.GetWordOfTheDay(date));
     }
 }
