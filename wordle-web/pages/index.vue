@@ -71,6 +71,7 @@
 <script setup lang="ts">
 import { Game, GameState } from "../scripts/game";
 import nuxtStorage from "nuxt-storage";
+import Axios from "axios";
 
 const showWordsList = ref(false);
 const isGameOn = ref(false);
@@ -88,7 +89,9 @@ provide("GAME", game);
 
 onMounted(() => {
   // Get random word from word list
-
+  getWordFromApi().then((word) => {
+    game.value = new Game(word);
+  });
   window.addEventListener("keyup", onKeyup);
   var defaultName = nuxtStorage.localStorage.getData("name");
   showNameDialog.value = defaultName ? false : true;
@@ -163,5 +166,13 @@ function enterPlayerName() {
     nuxtStorage.localStorage.setData("name", playerName.value);
   }
   showNameDialog.value = !showNameDialog.value;
+}
+
+async function getWordFromApi(): Promise<string> {
+  let wordUrl = "word/wordOfTheDay";
+
+  const response = await Axios.get(wordUrl);
+  console.log("Response from API: " + response.data);
+  return response.data;
 }
 </script>
