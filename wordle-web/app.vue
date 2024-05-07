@@ -51,7 +51,7 @@
           <v-list-item prepend-icon="mdi-help-circle" title="About" @click="router.push('/aboutPage')"/>
           <v-list-item prepend-icon="mdi-weather-night" title="Light vs Dark"@click="toggleTheme()"/>
           <v-list-item  prepend-icon="mdi-help" title="Help" @click="showHelpDialog = true" />
-          <v-list-item  prepend-icon="mdi-hamburger" title="LEADERBOARD" @click="router.push('/leaderboard')" />
+          <v-list-item  prepend-icon="mdi-trophy" title="LEADERBOARD" @click="router.push('/leaderboard')" />
         </v-list>
       </v-navigation-drawer>
       
