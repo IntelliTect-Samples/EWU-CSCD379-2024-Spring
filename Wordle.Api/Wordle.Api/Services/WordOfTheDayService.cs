@@ -3,17 +3,12 @@ using Wordle.Api.Models;
 
 namespace Wordle.Api.Services;
 
-public class WordOfTheDayService
+public class WordOfTheDayService(WordleDbContext Db)
 {
     private readonly List<string> words = LoadWordList();
     private static object _lock = new();
 
-    public WordleDbContext Db { get; set; }
-
-    public WordOfTheDayService(WordleDbContext db)
-    {
-        Db = db;
-    }
+    public WordleDbContext Db { get; set; } = Db;
 
     public string GetRandomWord()
     {
