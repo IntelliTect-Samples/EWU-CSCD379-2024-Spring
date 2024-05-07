@@ -103,9 +103,9 @@ onUnmounted(() => {
 });
 
 function onKeyup(event: KeyboardEvent) {
-  // if (showWordsList.value) {
-  //    return;
-  // }
+  if (showWordsList.value) {
+    return;
+  }
   if (showNameDialog.value) {
     if (event.key === "Enter") {
       enterPlayerName();

@@ -43,7 +43,6 @@ test("filterValidWords contains words with letters that are misplaced in differe
   game.guess.addLetter("s");
   game.guess.addLetter("e");
   game.submitGuess();
-  console.log(filterValidWords(game));
 
   expect(filterValidWords(game)).toContain("biggy");
   expect(filterValidWords(game)).toContain("drink");
