@@ -1,4 +1,4 @@
-<template>
+﻿<template>
   <v-container>
     <v-row>
       <v-col cols="12" class="d-flex justify-end">
@@ -72,7 +72,7 @@
 import { Game, GameState } from "../scripts/game";
 import nuxtStorage from "nuxt-storage";
 
-const game: Game = reactive(new Game());
+const game: Game = reactive(new Game("GAMES"));
 const showWordsList = ref(false);
 const isGameOn = ref(false);
 const playerName = ref("");
@@ -88,9 +88,6 @@ provide("GAME", game);
 
 onMounted(() => {
   // Get random word from word list
-  getWordFromApi().then((word) => {
-    game.value = new Game(word);
-  });
 
   window.addEventListener("keyup", onKeyup);
   var defaultName = nuxtStorage.localStorage.getData("name");
