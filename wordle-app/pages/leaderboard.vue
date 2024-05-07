@@ -42,7 +42,14 @@ const players = ref<Player[]>();
 
 // fetch the leaderboard data from the server
 onMounted(async () => {
-	const response = await Axios.get("http://localhost:5183/Player/TopPlayers?numberOfPlayers=10");
+
+	if (window.location.hostname === "localhost" || window.location.hostname === "127.0.0.1") {
+    Axios.defaults.baseURL = "https://localhost:7108/";
+  } else {
+    Axios.defaults.baseURL = "https://wordleapiewu.azurewebsites.net/";
+  }
+
+	const response = await Axios.get("/Player/TopPlayers?numberOfPlayers=10");
 	players.value = response.data;
 	console.log("What is this: " + players.value);
 });
