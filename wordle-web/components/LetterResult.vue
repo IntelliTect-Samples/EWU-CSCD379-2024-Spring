@@ -58,6 +58,7 @@ function onClicked() {
   } else {
     game.addLetter(props.letter.char.toUpperCase());
   }
+  debugger;
 }
 
 watch([display.sm, display.xs, display.md], () => {
