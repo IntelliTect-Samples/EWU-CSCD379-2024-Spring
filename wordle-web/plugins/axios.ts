@@ -1,4 +1,4 @@
-import Axios from 'axios'
+import Axios from "axios";
 
 export default defineNuxtPlugin(() => {
   if (process.client) {
@@ -11,4 +11,4 @@ export default defineNuxtPlugin(() => {
       Axios.defaults.baseURL = "https://wordleapiewu.azurewebsites.net/";
     }
   }
-})
+});
