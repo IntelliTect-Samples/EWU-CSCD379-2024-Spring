@@ -45,7 +45,7 @@ function correctState(letterState: LetterState) {
   }
 }
 
-const game: Game | undefined = inject("GAME", undefined);
+const game: Ref<Game> | undefined = inject("GAME", undefined);
 const boxSize = ref(60);
 const display = useDisplay();
 
@@ -54,11 +54,10 @@ function onClicked() {
 
 
   if (props.letter.char === "⌫ ") {
-    game.removeLastLetter();
+    game.value.removeLastLetter();
   } else {
-    game.addLetter(props.letter.char.toUpperCase());
+    game.value.addLetter(props.letter.char.toUpperCase());
   }
-  debugger;
 }
 
 watch([display.sm, display.xs, display.md], () => {
