@@ -139,42 +139,44 @@
 - Creating a context
 - Creating models
 - Migrations
-- Deployment (Site and Database)
 
 - Initial EF Context
 - Word object
 - Word migration
-- Word Controller that returns a word
-- Word Service
-- Service Dependency Injection
+- EF Migration Deltas to a table
 
 ### Lecture 10. 5/2: 🟢
-- API Post
-- DTOs
-- EF Migration Deltas to a table
-- Basic EF Querying
-- Axios using Post
-
---- After this point is subject to significant change ---
+- Word Service
+- Word Controller that returns a word
+- Service Dependency Injection
+- Deployment (Site and Database)
+- API configuration: Swagger in production
 
 ## Week 6
 ### Lecture 11. 5/7: 
-- API unit testing: database, services, integration.
-- App Refactor:
-  - Add game features like end and restart
-  - Add solver and componentize
-  - Handle the word API not responding
-  - API configuration: Swagger in production
-  - Action updates, versioning, file names, warnings
-  - Sizing of letters/buttons with useDisplay
-  - Unit testing letters with DI on useDisplay
-  - New App bar and UI cleanup
-  - New starting page and default route
-  - Theme update and add of 'Unknown' color
-  - Split LetterResult from LetterButton
-  - Move AddWordTest to about page
+- Meg's Awesome Changes
+  - Global Base URL for Axios
+  - Restructure App Async in Constructor
+
+- Unit Testing with Databases
+  - API unit testing: database, services, integration.
+  - Testing with DI and Services
+
+- EF Parent/Child (Word with child Game)
+  - API Post
+  - DTOs
+  - Axios using Post
+  - Basic EF Querying
+
+- Miscelaneous
   - Custom icon and favicon
-  - Google Search Console and 
+  - New starting page and default route
+
+
+
+
+--- After this point is subject to significant change ---
+
 
 ### Lecture 12. 5/09: 
 - Troubleshooting Azure
@@ -206,6 +208,7 @@
 - Using GroupBy, Sort
 - Questions from the homework
 - Lots of other stuff pertaining to homework
+- Google Analytics
 
 ### Lecture 16, 5/23
 - Database rollback and Migration consolidate
