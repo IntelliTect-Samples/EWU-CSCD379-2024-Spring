@@ -30,7 +30,7 @@ namespace Wordle.Api.Services
             else
             {
                 player.GameCount++;
-                player.AverageAttempts = (attempts + player.AverageAttempts) / (player.GameCount)
+                player.AverageAttempts = (attempts + player.AverageAttempts) / (player.GameCount);
             }
             Db.SaveChanges();
 
