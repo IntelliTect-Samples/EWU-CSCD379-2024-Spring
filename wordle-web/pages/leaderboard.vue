@@ -29,6 +29,29 @@
 <script setup lang="ts">
 import "../animations/fireworks.scss";
 import Axios from "axios";
+import { onMounted } from "vue";
+interface Player {
+  id: number;
+  name: string;
+  score: number;
+  attemps: number;
+}
 
-const players = await Axios.get("player/leaderboard").then((res) => res.data);
+
+let players: Player[];
+
+onMounted(() => {
+  Axios.get("player/leaderboard")
+    .then((res: { data: any }) => res.data)
+    .then((data: any) =>
+      data.map((player: any) => ({
+        id: player.id,
+        name: player.name,
+        score: player.score,
+        attemps: player.attemps,
+      }))
+    )
+    .then((playersData: Player[]) => (players = playersData));
+});
+
 </script>
