@@ -12,21 +12,16 @@ public class LeaderboardServiceTests : DatabaseTestBase
 	private readonly WebApplicationFactory<Program> _factory = new();
 	private LeaderboardService _service = null!;
 
-	[TestInitialize]
-	public async Task Init()
+	[TestMethod]
+	public async Task GetTopScores_ReturnsListOfSizeTen()
 	{
-		var context = new AppDbContext(Options);
+		// Arrange
+		using var context = new AppDbContext(Options);
 		_service = new(context);
 		foreach (PlayerDto request in Requests)
 		{
 			await _service.PostScoreAsync(request);
 		}
-	}
-
-	[TestMethod]
-	public async Task GetTopScores_ReturnsListOfSizeTen()
-	{
-		// Arrange
 
 		// Act
 		var scores = await _service.GetTopScoresAsync();
@@ -39,6 +34,12 @@ public class LeaderboardServiceTests : DatabaseTestBase
 	public async Task GetTopScoresAsync_SuccessfullyGetsWords()
 	{
 		// Arrange
+		using var context = new AppDbContext(Options);
+		_service = new(context);
+		foreach (PlayerDto request in Requests)
+		{
+			await _service.PostScoreAsync(request);
+		}
 
 		// Act
 		var scores = await _service.GetTopScoresAsync();
@@ -51,6 +52,12 @@ public class LeaderboardServiceTests : DatabaseTestBase
 	public async Task GetWordOfTheDay_ReturnsString()
 	{
 		// Arrange
+		using var context = new AppDbContext(Options);
+		_service = new(context);
+		foreach (PlayerDto request in Requests)
+		{
+			await _service.PostScoreAsync(request);
+		}
 
 		// Act
 		var scores = await _service.GetTopScoresAsync();
