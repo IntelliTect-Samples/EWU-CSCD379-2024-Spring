@@ -1,7 +1,9 @@
+using Wordle.Api.Models;
+
 namespace Wordle.Api.Tests;
 
 [TestClass]
-public class WordOfTheDayServiceTests
+public class WordOfTheDayServiceTests : DatabaseTestBase
 {
     [TestMethod]
     public void LoadWordList_SuccessfullyGetsWords()
@@ -17,12 +19,17 @@ public class WordOfTheDayServiceTests
 
 
     // TODO: Add a database to test with!
-    //[TestMethod]
-    //public void GetWordOfTheDay_SameWord()
-    //{
-    //    WordOfTheDayService service = new();
-    //    var word = service.GetRandomWord();
-    //    CollectionAssert.Equals(word, service.GetRandomWord());
-    //}
+    [TestMethod]
+    public void GetWordOfTheDay_SameWord()
+    {
+        // Arrange
+        using var context = new WordleDbContext(Options);
+        WordOfTheDayService service = new(context);
 
+        // Act
+        var word = service.GetRandomWord();
+
+        // Assert
+        Equals(word, service.GetRandomWord());
+    }
 }
