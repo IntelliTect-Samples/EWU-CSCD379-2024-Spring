@@ -72,7 +72,6 @@
 import { Game, GameState } from "../scripts/game";
 import nuxtStorage from "nuxt-storage";
 
-const game: Game = reactive(new Game("GAMES"));
 const showWordsList = ref(false);
 const isGameOn = ref(false);
 const playerName = ref("");
@@ -84,6 +83,7 @@ import {
   playWinSound,
 } from "../scripts/soundUtils";
 
+const game: Ref<Game> = ref(new Game("GAMES"));
 provide("GAME", game);
 
 onMounted(() => {
@@ -109,30 +109,30 @@ function onKeyup(event: KeyboardEvent) {
     }
   } else {
     if (event.key === "Enter") {
-      let currentGuessIndex = game.guessIndex;
-      game.submitGuess();
-      if (currentGuessIndex !== game.guessIndex) {
+      let currentGuessIndex = game.value?.guessIndex;
+      game.value?.submitGuess();
+      if (currentGuessIndex !== game.value?.guessIndex) {
         playEnterSound();
       }
     } else if (event.key == "Backspace") {
       playClickSound();
-      game.removeLastLetter();
+      game.value?.removeLastLetter();
     } else if (event.key.match(/[A-z]/) && event.key.length === 1) {
       playClickSound();
-      game.addLetter(event.key.toUpperCase());
+      game.value?.addLetter(event.key.toUpperCase());
     }
   }
 }
 
-watch(game, () => {
-  if (game.gameState !== GameState.Playing) {
+watch(game.value, () => {
+  if (game.value?.gameState !== GameState.Playing) {
     isGameOn.value = true;
   } else {
     isGameOn.value = false;
   }
 });
 watch(
-  () => game.gameState,
+  () => game.value?.gameState,
   (newState) => {
     switch (newState) {
       case GameState.Won:
@@ -152,7 +152,7 @@ watch(
 function closeGameDialog() {
   isGameOn.value = false;
   setTimeout(() => {
-    game.startNewGame();
+    game.value?.startNewGame();
   }, 300);
 }
 
