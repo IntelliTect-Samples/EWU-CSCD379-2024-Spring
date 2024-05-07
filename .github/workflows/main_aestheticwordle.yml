@@ -12,7 +12,8 @@ on:
       - Wordle.Api/**
   pull_request:
     branches:
-      - main
+      - Assignemnt3
+      - Assignment3-Dev
   workflow_dispatch:
 
 jobs:
