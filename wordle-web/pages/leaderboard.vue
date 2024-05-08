@@ -9,23 +9,32 @@
       class="mx-auto mt-8 w-75 pa-8 rounded text-center"
       elevation="4"
     >
-      <v-card-title class="text-h3 mb-3">Leaderboard</v-card-title>
-      <v-table>
-        <thead>
-          <tr>
-            <th class="text-center">Player</th>
-            <th class="text-center">Games Played</th>
-            <th class="text-center">Average Attempts</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr v-for="player in players" :key="player.playerId">
-            <td>{{ player.name }}</td>
-            <td>{{ player.gameCount }}</td>
-            <td>{{ player.averageAttempts }}</td>
-          </tr>
-        </tbody></v-table
-      >
+      <v-card-title class="text-h3 mb-3">
+        <v-icon icon="mdi-star" />Leaderboard <v-icon icon="mdi-star"
+      /></v-card-title>
+      <v-card-item>
+        <v-table>
+          <thead>
+            <tr>
+              <th class="text-center">Rank</th>
+              <th class="text-center">Player</th>
+              <th class="text-center">Games Played</th>
+              <th class="text-center">Average Attempts</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr v-for="(player, i) in players" :key="i">
+              <td v-if="i < 3">
+                <v-icon :class="[isPosdium(i), 'rotate']">mdi-trophy</v-icon>
+              </td>
+              <td v-else>{{ i + 1 }}</td>
+              <td>{{ player.name }}</td>
+              <td>{{ player.gameCount }}</td>
+              <td>{{ player.averageAttempts }}</td>
+            </tr>
+          </tbody></v-table
+        >
+      </v-card-item>
 
       <v-spacer />
       <v-card-actions class="d-flex justify-center">
@@ -39,6 +48,32 @@
     </v-card>
   </v-container>
 </template>
+
+<style lang="scss" scoped>
+.first-place {
+  color: #ffd700;
+}
+.second-place {
+  color: #c0c0c0;
+}
+.third-place {
+  color: #cd7f32;
+}
+
+// build 3d roation
+@keyframes rotate3d {
+  0% {
+    transform: rotate3d(0, 1, 0, 0deg);
+  }
+  100% {
+    transform: rotate3d(0, 1, 0, 360deg);
+  }
+}
+//apply to v-card now
+.rotate {
+  animation: rotate3d 3s linear infinite;
+}
+</style>
 
 <script setup lang="ts">
 import "../animations/fireworks.scss";
@@ -65,4 +100,10 @@ onMounted(() => {
     )
     .then((playersData: Player[]) => (players.value = playersData));
 });
+
+function isPosdium(i: number) {
+  if (i === 0) return "first-place";
+  if (i === 1) return "second-place";
+  if (i === 2) return "third-place";
+}
 </script>
