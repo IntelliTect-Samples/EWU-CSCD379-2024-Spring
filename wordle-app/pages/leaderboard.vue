@@ -10,14 +10,15 @@
 							<th>Name</th>
 							<th>Average Guesses</th>
 							<th>Number of Games</th>
+							<th>Average Time</th>
 						</tr>
 					</thead>
 					<tbody>
-						<tr v-for="(player, index) in players" :key="player.playerId">
-							<td>{{ index + 1 }}</td>
+						<tr v-for="player in players" :key="player.name">
 							<td>{{ player.name }}</td>
-							<td>{{ Math.round(player.averageAttempts) }}</td>
-							<td>{{ player.gameCount }}</td>
+							<td>{{ player.averageGuesses }}</td>
+							<td>{{ player.gamesPlayed }}</td>
+							<td>{{ player.averageTime }}</td>
 						</tr>
 					</tbody>
 				</v-table>
@@ -28,38 +29,25 @@
 
 <script setup lang="ts">
 import Axios from "axios";
-import type { Player } from "~/scripts/player";
+import {ref} from 'vue';
 
 const players = ref<Player[]>();
+interface Player {
+  name: string;
+  averageGuesses: number;
+  gamesPlayed: number;
+  averageTime: number;
+}
 
-// interface Player {
-// 	playerId: number;
-// 	name: string;
-// 	gameCount: number;
-// 	averageAttempts: number;
-// 	averageSecondsPerGame: number;
-// }
+const topTenScores = ref<Player[]>();
 
-// fetch the leaderboard data from the server
-onMounted(async () => {
-
-	const response = await Axios.get("https://wordleapiewusergeitim.azurewebsites.net/Player/TopPlayers?numberOfPlayers=10");
-	players.value = response.data;
-	console.log("What is this: " + players.value);
-});
-
-// create a dummy data for the leaderboard
-// const players = [
-// 	{ id: 1, name: "John", averageGuesses: 3, numberOfGames: 10 },
-// 	{ id: 2, name: "Alex", averageGuesses: 4, numberOfGames: 20 },
-// 	{ id: 3, name: "Alice", averageGuesses: 5, numberOfGames: 30 },
-// 	{ id: 4, name: "Bob", averageGuesses: 6, numberOfGames: 40 },
-// 	{ id: 5, name: "Charlie", averageGuesses: 7, numberOfGames: 50 },
-// 	{ id: 6, name: "David", averageGuesses: 8, numberOfGames: 60 },
-// 	{ id: 7, name: "Eve", averageGuesses: 9, numberOfGames: 70 },
-// 	{ id: 8, name: "Frank", averageGuesses: 10, numberOfGames: 80 },
-// 	{ id: 9, name: "Grace", averageGuesses: 11, numberOfGames: 90 },
-// 	{ id: 10, name: "Hank", averageGuesses: 12, numberOfGames: 100 },
-// ];
+//TODO: APIURL
+Axios.get(apiUrl + '/leaderboard/GetTopScores')
+  .then(response => {
+    topTenScores.value = response.data;
+  })
+  .catch(error => {
+    console.log(error);
+  });
 
 </script>

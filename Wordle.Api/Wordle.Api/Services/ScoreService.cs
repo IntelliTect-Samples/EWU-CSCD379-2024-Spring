@@ -5,41 +5,78 @@ namespace Wordle.Api.Services;
 
 public class ScoreService
 {
-    private WordleDbContext Db { get; set; }
+    private readonly AppDbContext _context;
+    private static object updateLock = new();
+	private static object addLock = new();
     
-    public ScoreService(WordleDbContext db)
-    {
-        Db = db;
-    }
+    public ScoreService(AppDbContext context)
+	{
+		_context = context;
+	}
+    
 
-    public async Task<Score[]> GetTopScores()
+    public async Task<List<PlayerDTO>> GetTopScores()
     {
-        return await Db.Scores
-            .OrderByDescending(s => s.AverageGuesses)
-            .ThenBy(s => s.GamesPlayed)
-            .Take(10)
-            .ToArrayAsync();
+        return await _context.Players.
+			OrderBy(player => player.AverageAttempts).
+            .ThenBy(player => player.GamesPlayed)
+			Take(10).
+			Select(player => new PlayerDTO
+			{
+				Name = player.Name,
+				GameCount = player.GameCount,
+				AverageAttempts = player.AverageAttempts
+                AverageSecondsPerGame = player.AverageSecondsPerGame;
+			}).ToListAsync();
+
     }
     
-    public async Task AddScore(Player player)
+    public async Task<Player> AddScore(PlayerDTO player)
     {
-        var score = new Score
-        {
-            PlayerId = player.PlayerId,
-            AverageGuesses = player.AverageAttempts,
-            GamesPlayed = player.GameCount
-        };
-        
-        if(Db.Scores.Any(s => s.PlayerId == player.PlayerId))
-        {
-            Db.Scores.Update(score);
-        }
-        else
-        {
-            Db.Scores.Add(score);
-        }
-        
-        
-        await Db.SaveChangesAsync();
+        Player? curPlayer = await _context.Players.FirstOrDefaultAsync(player => player.Name.Equals(request.Name));
+		if (curPlayer != null)
+		{
+			lock (updateLock)
+			{
+				double attempts = curPlayer.AverageAttempts * curPlayer.GameCount + request.AverageAttempts;
+				curPlayer.AverageAttempts = attempts / (curPlayer.GameCount + 1);
+                int seconds = curPlayer.AverageSecondsPerGame * curPlayer.GameCount + request.AverageSecondsPerGame;
+                curPlayer.AverageSecondsPerGame = seconds/ (curPlayer.GameCount + 1);
+                curPlayer.GameCount = curPlayer.GameCount + 1;
+				_context.SaveChanges();
+				return curPlayer;
+			}
+		}
+		else
+		{
+			lock (addLock)
+			{
+				curPlayer = _context.Players.FirstOrDefault(player => player.Name.Equals(request.Name));
+				if (curPlayer != null)
+				{
+					double attempts = curPlayer.AverageAttempts * curPlayer.GameCount + request.AverageAttempts;
+                    curPlayer.AverageAttempts = attempts / (curPlayer.GameCount + 1);
+                    int seconds = curPlayer.AverageSecondsPerGame * curPlayer.GameCount + request.AverageSecondsPerGame;
+                    curPlayer.AverageSecondsPerGame = seconds/ (curPlayer.GameCount + 1);
+                    curPlayer.GameCount = curPlayer.GameCount + 1;
+                    _context.SaveChanges();
+                    return curPlayer;
+				}
+				else
+				{
+					Player newPlayer = new()
+					{
+						AverageAttempts = request.AverageAttempts,
+						GameCount = request.GameCount,
+						Name = request.Name,
+                        AverageSecondsPerGame = request.AverageSecondsPerGame
+					};
+					_context.Players.Add(newPlayer);
+					_context.SaveChanges();
+					return newPlayer;
+				}
+
+			}
+		}
     }
 }
