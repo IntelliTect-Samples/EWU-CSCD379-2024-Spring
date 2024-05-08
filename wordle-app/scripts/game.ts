@@ -1,4 +1,4 @@
-import { Axios } from "axios";
+import axios, { Axios } from "axios";
 import { LetterState, type Letter } from "./letter";
 import { Word } from "./word";
 import { WordList } from "./wordList";
@@ -87,6 +87,7 @@ export class Game {
     } else {
       if (this.guessIndex === this.maxAttempts - 1) {
         this.gameState = GameState.Lost;
+        this.postScore();
       } else {
         this.guessIndex++;
       }
@@ -99,13 +100,12 @@ export class Game {
     } else {
       attempts = this.maxAttempts;
     }
-    //TODO - INSERT API LINK
-    /*Axios.post(apiUrl + '/leaderboard/postscore', {
+    axios.post("https://wordleapiewusergeitim.azurewebsites.net/Player/AddPlayer", {
       Name: nameUserNameDialog,
       GameCount: 1,
       AverageAttempts: attempts,
       AverageSecondsPerGame: stopwatch.seconds.value
-    });*/
+    });
   }
 }
 

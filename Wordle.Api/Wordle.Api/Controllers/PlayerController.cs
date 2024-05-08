@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Wordle.Api.Models;
 using Wordle.Api.Services;
+using Wordle.Api.DTOS;
 
 namespace Wordle.Api.Controllers;
 
@@ -22,9 +23,15 @@ public class PlayerController(PlayerService playerService) : ControllerBase
     }
     
     [HttpPost("AddPlayer")]
-    public async Task<Player> AddPlayer(Player player)
-    {
-        await playerService.AddPlayer(player);
-        return player;
-    }
+	public async Task<PlayerDTO> Post(PlayerDTO request)
+	{
+		Player player = await _scoreService.PostScoreAsync(request);
+		return new PlayerDTO
+		{
+			Name = player.Name,
+			GameCount = player.GameCount,
+			AverageAttempts = player.AverageAttempts
+            AverageSecondsPerGame = player.AverageSecondsPerGame;
+		};
+	}
 }

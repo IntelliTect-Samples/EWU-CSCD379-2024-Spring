@@ -42,9 +42,9 @@ interface Player {
 const topTenScores = ref<Player[]>();
 
 //TODO: APIURL
-Axios.get(apiUrl + '/leaderboard/GetTopScores')
+Axios.get("https://wordleapiewusergeitim.azurewebsites.net/Player/TopPlayers?numberOfPlayers=10")
   .then(response => {
-    topTenScores.value = response.data;
+    players.value = response.data;
   })
   .catch(error => {
     console.log(error);
