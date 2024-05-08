@@ -166,6 +166,8 @@ function enterPlayerName() {
     nuxtStorage.localStorage.setData("name", playerName.value);
   }
   showNameDialog.value = !showNameDialog.value;
+  saveScore();
+
 }
 
 async function getWordFromApi(): Promise<string> {
@@ -174,5 +176,16 @@ async function getWordFromApi(): Promise<string> {
   const response = await Axios.get(wordUrl);
   console.log("Response from API: " + response.data);
   return response.data;
+}
+
+async function saveScore() {
+  let scoreUrl = "player/saveScore";
+  let data = {
+    name: playerName.value,
+    averageAttempts: game.value?.guesses.length,
+  };
+  await Axios.post(scoreUrl,data,   {
+    headers: { "Content-Type": "application/json" } // config
+  }).then((res) => console.log(res)).catch((err) => console.log(err));
 }
 </script>

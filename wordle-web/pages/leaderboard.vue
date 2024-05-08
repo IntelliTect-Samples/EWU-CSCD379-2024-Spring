@@ -4,7 +4,6 @@
       <div class="before"></div>
       <div class="after"></div>
     </div>
-
     <v-card
       color="secondary"
       class="mx-auto mt-8 w-75 pa-8 rounded text-center"
@@ -14,17 +13,19 @@
       <v-table>
         <thead>
           <tr>
-            <th class="text-left">Player</th>
-            <th>Games Played</th>
-            <th>Average Attempts</th>
+            <th class="text-center">Player</th>
+            <th class="text-center">Games Played</th>
+            <th class="text-center">Average Attempts</th>
           </tr>
         </thead>
-        <tr v-for="player in players" :key="player.playerId">
-          <td class="text-left">{{ player.name }}</td>
-          <td>{{ player.gameCount }}</td>
-          <td>{{ player.averageAttempts }}</td>
-        </tr>
-      </v-table>
+        <tbody>
+          <tr v-for="player in players" :key="player.playerId">
+            <td>{{ player.name }}</td>
+            <td>{{ player.gameCount }}</td>
+            <td>{{ player.averageAttempts }}</td>
+          </tr>
+        </tbody></v-table
+      >
 
       <v-spacer />
       <v-card-actions class="d-flex justify-center">
@@ -64,5 +65,4 @@ onMounted(() => {
     )
     .then((playersData: Player[]) => (players.value = playersData));
 });
-
 </script>

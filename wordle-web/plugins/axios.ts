@@ -11,4 +11,7 @@ export default defineNuxtPlugin(() => {
       Axios.defaults.baseURL = "https://aestheticwordle.azurewebsites.net/";
     }
   }
+  Axios.defaults.headers.common["Content-Type"] = "application/json";
+  Axios.defaults.headers.common["Accept"] = "application/json";
+  Axios.defaults.headers.common["Access-Control-Allow-Origin"] = "*";
 });
