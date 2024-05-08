@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Wordle.Api.Dtos;
 using Wordle.Api.Models;
 using Wordle.Api.Services;
 
@@ -9,9 +10,12 @@ namespace Wordle.Api.Controllers;
 public class PlayerController(PlayerServices PlayerService) : ControllerBase
 {
     [HttpGet("Leaderboard")]
-    public IEnumerable<Player> GetLeaderboard()
+    public IEnumerable<PlayerDto> GetLeaderboard()
     {
-        return PlayerService.TopTenPlayers();
+        return PlayerService.TopTenPlayers()
+            .Select(player => 
+            new PlayerDto() 
+            { Name= player.Name, GameCount=player.GameCount, AverageAttempts = player.AverageAttempts });
     }
 
     [HttpPost("SaveScore")]
