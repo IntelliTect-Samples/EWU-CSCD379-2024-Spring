@@ -7,8 +7,8 @@
             <v-text-field v-model="userName" label="User Name" required></v-text-field>
             <v-card-actions>
                 <v-spacer></v-spacer>
-                <v-btn color="primary" @click="modelValue = false">Cancel</v-btn>
-                <v-btn color="primary" @click=saveUserName>Save</v-btn>
+                <v-btn color="primary" variant="flat" @click="modelValue = false">Cancel</v-btn>
+                <v-btn color="primary" variant="flat" @click=saveUserName>Save</v-btn>
             </v-card-actions>
         </v-card>
 
@@ -21,8 +21,8 @@ const modelValue = defineModel<boolean>({ default: false });
 const userName = inject("userName");
 const saveUserName = () => {
     modelValue.value = false;
-    console.log("userName in dialog " + userName.value);
+    //console.log("userName in dialog " + userName.value);
     nuxtStorage.localStorage.setData("userName", userName.value);
 }
-console.log("userName in dialog " + userName.value);
+//console.log("userName in dialog " + userName.value);
 </script>
