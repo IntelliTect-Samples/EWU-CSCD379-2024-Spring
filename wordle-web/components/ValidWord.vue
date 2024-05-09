@@ -24,11 +24,11 @@ const validWords = computed(() => {
     return gameRef.value ? findValidWords(gameRef.value) : [];
 });
 function setGuess(word: string) {
-    game?.guess.clear();
+    gameRef.value?.guess.clear();
 
     word = word.toUpperCase();
     for (let letter of word) {
-        game?.guess.addLetter(letter);
+        gameRef.value?.guess.addLetter(letter);
     }
 }
 
