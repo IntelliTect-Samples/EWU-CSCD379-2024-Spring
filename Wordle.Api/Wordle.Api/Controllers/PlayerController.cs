@@ -7,7 +7,7 @@ namespace Wordle.Api.Controllers;
 
 [ApiController]
 [Route("[controller]")]
-public class PlayerController : ControllerBase
+public class PlayerController(PlayerService playerService) : ControllerBase
 {
     private readonly PlayerService _service;
     public PlayerController(PlayerService service)
@@ -28,9 +28,8 @@ public class PlayerController : ControllerBase
     }
     
     [HttpPost("AddPlayer")]
-	public async Task<bool> Post(Player player)
+	public async Task Post(Player player)
 	{
-		Player player = await _service.AddPlayer(player);
-		return true;
+		await _service.AddPlayer(player);
 	}
 }

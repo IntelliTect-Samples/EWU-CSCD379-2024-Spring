@@ -17,9 +17,8 @@
 						<tr v-for="(player, index) in players" :key="player.playerId">
 							<td>{{ index + 1 }}</td>
 							<td>{{ player.name }}</td>
-							<td>{{ Math.round(player.averageAttempts) }}</td>
+							<td>{{ player.averageAttempts }}</td>
 							<td>{{ player.gameCount }}</td>
-							<td>{{ player.averageSecondsPerGame }} sec.</td>
 						</tr>
 					</tbody>
 				</v-table>
