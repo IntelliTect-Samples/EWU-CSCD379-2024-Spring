@@ -8,7 +8,6 @@
         placeholder="Enter a Word!"
         @update:modelValue="updatePage"
       />
-
       <v-btn
         height="40px"
         v-for="word in pagedWords"
@@ -20,6 +19,7 @@
       </v-btn>
       <v-card-item class="ma-3">
         <v-pagination
+          v-if="totalPages > 1"
           density="compact"
           v-model="currentPage"
           :length="totalPages"
@@ -80,7 +80,7 @@ function addGuess(word: string) {
   currentPage.value = 1;
 }
 
-watch(game.value?.guessedLetters, () => {
+watch(pagedWords, () => {
   updatedWords.value = validWords();
   totalPages.value = Math.ceil(updatedWords.value.length / 10);
 });
