@@ -22,7 +22,7 @@
         </v-card-actions>
       </v-card>
     </v-dialog>
-    <v-col class="d-flex flex-column align-end ga-3">
+    <v-col class="d-flex flex-column align-end ga-2">
       <v-row>
         <v-sheet
           class="pa-2 cursor-pointer"
@@ -32,11 +32,14 @@
           elevation="4"
           @click="showNameDialog = !showNameDialog"
         >
+        <v-icon icon="mdi-account"/>
           <strong>Username:</strong> {{ playerName }}
         </v-sheet>
       </v-row>
       <v-row>
         <v-sheet width="200" class="pa-2" color="primary" rounded elevation="4">
+          <v-icon icon="mdi-timer"/>
+
           <strong> Current Time:</strong> {{ stopwatch.getCurrentTime() }}
         </v-sheet>
       </v-row>
