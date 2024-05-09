@@ -19,9 +19,9 @@ public class PlayerController(PlayerServices PlayerService) : ControllerBase
     }
 
     [HttpPost("SaveScore")]
-    public async Task SaveScores(string name, int attempts)
+    public async Task SaveScores(Score score)
     {
-        await PlayerService.AddPlayer(name, attempts);
+        await PlayerService.AddPlayer(score);
     }
 
 }

@@ -9,18 +9,18 @@ namespace Wordle.Api.Services
         public WordleDbContext Db { get; set; } = Db;
 
 
-        public async Task AddPlayer(string name, int attempts)
+        public async Task AddPlayer(Score score)
         {
-            Player? player = await Db.Players.FirstOrDefaultAsync(player => player.Name == name);
+            Player? player = await Db.Players.FirstOrDefaultAsync(player => player.Name == score.Name);
 
             if (player is null) {
                 lock (_lock)
                 {
                     player = new()
                     {
-                        Name = name,
+                        Name = score.Name,
                         GameCount = 1,
-                        AverageAttempts = attempts
+                        AverageAttempts = score.Attempts
                     };
 
                     Db.Players.Add(player);
@@ -30,7 +30,7 @@ namespace Wordle.Api.Services
             else
             {
                 player.GameCount++;
-                player.AverageAttempts = (attempts + player.AverageAttempts) / (player.GameCount);
+                player.AverageAttempts = (score.Attempts + player.AverageAttempts) / (player.GameCount);
             }
             Db.SaveChanges();
 

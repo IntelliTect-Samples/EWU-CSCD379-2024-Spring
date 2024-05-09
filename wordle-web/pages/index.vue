@@ -167,7 +167,6 @@ function enterPlayerName() {
   }
   showNameDialog.value = !showNameDialog.value;
   saveScore();
-
 }
 
 async function getWordFromApi(): Promise<string> {
@@ -182,10 +181,12 @@ async function saveScore() {
   let scoreUrl = "player/saveScore";
   let data = {
     name: playerName.value,
-    averageAttempts: game.value?.guesses.length,
+    averageAttempts: game.value?.guessIndex + 1,
   };
-  await Axios.post(scoreUrl,data,   {
-    headers: { "Content-Type": "application/json" } // config
-  }).then((res) => console.log(res)).catch((err) => console.log(err));
+  await Axios.post(scoreUrl, data, {
+    headers: { "Content-Type": "application/json" }, // config
+  })
+    .then((res) => console.log(res))
+    .catch((err) => console.log(err));
 }
 </script>
