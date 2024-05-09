@@ -26,7 +26,7 @@ public class PlayerService
         return await _context.Players.OrderBy(p => p.AverageAttempts).Take(numberOfPlayers).ToArrayAsync();
     }
     
-    public async Task AddPlayer(PlayerDTO request)
+    public async Player AddPlayer(PlayerDTO request)
     {
         Player? curPlayer = await _context.Players.FirstOrDefaultAsync(request => request.Name.Equals(request.Name));
 		if (curPlayer != null)
@@ -39,7 +39,7 @@ public class PlayerService
                 curPlayer.AverageSecondsPerGame = seconds/ (curPlayer.GameCount + 1);
                 curPlayer.GameCount = curPlayer.GameCount + 1;
 				_context.SaveChanges();
-				return;
+				return curPlayer;
 			}
 		}
 		else
@@ -55,7 +55,7 @@ public class PlayerService
                 };
                 _context.Players.Add(newPlayer);
                 _context.SaveChanges();
-                return;
+                return newPlayer;
 			}
 		}
     }
