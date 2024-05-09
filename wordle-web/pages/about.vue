@@ -12,8 +12,18 @@
     </v-card-text>
     <v-btn @click="router.go(-1)" class="ma-4" color="secondary">Back</v-btn>
   </v-card>
+  <v-card class="Whurdle mx-auto w-75">
+    <img  src="../public/WhurdleCompany.png" alt="logo" width="150" height="150"/>
+  </v-card>
 </template>
 
 <script setup lang="ts">
 const router = useRouter();
 </script>
+<style>
+.Whurdle {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+</style>
