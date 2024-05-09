@@ -34,7 +34,7 @@
             </tr>
           </thead>
           <tbody>
-            <tr v-for="(player, i) in players" :key="i">
+            <tr v-for="(player, i) in players" :key="i" class="bg-background">
               <td v-if="i < 3">
                 <v-icon :class="[isPosdium(i), 'rotate']">mdi-trophy</v-icon>
               </td>
