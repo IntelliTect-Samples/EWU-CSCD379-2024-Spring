@@ -29,7 +29,7 @@
 </template>
 
 <script setup lang="ts">
-import type { Player } from "../types/Player"
+import type { Player } from "../scripts/player"
 import Axios from "axios";
 
 const players = ref<Player[]>();
