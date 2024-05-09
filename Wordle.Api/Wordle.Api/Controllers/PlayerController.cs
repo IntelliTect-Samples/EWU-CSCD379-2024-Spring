@@ -28,15 +28,9 @@ public class PlayerController : ControllerBase
     }
     
     [HttpPost("AddPlayer")]
-	public async Task<PlayerDTO> Post(PlayerDTO request)
+	public async Task<bool> Post(Player player)
 	{
-		Player player = await _service.AddPlayer(request);
+		Player player = await _service.AddPlayer(player);
 		return new PlayerDTO
-		{
-			Name = player.Name,
-			GameCount = player.GameCount,
-			AverageAttempts = player.AverageAttempts,
-            AverageSecondsPerGame = player.AverageSecondsPerGame
-		};
 	}
 }

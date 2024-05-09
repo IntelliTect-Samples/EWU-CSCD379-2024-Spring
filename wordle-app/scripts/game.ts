@@ -87,6 +87,7 @@ export class Game {
   }
 
   public submitGuess() {
+    console.log("SubmitGuess")
     if (this.gameState !== GameState.Playing) return;
     if (!this.guess.isFilled) return;
     if (!this.guess.isValidWord()) {
@@ -99,11 +100,9 @@ export class Game {
 
     if (isCorrect) {
       this.gameState = GameState.Won;
-      this.postScore();
     } else {
       if (this.guessIndex === this.maxAttempts - 1) {
         this.gameState = GameState.Lost;
-        this.postScore();
       } else {
         this.guessIndex++;
       }
@@ -122,21 +121,6 @@ export class Game {
       console.error("Error fetching word of the day:", error);
       this.secretWord = "ERROR";
     }
-  }
-
-  public postScore() {
-    let attempts = 0;
-    if (this.gameState == GameState.Won) {
-      attempts = this.guessIndex + 1;
-    } else {
-      attempts = this.maxAttempts;
-    }
-    axios.post("https://wordleapiewusergeitim.azurewebsites.net/Player/AddPlayer", {
-      Name: nameUserNameDialog,
-      GameCount: 1,
-      AverageAttempts: attempts,
-      AverageSecondsPerGame: stopwatch.seconds.value
-    });
   }
 }
 

@@ -145,4 +145,27 @@ async function checkUserName() {
   console.log("Check user name response: " + response.data);
 }
 
+function postScore() {
+    console.log("PostScoreEntered")
+    var attempts = 0;
+    if(game.gameState == GameState.Won){
+      attempts = game.guessIndex + 1;
+    }else{
+      attempts = game.guesses.length + 5;
+    }
+    Axios.post("Player/AddPlayer", {
+      Name: nameUserNameDialog,
+      GameCount: 1,
+      AverageAttempts: attempts,
+      //AverageSecondsPerGame: stopwatch.seconds.value
+    });
+}
+watch(() => game.gameState, (value) => {
+  if(value == GameState.Won || value == GameState.Lost){
+    postScore();
+  }
+});
+
+
+
 </script>
