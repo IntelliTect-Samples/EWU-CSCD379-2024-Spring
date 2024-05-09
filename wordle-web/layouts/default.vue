@@ -2,11 +2,12 @@
   <v-app>
     <v-app-bar color="primary" :elevation="2">
       <v-app-bar-title @click="$router.push('/')" style="cursor: pointer">
-        <img
-          src="../public/logoo.svg"
-          alt="Logo"
-          style="height: 185px; width: auto"
-        />
+        <v-img
+      src="../public/logo.svg"
+      alt="Logo"
+      max-width="180"
+      max-height="110"
+    ></v-img>
       </v-app-bar-title>
 
       <v-btn icon="mdi-help-circle" @click="showHelpDialog = true" />
