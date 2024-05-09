@@ -1,6 +1,5 @@
 using Microsoft.EntityFrameworkCore;
 using Wordle.Api.Models;
-using Wordle.Api.Data;
 using Wordle.Api.DTOS;
 
 namespace Wordle.Api.Services;
