@@ -56,8 +56,10 @@ const theme = useTheme();
 const showHelpDialog = ref(false);
 const showUserNameDialog = ref(false);
 const userName = ref("guest");
-
-
+const props = defineProps<{ 
+  userName: string
+  showUserNameDialog: boolean
+ }>();
 provide("userName", userName);
 provide("showUserNameDialog", showUserNameDialog.value);
 
