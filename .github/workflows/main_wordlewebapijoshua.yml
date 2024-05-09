@@ -9,7 +9,7 @@ on:
       - Wordle.Api/**
   pull_request:
     branches:
-      - main
+      - Assignment3
   workflow_dispatch:
 
 jobs:

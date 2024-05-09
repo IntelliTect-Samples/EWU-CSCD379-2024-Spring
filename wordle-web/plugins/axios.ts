@@ -12,6 +12,3 @@ export default defineNuxtPlugin(() => {
     }
   }
 });
-
-// ERROR: https://localhost:7266/word/wordOfTheDay
-// PASS:  https://localhost:7266/word/wordOfTheDay

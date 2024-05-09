@@ -5,7 +5,7 @@ on:
   pull_request:
     types: [opened, synchronize, reopened, closed]
     branches:
-      - Assignment2
+      - Assignment3
   workflow_dispatch:
 
 jobs:
