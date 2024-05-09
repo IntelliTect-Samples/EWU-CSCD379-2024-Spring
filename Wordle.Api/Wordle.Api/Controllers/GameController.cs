@@ -3,44 +3,43 @@ using Microsoft.AspNetCore.Mvc;
 using Wordle.Api.Dtos;
 using Wordle.Api.Models;
 
-namespace Wordle.Api.Controllers
+namespace Wordle.Api.Controllers;
+
+[Route("api/[controller]")]
+[ApiController]
+public class GameController : ControllerBase
 {
-    [Route("api/[controller]")]
-    [ApiController]
-    public class GameController : ControllerBase
+    public WordleDbContext Db { get; set; }
+
+    public GameController(WordleDbContext db)
     {
-        public WordleDbContext Db { get; set; }
+        Db = db;
+    }
 
-        public GameController(WordleDbContext db)
+    [HttpPost("Game")]
+    public async Task<bool> PostGame(GameDto gameDto)
+    {
+        var wordOfTheDay = Db.WordsOfTheDays
+            .Where(word => word.WordId == gameDto.WordOfTheDayId)
+            .OrderByDescending(word => word.Date)
+            .FirstOrDefault();
+
+        if (wordOfTheDay == null)
         {
-            Db = db;
+            // TODO: We need better error messages here
+            // our users are upset
+            return false;
         }
 
-        [HttpPost("Game")]
-        public async Task<bool> PostGame(WordOfTheDayGameDto gameDto)
+        Game game = new()
         {
-            var wordOfTheDay = Db.WordsOfTheDays
-                .Where(word => word.Word == gameDto.WordOfTheDay)
-                .OrderByDescending(word => word.Date)
-                .FirstOrDefault();
+            Attempts = gameDto.Attempts,
+            IsWin = gameDto.IsWin,
+            WordOfTheDay = wordOfTheDay,
+        };
 
-            if(wordOfTheDay == null)
-            {
-                // TODO: We need better error messages here
-                // our users are upset
-                return false;
-            }
-
-            WordOfTheDayGame game = new()
-            {
-                Attempts = gameDto.Attempts,
-                IsWin = gameDto.IsWin,
-                WordOfTheDay = wordOfTheDay,
-            };
-
-            Db.WordOfTheDayGames.Add(game);
-            await Db.SaveChangesAsync();
-            return true;
-        }
+        Db.Games.Add(game);
+        await Db.SaveChangesAsync();
+        return true;
     }
 }

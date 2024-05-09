@@ -35,7 +35,10 @@ public class WordOfTheDayService
                 {
                     wordOfTheDay = new()
                     {
-                        Word = GetRandomWord(),
+                        Word = new Word()
+                        {
+                            Text = GetRandomWord()
+                        },
                         Date = date
                     };
 
@@ -45,7 +48,7 @@ public class WordOfTheDayService
             }
         }
 
-        return wordOfTheDay.Word;
+        return wordOfTheDay.Word!.Text;
     }
 
     #region WordList

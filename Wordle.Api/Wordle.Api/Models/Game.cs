@@ -1,9 +1,9 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
 namespace Wordle.Api.Models;
-public class WordOfTheDayGame
+public class Game
 {
-    public int WordOfTheDayGameId { get; set; }
+    public int GameId { get; set; }
 
     public int Attempts { get; set; }
 
