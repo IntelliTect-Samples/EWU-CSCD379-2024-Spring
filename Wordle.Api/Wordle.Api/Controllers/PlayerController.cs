@@ -9,11 +9,7 @@ namespace Wordle.Api.Controllers;
 [Route("[controller]")]
 public class PlayerController(PlayerService playerService) : ControllerBase
 {
-    private readonly PlayerService _service;
-    public PlayerController(PlayerService service)
-	{
-		_service = service;
-	}
+    _service = service;
 
     [HttpGet("Player")]
     public async Task<Player?> GetPlayer(string playerName = "Guest")
