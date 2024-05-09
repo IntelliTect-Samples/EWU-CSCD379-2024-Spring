@@ -21,7 +21,7 @@
           <v-icon class="mr-2" > mdi-account </v-icon> {{ nameUserNameDialog }}
         </v-chip>
         <v-chip color="secondary" class="mr-2">
-          <v-icon class="mr-2"> mdi-timer </v-icon> {{ stopwatch.seconds }}
+          <v-icon class="mr-2"> mdi-timer </v-icon> 5s
         </v-chip>
       </v-card-text>
 
@@ -61,8 +61,6 @@ const router = useRouter();
 const game: Ref<Game> = ref(new Game("GAMES"));
 provide("GAME", game.value);
 
-const stopwatch = useStopwatch(0,true);
-
 // User name dialog
 const showUserNameDialog = ref(false);
 const nameUserNameDialog = ref("");
@@ -75,7 +73,7 @@ onMounted(() => {
   } else {
     Axios.defaults.baseURL = "https://wordleapiewu.azurewebsites.net/";
   }
-  stopwatch.reset;
+  
 
   // Get random word from word list
   getWordFromApi().then((word) => {

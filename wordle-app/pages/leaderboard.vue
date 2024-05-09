@@ -14,8 +14,8 @@
 						</tr>
 					</thead>
 					<tbody>
-						<tr v-for="(player, id) in players" :key="player.playerId">
-							<td>{{ id + 1 }}</td>
+						<tr v-for="(player, index) in players" :key="player.playerId">
+							<td>{{ index + 1 }}</td>
 							<td>{{ player.name }}</td>
 							<td>{{ Math.round(player.averageAttempts) }}</td>
 							<td>{{ player.gameCount }}</td>
@@ -33,12 +33,15 @@ import type { Player } from "../types/Player"
 import Axios from "axios";
 
 const players = ref<Player[]>();
-Axios.get("https://wordleapiewusergeitim.azurewebsites.net/Player/TopPlayers?numberOfPlayers=10")
+
+onMounted(async () => {
+	Axios.get("https://wordleapiewusergeitim.azurewebsites.net/Player/TopPlayers?numberOfPlayers=10")
   .then(response => {
     players.value = response.data;
   })
   .catch(error => {
     console.log(error);
   });
+});
 
 </script>
