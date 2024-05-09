@@ -33,6 +33,9 @@ namespace Wordle.Api.Migrations
                     b.Property<double>("AverageAttempts")
                         .HasColumnType("float");
 
+                    b.Property<int>("AverageSeconds")
+                        .HasColumnType("int");
+
                     b.Property<int>("GameCount")
                         .HasColumnType("int");
 
