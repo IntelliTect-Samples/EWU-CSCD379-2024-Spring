@@ -151,6 +151,7 @@
 - Service Dependency Injection
 - Deployment (Site and Database)
 - API configuration: Swagger in production
+- Troubleshooting Azure
 
 ## Week 6
 ### Lecture 11. 5/7: 
@@ -163,29 +164,26 @@
   - Testing with DI and Services
 
 - EF Parent/Child (Word with child Game)
+  - Adding additional migrations
   - API Post
   - DTOs
-  - Axios using Post
-  - Basic EF Querying
-
-- Miscelaneous
-  - Custom icon and favicon
-  - New starting page and default route
-
-
-
 
 --- After this point is subject to significant change ---
 
 
 ### Lecture 12. 5/09: 
-- Troubleshooting Azure
-- Vue services
-- EF Parent-Child relationships
-- Querying with Includes
+- Axios using Post
+- EF Querying
+  - Querying with Includes
 - EF unit testing
 - Model builder cascade deletes
-- Adding of DateWord and Migration
+- Returning a DTO with statistics for a word
+
+- Miscellaneous
+  - Custom favicon
+  - New starting page and default route
+
+- Vue services (Provide and Inject)
 
 ## Week 7
 ### Lecture 13. 5/14: 
