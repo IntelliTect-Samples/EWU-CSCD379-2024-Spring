@@ -31,6 +31,6 @@ public class PlayerController : ControllerBase
 	public async Task<bool> Post(Player player)
 	{
 		Player player = await _service.AddPlayer(player);
-		return new PlayerDTO
+		return true;
 	}
 }
