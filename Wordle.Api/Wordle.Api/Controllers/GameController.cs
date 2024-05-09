@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Wordle.Api.Dtos;
 using Wordle.Api.Models;
 
@@ -16,26 +17,28 @@ public class GameController : ControllerBase
         Db = db;
     }
 
-    [HttpPost("Game")]
+    [HttpPost("GameWordOfTheDay")]
     public async Task<bool> PostGame(GameDto gameDto)
     {
-        var wordOfTheDay = Db.WordsOfTheDays
-            .Where(word => word.WordId == gameDto.WordOfTheDayId)
-            .OrderByDescending(word => word.Date)
-            .FirstOrDefault();
+        // Get todays date
+        var today = DateOnly.FromDateTime(DateTime.UtcNow);
 
-        if (wordOfTheDay == null)
-        {
-            // TODO: We need better error messages here
-            // our users are upset
-            return false;
-        }
+        // Get all the words that match our game word and load their WOTDs
+        var word = Db.Words
+            .Include(word => word.WordsOfTheDays)
+            .Where(word => word.Text == gameDto.Word)
+            .First();
 
+        // Create a new game object to save to the DB
         Game game = new()
         {
             Attempts = gameDto.Attempts,
             IsWin = gameDto.IsWin,
-            WordOfTheDay = wordOfTheDay,
+            // Attempt to find the WOTD that best matches todays date
+            WordOfTheDay = word.WordsOfTheDays
+                .OrderByDescending(wotd => wotd.Date)
+                .FirstOrDefault(wotd => wotd.Date < today.AddDays(-1)),
+            Word = word
         };
 
         Db.Games.Add(game);

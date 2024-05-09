@@ -8,6 +8,6 @@ namespace Wordle.Api.Dtos
 
         public bool IsWin { get; set; }
 
-        public required int WordOfTheDayId {  get; set; }
+        public required string Word {  get; set; }
     }
 }
