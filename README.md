@@ -1,6 +1,8 @@
 # EWU-CSCD378-2022-Spring
 
-Azure Site URL: https://lively-island-012d7ce1e.5.azurestaticapps.net
+Azure Web Site URL: https://lively-island-012d7ce1e.5.azurestaticapps.net
+
+Azure API Site URL: https://aestheticwordle.azurewebsites.net/
 
 ## Assignment 3
 
