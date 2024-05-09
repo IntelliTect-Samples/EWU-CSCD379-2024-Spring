@@ -35,7 +35,7 @@ import Axios from "axios";
 const players = ref<Player[]>();
 
 onMounted(async () => {
-	Axios.get("https://wordleapiewusergeitim.azurewebsites.net/Player/TopPlayers?numberOfPlayers=10")
+	Axios.get("Player/TopPlayers?numberOfPlayers=10")
   .then(response => {
     players.value = response.data;
   })
