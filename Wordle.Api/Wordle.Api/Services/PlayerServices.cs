@@ -40,7 +40,7 @@ namespace Wordle.Api.Services
 
         public  IEnumerable<Player> TopTenPlayers(){
 
-            return Db.Players.OrderBy(player => player.AverageAttempts).ThenBy(player => player.GameCount).Take(10);
+            return Db.Players.OrderBy(player => player.AverageAttempts).ThenBy(player => player.GameCount).ThenBy(player => player.AverageSeconds).Take(10);
 
             }
 }
