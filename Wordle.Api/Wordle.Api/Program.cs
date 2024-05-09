@@ -1,6 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using Wordle.Api.Models;
 using Wordle.Api.Services;
+using Wordle.Api.
 
 var AllOrigins = "AllOrigins";
 
@@ -34,7 +35,7 @@ var app = builder.Build();
 
 using (var scope = app.Services.CreateScope())
 {
-    var db = scope.ServiceProvider.GetRequiredService<AppDbContext>();
+    var db = scope.ServiceProvider.GetRequiredService<WordleDbContext>();
     db.Database.Migrate();
 }
 

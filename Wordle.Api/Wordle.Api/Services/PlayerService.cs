@@ -7,12 +7,12 @@ namespace Wordle.Api.Services;
 
 public class PlayerService
 {
-    private readonly AppDbContext _context;
+    private readonly WordleDbContext _context;
 
     private static object updateLock = new();
 	private static object addLock = new();
     
-    public PlayerService(AppDbContext context)
+    public PlayerService(WordleDbContext context)
 	{
 		_context = context;
 	}
