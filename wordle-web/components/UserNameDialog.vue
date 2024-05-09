@@ -4,11 +4,11 @@
         <v-card>
             <v-sheet color="primary"></v-sheet>
             <v-card-title>Enter your user name current user is {{ userName }}</v-card-title>
-            <v-text-field v-model="userName" label="User Name" required></v-text-field>
+            <v-text-field @keyup.stop v-model="userName" label="User Name" required></v-text-field>
             <v-card-actions>
                 <v-spacer></v-spacer>
-                <v-btn color="primary" @click="modelValue = false">Cancel</v-btn>
-                <v-btn color="primary" @click=saveUserName>Save</v-btn>
+                <v-btn color="primary" variant ="flat" @click="modelValue = false">Cancel</v-btn>
+                <v-btn color="primary" variant = "flat" @click=saveUserName>Save</v-btn>
             </v-card-actions>
         </v-card>
 

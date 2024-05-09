@@ -1,4 +1,5 @@
 <template>
+  <UserNameDialog v-model ="showUserNameDialog" />
   <v-container class="myFontDefault">
     <v-card class="text-center">
       <v-alert v-if="game.gameState != GameState.Playing" :color="game.gameState == GameState.Won ? 'success' : 'error'"
@@ -37,11 +38,12 @@
 import { Game, GameState } from "../scripts/game";
 import Axios from "axios" //npm install axios 
 
+
 const userName = inject("userName");
 const game = ref(new Game("GAMES"));
 provide("GAME", game);
-const showUserNameDialog = inject("showUserNameDialog");
-
+const showUserNameDialogInject = inject("showUserNameDialog");
+const showUserNameDialog = ref(false);
 onMounted(() => {
   // Get random word from word list
   getWordFromApi().then((word) => {
@@ -97,10 +99,16 @@ watch(() => game.value.gameState, (value) => {
   if(value == GameState.Won || value == GameState.Lost){
     if(userName === "guest"){
       showUserNameDialog.value = true;
-      // it is not working I don't think it is updating the value on the app.vue page to show the dialog
+      watch(() => showUserNameDialog.value, (value) => {
+        if(value == false){
+          postScore(userName.value as string, calcAttempts(), 0);
+        }
+      });
+      
+    }else{
+      postScore(userName.value as string, calcAttempts(), 0);
     }
     
-    postScore(userName.value as string, calcAttempts(), 0);
     //I know userName is showing an error but the api only gets the data when its set up like that
   }
 });

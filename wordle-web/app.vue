@@ -50,14 +50,14 @@
 <script setup lang="ts">
 import { useTheme } from "vuetify";
 import nuxtStorage from "nuxt-storage";
-import { provide, ref, watch, onMounted, inject } from "vue";
+import {defineProps} from "vue";
 const router = useRouter();
 const theme = useTheme();
 const showHelpDialog = ref(false);
 const showUserNameDialog = ref(false);
 const userName = ref("guest");
 
-provide("userNameValue", userName.value);
+
 provide("userName", userName);
 provide("showUserNameDialog", showUserNameDialog.value);
 
@@ -65,7 +65,7 @@ provide("showUserNameDialog", showUserNameDialog.value);
 const themes = [
   { name: "default", theme: "dark" },
   { name: "sans", theme: "sansDark" },
-  { name: "watermelon", theme: "jarringDark" },
+  { name: "watermelon", theme: "watermelonDark" },
 ];
 
 const pages = [
@@ -99,10 +99,10 @@ function toggleTheme() {
     changeTheme("sansDark");
   } else if (theme.global.name.value === "sansDark") {
     changeTheme("sansLight");
-  } else if (theme.global.name.value === "jarringLight") {
-    changeTheme("jarringDark");
-  } else if (theme.global.name.value === "jarringDark") {
-    changeTheme("jarringLight");
+  } else if (theme.global.name.value === "watermelonLight") {
+    changeTheme("watermelonDark");
+  } else if (theme.global.name.value === "watermelonDark") {
+    changeTheme("watermelonLight");
   } else {
     changeTheme("dark");
   }
