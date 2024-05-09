@@ -44,10 +44,12 @@ const game = ref(new Game("GAMES"));
 provide("GAME", game);
 const showUserNameDialogInject = inject("showUserNameDialog");
 const showUserNameDialog = ref(false);
+var startTime = new Date().getTime();
 onMounted(() => {
   // Get random word from word list
   getWordFromApi().then((word) => {
     game.value = new Game(word);
+    startTime = new Date().getTime();
   });
 
   window.addEventListener("keyup", onKeyup);
@@ -97,19 +99,25 @@ function postScore(playerNameIn: string, attemptsIn: number, timeIn: number){
 }
 watch(() => game.value.gameState, (value) => {
   if(value == GameState.Won || value == GameState.Lost){
-    if(userName === "guest"){
+    if(userName === "guest" || userName ===""){
       showUserNameDialog.value = true;
       watch(() => showUserNameDialog.value, (value) => {
         if(value == false){
-          postScore(userName.value as string, calcAttempts(), 0);
+          postScore(userName.value as string, calcAttempts(), calcSecond());
         }
       });
       
     }else{
-      postScore(userName.value as string, calcAttempts(), 0);
+      postScore(userName.value as string, calcAttempts(), calcSecond());
     }
     
     //I know userName is showing an error but the api only gets the data when its set up like that
+  }
+  function calcSecond()
+  {
+    var endTime = new Date().getTime();
+    var timeDiff = endTime - startTime;
+    return timeDiff / 1000;
   }
 });
 </script>
