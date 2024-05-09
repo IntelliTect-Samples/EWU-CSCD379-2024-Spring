@@ -17,7 +17,8 @@ const wordList2 = ['ABACA', 'ABODE', 'TAROT'];
 
 describe('validWords_enteredLettersIn_returnsCorrectWordAndLength', () => {
   it('enteredA_returnsFirstTwoWords', () => {
-    let game = new Game('HELLO');
+    let game = new Game();
+    game.startNewGame('HELLO');
     game.addLetter('A');
     let utils = new ValidWordsUtils(game, wordList);
     let validWords = utils.validWords();
@@ -26,7 +27,8 @@ describe('validWords_enteredLettersIn_returnsCorrectWordAndLength', () => {
     expect(validWords[1]).toBe('ABACA');
   });
   it('enteredAA_returnsAARGH', () => {
-    let game = new Game('HELLO');
+    let game = new Game();
+    game.startNewGame('HELLO');
     game.addLetter('A');
     game.addLetter('A');
     let utils = new ValidWordsUtils(game, wordList);
@@ -35,13 +37,15 @@ describe('validWords_enteredLettersIn_returnsCorrectWordAndLength', () => {
     expect(validWords[0]).toBe('AARGH');
   });
   it('noLettersEntered_returnsFullList', () => {
-    let game = new Game('HELLO');
+    let game = new Game();
+    game.startNewGame('HELLO');
     let utils = new ValidWordsUtils(game, wordList);
     let validWords = utils.validWords();
     expect(validWords.length).toBe(7);
   });
   it('submittedGuessAndEnteredLetters', () => {
-    let game = new Game('THINK');
+    let game = new Game();
+    game.startNewGame('THINK');
     let utils = new ValidWordsUtils(game, wordList);
     game.addLetter('H');
     game.addLetter('E');
@@ -55,7 +59,8 @@ describe('validWords_enteredLettersIn_returnsCorrectWordAndLength', () => {
     expect(validWords[0]).toBe('AARGH');
   });
   it('minimumOfDiscoveredLettersFoundInNewWord', () => {
-    let game = new Game('GONNA');
+    let game = new Game();
+    game.startNewGame('GONNA');
     let utils = new ValidWordsUtils(game, wordList2);
     game.addLetter('T');
     game.addLetter('A');
@@ -71,7 +76,8 @@ describe('validWords_enteredLettersIn_returnsCorrectWordAndLength', () => {
 
 describe('validWords_submittedGuess_returnsCorrectWordAndLength', () => {
   it('wrongLetterEliminatesAllOtherWordListWords', () => {
-    let game = new Game('ABACA');
+    let game = new Game();
+    game.startNewGame('ABACA');
     let utils = new ValidWordsUtils(game, wordList);
     game.addLetter('A');
     game.addLetter('A');
@@ -84,7 +90,8 @@ describe('validWords_submittedGuess_returnsCorrectWordAndLength', () => {
     expect(validWords.length).toBe(1);
   });
   it('misplacedLetterLeavesThreeWords', () => {
-    let game = new Game('THINK');
+    let game = new Game();
+    game.startNewGame('THINK');
     let utils = new ValidWordsUtils(game, wordList);
     game.addLetter('H');
     game.addLetter('E');
@@ -99,7 +106,8 @@ describe('validWords_submittedGuess_returnsCorrectWordAndLength', () => {
     expect(validWords[2]).toBe('WHICH');
   });
   it('correctLetterLeavesOneWord', () => {
-    let game = new Game('AARGH');
+    let game = new Game();
+    game.startNewGame('AARGH');
     let utils = new ValidWordsUtils(game, wordList);
     game.addLetter('A');
     game.addLetter('B');
@@ -112,7 +120,8 @@ describe('validWords_submittedGuess_returnsCorrectWordAndLength', () => {
     expect(validWords[0]).toBe('AARGH');
   });
   it('twoGuessesLeaves', () => {
-    let game = new Game('PEACH');
+    let game = new Game();
+    game.startNewGame('PEACH');
     let utils = new ValidWordsUtils(game, wordList);
     game.addLetter('L');
     game.addLetter('E');
