@@ -39,7 +39,7 @@ public class PlayerService
                 curPlayer.AverageSecondsPerGame = seconds/ (curPlayer.GameCount + 1);
                 curPlayer.GameCount = curPlayer.GameCount + 1;
 				_context.SaveChanges();
-				return await curPlayer;
+				return curPlayer;
 			}
 		}
 		else
@@ -55,7 +55,7 @@ public class PlayerService
                 };
                 _context.Players.Add(newPlayer);
                 _context.SaveChanges();
-                return await newPlayer;
+                return newPlayer;
 			}
 		}
     }
