@@ -18,10 +18,10 @@
 import { Game } from "~/scripts/game";
 import { findValidWords } from "~/scripts/ValidWordList";
 
-
+const gameRef: Ref<Game> = inject("GAME") as Ref<Game>;
 const game: Game | undefined = inject("GAME", undefined);
 const validWords = computed(() => {
-    return game ? findValidWords(game) : [];
+    return gameRef.value ? findValidWords(gameRef.value) : [];
 });
 function setGuess(word: string) {
     game?.guess.clear();

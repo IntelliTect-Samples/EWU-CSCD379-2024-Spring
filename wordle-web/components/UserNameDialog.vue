@@ -21,8 +21,8 @@ const modelValue = defineModel<boolean>({ default: false });
 const userName = inject("userName");
 const saveUserName = () => {
     modelValue.value = false;
-    console.log("userName in dialog " + userName.value);
+    //console.log("userName in dialog " + userName.value);
     nuxtStorage.localStorage.setData("userName", userName.value);
 }
-console.log("userName in dialog " + userName.value);
+//console.log("userName in dialog " + userName.value);
 </script>
