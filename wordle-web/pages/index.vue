@@ -1,6 +1,10 @@
 <template>
   <v-container>
-    <v-card class="text-center" elevation="0">
+    <v-progress-linear
+      v-if="game.gameState === GameState.Initializing"
+      color="primary"
+      indeterminate />
+    <v-card v-else class="text-center" elevation="0">
       <v-sheet>
         <v-container height="150px">
           <v-sheet
@@ -87,26 +91,14 @@ import { WordList } from '~/scripts/wordList';
 import nuxtStorage from 'nuxt-storage';
 import Axios from 'axios';
 
-const game = ref(new Game(' '));
-// Get random word from word list
-getWordFromApi().then(word => {
-  game.value = new Game(word);
-});
+const game = reactive(new Game());
+game.startNewGame();
 provide('GAME', game);
 const showValidWordsDialog = ref(false);
 const validWordsCount = ref(WordList.length);
 const username = ref(' ');
 const showNameDialog = ref(false);
 const showGuestSaveDialog = ref(false);
-const apiUrl = 'https://wordlewebapijoshua.azurewebsites.net';
-
-async function getWordFromApi(): Promise<string> {
-  let wordUrl =
-    'https://wordlewebapijoshua.azurewebsites.net/word/wordoftheday';
-  const response = await Axios.get(wordUrl);
-  console.log('Response from API: ' + response.data);
-  return response.data;
-}
 
 const myGuess = ref('');
 function playAudio(): any {
@@ -115,11 +107,6 @@ function playAudio(): any {
   audio.play();
 }
 onMounted(() => {
-  // Get random word from word list
-  getWordFromApi().then(word => {
-    game.value = new Game(word);
-  });
-
   window.addEventListener('keyup', onKeyup);
   var defaultName = nuxtStorage.localStorage.getData('name');
   showNameDialog.value = defaultName ? false : true;
@@ -131,12 +118,9 @@ onUnmounted(() => {
 });
 
 watch(
-  () => game.value.gameState,
+  () => game.gameState,
   () => {
-    if (
-      game.value.gameState == GameState.Won ||
-      game.value.gameState == GameState.Lost
-    ) {
+    if (game.gameState == GameState.Won || game.gameState == GameState.Lost) {
       if (username.value === 'Guest') {
         showGuestSaveDialog.value = true;
       } else {
@@ -155,30 +139,29 @@ function onKeyup(event: KeyboardEvent) {
   } else {
     if (event.key === 'Enter') {
       playAudio();
-      game.value.submitGuess();
+      game.submitGuess();
     } else if (event.key == 'Backspace') {
       playAudio();
-      game.value.removeLastLetter();
+      game.removeLastLetter();
     } else if (event.key.match(/[A-z]/) && event.key.length === 1) {
       playAudio();
-      game.value.addLetter(event.key.toUpperCase());
+      game.addLetter(event.key.toUpperCase());
     }
   }
 }
 
 function selectWord(selected: string) {
-  game.value.guess.clear();
+  game.guess.clear();
   myGuess.value = '';
   selected.split('').forEach(character => {
     character = character.toUpperCase();
-    game.value.addLetter(character);
+    game.addLetter(character);
     myGuess.value += character;
   });
 }
 
 function enterName() {
   if (username.value === '') {
-    console.log('hello');
     username.value = 'Guest';
   } else {
     nuxtStorage.localStorage.setData('name', username.value);
@@ -188,12 +171,12 @@ function enterName() {
 
 function postScore() {
   let attempts = 0;
-  if (game.value.gameState == GameState.Won) {
-    attempts = game.value.guessIndex + 1;
+  if (game.gameState == GameState.Won) {
+    attempts = game.guessIndex + 1;
   } else {
-    attempts = game.value.maxAttempts;
+    attempts = game.maxAttempts;
   }
-  Axios.post(apiUrl + '/leaderboard/postscore', {
+  Axios.post('/leaderboard/postscore', {
     Name: username.value,
     GameCount: 1,
     AverageAttempts: attempts,

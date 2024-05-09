@@ -39,7 +39,7 @@
 <script setup lang="ts">
 import { Game } from '~/scripts/game';
 import { ValidWordsUtils } from '~/scripts/validWordsUtils';
-let game: Ref<Game> | undefined = inject('GAME');
+let game: Game | undefined = inject('GAME');
 if (game === null || game === undefined) {
   throw new Error('injected game is null or undefined');
 }
@@ -48,7 +48,7 @@ const validWordsCount = defineModel<number>('validWordsCount', {
   required: true,
 });
 defineEmits(['chooseWord']);
-const utils = ref(new ValidWordsUtils(game.value));
+const utils = ref(new ValidWordsUtils(game));
 let validWords = utils.value.validWords();
 let index = 0;
 let localGuessIndex = 0;
@@ -57,13 +57,13 @@ const isEmpty = ref(false);
 
 watch(
   () => {
-    game.value.guessedLetters;
+    game.guessedLetters;
   },
   () => {
-    console.log('ITS HAPPENING');
+    utils.value.game = game;
     validWords = utils.value.validWords();
     index = 0;
-    localGuessIndex = game.value.guessIndex;
+    localGuessIndex = game.guessIndex;
     validWordsCount.value = validWords.length;
     output = getNextTenWords();
   }
@@ -71,10 +71,10 @@ watch(
 
 watch(
   () => {
-    game.value.secretWord;
+    game.secretWord;
   },
   () => {
-    utils.value = new ValidWordsUtils(game.value);
+    utils.value = new ValidWordsUtils(game);
   }
 );
 

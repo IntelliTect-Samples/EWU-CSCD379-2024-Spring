@@ -38,7 +38,7 @@ const props = withDefaults(
   }
 );
 
-const game: Ref<Game> | undefined = inject('GAME', undefined);
+const game: Game | undefined = inject('GAME', undefined);
 const boxHeight = ref(60);
 const boxWidth = ref(60);
 updateWidth();
@@ -48,9 +48,9 @@ function onClicked() {
   if (!game) return;
 
   if (props.letter.char === '👈') {
-    game.value.removeLastLetter();
+    game?.removeLastLetter();
   } else {
-    game.value.addLetter(props.letter.char.toUpperCase());
+    game?.addLetter(props.letter.char.toUpperCase());
   }
 }
 

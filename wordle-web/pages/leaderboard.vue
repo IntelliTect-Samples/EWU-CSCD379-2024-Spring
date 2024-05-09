@@ -35,8 +35,6 @@
 import { ref } from 'vue';
 import Axios from 'axios';
 
-const apiUrl = 'https://wordlewebapijoshua.azurewebsites.net';
-
 interface Player {
   name: string;
   gameCount: number;
@@ -46,7 +44,7 @@ interface Player {
 const topTenScores = ref<Player[]>();
 
 //need to make GET request to the server to get the leaderboard data
-Axios.get(apiUrl + '/leaderboard/GetScores')
+Axios.get('/leaderboard/GetScores')
   .then(response => {
     topTenScores.value = response.data;
   })
@@ -56,7 +54,7 @@ Axios.get(apiUrl + '/leaderboard/GetScores')
 //note to self need to implement animate.css for the leaderboard extra credit
 </script>
 <style>
-.table{
+.table {
   background-color: unknownGradient;
   animation: colorChange 10s infinite;
 }
@@ -65,10 +63,10 @@ Axios.get(apiUrl + '/leaderboard/GetScores')
     background-color: #b7afaf;
   }
   25% {
-    background-color: #FFD54F;
+    background-color: #ffd54f;
   }
   50% {
-    background-color: #9575CD;
+    background-color: #9575cd;
   }
   75% {
     background-color: #482e74;
@@ -78,4 +76,3 @@ Axios.get(apiUrl + '/leaderboard/GetScores')
   }
 }
 </style>
-
