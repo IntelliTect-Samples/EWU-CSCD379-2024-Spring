@@ -1,6 +1,11 @@
 <template>
   <v-container>
-    <v-card class="text-center">
+    <<v-progress-linear
+      v-if="game.gameState === GameState.Initializing"
+      color="primary"
+      indeterminate
+    />
+    <v-card v-else class="text-center">
       <v-alert v-if="game.gameState != GameState.Playing" :color="game.gameState == GameState.Won ? 'success' : 'error'"
         class="mb-5" tile>
         <h3>
@@ -58,8 +63,11 @@ import type { Player } from "../scripts/player";
 import { useStopwatch } from 'vue-timer-hook';
 
 const router = useRouter();
-const game: Ref<Game> = ref(new Game("GAMES"));
-provide("GAME", game.value);
+const game = reactive(new Game());
+game.startNewGame();
+provide("GAME", game);
+// const game: Ref<Game> = ref(new Game("GAMES"));
+// provide("GAME", game.value);
 
 // User name dialog
 const showUserNameDialog = ref(false);
@@ -85,8 +93,6 @@ onMounted(() => {
 
   // Assignment 3 Task 2
   // Check if user name is stored in local storage
-  localStorage.clear();
-  sessionStorage.clear();
   checkUserNameLocalStorage();
   checkUserName();
 
@@ -111,11 +117,11 @@ async function getWordFromApi(): Promise<string> {
 function onKeyup(event: KeyboardEvent) {
   if (!showUserNameDialog.value) {
     if (event.key === "Enter") {
-      game.value.submitGuess();
+      game.submitGuess();
     } else if (event.key == "Backspace") {
-      game.value.removeLastLetter();
+      game.removeLastLetter();
     } else if (event.key.match(/[A-z]/) && event.key.length === 1) {
-      game.value.addLetter(event.key.toUpperCase());
+      game.addLetter(event.key.toUpperCase());
     }
   }
 
