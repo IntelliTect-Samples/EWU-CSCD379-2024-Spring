@@ -20,7 +20,8 @@ namespace Wordle.Api.Services
                     {
                         Name = score.Name,
                         GameCount = 1,
-                        AverageAttempts = score.Attempts
+                        AverageAttempts = score.Attempts,
+                        AverageSeconds = score.Seconds
                     };
 
                     Db.Players.Add(player);
@@ -31,6 +32,7 @@ namespace Wordle.Api.Services
             {
                 player.GameCount++;
                 player.AverageAttempts = (score.Attempts + player.AverageAttempts) / (player.GameCount);
+                player.AverageSeconds = (score.Seconds + player.AverageSeconds) / (player.GameCount);
             }
             Db.SaveChanges();
 

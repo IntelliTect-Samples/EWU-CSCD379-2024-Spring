@@ -15,7 +15,7 @@ public class PlayerController(PlayerServices PlayerService) : ControllerBase
         return PlayerService.TopTenPlayers()
             .Select(player => 
             new PlayerDto() 
-            { Name= player.Name, GameCount=player.GameCount, AverageAttempts = player.AverageAttempts });
+            { Name= player.Name, GameCount=player.GameCount, AverageAttempts = player.AverageAttempts, AverageSeconds = player.AverageSeconds });
     }
 
     [HttpPost("SaveScore")]
