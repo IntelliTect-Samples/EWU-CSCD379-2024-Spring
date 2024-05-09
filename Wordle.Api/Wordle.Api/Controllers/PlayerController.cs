@@ -25,7 +25,7 @@ public class PlayerController(PlayerService playerService) : ControllerBase
     [HttpPost("AddPlayer")]
 	public async Task<PlayerDTO> Post(PlayerDTO request)
 	{
-		Player player = await playerService.PostScoreAsync(request);
+		Player player = await playerService.AddPlayer(request);
 		return new PlayerDTO
 		{
 			Name = player.Name,
