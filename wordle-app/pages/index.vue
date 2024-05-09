@@ -76,11 +76,11 @@ const nameUserNameDialog = ref("");
 var showWordsList = ref(false);
 
 onMounted(() => {
-  if (window.location.hostname === "localhost" || window.location.hostname === "127.0.0.1") {
-    Axios.defaults.baseURL = "https://localhost:7108/";
-  } else {
-    Axios.defaults.baseURL = "https://wordleapiewu.azurewebsites.net/";
-  }
+  // if (window.location.hostname === "localhost" || window.location.hostname === "127.0.0.1") {
+  //   Axios.defaults.baseURL = "https://localhost:7108/";
+  // } else {
+  //   Axios.defaults.baseURL = "https://wordleapiewu.azurewebsites.net/";
+  // }
   
 
   // Get random word from word list
