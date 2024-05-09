@@ -5,7 +5,7 @@ namespace Wordle.Api.Services;
 
 public class WordOfTheDayService
 {
-    private readonly List<string> words = LoadWordList();
+    private readonly List<string> words = WordList();
     private static object _lock = new();
 
     public WordleDbContext Db { get; set; }
@@ -52,7 +52,7 @@ public class WordOfTheDayService
     }
 
     #region WordList
-    public static List<string> LoadWordList()
+    public static List<string> WordList()
     {
         return [
     "aargh",
