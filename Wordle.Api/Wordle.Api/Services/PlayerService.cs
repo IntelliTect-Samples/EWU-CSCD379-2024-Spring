@@ -18,17 +18,17 @@ public class PlayerService
 
     public async Task<Player?> GetPlayer(string playerName)
     {
-        return await Db.Players.FirstOrDefaultAsync(p => p.Name == playerName);
+        return await _context.Players.FirstOrDefaultAsync(p => p.Name == playerName);
     }
     
     public async Task<Player[]> GetTopPlayers(int numberOfPlayers)
     {
-        return await Db.Players.OrderBy(p => p.AverageAttempts).Take(numberOfPlayers).ToArrayAsync();
+        return await _context.Players.OrderBy(p => p.AverageAttempts).Take(numberOfPlayers).ToArrayAsync();
     }
     
-    public async Task AddPlayer(PlayerDTO player)
+    public async Task AddPlayer(PlayerDTO request)
     {
-        Player? curPlayer = await _context.Players.FirstOrDefaultAsync(player => player.Name.Equals(request.Name));
+        Player? curPlayer = await _context.Players.FirstOrDefaultAsync(request => request.Name.Equals(request.Name));
 		if (curPlayer != null)
 		{
 			lock (updateLock)
@@ -39,7 +39,7 @@ public class PlayerService
                 curPlayer.AverageSecondsPerGame = seconds/ (curPlayer.GameCount + 1);
                 curPlayer.GameCount = curPlayer.GameCount + 1;
 				_context.SaveChanges();
-				return curPlayer;
+				return;
 			}
 		}
 		else
@@ -55,7 +55,7 @@ public class PlayerService
                 };
                 _context.Players.Add(newPlayer);
                 _context.SaveChanges();
-                return newPlayer;
+                return;
 			}
 		}
     }

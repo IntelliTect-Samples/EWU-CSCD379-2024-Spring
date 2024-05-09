@@ -1,7 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using Wordle.Api.Models;
 using Wordle.Api.Services;
-using Wordle.Api.
 
 var AllOrigins = "AllOrigins";
 
