@@ -6,6 +6,7 @@ export default defineNuxtConfig({
   },
   plugins: ['@/plugins/axios.ts'],
   devtools: { enabled: true },
+  ssr: false,
   modules: [
     '@nuxt/test-utils/module',
     (_options, nuxt) => {
