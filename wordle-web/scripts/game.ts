@@ -133,7 +133,6 @@ export class Game {
 
   public async getWordOfTheDayFromApi(): Promise<string> {
     try {
-      debugger;
       const response = await axios.get('/word/wordOfTheDay');
       this.secretWord = response.data;
 
