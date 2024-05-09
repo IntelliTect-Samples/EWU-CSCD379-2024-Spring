@@ -9,6 +9,7 @@ export class Game {
   public guessIndex: number = 0;
   public gameState: GameState = GameState.Playing;
   public guessedLetters: Letter[] = [];
+  public timeElapsed: number = 0;
 
   constructor(secretWord: string, maxAttempts: number = 6) {
     this.maxAttempts = maxAttempts;
@@ -18,6 +19,7 @@ export class Game {
 
   public startNewGame() {
     this.guessIndex = 0;
+    this.timeElapsed= 0;
     this.gameState = GameState.Playing;
     this.guessedLetters = [];
 

@@ -182,6 +182,7 @@ async function saveScore() {
   let data = {
     name: playerName.value,
     averageAttempts: game.value?.guessIndex + 1,
+    averageSeconds: 0,
   };
   await Axios.post(scoreUrl, data, {
     headers: { "Content-Type": "application/json" }, // config

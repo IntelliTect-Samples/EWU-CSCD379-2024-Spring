@@ -30,6 +30,8 @@
               <th class="text-center font-weight-bold">Player</th>
               <th class="text-center font-weight-bold">Games Played</th>
               <th class="text-center font-weight-bold">Average Attempts</th>
+              <th class="text-center font-weight-bold">Average Seconds</th>
+
             </tr>
           </thead>
           <tbody>
@@ -41,6 +43,8 @@
               <td>{{ player.name }}</td>
               <td>{{ player.gameCount }}</td>
               <td>{{ player.averageAttempts }}</td>
+              <td>{{ player.averageSeconds }}</td>
+
             </tr>
           </tbody></v-table
         >
@@ -93,6 +97,7 @@ interface Player {
   name: string;
   gameCount: number;
   averageAttempts: number;
+  averageSeconds: 0;
 }
 
 const isLeaderboardLoading = ref(true);
@@ -108,6 +113,7 @@ onMounted(() => {
         name: player.name,
         gameCount: player.gameCount,
         averageAttempts: player.averageAttempts,
+        averageSeconds: 0,
       }))
     )
     .then((playersData: Player[]) => {
