@@ -14,11 +14,12 @@
 						</tr>
 					</thead>
 					<tbody>
-						<tr v-for="player in players" :key="player.name">
+						<tr v-for="(player, id) in players" :key="player.playerId">
+							<td>{{ id + 1 }}</td>
 							<td>{{ player.name }}</td>
-							<td>{{ player.averageGuesses }}</td>
-							<td>{{ player.gamesPlayed }}</td>
-							<td>{{ player.averageTime }}</td>
+							<td>{{ Math.round(player.averageAttempts) }}</td>
+							<td>{{ player.gameCount }}</td>
+							<td>{{ player.averageSecondsPerGame }} sec.</td>
 						</tr>
 					</tbody>
 				</v-table>
@@ -28,20 +29,10 @@
 </template>
 
 <script setup lang="ts">
+import type { Player } from "../types/Player"
 import Axios from "axios";
-import {ref} from 'vue';
 
 const players = ref<Player[]>();
-interface Player {
-  name: string;
-  averageGuesses: number;
-  gamesPlayed: number;
-  averageTime: number;
-}
-
-const topTenScores = ref<Player[]>();
-
-//TODO: APIURL
 Axios.get("https://wordleapiewusergeitim.azurewebsites.net/Player/TopPlayers?numberOfPlayers=10")
   .then(response => {
     players.value = response.data;
