@@ -73,7 +73,7 @@
 
 <script setup lang="ts">
 import { Game, GameState } from "../scripts/game";
-import { Stopwatch } from "~/scripts/stopwtch";
+import { Stopwatch } from "~/scripts/stopwatch";
 import nuxtStorage from "nuxt-storage";
 import Axios from "axios";
 
