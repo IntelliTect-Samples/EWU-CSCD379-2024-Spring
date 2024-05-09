@@ -5,6 +5,7 @@ export default defineNuxtConfig({
   build: {
     transpile: ['vuetify'],
   },
+  plugins: ["@/plugins/axios.ts"],
   devtools: { enabled: true },
   modules: [
     '@nuxt/test-utils/module',
