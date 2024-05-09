@@ -1,22 +1,6 @@
 ﻿<template>
   <v-container>
-    <v-row>
-      <v-col cols="12" class="d-flex justify-end">
-        <v-sheet
-          class="pa-2 cursor-pointer mt-3 d-flex"
-          color="primary"
-          min-width="150"
-          max-width="900"
-          @click="showNameDialog = !showNameDialog"
-        >
-          <div class="shrink-0 no-wrap pr-4">Player Name:</div>
-          <div>
-            {{ playerName }}
-          </div>
-        </v-sheet>
-      </v-col>
-    </v-row>
-    <v-dialog v-model="isGameOn" class="mx-auto" max-width="500">
+    <v-dialog v-model="isGameOver" class="mx-auto" max-width="500">
       <v-card
         :color="game.gameState == GameState.Won ? 'win' : 'lose'"
         tile
@@ -38,6 +22,25 @@
         </v-card-actions>
       </v-card>
     </v-dialog>
+    <v-col class="d-flex flex-column align-end ga-3">
+      <v-row>
+        <v-sheet
+          class="pa-2 cursor-pointer"
+          color="primary"
+          width="200"
+          rounded
+          elevation="4"
+          @click="showNameDialog = !showNameDialog"
+        >
+          <strong>Username:</strong> {{ playerName }}
+        </v-sheet>
+      </v-row>
+      <v-row>
+        <v-sheet width="200" class="pa-2" color="primary" rounded elevation="4">
+          <strong> Current Time:</strong> {{ stopwatch.getCurrentTime() }}
+        </v-sheet>
+      </v-row>
+    </v-col>
     <GameBoardGuess
       v-for="(guess, i) of game.guesses"
       :key="i"
@@ -46,7 +49,7 @@
     <div class="d-flex justify-center my-3">
       <v-btn
         v-if="game.gameState !== GameState.Playing"
-        @click="isGameOn = true"
+        @click="isGameOver = true"
         color="primary"
         text="RESULTS"
         height="40px"
@@ -70,11 +73,12 @@
 
 <script setup lang="ts">
 import { Game, GameState } from "../scripts/game";
+import { Stopwatch } from "~/scripts/stopwtch";
 import nuxtStorage from "nuxt-storage";
 import Axios from "axios";
 
 const showWordsList = ref(false);
-const isGameOn = ref(false);
+const isGameOver = ref(false);
 const playerName = ref("");
 const showNameDialog = ref(false);
 import {
@@ -86,16 +90,18 @@ import {
 
 const game: Ref<Game> = ref(new Game("GAMES"));
 provide("GAME", game);
+const stopwatch = ref(new Stopwatch());
 
 onMounted(() => {
-  // Get random word from word list
   getWordFromApi().then((word) => {
     game.value = new Game(word);
   });
   window.addEventListener("keyup", onKeyup);
-  var defaultName = nuxtStorage.localStorage.getData("name");
+  const defaultName = nuxtStorage.localStorage.getData("name");
   showNameDialog.value = defaultName ? false : true;
   playerName.value = showNameDialog.value ? "Guest" : defaultName;
+
+  stopwatch.value.start();
 });
 
 onUnmounted(() => {
@@ -127,34 +133,33 @@ function onKeyup(event: KeyboardEvent) {
   }
 }
 
-watch(game.value, () => {
-  if (game.value?.gameState !== GameState.Playing) {
-    isGameOn.value = true;
-  } else {
-    isGameOn.value = false;
-    saveScore();
-  }
-});
 watch(
   () => game.value?.gameState,
   (newState) => {
     switch (newState) {
       case GameState.Won:
         playWinSound();
-        isGameOn.value = true;
+
+        stopwatch.value.stop();
+        saveScore();
+
+        isGameOver.value = true;
         break;
       case GameState.Lost:
         playLoseSound();
-        isGameOn.value = true;
+        stopwatch.value.stop();
+        saveScore();
+
+        isGameOver.value = true;
         break;
       case GameState.Playing:
-        isGameOn.value = false;
+        isGameOver.value = false;
         break;
     }
   }
 );
 function closeGameDialog() {
-  isGameOn.value = false;
+  isGameOver.value = false;
   setTimeout(() => {
     game.value?.startNewGame();
   }, 300);
@@ -182,7 +187,7 @@ async function saveScore() {
   let data = {
     name: playerName.value,
     averageAttempts: game.value?.guessIndex + 1,
-    averageSeconds: 0,
+    averageSeconds: stopwatch.value.getCurrentTime(),
   };
   await Axios.post(scoreUrl, data, {
     headers: { "Content-Type": "application/json" }, // config

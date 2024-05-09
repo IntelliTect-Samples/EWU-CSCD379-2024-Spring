@@ -16,10 +16,10 @@
     <v-card
       v-else
       color="secondary"
-      class="mx-auto mt-8 w-75 pa-8 rounded text-center"
+      class="mx-auto pa-8 rounded text-center"
       elevation="4"
     >
-      <v-card-title class="text-h3 mb-3">
+      <v-card-title class="text-h5 mb-2">
         <v-icon icon="mdi-star" />Leaderboard<v-icon icon="mdi-star"
       /></v-card-title>
       <v-card-item>
@@ -31,11 +31,10 @@
               <th class="text-center font-weight-bold">Games Played</th>
               <th class="text-center font-weight-bold">Average Attempts</th>
               <th class="text-center font-weight-bold">Average Seconds</th>
-
             </tr>
           </thead>
           <tbody>
-            <tr v-for="(player, i) in players" :key="i" class="bg-">
+            <tr v-for="(player, i) in players" :key="i">
               <td v-if="i < 3">
                 <v-icon :class="[isPosdium(i), 'rotate']">mdi-trophy</v-icon>
               </td>
@@ -44,7 +43,6 @@
               <td>{{ player.gameCount }}</td>
               <td>{{ player.averageAttempts }}</td>
               <td>{{ player.averageSeconds }}</td>
-
             </tr>
           </tbody></v-table
         >
@@ -92,6 +90,7 @@
 <script setup lang="ts">
 import "../animations/fireworks.scss";
 import Axios from "axios";
+import nuxtStorage from "nuxt-storage";
 interface Player {
   playerId: number;
   name: string;
@@ -113,7 +112,7 @@ onMounted(() => {
         name: player.name,
         gameCount: player.gameCount,
         averageAttempts: player.averageAttempts,
-        averageSeconds: 0,
+        averageSeconds: player.averageSeconds,
       }))
     )
     .then((playersData: Player[]) => {
