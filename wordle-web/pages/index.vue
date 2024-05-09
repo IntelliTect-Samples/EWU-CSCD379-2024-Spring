@@ -186,8 +186,8 @@ async function saveScore() {
   let scoreUrl = "player/saveScore";
   let data = {
     name: playerName.value,
-    averageAttempts: game.value?.guessIndex + 1,
-    averageSeconds: stopwatch.value.getCurrentTime(),
+    attempts: game.value?.guessIndex + 1,
+    seconds: stopwatch.value.getCurrentTime(),
   };
   await Axios.post(scoreUrl, data, {
     headers: { "Content-Type": "application/json" }, // config
