@@ -12,7 +12,7 @@ export class Game {
 
   constructor(secretWord: string, maxAttempts: number = 6) {
     this.maxAttempts = maxAttempts;
-    this.secretWord = secretWord;
+    this.secretWord = secretWord.toUpperCase();
     this.startNewGame();
   }
 
@@ -21,9 +21,9 @@ export class Game {
     this.gameState = GameState.Playing;
     this.guessedLetters = [];
     
-    this.secretWord =
-    WordList[Math.floor(Math.random() * WordList.length)].toUpperCase();
-    console.log(this.secretWord);
+    //this.secretWord =
+    //WordList[Math.floor(Math.random() * WordList.length)].toUpperCase();
+    //console.log(this.secretWord);
     
     // Populate guesses with the correct number of empty words
     this.guesses = [];

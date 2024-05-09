@@ -46,28 +46,25 @@ import { Game, GameState } from "../scripts/game";
 import Axios from "axios";
 
 
-const api = ''
-
-const game: Ref<Game> = ref(new Game(""));
+const game: Ref<Game> = ref(new Game("GAMES"));
 // Get random word from word list
-getWordFromApi().then((word) => {
+onMounted(() => {
+  getWordFromApi().then((word) => {
   game.value = new Game(word);
+  });
+  window.addEventListener("keyup", onKeyup);
 });
 
 provide("GAME", game.value);
 
 const myGuess = ref("");
 
-onMounted(() => {
-  window.addEventListener("keyup", onKeyup);
-});
-
 onUnmounted(() => {
   window.removeEventListener("keyup", onKeyup);
 });
 
 async function getWordFromApi(): Promise<string> {
-  let wordUrl = "https://agreeable-island-web-app.azurewebsites.net/word";
+  let wordUrl = "word/wordOfTheDay";
 
   const response = await Axios.get(wordUrl);
   console.log("Response from API: " + response.data);
@@ -91,7 +88,7 @@ function onKeyup(event: KeyboardEvent) {
         } else {
             attempts = game.value.maxAttempts;
         }
-        Axios.post('http://agreeable-island-web-app.azurewebsites.net/PostScore', {
+        Axios.post('/PostScore', {
             Name: nuxtStorage.localStorage.get("userName", userName.value),
             GameCount: 1,
             AverageAttempts: attempts,

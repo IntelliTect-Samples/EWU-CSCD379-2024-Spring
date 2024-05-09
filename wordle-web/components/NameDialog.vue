@@ -3,7 +3,7 @@
     <v-card>
       <v-sheet color="primary"></v-sheet>
       <v-card-title>Enter a username.</v-card-title>
-      <v-text-field v-model="userName" label="UserName" required></v-text-field>
+      <v-text-field v-model="userName" label="UserName" persistent></v-text-field>
       <v-card-actions>
         <v-spacer></v-spacer>
         <v-btn color="primary" @click="closeDialog">Cancel</v-btn>
