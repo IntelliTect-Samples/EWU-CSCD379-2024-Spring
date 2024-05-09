@@ -151,7 +151,6 @@ watch(
       case GameState.Lost:
         playLoseSound();
         stopwatch.value.stop();
-        saveScore();
 
         isGameOver.value = true;
         break;
