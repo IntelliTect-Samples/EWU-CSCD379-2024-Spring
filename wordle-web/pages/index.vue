@@ -132,6 +132,7 @@ watch(game.value, () => {
     isGameOn.value = true;
   } else {
     isGameOn.value = false;
+    saveScore();
   }
 });
 watch(
@@ -166,7 +167,6 @@ function enterPlayerName() {
     nuxtStorage.localStorage.setData("name", playerName.value);
   }
   showNameDialog.value = !showNameDialog.value;
-  saveScore();
 }
 
 async function getWordFromApi(): Promise<string> {

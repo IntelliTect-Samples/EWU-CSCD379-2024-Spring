@@ -4,26 +4,36 @@
       <div class="before"></div>
       <div class="after"></div>
     </div>
+    <v-progress-linear
+      v-if="isLeaderboardLoading"
+      class="mx-auto"
+      color="primary"
+      height="10"
+      indeterminate
+      rounded
+      width="75%"
+    />
     <v-card
+      v-else
       color="secondary"
       class="mx-auto mt-8 w-75 pa-8 rounded text-center"
       elevation="4"
     >
       <v-card-title class="text-h3 mb-3">
-        <v-icon icon="mdi-star" />Leaderboard <v-icon icon="mdi-star"
+        <v-icon icon="mdi-star" />Leaderboard<v-icon icon="mdi-star"
       /></v-card-title>
       <v-card-item>
         <v-table>
           <thead>
-            <tr>
-              <th class="text-center">Rank</th>
-              <th class="text-center">Player</th>
-              <th class="text-center">Games Played</th>
-              <th class="text-center">Average Attempts</th>
+            <tr class="bg-primary">
+              <th class="text-center font-weight-bold">Rank</th>
+              <th class="text-center font-weight-bold">Player</th>
+              <th class="text-center font-weight-bold">Games Played</th>
+              <th class="text-center font-weight-bold">Average Attempts</th>
             </tr>
           </thead>
           <tbody>
-            <tr v-for="(player, i) in players" :key="i">
+            <tr v-for="(player, i) in players" :key="i" class="bg-">
               <td v-if="i < 3">
                 <v-icon :class="[isPosdium(i), 'rotate']">mdi-trophy</v-icon>
               </td>
@@ -85,6 +95,8 @@ interface Player {
   averageAttempts: number;
 }
 
+const isLeaderboardLoading = ref(true);
+
 const players: ref<Player[]> = ref([]);
 
 onMounted(() => {
@@ -98,7 +110,10 @@ onMounted(() => {
         averageAttempts: player.averageAttempts,
       }))
     )
-    .then((playersData: Player[]) => (players.value = playersData));
+    .then((playersData: Player[]) => {
+      players.value = playersData;
+      isLeaderboardLoading.value = false;
+    });
 });
 
 function isPosdium(i: number) {
