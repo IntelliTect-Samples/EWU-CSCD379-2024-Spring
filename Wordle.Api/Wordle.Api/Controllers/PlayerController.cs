@@ -30,7 +30,7 @@ public class PlayerController(PlayerService playerService) : ControllerBase
 		{
 			Name = player.Name,
 			GameCount = player.GameCount,
-			AverageAttempts = player.AverageAttempts
+			AverageAttempts = player.AverageAttempts,
             AverageSecondsPerGame = player.AverageSecondsPerGame;
 		};
 	}
