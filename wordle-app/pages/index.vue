@@ -1,6 +1,6 @@
 <template>
   <v-container>
-    <<v-progress-linear
+    <v-progress-linear
       v-if="game.gameState === GameState.Initializing"
       color="primary"
       indeterminate
