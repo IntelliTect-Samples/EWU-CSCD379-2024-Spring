@@ -3,11 +3,11 @@
     <v-app-bar color="primary" :elevation="2">
       <v-app-bar-title @click="$router.push('/')" style="cursor: pointer">
         <v-img
-      src="../public/logo.svg"
-      alt="Logo"
-      max-width="180"
-      max-height="110"
-    ></v-img>
+          src="../public/logo.svg"
+          alt="Logo"
+          max-width="180"
+          max-height="95"
+        ></v-img>
       </v-app-bar-title>
 
       <v-btn icon="mdi-help-circle" @click="showHelpDialog = true" />
@@ -25,7 +25,7 @@
       color="secondary"
       temporary
     >
-      <v-list v-for="item in ['About','Leaderboard']" :key="item">
+      <v-list v-for="item in ['About', 'Leaderboard']" :key="item">
         <v-list-item @click="$router.push('/' + item.toLowerCase())">
           <v-list-item-title> {{ item }} </v-list-item-title>
         </v-list-item>
