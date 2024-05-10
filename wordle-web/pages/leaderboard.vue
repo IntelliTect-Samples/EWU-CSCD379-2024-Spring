@@ -90,7 +90,6 @@
 <script setup lang="ts">
 import "../animations/fireworks.scss";
 import Axios from "axios";
-import nuxtStorage from "nuxt-storage";
 interface Player {
   playerId: number;
   name: string;

@@ -96,16 +96,12 @@
             <v-icon icon="mdi-flag-variant" />
             Results
           </v-sheet>
-        </v-row> </v-col
-      >>
+        </v-row>
+      </v-col>
     </v-row>
-    <Keyboard />
 
-    <NameDialog
-      v-model:show="showNameDialog"
-      v-model:name="playerName"
-      @entered="enterPlayerName"
-    />
+    <Keyboard />
+    <NameDialog v-model:show="showNameDialog" v-model:name="playerName" />
     <WordList v-model="showWordsList" @validWordsUpdate="captureValidWords" />
   </v-container>
 </template>
@@ -115,13 +111,6 @@ import { Game, GameState } from "../scripts/game";
 import { Stopwatch } from "~/scripts/stopwatch";
 import nuxtStorage from "nuxt-storage";
 import Axios from "axios";
-
-const showWordsList = ref(false);
-const isGameOver = ref(false);
-const playerName = ref("");
-const showNameDialog = ref(false);
-const validWordsNum = ref(0);
-
 import {
   playClickSound,
   playEnterSound,
@@ -129,6 +118,11 @@ import {
   playWinSound,
 } from "../scripts/soundUtils";
 
+const showWordsList = ref(false);
+const isGameOver = ref(false);
+const playerName = ref("");
+const showNameDialog = ref(false);
+const validWordsNum = ref(0);
 const game: Ref<Game> = ref(new Game("GAMES"));
 provide("GAME", game);
 const stopwatch = ref(new Stopwatch());
@@ -138,71 +132,6 @@ const captureValidWords = (num: number) => {
   validWordsNum.value = num;
 };
 
-onMounted(() => {
-  getWordFromApi().then((word) => {
-    game.value = new Game(word);
-  });
-  window.addEventListener("keyup", onKeyup);
-  const defaultName = nuxtStorage.localStorage.getData("name");
-  showNameDialog.value = defaultName ? false : true;
-  playerName.value = showNameDialog.value ? "Guest" : defaultName;
-
-  stopwatch.value.start();
-});
-
-onUnmounted(() => {
-  window.removeEventListener("keyup", onKeyup);
-});
-
-function onKeyup(event: KeyboardEvent) {
-  if (showWordsList.value) {
-    return;
-  }
-  if (showNameDialog.value) {
-    if (event.key === "Enter") {
-      enterPlayerName();
-    }
-  } else {
-    if (event.key === "Enter") {
-      let currentGuessIndex = game.value?.guessIndex;
-      game.value?.submitGuess();
-      if (currentGuessIndex !== game.value?.guessIndex) {
-        playEnterSound();
-      }
-    } else if (event.key == "Backspace") {
-      playClickSound();
-      game.value?.removeLastLetter();
-    } else if (event.key.match(/[A-z]/) && event.key.length === 1) {
-      playClickSound();
-      game.value?.addLetter(event.key.toUpperCase());
-    }
-  }
-}
-
-watch(
-  () => game.value?.gameState,
-  (newState) => {
-    switch (newState) {
-      case GameState.Won:
-        playWinSound();
-
-        stopwatch.value.stop();
-        saveScore();
-
-        isGameOver.value = true;
-        break;
-      case GameState.Lost:
-        playLoseSound();
-        stopwatch.value.stop();
-
-        isGameOver.value = true;
-        break;
-      case GameState.Playing:
-        isGameOver.value = false;
-        break;
-    }
-  }
-);
 function closeGameDialog() {
   isGameOver.value = false;
   setTimeout(() => {
@@ -210,15 +139,6 @@ function closeGameDialog() {
   }, 300);
   stopwatch.value.reset();
   stopwatch.value.start();
-}
-
-function enterPlayerName() {
-  if (playerName.value === "") {
-    playerName.value = "Guest";
-  } else {
-    nuxtStorage.localStorage.setData("name", playerName.value);
-  }
-  showNameDialog.value = !showNameDialog.value;
 }
 
 async function getWordFromApi(): Promise<string> {
@@ -241,5 +161,75 @@ async function saveScore() {
   })
     .then((res) => console.log(res))
     .catch((err) => console.log(err));
+}
+
+watch(showNameDialog, () => {
+  if (playerName.value === "") {
+    playerName.value = "Guest";
+  } else {
+    nuxtStorage.localStorage.setData("name", playerName.value);
+  }
+});
+
+watch(
+  () => game.value?.gameState,
+  (newState) => {
+    switch (newState) {
+      case GameState.Won:
+        playWinSound();
+        stopwatch.value.stop();
+        saveScore();
+        isGameOver.value = true;
+        break;
+
+      case GameState.Lost:
+        playLoseSound();
+        stopwatch.value.stop();
+        isGameOver.value = true;
+        break;
+
+      case GameState.Playing:
+        isGameOver.value = false;
+        break;
+    }
+  }
+);
+
+onMounted(() => {
+  getWordFromApi().then((word) => {
+    game.value = new Game(word);
+  });
+  window.addEventListener("keyup", onKeyup);
+  const defaultName = nuxtStorage.localStorage.getData("name");
+  showNameDialog.value = defaultName === null || defaultName === "Guest";
+  playerName.value = showNameDialog.value ? "Guest" : defaultName;
+
+  stopwatch.value.start();
+});
+
+onUnmounted(() => {
+  window.removeEventListener("keyup", onKeyup);
+});
+
+function onKeyup(event: KeyboardEvent) {
+  if (showWordsList.value) {
+    return;
+  }
+  if (showNameDialog.value) {
+    return;
+  }
+  if (event.key === "Enter") {
+    let currentGuessIndex = game.value?.guessIndex;
+    game.value?.submitGuess();
+    if (currentGuessIndex !== game.value?.guessIndex) {
+      playEnterSound();
+    }
+  } else if (event.key == "Backspace") {
+    playClickSound();
+    game.value?.removeLastLetter();
+  } else if (event.key.match(/[A-z]/) && event.key.length === 1) {
+    playClickSound();
+    game.value?.addLetter(event.key.toUpperCase());
+  }
 }
 </script>

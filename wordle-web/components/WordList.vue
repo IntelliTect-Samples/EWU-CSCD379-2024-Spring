@@ -39,18 +39,19 @@
 import { WordList } from "~/scripts/wordList";
 import { Game } from "~/scripts/game";
 import { filterValidWords } from "~/scripts/wordListUtils";
+
 const game: Ref<Game> = inject("GAME") as Ref<Game>;
+const selectedWord = ref("");
+const words = WordList;
+const totalPages = ref(Math.ceil(words.length / 10));
+const updatedWords = ref(words);
+const currentPage = ref(1);
 
 const modelValue = defineModel<boolean>({ default: false });
 const emits = defineEmits<{
   (e: "validWordsUpdate", validWoerdsNum: number): number;
 }>();
 
-const selectedWord = ref("");
-const words = WordList;
-const totalPages = ref(Math.ceil(words.length / 10));
-const updatedWords = ref(words);
-const currentPage = ref(1);
 const pagedWords = computed(() => {
   const start = (currentPage.value - 1) * 10;
   const end = start + 10;
