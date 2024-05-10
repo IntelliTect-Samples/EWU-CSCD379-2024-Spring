@@ -110,25 +110,29 @@ function changeTheme(themeName: string) {
   nuxtStorage.localStorage.setData('theme', theme.global.name.value);
 
 }
+function setTheme(themeName: string) {
+  theme.global.name.value = themeName;
+  nuxtStorage.localStorage.setData('theme', theme.global.name.value);
+}
 function toggleTheme() {
   if (theme.global.name.value === "dark") {
-    changeTheme("light");
+    setTheme("light");
     dark.value = false;
   } else if (theme.global.name.value === "sansLight") {
-    changeTheme("sansDark");
+    setTheme("sansDark");
     dark.value = true;
   } else if (theme.global.name.value === "sansDark") {
-    changeTheme("sansLight");
+    setTheme("sansLight");
     dark.value = false;
   } else if (theme.global.name.value === "watermelonLight") {
-    changeTheme("watermelonDark");
+    setTheme("watermelonDark");
     dark.value = true;
   } else if (theme.global.name.value === "watermelonDark") {
-    changeTheme("watermelonLight");
+    setTheme("watermelonLight");
     dark.value = false;
   } else {
-    changeTheme("dark");
-
+    setTheme("dark");
+    dark.value = true;
   }
 }
 
