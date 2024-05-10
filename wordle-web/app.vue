@@ -61,7 +61,6 @@ const props = defineProps<{
   showUserNameDialog: boolean
  }>();
 provide("userName", userName);
-provide("showUserNameDialog", showUserNameDialog.value);
 
 
 const themes = [
