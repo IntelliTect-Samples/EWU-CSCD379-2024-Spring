@@ -1,97 +1,60 @@
 # EWU-CSCD378-2022-Spring
 
-Azure Web Site URL: https://lively-island-012d7ce1e.5.azurestaticapps.net
+Azure Web Site URL:
 
 Azure API Site URL: https://aestheticwordle.azurewebsites.net/
 
-## Assignment 3
+## Assignment 4
 
 The purpose of this assignment is to solidify your learning of:
 
-- Creating an API and deploying it to Azure
-- Calling the API from the client using Axios
-- Using Entity Framework to store data in SQL Server
-- Configuring SQL Server for localhost development and Azure
-- Entity Framework Migrations
-- Local storage
+- Responsive design for a variety of devices.
+- Using a more complex API
+- Creating services that use multiple EF classes (GET and POST)
 
-## Feature
+## Due Dates
 
-Add leaderboard to the application
+- 100 points +5 EC points
+- Assigned: 5/09
+- Initial work complete: 5/19 11:59 pm
+  - 50% for running pipeline with passing unit test
+  - 50% for working website
+- Code Reviews Due by: 5/21 11:59 pm
+- Review in class: 5/23 2:00 pm
+- Final turn-in: 5/23 11:59 pm
 
-- Allow the user to play a game
-- At the end of the game get a name via a dialog
-- Save the name in local storage so we don't have to ask again
-- Call an API to save the data
-- Create a Leaderboard page which displays the top 10 scores
-- Determine a good algorithm for sorting scores
+## Features
+
+- Make all pages responsive ❌✅
+  - 1080p desktop ❌✅
+  - iPad Air ❌✅
+  - Samsung Galaxy S20 Ultra Super Mega Excellent ❌✅
+  - IPhone SE ❌✅
+- Create a improved landing page and site theme (Background, make it look attractive to play) ❌✅
+  - Theme should extend all pages ❌✅
+- Add an instructions page that is available via the hamburger menu that details the features of the game and how to play ❌✅
+- Create a new Wordle game page that reuses components but will provide the same word for a specific day. Everyone going to the page that day will get the same word. The page should indicate Wordle of the Day or something like that ❌✅
+- Create a page that lists the last 10 daily words with statistics. Number of plays, Average score, Average time. (just list the date, don't show the word silly) ❌✅
+  - It should indicate if the user has played that day ❌✅
+  - Clicking on the item should take the player to that game (Extra Credit) ❌✅
 
 ## Turn in Process
 
-- On your fork, create an Assignment3 branch
-- Update this branch (Fetch upstream) from the Assignment3 branch in the class repo. [Assignment3 in class repo](https://github.com/IntelliTect-Samples/EWU-CSCD379-2022-Spring/tree/Assignment3)
-- Do your homework in your Assignment3 branch
-- Submit your pull request against Assignment3 in the class repo
+- On your fork, create an Assignment4 branch
+- Update this branch (Fetch upstream) from the Assignment4 branch in the class repo. [Assignment4 in class repo](https://github.com/IntelliTect-Samples/EWU-CSCD379-2022-Spring/tree/Assignment4)
+- Do your homework in your Assignment4 branch
+- Submit your pull request against Assignment4 in the class repo
 - Ask in Teams chat if you have questions or issues
 
-## Instructions
+## Hints
 
-**1. Create a leaderboard API Controller** ❌✅
+For this assignment, fewer guidelines are going to be given. If we discuss ideas in class, feel free to PR them here and we will merge into the assignment.
 
-- Create an endpoint that returns the top 10 scores (HttpGet) ❌✅
-  - Results should include Name, average guesses, and number of games played ❌✅
-- Create an endpoint that allows for posting a score (HttpPost) with data in the body ❌✅
-  - A new name should add a new record ❌✅
-  - An existing name should update that record ❌✅
-- Save and load all data with Entity Framework to an Azure SQL database or LocalDb for debugging ❌✅
-  - Class should be named "Player" and "Players" for the DbSet ❌✅
-  - Fields should be:
-    - int PlayerId ❌✅
-    - string Name ❌✅
-    - int GameCount ❌✅
-    - double AverageAttempts ❌✅
-    - int AverageSecondsPerGame ❌✅(OPTIONAL)
-- The logic should reside in a service that is injected via dependency injection into the controller ❌✅
-- Set up CORS (Cross Origin Resource Sharing) ❌✅
-
-**2. Create a dialog for getting the user's name** ❌✅
-
-- If we don't have the user's name, present the user with a dialog that allows them to type in their name ❌✅
-- The users current name should show on the game page (upper right) ❌✅
-  - This should be visible when setting/changing the name. It should change as the user types ❌✅
-- The user should be able to click on their name to change it (with the same dialog) ❌✅
-- Save the name in local storage and load it for the next game if it is set ❌✅
-- If the name is not set, display Guest as the name. ❌✅
-  - Clicking on this allows for preemptive setting of the name before the end of the game ❌✅
-- Dialog must be persistent, doesn't close by clicking off the dialog ❌✅
-
-**3. Save the Score and Seconds to complete** ❌✅
-
-- Save the score and time to complete in seconds at the end of the game if we have a name. ❌✅
-- If the user hasn't set a name, save the score and seconds as "Guest". (Be sure to prompt first) ❌✅
-- Save should be done with an Axios Post ❌✅
-
-**4. Create a Leaderboard Page** ❌✅
-
-- Create a /leaderboard page in the application that shows the top scores ❌✅
-- Use Axios to call the leaderboard API ❌✅
-- Make a nice display of the returned data ❌✅
-- Add a link on the front page to access the leaderboard ❌✅
-- Add a link to the app bar to access the leaderboard ❌✅
-
-**5. Unit testing** ❌✅ (OPTIONAL) (Not covered in class, but in instructor's repo: https://github.com/granterickson/EWU-CSCD379-2024-Spring)
-
-- Tests for the service ❌✅ (OPTIONAL)
-- Integration tests for the controller ❌✅ (OPTIONAL)
-
-**6. Deploy site to Azure** ❌✅
-
-- Deploy API site with Github Action to Azure Web App ❌✅
-- Unit Tests should run on build ❌✅
+- We want to push you to learn to make architectural decisions and follow the patterns we have applied in the past. However, if this is too hard, please let us know.
+- It will be necessary to create a controller (and a service) for the daily words stats page
+- Look a using a URL parameter to jump to the game at a specific date. [Stack Overflow](https://stackoverflow.com/questions/48068520/nuxt-js-how-to-get-route-url-params-in-a-page)
 
 ## Extra Credit
 
-- Unit testing on the client side (3) ❌✅
-- Animate the leaderboard (3) ❌✅
-- Create a logo (3) ❌✅
-- Add Average Seconds to win in score (3) ❌✅
+- Clicking on an item in the daily word stats page should take the player to that game and allow them to play it
+- Create another ad page and choose one at random
