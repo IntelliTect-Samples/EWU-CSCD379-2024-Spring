@@ -2,8 +2,8 @@
 {
     public record Score
     {
-        public string Name { get; set; } = "";
-        public double AverageAttempts { get; set; }
-        public int GameCount { get; set; }
+        public string PlayerName { get; set; } = "";
+        public int Attempts { get; set; }
+        public int Time { get; set; }
     }
 }

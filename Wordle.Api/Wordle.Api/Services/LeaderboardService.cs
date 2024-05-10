@@ -17,7 +17,7 @@ public class LeaderboardService
         Db = db;
     }
 
-    public async Task<List<Score>> GetTopTenScores()
+    public async Task<List<PlayerDto>> GetTopTenScores()
     {
         /*for (int j = 0; j < players.Count; j++)
         {
@@ -34,7 +34,7 @@ public class LeaderboardService
         return await Db.Players.
             OrderBy(player => player.AverageAttempts).
             Take(10).
-            Select(player => new Score
+            Select(player => new PlayerDto
             {
                 Name = player.Name,
                 AverageAttempts = player.AverageAttempts,
@@ -42,33 +42,36 @@ public class LeaderboardService
             }).ToListAsync();
     }
 
-    public async Task<bool> UpdateScore(NewScore score)
+    public async Task<bool> UpdateScore(Score score)
     {
-        Player? player = await Db.Players.FirstOrDefaultAsync(player => player.Name == score.playerName);
-        if (player == null)
+        Player? player = await Db.Players.FirstOrDefaultAsync(player => player.Name == score.PlayerName);
+        lock (_lock)
         {
-            player = new()
+            if (player == null)
             {
-                Name = score.playerName,
-                GameCount = 1,
-                AverageAttempts = score.attempts,
-                AverageSecondsPerGame = score.time
-            };
-            Db.Players.Add(player);
-        }
-        else
-        {
-            player.GameCount += 1;
-            player.AverageAttempts = ((player.AverageAttempts * (player.GameCount-1)) + score.attempts) / (player.GameCount);
-            player.AverageSecondsPerGame = ((player.AverageSecondsPerGame * (player.GameCount - 1)) + score.time) / (player.GameCount);
-        }
-        if(Db.SaveChanges() > 0)
-        {
-            return true;
-        } 
-        else
-        {
-            return false;
+                player = new()
+                {
+                    Name = score.PlayerName,
+                    GameCount = 1,
+                    AverageAttempts = score.Attempts,
+                    AverageSecondsPerGame = score.Time
+                };
+                Db.Players.Add(player);
+            }
+            else
+            {
+                player.GameCount += 1;
+                player.AverageAttempts = ((player.AverageAttempts * (player.GameCount - 1)) + score.Attempts) / (player.GameCount);
+                player.AverageSecondsPerGame = ((player.AverageSecondsPerGame * (player.GameCount - 1)) + score.Time) / (player.GameCount);
+            }
+            if (Db.SaveChanges() > 0)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
         }
     }
 }
