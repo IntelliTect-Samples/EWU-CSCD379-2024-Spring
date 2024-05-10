@@ -13,10 +13,6 @@ var connectionString = builder.Configuration.GetConnectionString("DefaultConnect
 builder.Services.AddDbContext<WordleDbContext>(options =>
     options.UseSqlServer(connectionString));
 
-builder.Services.AddDbContext<PlayerDbContext>(options =>
-    options.UseSqlServer(connectionString));
-//builder.Services.AddDatabaseDeveloperPageExceptionFilter();
-
 // add for push x3 
 // Add services to the container.
 builder.Services.AddCors(options =>
@@ -35,6 +31,7 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 builder.Services.AddScoped<WordOfTheDayService>();
+builder.Services.AddScoped<WordleService>();
 
 var app = builder.Build();
 

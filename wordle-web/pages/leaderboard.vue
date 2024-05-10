@@ -32,21 +32,20 @@
 <script setup lang="ts">
 
 import { ref } from 'vue';
-    import Axios from 'axios';
-
-const apiUrl = '';
+import Axios from 'axios';
 
 
 interface Player {
   name: string;
   gameCount: number;
   averageAttempts: number;
+  averageSecondsPerGame: number;
 }
 
-    const topTenScores = ref<Player[]>();
+const topTenScores = ref<Player[]>();
 
 
-Axios.get(apiUrl + '/leaderboard/GetScores')
+Axios.get('/Leaderboard/top10')
   .then(response => {
     topTenScores.value = response.data;
   })

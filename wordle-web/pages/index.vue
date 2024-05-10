@@ -46,7 +46,22 @@ import { Game, GameState } from "../scripts/game";
 import Axios from "axios";
 
 
+
+
+
 const game: Ref<Game> = ref(new Game("GAMES"));
+
+watch(
+  () => game.value?.gameState,
+  (stateChange) => {
+    switch (stateChange) {
+      case GameState.Won:
+        postScore();
+        break;
+    }
+  }
+);
+
 // Get random word from word list
 onMounted(() => {
   getWordFromApi().then((word) => {
@@ -71,6 +86,23 @@ async function getWordFromApi(): Promise<string> {
   return response.data;
 }
 
+async function postScore(){
+  let attempts = 0;
+  if(game.gameState == GameState.Won){
+    attempts = game.guessIndex + 1;
+  }
+  else {
+    attempts = game.maxAttempts;
+  }
+  const requestBody = {
+    name: nuxtStorage.localStorage.get("userName", userName.value),
+    gameCount: 1, //since it posts after everygame
+    averageAttempts: attempts,
+    AverageSecondsPerGame: 0
+  };
+  axios.post("http://localhost:5297/Leaderboard", requestBody);
+}
+
 function onKeyup(event: KeyboardEvent) {
   if (event.key === "Enter") {
     game.value?.submitGuess();
@@ -79,20 +111,6 @@ function onKeyup(event: KeyboardEvent) {
   } else if (event.key.match(/[A-z]/) && event.key.length === 1) {
     game.value?.addLetter(event.key.toUpperCase());
   }
-    }
-
-    function postScore() {
-        let attempts = 0;
-        if (game.value.gameState == GameState.Won) {
-            attempts = game.value.guessIndex + 1;
-        } else {
-            attempts = game.value.maxAttempts;
-        }
-        Axios.post('/PostScore', {
-            Name: nuxtStorage.localStorage.get("userName", userName.value),
-            GameCount: 1,
-            AverageAttempts: attempts,
-        });
     }
 
 

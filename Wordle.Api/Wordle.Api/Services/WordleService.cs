@@ -1,37 +1,48 @@
 using System.Collections.Generic;
+using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using Wordle.Api.Models;
+using Wordle.Api.Dtos;
 
 namespace Wordle.Api.Services
 {
   public class WordleService 
   {
-    private readonly PlayerDbContext _context;
+    private readonly WordleDbContext _context;
 
-    public WordleService(PlayerDbContext context)
+    public WordleService(WordleDbContext context)
     {
       _context = context;
     }
 
-    public List<Player> GetTop10Scores()
+    public async Task<Player[]> GetTop10Scores()
     {
-      return _context.Players.OrderByDescending(p => p.AverageAttempts).ThenBy(p => p.GameCount).Take(10).ToList();
+      return await _context.Players.OrderByDescending(p => p.AverageAttempts).ThenBy(p => p.GameCount).Take(10).ToArrayAsync();
     }
 
-    public void AddOrUpdatePlayer(Player player)
+    public async Task<Player> AddOrUpdatePlayer(PlayerDTO player)
     {
-      var existingPlayer = _context.Players.FirstOrDefault(p => p.Name == player.Name);
+      Player? existingPlayer = await _context.Players.FirstOrDefaultAsync(player => player.Name == player.Name);
       if(existingPlayer != null)
       {
         existingPlayer.GameCount++;
         existingPlayer.AverageAttempts = (existingPlayer.AverageAttempts * (existingPlayer.GameCount - 1) + player.AverageAttempts) / existingPlayer.GameCount;
         existingPlayer.AverageSecondsPerGame = (existingPlayer.AverageSecondsPerGame * (existingPlayer.GameCount - 1) + player.AverageSecondsPerGame) / existingPlayer.GameCount;
+        _context.SaveChanges();
+        return existingPlayer;
       }
       else 
       {
-        _context.Players.Add(player);
+        Player newPlayer = new(){
+          AverageAttempts = player.AverageAttempts,
+          GameCount = player.GameCount,
+          Name = player.Name,
+          AverageSecondsPerGame = player.AverageSecondsPerGame
+        };
+        _context.Players.Add(newPlayer);
+        _context.SaveChanges();
+        return newPlayer;
       }
-      _context.SaveChanges();
     }
   }
 }
