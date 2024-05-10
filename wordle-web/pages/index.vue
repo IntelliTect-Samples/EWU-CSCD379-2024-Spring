@@ -5,7 +5,10 @@
       class="pa-2 mx-2 mt-2 cursor-pointer"
       color="secondary"
     >
-      <v-card-subtitle style="font-size: xx-large; align-self: start"
+      <v-card-subtitle
+        :class="{ animated: timerRunning }"
+        style="font-size: xx-large; align-self: start; font-style: oblique"
+        color="primary"
         >Welcome, {{ userName }}</v-card-subtitle
       >
     </v-sheet>
@@ -13,15 +16,12 @@
 
   <v-container>
     <!-- Timer Box -->
-    <v-container class="text-center" height="150px">
-      <v-card
-        class="pa-2 mx-auto mt-2"
-        max-width="250"
-        outlined
-        color="secondary"
-      >
-        <v-card-title class="subtitle-1">Time Elapsed</v-card-title>
-        <v-card-text>{{ elapsedTime }}</v-card-text>
+    <v-container class="timer-container">
+      <v-card class="timer-box" max-width="250" outlined color="secondary">
+        <v-card-title class="subtitle-1">Time: </v-card-title>
+        <v-card-text :class="{ animated: timerRunning }">{{
+          elapsedTime
+        }}</v-card-text>
       </v-card>
     </v-container>
 
@@ -34,7 +34,7 @@
       >
         <h3>
           You've
-          {{ game.gameState == GameState.Won ?  "Won! 🥳" : "Lost... 😭" }}
+          {{ game.gameState == GameState.Won ? "Won! 🥳" : "Lost... 😭" }}
           {{ stopTimerOnGameEnd() }}
         </h3>
         <v-card-text>
@@ -231,4 +231,75 @@ function saveScoreAndTime(timeInSeconds: number) {
     );
   }
 }
+const timerRunning = ref(false);
+
+// Determine when the timer should be running based on game state
+watchEffect(() => {
+  timerRunning.value = game.gameState === GameState.Playing;
+});
 </script>
+
+<style scoped>
+/* Container for the timer */
+.timer-container {
+  position: fixed;
+  top: 180px;
+  right: -800px;
+  z-index: 1000;
+}
+
+/* Styling for the timer box */
+.timer-box {
+  display: flex;
+  align-items: first baseline;
+  justify-content: center;
+  width: 150px; /* Adjust as needed */
+  height: 50px; /* Adjust as needed */
+  background-color: #4caf50;
+  color: white;
+  font-size: 30px;
+  font-weight: bold;
+  border-radius: 25px; /* Half of the height for a perfect circle */
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+  transition: background-color 0.3s, transform 0.5s ease-in-out; /* Smooth transitions */
+}
+
+/* Animation for the timer box when running */
+.timer-box--running {
+  animation: pulse 1s infinite alternate;
+}
+
+/* Additional animation for rotating */
+.animated {
+  animation: pulse 5s linear infinite;
+}
+
+/* Pulse animation */
+@keyframes pulse {
+  0% {
+    transform: scale(1);
+  }
+  25% {
+    transform: scale(-1.2);
+  }
+  50% {
+    transform: scale(1.3);
+  }
+  100% {
+    transform: scale(1.1);
+  }
+  110% {
+    transform: scale(1);
+  }
+}
+
+/* Rotation animation */
+@keyframes rotate {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+</style>
