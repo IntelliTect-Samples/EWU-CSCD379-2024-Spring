@@ -4,7 +4,9 @@ export default defineNuxtConfig({
   build: {
     transpile: ['vuetify'],
   },
+  plugins: ['@/plugins/axios.ts'],
   devtools: { enabled: true },
+  ssr: false,
   modules: [
     '@nuxt/test-utils/module',
     (_options, nuxt) => {
@@ -21,10 +23,5 @@ export default defineNuxtConfig({
       },
     },
   },
-  nitro: {
-    baseURL: "http://localhost:3000",
-    prerender: {
-      failOnError: false, 
-    },
-  },
+  
 })
