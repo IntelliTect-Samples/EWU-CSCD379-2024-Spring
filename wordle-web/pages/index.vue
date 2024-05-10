@@ -22,48 +22,63 @@
         </v-card-actions>
       </v-card>
     </v-dialog>
-    <v-row class="d-flex ga-3 justify-end mb-5">
-      <v-sheet
-        v-if="game.gameState !== GameState.Playing"
-        @click="isGameOver = true"
-        color="primary"
-        min-width="200px"
-        class="pa-2 cursor-pointer text-center font-weight-bold"
-        elevation="4"
-        rounded
-      >
-        <v-icon icon="mdi-flag-variant" />
-        Results
-      </v-sheet>
-      <v-sheet
-        class="pa-2 cursor-pointer"
-        color="primary"
-        rounded
-        min-width="200px"
-        elevation="4"
-        @click="showNameDialog = !showNameDialog"
-      >
-        <v-icon icon="mdi-account" />
-        <strong>Username:</strong> {{ playerName }}
-      </v-sheet>
-      <v-sheet
-        class="pa-2"
-        color="primary"
-        rounded
-        elevation="4"
-        min-width="200px"
-      >
-        <v-icon icon="mdi-timer" />
-        <strong> Current Time:</strong> {{ stopwatch.getCurrentTime() }}
-      </v-sheet>
+    <v-row>
+      <v-col lg="2" md="12" class="d-none d-md-flex" />
+      <v-col lg="8" md="12" class="d-flex align-center flex-column flex-nowrap">
+        <GameBoardGuess
+          v-for="(guess, i) of game.guesses"
+          :key="i"
+          :guess="guess"
+        />
+      </v-col>
+      <v-col lg="2" md="12" class="my-3">
+        <v-row class="mb-1 justify-center">
+          <v-sheet
+            class="pa-2 cursor-pointer"
+            color="primary"
+            rounded
+            v-ripple
+            min-width="200px"
+            height="40px"
+            elevation="4"
+            @click="showNameDialog = !showNameDialog"
+          >
+            <v-icon icon="mdi-account" />
+            <strong>Username:</strong> {{ playerName }}
+          </v-sheet>
+        </v-row>
+        <v-row class="mb-1 justify-center">
+          <v-sheet
+            class="pa-2"
+            color="primary"
+            rounded
+            elevation="4"
+            min-width="200px"
+            height="40px"
+          >
+            <v-icon icon="mdi-timer" />
+            <strong> Current Time:</strong> {{ stopwatch.getCurrentTime() }}
+          </v-sheet>
+        </v-row>
+        <v-row class="mb-1 justify-center">
+          <v-sheet
+            v-if="game.gameState !== GameState.Playing"
+            @click="isGameOver = true"
+            color="primary"
+            min-width="200px"
+            height="40px"
+            v-ripple
+            class="mx-auto pa-2 cursor-pointer text-center font-weight-bold"
+            elevation="4"
+            rounded
+          >
+            <v-icon icon="mdi-flag-variant" />
+            Results
+          </v-sheet>
+        </v-row> </v-col
+      >>
     </v-row>
-    <div class="m">
-      <GameBoardGuess
-        v-for="(guess, i) of game.guesses"
-        :key="i"
-        :guess="guess"
-      />
-    </div>
+    <div class="m"></div>
     <Keyboard />
 
     <WordList
