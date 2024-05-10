@@ -19,7 +19,7 @@
       class="mx-auto pa-8 w-75 rounded text-center"
       elevation="4"
     >
-      <v-card-title class="text-h5 mb-2">
+      <v-card-title class="text-h5 mb-2 text-background">
         <v-icon icon="mdi-star" />Leaderboard<v-icon icon="mdi-star"
       /></v-card-title>
       <v-card-item>
@@ -36,7 +36,9 @@
           <tbody>
             <tr v-for="(player, i) in players" :key="i" class="bg-background">
               <td v-if="i < 3">
-                <v-icon :class="[isPosdium(i), 'rotate']">mdi-trophy</v-icon>
+                <v-icon :class="[getTrophyColor(i), 'rotate']"
+                  >mdi-trophy</v-icon
+                >
               </td>
               <td v-else>{{ i + 1 }}</td>
               <td class="w-25">{{ player.name }}</td>
@@ -120,7 +122,7 @@ onMounted(() => {
     });
 });
 
-function isPosdium(i: number) {
+function getTrophyColor(i: number) {
   if (i === 0) return "first-place";
   if (i === 1) return "second-place";
   if (i === 2) return "third-place";
