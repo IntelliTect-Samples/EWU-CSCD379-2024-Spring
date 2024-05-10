@@ -1,3 +1,4 @@
+using Wordle.Api.Data;
 using Wordle.Api.Services;
 
 var AllOrigins = "AllOrigins";
@@ -20,10 +21,15 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+builder.Services.AddScoped<LeaderboardService>();
 builder.Services.AddScoped<WordOfTheDayService>();
 
 var app = builder.Build();
-
+using (var scope = app.Services.CreateScope())
+{
+    var db = scope.ServiceProvider.GetRequiredService<AppDbContext>();
+    //db.Database.Migrate();
+}
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
