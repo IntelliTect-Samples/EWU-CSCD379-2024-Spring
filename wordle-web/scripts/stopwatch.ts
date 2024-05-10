@@ -11,16 +11,19 @@ export class Stopwatch {
       this.startTime = this.startTime + 1;
     }, 1000);
   }
+
   public stop(): void {
     if (this.intervalId) {
       clearInterval(this.intervalId);
       this.intervalId = null;
     }
   }
+
   public reset(): void {
     this.stop();
     this.startTime = 0;
   }
+
   public getCurrentTime(): number {
     return this.startTime;
   }
