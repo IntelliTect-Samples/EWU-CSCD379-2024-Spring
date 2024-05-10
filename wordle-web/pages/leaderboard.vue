@@ -3,7 +3,7 @@
         <v-sheet color="secondary">
             <v-card-title>Leaderboard</v-card-title>
         </v-sheet>
-        <v-table class="mt-7 mx-auto w-75">
+        <v-table class="table mt-7 mx-auto w-75">
             <thead>
                 <tr>
                     <th class="text-h6 text-center Name"><strong>Player Name</strong></th>
@@ -30,26 +30,21 @@
 </template>
 
 <script setup lang="ts">
-
-import { ref } from 'vue';
-import Axios from 'axios';
-
-
-interface Player {
-  name: string;
-  gameCount: number;
-  averageAttempts: number;
-  averageSecondsPerGame: number;
-}
-
-const topTenScores = ref<Player[]>();
-
-
-Axios.get('/Leaderboard/top10')
-  .then(response => {
-    topTenScores.value = response.data;
-  })
-  .catch(error => {
-    console.log(error);
-  });
+    import { ref } from 'vue';
+    import Axios from 'axios';
+    interface Player {
+        name: string;
+        gameCount: number;
+        averageAttempts: number;
+    }
+    const topTenScores = ref<Player[]>();
+    //need to make GET request to the server to get the leaderboard data
+    Axios.get('/leaderboard/GetScores')
+        .then(response => {
+            topTenScores.value = response.data;
+        })
+        .catch(error => {
+            console.log(error);
+        });
+    //note to self need to implement animate.css for the leaderboard extra credit
 </script>
