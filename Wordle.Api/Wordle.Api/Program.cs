@@ -1,3 +1,4 @@
+using Microsoft.EntityFrameworkCore;
 using Wordle.Api.Data;
 using Wordle.Api.Services;
 
@@ -21,15 +22,22 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-builder.Services.AddScoped<LeaderboardService>();
+var connectionString = builder.Configuration.GetConnectionString("DefaultConnection") ?? throw new InvalidOperationException("Unable to connect to 'DefaultConnection'");
+builder.Services.AddDbContext<AppDbContext>(options =>
+{
+    options.UseSqlServer(connectionString);
+});
 builder.Services.AddScoped<WordOfTheDayService>();
+builder.Services.AddScoped<LeaderboardService>();
 
 var app = builder.Build();
+
 using (var scope = app.Services.CreateScope())
 {
     var db = scope.ServiceProvider.GetRequiredService<AppDbContext>();
-    //db.Database.Migrate();
+    db.Database.Migrate();
 }
+
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
