@@ -20,7 +20,7 @@
             </tbody>
         </v-table>
         <v-card-actions>
-            <v-btn @click="router.push('/')">Back</v-btn>
+            <v-btn variant ="flat" color="primary" @click="router.push('/')">Back</v-btn>
         </v-card-actions>
     </v-card>
 </template>

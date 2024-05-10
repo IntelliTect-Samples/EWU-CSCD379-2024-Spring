@@ -1,6 +1,5 @@
 <template>
   <UserNameDialog v-model ="showUserNameDialog" />
-  <v-container class="myFontDefault">
     <v-card class="text-center">
       <v-alert v-if="game.gameState != GameState.Playing" :color="game.gameState == GameState.Won ? 'success' : 'error'"
         class="mb-5" tile >
@@ -17,28 +16,29 @@
         </v-btn>
       </v-alert>
       <v-card-title v-else>Wordle</v-card-title>
+      
       <GameBoardGuess v-for="(guess, i) of game.guesses" :key="i" :guess="guess"/>
 
-      <div class="my-5">
-        <ValidWord />
-      </div>
-    
       <div class="my-10">
         <Keyboard />
       </div>
 
-      <v-btn @click="game.submitGuess()" class="mb-5" color="primary">
-        Guess!
-      </v-btn>
+      <div class="my-5">
+        <ValidWord />
+      </div>
+
+      <v-btn @click="game.submitGuess()" class="mb-5" color="primary">Guess!</v-btn>
+
+      <v-btn class ="mb-5 ml-5" color="primary" variant ="flat" @click = "router.push('/leaderboard')">Leaderboard</v-btn>
     </v-card>
-  </v-container>
+
 </template>
 
 <script setup lang="ts">
 import { Game, GameState } from "../scripts/game";
 import Axios from "axios" //npm install axios 
 
-
+const router = useRouter();
 const userName = inject("userName");
 const game = ref(new Game("GAMES"));
 provide("GAME", game);
