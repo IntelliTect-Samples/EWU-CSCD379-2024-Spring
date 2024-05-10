@@ -162,7 +162,6 @@ const router = useRouter();
 const theme = useTheme();
 const showHelpDialog = ref(false);
 const settingsDialog = ref(false);
-const wordEngineDialog = ref(false);
 
 onMounted(() => {
   var defaultTheme = nuxtStorage.localStorage.getData("theme");
@@ -181,15 +180,6 @@ function themeSettings(item: string) {
 }
 
 
-function saveUserName() {
-  if (dialogBox.value) {
-    const userName = usersNameInput.value.trim();
-    if (userName !== "") {
-      nuxtStorage.localStorage.setData("userName", userName);
-      dialogBox.value = false;
-    }
-  }
-}
 </script>
 
 <style>
