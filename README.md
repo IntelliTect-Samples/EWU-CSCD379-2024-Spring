@@ -1,6 +1,6 @@
 # EWU-CSCD378-2022-Spring
 
-Azure Web Site URL:
+Azure Web Site URL: https://gray-sea-0956dd21e.5.azurestaticapps.net
 
 Azure API Site URL: https://aestheticwordle.azurewebsites.net/
 
