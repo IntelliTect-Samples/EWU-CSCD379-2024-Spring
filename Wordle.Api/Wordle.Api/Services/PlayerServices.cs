@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Wordle.Api.Dtos;
 using Wordle.Api.Models;
 
 namespace Wordle.Api.Services
@@ -9,7 +10,7 @@ namespace Wordle.Api.Services
         public WordleDbContext Db { get; set; } = Db;
 
 
-        public async Task AddPlayer(Score score)
+        public async Task SavePlayer(Score score)
         {
             Player? player = await Db.Players.FirstOrDefaultAsync(player => player.Name == score.Name);
 
@@ -38,9 +39,11 @@ namespace Wordle.Api.Services
 
         }
 
-        public  IEnumerable<Player> TopTenPlayers(){
+        public  IEnumerable<PlayerDto> TopTenPlayers(){
 
-            return Db.Players.OrderBy(player => player.AverageAttempts).ThenBy(player => player.GameCount).ThenBy(player => player.AverageSeconds).Take(10);
+            return Db.Players.OrderBy(player => player.AverageAttempts).ThenBy(player => player.GameCount).ThenBy(player => player.AverageSeconds).Select(player =>
+            new PlayerDto()
+            { Name = player.Name, GameCount = player.GameCount, AverageAttempts = player.AverageAttempts, AverageSeconds = player.AverageSeconds }).Take(10);
 
             }
 }
