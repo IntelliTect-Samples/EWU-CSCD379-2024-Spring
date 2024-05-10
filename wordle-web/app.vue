@@ -17,7 +17,7 @@
             <v-card-text>UserName: </v-card-text>
           </v-sheet>
           <v-form class="mx-3 mt-5">
-            <v-text-field v-model="usersNameInput" label="user" variant="outlined" clearable required>
+            <v-text-field @keyup.stop v-model="usersNameInput" label="user" variant="outlined" clearable required>
               </v-text-field>
           </v-form>
           <v-card-actions class="mx-4 mb-3">
