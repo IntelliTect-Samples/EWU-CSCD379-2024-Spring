@@ -39,7 +39,7 @@
                 <v-icon :class="[isPosdium(i), 'rotate']">mdi-trophy</v-icon>
               </td>
               <td v-else>{{ i + 1 }}</td>
-              <td>{{ player.name }}</td>
+              <td class="w-25">{{ player.name }}</td>
               <td>{{ player.gameCount }}</td>
               <td>{{ player.averageAttempts.toFixed(2) }}</td>
               <td>{{ player.averageSeconds.toFixed(2) }}</td>
