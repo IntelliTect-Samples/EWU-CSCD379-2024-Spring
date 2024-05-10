@@ -1,6 +1,5 @@
 <template>
-  <UserNameDialog v-model="showUserNameDialog" />
-  <v-container class="myFontDefault">
+  <UserNameDialog v-model ="showUserNameDialog" />
     <v-card class="text-center">
       <v-alert v-if="game.gameState != GameState.Playing" :color="game.gameState == GameState.Won ? 'success' : 'error'"
         class="mb-5" tile >
@@ -17,33 +16,35 @@
         </v-btn>
       </v-alert>
       <v-card-title v-else>Wordle</v-card-title>
+      
       <GameBoardGuess v-for="(guess, i) of game.guesses" :key="i" :guess="guess"/>
 
-      <div class="my-5">
-        <ValidWord />
-      </div>
-    
       <div class="my-10">
         <Keyboard />
       </div>
 
-      <v-btn @click="game.submitGuess()" class="mb-5" color="primary">
-        Guess!
-      </v-btn>
+      <div class="my-5">
+        <ValidWord />
+      </div>
+
+      <v-btn @click="game.submitGuess()" class="mb-5" color="primary">Guess!</v-btn>
+
+      <v-btn class ="mb-5 ml-5" color="primary" variant ="flat" @click = "router.push('/leaderboard')">Leaderboard</v-btn>
     </v-card>
-  </v-container>
+
 </template>
 
 <script setup lang="ts">
 import { Game, GameState } from "../scripts/game";
 import Axios from "axios" //npm install axios 
 
-
+const router = useRouter();
 const userName = inject("userName");
-const game: Ref<Game> = ref(new Game("GAMES"));
-provide("GAME", game.value);
+const game = ref(new Game("GAMES"));
+provide("GAME", game);
+const showUserNameDialogInject = inject("showUserNameDialog");
 const showUserNameDialog = ref(false);
-
+var startTime = new Date().getTime();
 onMounted(() => {
   // Get random word from word list
   getWordFromApi().then((word) => {
@@ -59,7 +60,7 @@ onUnmounted(() => {
 });
 
 async function getWordFromApi(): Promise<string> {
-  let wordUrl = "Word/WordOfTheDay?offsetInHours=-27";
+  let wordUrl = "Word/WordOfTheDay";
 
   const response = await Axios.get(wordUrl);
   console.log("Response from API : " + response.data);
@@ -89,28 +90,27 @@ function postScore(playerNameIn: string, attemptsIn: number, timeIn: number){
   console.log("score data " + playerNameIn + " " + attemptsIn + " " + 0);
   let postScoreUrl ="Score/UpdateScore";
   Axios.post(postScoreUrl, {
-    playerName: playerNameIn,
-    attempts: attemptsIn,
-    time: timeIn
+    PlayerName: playerNameIn,
+    Attempts: attemptsIn,
+    Time: timeIn
   }).then((response) => {
     console.log("response from api " + response.data + " " + response.status);
   });
 }
 watch(() => game.value.gameState, (value) => {
   if(value == GameState.Won || value == GameState.Lost){
-    if(userName.value == "guest"){
+    if(userName === "guest" || userName ===""){
       showUserNameDialog.value = true;
       watch(() => showUserNameDialog.value, (value) => {
         if(value == false){
-          postScore(userName.value as string, calcAttempts(), 0);
+          postScore(userName.value as string, calcAttempts(), calcSecond());
         }
       });
-      // it is not working I don't think it is updating the value on the app.vue page to show the dialog
+      
     }else{
-      postScore(userName.value as string, calcAttempts(), 0);
+      postScore(userName.value as string, calcAttempts(), calcSecond());
     }
     
-   
     //I know userName is showing an error but the api only gets the data when its set up like that
   }
   function calcSecond()

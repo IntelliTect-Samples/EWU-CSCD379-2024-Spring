@@ -21,7 +21,7 @@
             <v-list-item v-for="page in pages" :key="page.name" @click="router.push(page.path)">
               <v-list-item-title>{{ page.name }}</v-list-item-title>
             </v-list-item>
-            <v-list-item @click ="showHelpDialog  = true">Help</v-list-item>
+            <v-list-item @click="showHelpDialog = true">Help</v-list-item>
           </v-list>
         </v-menu>
         <v-menu>
@@ -50,18 +50,18 @@
 <script setup lang="ts">
 import { useTheme } from "vuetify";
 import nuxtStorage from "nuxt-storage";
-import {defineProps} from "vue";
+import { defineProps } from "vue";
 const router = useRouter();
 const theme = useTheme();
 const showHelpDialog = ref(false);
 const showUserNameDialog = ref(false);
 const userName = ref("guest");
-const props = defineProps<{ 
+const dark = ref(true)
+const props = defineProps<{
   userName: string
   showUserNameDialog: boolean
- }>();
+}>();
 provide("userName", userName);
-provide("showUserNameDialog", showUserNameDialog.value);
 
 
 const themes = [
@@ -73,7 +73,7 @@ const themes = [
 const pages = [
   { name: "Home", path: "/" },
   { name: "About", path: "/about" },
-  { name: "Leader Board", path: "/leaderboard" },
+  { name: "Leaderboard", path: "/leaderboard" },
 ];
 onMounted(() => {
   var defaultTheme = nuxtStorage.localStorage.getData('theme');
@@ -87,26 +87,52 @@ onMounted(() => {
   if (userName.value === "guest " || !userNameStored) {
     showUserNameDialog.value = true;
   }
-  
+
 });
 
+
 function changeTheme(themeName: string) {
+  if (dark.value === false) {
+    var themeToSet = themeName;
+    if (themeToSet === "dark") {
+      themeToSet = "light";
+    } else {
+      themeToSet = themeToSet.replace("Dark", "Light");
+      console.log(themeToSet);
+    }
+    dark.value = false;
+    theme.global.name.value = themeToSet;
+
+  } else {
+    theme.global.name.value = themeName;
+    dark.value = true;
+  }
+  nuxtStorage.localStorage.setData('theme', theme.global.name.value);
+
+}
+function setTheme(themeName: string) {
   theme.global.name.value = themeName;
-  nuxtStorage.localStorage.setData('theme', themeName)
+  nuxtStorage.localStorage.setData('theme', theme.global.name.value);
 }
 function toggleTheme() {
   if (theme.global.name.value === "dark") {
-    changeTheme("light");
+    setTheme("light");
+    dark.value = false;
   } else if (theme.global.name.value === "sansLight") {
-    changeTheme("sansDark");
+    setTheme("sansDark");
+    dark.value = true;
   } else if (theme.global.name.value === "sansDark") {
-    changeTheme("sansLight");
+    setTheme("sansLight");
+    dark.value = false;
   } else if (theme.global.name.value === "watermelonLight") {
-    changeTheme("watermelonDark");
+    setTheme("watermelonDark");
+    dark.value = true;
   } else if (theme.global.name.value === "watermelonDark") {
-    changeTheme("watermelonLight");
+    setTheme("watermelonLight");
+    dark.value = false;
   } else {
-    changeTheme("dark");
+    setTheme("dark");
+    dark.value = true;
   }
 }
 

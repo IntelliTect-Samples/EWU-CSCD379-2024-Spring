@@ -1,6 +1,6 @@
 ﻿namespace Wordle.Api.Models
 {
-    public record Score
+    public record PlayerDto
     {
         public string Name { get; set; } = "";
         public double AverageAttempts { get; set; }
