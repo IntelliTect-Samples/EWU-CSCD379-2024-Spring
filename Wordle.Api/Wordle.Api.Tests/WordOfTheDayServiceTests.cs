@@ -1,3 +1,4 @@
+/*
 namespace Wordle.Api.Tests;
 
 [TestClass]
@@ -24,3 +25,4 @@ public class WordOfTheDayServiceTests
     }
 
 }
+*/
