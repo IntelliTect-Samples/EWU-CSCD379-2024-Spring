@@ -32,13 +32,13 @@
           elevation="4"
           @click="showNameDialog = !showNameDialog"
         >
-        <v-icon icon="mdi-account"/>
+          <v-icon icon="mdi-account" />
           <strong>Username:</strong> {{ playerName }}
         </v-sheet>
       </v-row>
       <v-row>
         <v-sheet width="200" class="pa-2" color="primary" rounded elevation="4">
-          <v-icon icon="mdi-timer"/>
+          <v-icon icon="mdi-timer" />
 
           <strong> Current Time:</strong> {{ stopwatch.getCurrentTime() }}
         </v-sheet>
@@ -165,6 +165,8 @@ function closeGameDialog() {
   setTimeout(() => {
     game.value?.startNewGame();
   }, 300);
+  stopwatch.value.reset();
+  stopwatch.value.start();
 }
 
 function enterPlayerName() {

@@ -16,7 +16,7 @@
     <v-card
       v-else
       color="secondary"
-      class="mx-auto pa-8 rounded text-center"
+      class="mx-auto pa-8 w-75 rounded text-center"
       elevation="4"
     >
       <v-card-title class="text-h5 mb-2">
@@ -41,8 +41,8 @@
               <td v-else>{{ i + 1 }}</td>
               <td>{{ player.name }}</td>
               <td>{{ player.gameCount }}</td>
-              <td>{{ player.averageAttempts }}</td>
-              <td>{{ player.averageSeconds }}</td>
+              <td>{{ player.averageAttempts.toFixed(2) }}</td>
+              <td>{{ player.averageSeconds.toFixed(2) }}</td>
             </tr>
           </tbody></v-table
         >
