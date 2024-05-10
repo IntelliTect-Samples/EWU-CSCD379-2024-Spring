@@ -23,15 +23,15 @@
       </v-card>
     </v-dialog>
     <v-row>
-      <v-col lg="2" md="12" class="d-none d-md-flex" />
-      <v-col lg="8" md="12" class="d-flex align-center flex-column flex-nowrap">
+      <v-col lg="4" md="12" class="d-none d-md-flex" />
+      <v-col lg="4" md="12" class="d-flex align-center flex-column flex-nowrap">
         <GameBoardGuess
           v-for="(guess, i) of game.guesses"
           :key="i"
           :guess="guess"
         />
       </v-col>
-      <v-col lg="2" md="12" class="my-3">
+      <v-col lg="4" md="12" class="my-3">
         <v-row class="mb-1 justify-center">
           <v-sheet
             class="pa-2 cursor-pointer"
@@ -60,15 +60,36 @@
             <strong> Current Time:</strong> {{ stopwatch.getCurrentTime() }}
           </v-sheet>
         </v-row>
-        <v-row class="mb-1 justify-center">
+        <v-row
+          v-if="game.gameState === GameState.Playing"
+          class="mb-1 justify-center"
+        >
           <v-sheet
-            v-if="game.gameState !== GameState.Playing"
+            color="primary"
+            min-width="200px"
+            height="40px"
+            v-ripple
+            class="mx-auto pa-2 cursor-pointer"
+            elevation="4"
+            rounded
+            @click="showWordsList = !showWordsList"
+          >
+            <v-icon icon="mdi-flag-variant" />
+
+            <strong> Words List:</strong> {{ validWordsNum }}
+          </v-sheet>
+        </v-row>
+        <v-row
+          v-if="game.gameState !== GameState.Playing"
+          class="mb-1 justify-center"
+        >
+          <v-sheet
             @click="isGameOver = true"
             color="primary"
             min-width="200px"
             height="40px"
             v-ripple
-            class="mx-auto pa-2 cursor-pointer text-center font-weight-bold"
+            class="mx-auto pa-2 cursor-pointer font-weight-bold"
             elevation="4"
             rounded
           >
@@ -78,18 +99,14 @@
         </v-row> </v-col
       >>
     </v-row>
-    <div class="m"></div>
     <Keyboard />
 
-    <WordList
-      v-if="game.gameState === GameState.Playing"
-      v-model="showWordsList"
-    />
     <NameDialog
       v-model:show="showNameDialog"
       v-model:name="playerName"
       @entered="enterPlayerName"
     />
+    <WordList v-model="showWordsList" @validWordsUpdate="captureValidWords" />
   </v-container>
 </template>
 
@@ -103,6 +120,8 @@ const showWordsList = ref(false);
 const isGameOver = ref(false);
 const playerName = ref("");
 const showNameDialog = ref(false);
+const validWordsNum = ref(0);
+
 import {
   playClickSound,
   playEnterSound,
@@ -113,6 +132,11 @@ import {
 const game: Ref<Game> = ref(new Game("GAMES"));
 provide("GAME", game);
 const stopwatch = ref(new Stopwatch());
+
+const captureValidWords = (num: number) => {
+  console.log("Valid Words: " + num);
+  validWordsNum.value = num;
+};
 
 onMounted(() => {
   getWordFromApi().then((word) => {

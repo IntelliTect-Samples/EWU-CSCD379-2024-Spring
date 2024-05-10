@@ -33,17 +33,6 @@
       </v-card-actions>
     </v-card>
   </v-bottom-sheet>
-  <v-btn
-    position="fixed"
-    location="bottom right"
-    class="mr-3 mb-3"
-    size="default"
-    color="primary"
-    elevation="8"
-    rounded
-    @click="modelValue = true"
-    >Word List: {{ validWords().length }}</v-btn
-  >
 </template>
 
 <script setup lang="ts">
@@ -53,6 +42,10 @@ import { filterValidWords } from "~/scripts/wordListUtils";
 const game: Ref<Game> = inject("GAME") as Ref<Game>;
 
 const modelValue = defineModel<boolean>({ default: false });
+const emits = defineEmits<{
+  (e: "validWordsUpdate", validWoerdsNum: number): number;
+}>();
+
 const selectedWord = ref("");
 const words = WordList;
 const totalPages = ref(Math.ceil(words.length / 10));
@@ -68,7 +61,8 @@ const pagedWords = computed(() => {
 });
 
 function validWords(): string[] {
-  return filterValidWords(game.value);
+  const wordsFilterd = filterValidWords(game.value);
+  return wordsFilterd;
 }
 
 function addGuess(word: string) {
@@ -82,6 +76,8 @@ function addGuess(word: string) {
 
 watch(pagedWords, () => {
   updatedWords.value = validWords();
+  emits("validWordsUpdate", updatedWords.value.length);
+
   totalPages.value = Math.ceil(updatedWords.value.length / 10);
 });
 
