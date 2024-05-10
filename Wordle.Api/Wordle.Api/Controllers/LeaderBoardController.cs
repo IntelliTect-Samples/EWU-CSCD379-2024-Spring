@@ -6,15 +6,30 @@ using Wordle.Api.Models;
 namespace Wordle.Api.Controllers;
 
 [ApiController]
-public class LeaderBoardController : ControllerBase
+[Route("[controller]")]
+public class LeaderboardController : ControllerBase
 {
-    private readonly WordleServicing wordleService;
+	private readonly LeaderboardService _service;
+	public LeaderboardController(LeaderboardService service)
+	{
+		_service = service;
+	}
 
-    public LeaderBoardController(WordleServicing service)
-    {
-        this.wordleService = service;
-    }
+	[HttpGet("GetScores")]
+	public async Task<List<PlayerDto>> Get()
+	{
+		return await _service.GetTopScoresAsync();
+	}
 
-
+	[HttpPost("PostScore")]
+	public async Task<PlayerDto> Post(PlayerDto request)
+	{
+		Player player = await _service.PostScoreAsync(request);
+		return new PlayerDto
+		{
+			Name = player.Name,
+			GameCount = player.GameCount,
+			AverageAttempts = player.AverageAttempts
+		};
+	}
 }
-
