@@ -22,44 +22,48 @@
         </v-card-actions>
       </v-card>
     </v-dialog>
-    <v-col class="d-flex flex-column align-end ga-2">
-      <v-row>
-        <v-sheet
-          class="pa-2 cursor-pointer"
-          color="primary"
-          width="200"
-          rounded
-          elevation="4"
-          @click="showNameDialog = !showNameDialog"
-        >
-          <v-icon icon="mdi-account" />
-          <strong>Username:</strong> {{ playerName }}
-        </v-sheet>
-      </v-row>
-      <v-row>
-        <v-sheet width="200" class="pa-2" color="primary" rounded elevation="4">
-          <v-icon icon="mdi-timer" />
-
-          <strong> Current Time:</strong> {{ stopwatch.getCurrentTime() }}
-        </v-sheet>
-      </v-row>
-    </v-col>
-    <GameBoardGuess
-      v-for="(guess, i) of game.guesses"
-      :key="i"
-      :guess="guess"
-    />
-    <div class="d-flex justify-center my-3">
-      <v-btn
+    <v-row class="d-flex ga-3 justify-end mb-5">
+      <v-sheet
         v-if="game.gameState !== GameState.Playing"
         @click="isGameOver = true"
         color="primary"
-        text="RESULTS"
-        height="40px"
-        width="120px"
+        min-width="200px"
+        class="pa-2 cursor-pointer text-center font-weight-bold"
+        elevation="4"
+        rounded
+      >
+        <v-icon icon="mdi-flag-variant" />
+        Results
+      </v-sheet>
+      <v-sheet
+        class="pa-2 cursor-pointer"
+        color="primary"
+        rounded
+        min-width="200px"
+        elevation="4"
+        @click="showNameDialog = !showNameDialog"
+      >
+        <v-icon icon="mdi-account" />
+        <strong>Username:</strong> {{ playerName }}
+      </v-sheet>
+      <v-sheet
+        class="pa-2"
+        color="primary"
+        rounded
+        elevation="4"
+        min-width="200px"
+      >
+        <v-icon icon="mdi-timer" />
+        <strong> Current Time:</strong> {{ stopwatch.getCurrentTime() }}
+      </v-sheet>
+    </v-row>
+    <div class="m">
+      <GameBoardGuess
+        v-for="(guess, i) of game.guesses"
+        :key="i"
+        :guess="guess"
       />
     </div>
-
     <Keyboard />
 
     <WordList
