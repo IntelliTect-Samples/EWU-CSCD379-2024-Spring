@@ -10,7 +10,7 @@
         ></v-img>
       </v-app-bar-title>
 
-      <v-btn icon="mdi-help-circle" @click="showHelpDialog = true" />
+      <v-btn icon="mdi-help-circle" @click="$router.push('/instructions')" />
       <v-btn icon="mdi-cog" @click="showSettingsDialog = true" />
       <v-btn icon="mdi-trophy-variant" @click="$router.push('/leaderboard')" />
 
@@ -25,8 +25,13 @@
       color="secondary"
       temporary
     >
-      <v-list v-for="item in ['About', 'Leaderboard']" :key="item">
-        <v-list-item @click="$router.push('/' + item.toLowerCase())">
+      <v-list
+        v-for="item in ['Daily Wordle', 'About', 'Leaderboard', 'Instructions']"
+        :key="item"
+      >
+        <v-list-item
+          @click="$router.push('/' + item.toLowerCase().replaceAll(' ', ''))"
+        >
           <v-list-item-title> {{ item }} </v-list-item-title>
         </v-list-item>
       </v-list>
@@ -34,7 +39,6 @@
     <v-main class="mt-5">
       <slot />
     </v-main>
-    <HelpDialog v-model="showHelpDialog" />
     <SettingsDialogue v-model="showSettingsDialog" />
   </v-app>
 </template>
@@ -44,7 +48,6 @@ import { useTheme } from "vuetify";
 import nuxtStorage from "nuxt-storage";
 
 const theme = useTheme();
-const showHelpDialog = ref(false);
 const showSettingsDialog = ref(false);
 const drawer = ref(false);
 onMounted(() => {
