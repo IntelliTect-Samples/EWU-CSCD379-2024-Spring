@@ -52,7 +52,7 @@
             rounded
             @click="showWordsList = !showWordsList"
           >
-            <v-icon icon="mdi-flag-variant" />
+            <v-icon icon="mdi-book" />
 
             <strong> Words List:</strong> {{ validWordsNum }}
           </v-sheet>
