@@ -7,7 +7,7 @@
           alt="Logo"
           max-width="180"
           max-height="95"
-        ></v-img>
+        />
       </v-app-bar-title>
 
       <v-btn icon="mdi-help-circle" @click="$router.push('/instructions')" />
