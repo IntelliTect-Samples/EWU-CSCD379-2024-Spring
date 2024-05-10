@@ -1,7 +1,7 @@
 <template>
     <!--create a leader board that shows top scores-->
     <v-card>
-        <v-card-title class = "text-center">Leader Board</v-card-title>
+        <v-card-title class = "text-center">Leaderboard</v-card-title>
         <v-table>
             <thead>
                 <tr>
@@ -42,7 +42,7 @@ onMounted(() => {
 
 async function getScores(){
     let scoreUrl = "Score/Leaderboard";
-    const response = await Axios.get(scoreUrl).then((response) => {
+    await Axios.get(scoreUrl).then((response) => {
         scoresToDisplay.value = response.data;
     })
     .catch((error) => {

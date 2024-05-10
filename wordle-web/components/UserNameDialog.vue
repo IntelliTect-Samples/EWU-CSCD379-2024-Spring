@@ -3,7 +3,8 @@
     <v-dialog v-model="modelValue" max-width="500" persistent>
         <v-card>
             <v-sheet color="primary"></v-sheet>
-            <v-card-title>Enter your user name current user is {{ userName }}</v-card-title>
+            <v-card-title>Enter your user name: </v-card-title>
+            <v-card-subtitle> Your current username is: {{ userName }}</v-card-subtitle>
             <v-text-field @keyup.stop v-model="userName" label="User Name" required></v-text-field>
             <v-card-actions>
                 <v-spacer></v-spacer>
@@ -19,6 +20,7 @@
 import nuxtStorage from "nuxt-storage";
 const modelValue = defineModel<boolean>({ default: false });
 const userName = inject("userName");
+
 const saveUserName = () => {
     modelValue.value = false;
     //console.log("userName in dialog " + userName.value);

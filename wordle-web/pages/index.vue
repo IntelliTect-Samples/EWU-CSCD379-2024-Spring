@@ -60,7 +60,7 @@ onUnmounted(() => {
 });
 
 async function getWordFromApi(): Promise<string> {
-  let wordUrl = "Word/WordOfTheDay?offsetInHours=-27";
+  let wordUrl = "Word/WordOfTheDay";
 
   const response = await Axios.get(wordUrl);
   console.log("Response from API : " + response.data);
