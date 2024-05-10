@@ -100,7 +100,13 @@ provide("GAME", game);
 
 const myGuess = ref("");
 const engine = ref(false);
-const userName = ref(nuxtStorage.localStorage.getData("userName") ?? "");
+const dialogBox = ref<boolean>(true);
+
+const usersNameInput = ref<string>(nuxtStorage.localStorage.getData("userName") ?? "");// ref<string>("");
+const userName = ref<string>(usersNameInput.value.trim() || "GUEST"); // ref(nuxtStorage.localStorage.getData("userName") ?? "");
+
+
+let startTime: number | null = null;
 
 function enterSound() {
   var sound = new Audio("/click.mp3");
@@ -119,6 +125,10 @@ function clickSound() {
 
 onMounted(() => {
   window.addEventListener("keyup", onKeyup);
+  const savedUserName = nuxtStorage.localStorage.getData("userName");
+  if (savedUserName) {
+    dialogBox.value = false; // Close the dialog if a username is already saved
+  }
 });
 
 onUnmounted(() => {
@@ -137,16 +147,48 @@ function onKeyup(event: KeyboardEvent) {
     game.addLetter(event.key.toUpperCase());
   }
 }
-const dialogBox = ref<boolean>(true);
-const usersNameInput = ref<string>("");
+
 
 function saveUserName() {
-  userName.value = usersNameInput.value.trim();
-  if (userName.value === '') {
-    userName.value = 'GUEST';
+  const name = usersNameInput.value.trim();
+  if (name === "") {
+    userName.value = "GUEST";
   } else {
-    nuxtStorage.localStorage.setData('name', userName.value);
+    userName.value = name;
+    nuxtStorage.localStorage.setData("userName", userName.value);
   }
-  dialogBox.value = !dialogBox.value;
+  dialogBox.value = false;
+}
+function openNameDialog() {
+  dialogBox.value = true;
+}
+
+function updateUserName() {
+  if (usersNameInput.value.trim() !== "") {
+    saveUserName();
+  }
+}
+
+function startTimer() {
+  startTime = Date.now();
+}
+
+function stopTimer() {
+  if (startTime !== null) {
+    const endTime = Date.now();
+    const elapsedTimeInSeconds = Math.round((endTime - startTime) / 1000);
+    saveScoreAndTime(elapsedTimeInSeconds);
+  }
+}
+
+function saveScoreAndTime(timeInSeconds: number) {
+  const score = game.getScore();
+  if (userName.value === "GUEST") {
+    nuxtStorage.localStorage.setData("guestScore", score);
+    nuxtStorage.localStorage.setData("guestTimeInSeconds", timeInSeconds);
+  } else {
+    nuxtStorage.localStorage.setData(`${userName.value}-score`, score);
+    nuxtStorage.localStorage.setData(`${userName.value}-timeInSeconds`, timeInSeconds);
+  }
 }
 </script>
