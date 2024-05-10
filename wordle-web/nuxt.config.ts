@@ -21,4 +21,11 @@ export default defineNuxtConfig({
       },
     },
   },
+  ssr: true,
+  nitro: {
+    baseURL: "http://localhost:3000",
+    prerender: {
+      failOnError: false, 
+    },
+  },
 })
