@@ -18,6 +18,7 @@ export class Stopwatch {
     }
   }
   public reset(): void {
+    this.stop();
     this.startTime = 0;
   }
   public getCurrentTime(): number {
