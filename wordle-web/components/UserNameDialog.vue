@@ -7,8 +7,8 @@
             <v-text-field @keyup.stop v-model="userName" label="User Name" required></v-text-field>
             <v-card-actions>
                 <v-spacer></v-spacer>
-                <v-btn color="primary" variant="flat" @click="modelValue = false">Cancel</v-btn>
-                <v-btn color="primary" variant="flat" @click=saveUserName>Save</v-btn>
+                <v-btn color="primary" variant ="flat" @click="modelValue = false">Cancel</v-btn>
+                <v-btn color="primary" variant = "flat" @click=saveUserName>Save</v-btn>
             </v-card-actions>
         </v-card>
 

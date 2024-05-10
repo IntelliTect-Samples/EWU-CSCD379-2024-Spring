@@ -1,5 +1,5 @@
 <template>
-  <UserNameDialog v-model="showUserNameDialog" />
+  <UserNameDialog v-model ="showUserNameDialog" />
   <v-container class="myFontDefault">
     <v-card class="text-center">
       <v-alert v-if="game.gameState != GameState.Playing" :color="game.gameState == GameState.Won ? 'success' : 'error'"
@@ -40,10 +40,11 @@ import Axios from "axios" //npm install axios
 
 
 const userName = inject("userName");
-const game: Ref<Game> = ref(new Game("GAMES"));
-provide("GAME", game.value);
+const game = ref(new Game("GAMES"));
+provide("GAME", game);
+const showUserNameDialogInject = inject("showUserNameDialog");
 const showUserNameDialog = ref(false);
-
+var startTime = new Date().getTime();
 onMounted(() => {
   // Get random word from word list
   getWordFromApi().then((word) => {
@@ -98,19 +99,18 @@ function postScore(playerNameIn: string, attemptsIn: number, timeIn: number){
 }
 watch(() => game.value.gameState, (value) => {
   if(value == GameState.Won || value == GameState.Lost){
-    if(userName.value == "guest"){
+    if(userName === "guest" || userName ===""){
       showUserNameDialog.value = true;
       watch(() => showUserNameDialog.value, (value) => {
         if(value == false){
-          postScore(userName.value as string, calcAttempts(), 0);
+          postScore(userName.value as string, calcAttempts(), calcSecond());
         }
       });
-      // it is not working I don't think it is updating the value on the app.vue page to show the dialog
+      
     }else{
-      postScore(userName.value as string, calcAttempts(), 0);
+      postScore(userName.value as string, calcAttempts(), calcSecond());
     }
     
-   
     //I know userName is showing an error but the api only gets the data when its set up like that
   }
   function calcSecond()
