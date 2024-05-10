@@ -1,28 +1,6 @@
 ﻿<template>
   <v-container>
-    <v-dialog v-model="isGameOver" class="mx-auto" max-width="500">
-      <v-card
-        :color="game.gameState == GameState.Won ? 'win' : 'lose'"
-        tile
-        class="pa-5 text-center text-white"
-        rounded
-      >
-        <v-card-title class="text-h4">
-          You've
-          {{ game.gameState == GameState.Won ? "Won! 🥳" : "Lost... 😭" }}
-        </v-card-title>
-
-        <v-card-text class="my-3">
-          The word was: <strong>{{ game.secretWord }}</strong>
-        </v-card-text>
-        <v-card-actions class="mx-auto">
-          <v-btn variant="outlined" @click="closeGameDialog">
-            <v-icon size="large" class="mr-2"> mdi-restart </v-icon> Play Again
-          </v-btn>
-        </v-card-actions>
-      </v-card>
-    </v-dialog>
-    <v-row>
+    <v-row class="mb-3">
       <v-col lg="4" md="12" class="d-none d-md-flex" />
       <v-col lg="4" md="12" class="d-flex align-center flex-column flex-nowrap">
         <GameBoardGuess
@@ -79,10 +57,7 @@
             <strong> Words List:</strong> {{ validWordsNum }}
           </v-sheet>
         </v-row>
-        <v-row
-          v-if="game.gameState !== GameState.Playing"
-          class="mb-1 justify-center"
-        >
+        <v-row class="mb-1 justify-center">
           <v-sheet
             @click="isGameOver = true"
             color="primary"
@@ -94,13 +69,37 @@
             rounded
           >
             <v-icon icon="mdi-flag-variant" />
-            Results
+            {{ game.gameState === GameState.Playing ? "Give Up" : "Results" }}
           </v-sheet>
         </v-row>
       </v-col>
     </v-row>
 
     <Keyboard />
+    <v-dialog v-model="isGameOver" class="mx-auto" max-width="500">
+      <v-card
+        :color="gameStateColor"
+        tile
+        class="pa-5 text-center text-white"
+        rounded
+      >
+        <v-card-title class="text-h5">
+          {{ gameMessage }}
+        </v-card-title>
+        <v-card-text v-if="game.gameState !== GameState.Playing" class="my-3">
+          The word was: <strong>{{ game.secretWord }}</strong>
+        </v-card-text>
+        <v-card-text v-else class="my-3">
+          You still have <strong>{{ 6 - game.guessIndex }}</strong> attempts
+          left..
+        </v-card-text>
+        <v-card-actions class="mx-auto">
+          <v-btn variant="outlined" @click="closeGameDialog">
+            <v-icon size="large" class="mr-2"> mdi-restart </v-icon> Restart
+          </v-btn>
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
     <NameDialog v-model:show="showNameDialog" v-model:name="playerName" />
     <WordList v-model="showWordsList" @validWordsUpdate="captureValidWords" />
   </v-container>
@@ -140,6 +139,28 @@ function closeGameDialog() {
   stopwatch.value.reset();
   stopwatch.value.start();
 }
+
+const gameMessage = computed(() => {
+  switch (game.value?.gameState) {
+    case GameState.Won:
+      return "Congratulations! You won! 🥳";
+    case GameState.Lost:
+      return "You lost! Better luck next time! 😭";
+    default:
+      return "Giving up already? 🤔";
+  }
+});
+
+const gameStateColor = computed(() => {
+  switch (game.value?.gameState) {
+    case GameState.Won:
+      return "win";
+    case GameState.Lost:
+      return "lose";
+    default:
+      return "play";
+  }
+});
 
 async function getWordFromApi(): Promise<string> {
   let wordUrl = "word/wordOfTheDay";
