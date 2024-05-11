@@ -2,11 +2,19 @@
   <NuxtLayout>
     <v-app>
       <v-app-bar color="primary" :elevation="2">
+        <v-app-bar-title @click="$router.push('/')" style="cursor: pointer">
+          <v-img
+            src="/image.png"
+            alt="Logo"
+            max-width="180"
+            max-height="95"
+          ></v-img>
+      </v-app-bar-title>
         <template v-slot:prepend>
           <v-btn icon = mdi-book
-             @click="router.push('/')"></v-btn>
-             <v-btn @click="router.push('/')">WordleApp</v-btn>
+            @click="router.push('/')"></v-btn>
         </template>
+        
         <v-btn icon="mdi-cog" @click="showSettingsDialog = true" />
         <!-- <v-btn icon="mdi-cog" @click="toggleMenu" /> -->
         <v-btn icon="mdi-help-circle" @click="showHelpDialog = true" />
@@ -32,6 +40,7 @@
 <script setup lang="ts">
 import { useTheme } from "vuetify";
 import nuxtStorage from "nuxt-storage";
+import logo from './public/image.svg'
 
 const router = useRouter();
 const theme = useTheme();
