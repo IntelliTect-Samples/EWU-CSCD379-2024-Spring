@@ -26,7 +26,7 @@
           <v-icon class="mr-2" > mdi-account </v-icon> {{ nameUserNameDialog }}
         </v-chip>
         <v-chip color="secondary" class="mr-2">
-          <v-icon class="mr-2"> mdi-timer </v-icon> 5s
+          <v-icon class="mr-2"> mdi-timer </v-icon> {{ stopwatch.seconds }}
         </v-chip>
       </v-card-text>
 
@@ -66,12 +66,13 @@ const router = useRouter();
 const game = reactive(new Game());
 game.startNewGame();
 provide("GAME", game);
-// const game: Ref<Game> = ref(new Game("GAMES"));
-// provide("GAME", game.value);
 
 // User name dialog
 const showUserNameDialog = ref(false);
 const nameUserNameDialog = ref("");
+
+// Stopwatch
+const stopwatch = useStopwatch();
 
 var showWordsList = ref(false);
 
@@ -79,8 +80,8 @@ onMounted(() => {
 
   // Get random word from word list
   getWordFromApi().then((word) => {
-    //game.value = new Game(word);
     game.secretWord = word;
+    console.log("Secret word from API is: " + game.secretWord);
   })
 
   window.addEventListener("keyup", onKeyup);
@@ -91,6 +92,10 @@ onMounted(() => {
   checkUserNameLocalStorage();
   checkUserName();
 
+  //Assignment 3 Task 3
+  // Start stopwatch
+  stopwatch.start();
+
   
   
 });
@@ -98,12 +103,13 @@ onMounted(() => {
 
 onUnmounted(() => {
   window.removeEventListener("keyup", onKeyup);
+
+  stopwatch.pause();
 });
 
 async function getWordFromApi(): Promise<string> {
   let wordUrl = "word/wordOfTheDay";
   const response = await Axios.get(wordUrl);
-  console.log("Secret word from API: " + response.data);
   return response.data;
 }
 
@@ -134,12 +140,19 @@ async function checkUserNameLocalStorage() {
 }
 
 async function checkUserName() {
-  const response = await Axios.get("player/checkUserName/" + nameUserNameDialog.value);
-  console.log("Check user name response: " + response.data);
+  const response = await Axios.get("/Player/Player?playerName=" + nameUserNameDialog.value);
+  const player: Player = response.data;
+  // Print player
+  console.log("Player name: " + player.name);
+  console.log("Player game count: " + player.gameCount);
+  console.log("Player average attempts: " + player.averageAttempts);
+  console.log("Player average seconds per game: " + player.averageSecondsPerGame);
 }
 
 function postScore() {
+    stopwatch.pause();
     console.log("PostScoreEntered")
+    console.log("Stopwatch seconds: " + stopwatch.seconds.value)
     var attempts = 0;
     if(game.gameState == GameState.Won){
       attempts = game.guessIndex + 1;
@@ -147,11 +160,17 @@ function postScore() {
       attempts = game.guesses.length + 5;
     }
     Axios.post("Player/AddPlayer", {
-      Name: nameUserNameDialog,
+      Name: nameUserNameDialog.value,
       GameCount: 1,
       AverageAttempts: attempts,
-      //AverageSecondsPerGame: stopwatch.seconds.value
-    });
+      AverageSecondsPerGame: stopwatch.seconds.value,
+    })
+    .then(res => {
+      console.log(res.data);
+    })
+    .catch(err => {
+      console.log(err);
+    })
 }
 watch(() => game.gameState, (value) => {
   if(value == GameState.Won || value == GameState.Lost){

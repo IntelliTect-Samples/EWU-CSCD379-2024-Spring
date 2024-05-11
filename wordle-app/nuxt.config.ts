@@ -10,6 +10,7 @@ export default defineNuxtConfig({
   ],
   devtools: { enabled: true },
   modules: [
+    'nuxt-time',
     '@nuxt/test-utils/module',
     (_options, nuxt) => {
       nuxt.hooks.hook('vite:extendConfig', (config) => {
