@@ -8,14 +8,9 @@ namespace Wordle.Api.Controllers;
 
 [Route("api/[controller]")]
 [ApiController]
-public class GameController : ControllerBase
+public class GameController(WordleDbContext db) : ControllerBase
 {
-    public WordleDbContext Db { get; set; }
-
-    public GameController(WordleDbContext db)
-    {
-        Db = db;
-    }
+    public WordleDbContext Db { get; set; } = db;
 
     [HttpPost("GameWordOfTheDay")]
     public async Task<bool> PostGame(GameDto gameDto)

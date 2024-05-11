@@ -104,7 +104,7 @@ interface Player {
 
 const isLeaderboardLoading = ref(true);
 
-const players: ref<Player[]> = ref([]);
+const players = ref<Player[]>([]);
 
 onMounted(() => {
   Axios.get("player/leaderboard")
