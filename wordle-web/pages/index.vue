@@ -5,7 +5,7 @@
       color="primary"
       indeterminate
     />
-    <v-sheet v-else>
+    <v-sheet v-else color="transparent">
       <v-row class="mb-3">
         <v-col lg="4" md="12" class="d-none d-md-flex" />
         <v-col
