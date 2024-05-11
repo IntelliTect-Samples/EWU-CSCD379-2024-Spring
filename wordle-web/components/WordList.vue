@@ -40,7 +40,8 @@ import { WordList } from "~/scripts/wordList";
 import { Game } from "~/scripts/game";
 import { filterValidWords } from "~/scripts/wordListUtils";
 
-const game: Ref<Game> = inject("GAME") as Ref<Game>;
+const game: Game | undefined = inject("GAME");
+
 const selectedWord = ref("");
 const words = WordList;
 const totalPages = ref(Math.ceil(words.length / 10));
@@ -55,21 +56,21 @@ const emits = defineEmits<{
 const pagedWords = computed(() => {
   const start = (currentPage.value - 1) * 10;
   const end = start + 10;
-  return (game.value?.guessedLetters.length === 0 ? words : validWords()).slice(
+  return (game?.guessedLetters.length === 0 ? words : validWords()).slice(
     start,
     end
   );
 });
 
 function validWords(): string[] {
-  const wordsFilterd = filterValidWords(game.value);
+  const wordsFilterd = filterValidWords(game!);
   return wordsFilterd;
 }
 
 function addGuess(word: string) {
-  game.value?.guess.clear();
+  game?.guess.clear();
   for (let i = 0; i < word.length; i++) {
-    game.value?.addLetter(word[i].toUpperCase());
+    game?.addLetter(word[i].toUpperCase());
   }
   modelValue.value = false;
   currentPage.value = 1;
@@ -89,4 +90,10 @@ const updatePage = () => {
     currentPage.value = pageNumber;
   }
 };
+
+onMounted(() => {
+  updatedWords.value = validWords();
+  totalPages.value = Math.ceil(updatedWords.value.length / 10);
+  emits("validWordsUpdate", updatedWords.value.length);
+});
 </script>

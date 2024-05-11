@@ -17,75 +17,6 @@
   </v-card>
 </template>
 
-<script setup lang="ts">
-import { Letter } from "~/scripts/letter";
-import { defineProps } from "vue";
-import { useDisplay } from "vuetify";
-import { Game } from "~/scripts/game";
-import { LetterState } from "~/scripts/letter";
-
-const props = withDefaults(
-  defineProps<{
-    letter: Letter;
-    clickable?: boolean;
-    isKeyboard?: boolean;
-  }>(),
-  {
-    clickable: false,
-    isKeyboard: false,
-  }
-);
-
-const game: Ref<Game> = inject("GAME") as Ref<Game>;
-const boxSize = ref(60);
-const display = useDisplay();
-const keySize = ref(40);
-function onClicked() {
-  if (!game) return;
-
-  if (props.letter.char === "👈") {
-    game.value?.removeLastLetter();
-  } else if (props.letter.char === "ENTER") {
-    game.value?.submitGuess();
-  } else {
-    game.value?.addLetter(props.letter.char.toUpperCase());
-  }
-}
-
-function correctState(letterState: LetterState) {
-  switch (letterState) {
-    case LetterState.Correct:
-      return "correct-letter";
-    case LetterState.Wrong:
-      return "wrong-letter";
-    case LetterState.Misplaced:
-      return "misplaced-letter";
-    default:
-      return "unkown-letter";
-  }
-}
-watch([display.sm, display.xs, display.md], () => {
-  updateSize();
-});
-
-function updateSize() {
-  if (display.xs.value) {
-    boxSize.value = 45;
-    keySize.value = 30;
-  } else if (display.sm.value) {
-    boxSize.value = 60;
-    keySize.value = 40;
-  } else {
-    boxSize.value = 60;
-    keySize.value = 60;
-  }
-}
-
-onMounted(() => {
-  updateSize();
-});
-</script>
-
 <style scoped>
 .no-pointer {
   pointer-events: none;
@@ -123,3 +54,72 @@ onMounted(() => {
   );
 }
 </style>
+
+<script setup lang="ts">
+import { Letter } from "~/scripts/letter";
+import { defineProps } from "vue";
+import { useDisplay } from "vuetify";
+import { Game } from "~/scripts/game";
+import { LetterState } from "~/scripts/letter";
+
+const props = withDefaults(
+  defineProps<{
+    letter: Letter;
+    clickable?: boolean;
+    isKeyboard?: boolean;
+  }>(),
+  {
+    clickable: false,
+    isKeyboard: false,
+  }
+);
+
+const game: Game | undefined = inject("GAME");
+const boxSize = ref(60);
+const display = useDisplay();
+const keySize = ref(40);
+function onClicked() {
+  if (!game) return;
+
+  if (props.letter.char === "👈") {
+    game.removeLastLetter();
+  } else if (props.letter.char === "ENTER") {
+    game.submitGuess();
+  } else {
+    game.addLetter(props.letter.char.toUpperCase());
+  }
+}
+
+function correctState(letterState: LetterState) {
+  switch (letterState) {
+    case LetterState.Correct:
+      return "correct-letter";
+    case LetterState.Wrong:
+      return "wrong-letter";
+    case LetterState.Misplaced:
+      return "misplaced-letter";
+    default:
+      return "unkown-letter";
+  }
+}
+watch([display.sm, display.xs, display.md], () => {
+  updateSize();
+});
+
+function updateSize() {
+  if (display.xs.value) {
+    boxSize.value = 45;
+    keySize.value = 30;
+  } else if (display.sm.value) {
+    boxSize.value = 60;
+    keySize.value = 40;
+  } else {
+    boxSize.value = 60;
+    keySize.value = 60;
+  }
+}
+
+onMounted(() => {
+  updateSize();
+});
+</script>

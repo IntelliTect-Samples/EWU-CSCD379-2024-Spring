@@ -26,7 +26,7 @@ import { Game } from "~/scripts/game";
 import { Letter } from "~/scripts/letter";
 import { playClickSound, playEnterSound } from "~/scripts/soundUtils";
 
-const game: Ref<Game> = inject("GAME") as Ref<Game>;
+const game: Game | undefined = inject("GAME");
 
 const keyboardLetterRows = computed(() => {
   let keyboardLetterRows: Letter[][] = [];
@@ -41,7 +41,7 @@ const keyboardLetterRows = computed(() => {
     let keyboardLetterRow: Letter[] = [];
     for (let key of keyboardRow) {
       keyboardLetterRow.push(
-        game.value?.guessedLetters.find((letter) => letter.char === key) ??
+        game.guessedLetters.find((letter) => letter.char === key) ??
           new Letter(key)
       );
     }
