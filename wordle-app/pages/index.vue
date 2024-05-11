@@ -1,6 +1,6 @@
 <template>
   <v-container>
-    <<v-progress-linear
+    <v-progress-linear
       v-if="game.gameState === GameState.Initializing"
       color="primary"
       indeterminate
@@ -76,16 +76,11 @@ const nameUserNameDialog = ref("");
 var showWordsList = ref(false);
 
 onMounted(() => {
-  if (window.location.hostname === "localhost" || window.location.hostname === "127.0.0.1") {
-    Axios.defaults.baseURL = "https://localhost:7108/";
-  } else {
-    Axios.defaults.baseURL = "https://wordleapiewu.azurewebsites.net/";
-  }
-  
 
   // Get random word from word list
   getWordFromApi().then((word) => {
-    game.value = new Game(word);
+    //game.value = new Game(word);
+    game.secretWord = word;
   })
 
   window.addEventListener("keyup", onKeyup);
@@ -106,8 +101,6 @@ onUnmounted(() => {
 });
 
 async function getWordFromApi(): Promise<string> {
-  // const { data: word } = await useFetch("https://wordleapiewusergeitim.azurewebsites.net/word");
-  //let wordUrl = "https://wordleapiewusergeitim.azurewebsites.net/word";
   let wordUrl = "word/wordOfTheDay";
   const response = await Axios.get(wordUrl);
   console.log("Secret word from API: " + response.data);

@@ -28,13 +28,14 @@
 </template>
 
 <script setup lang="ts">
+import type { Player } from "../scripts/player"
 import Axios from "axios";
 import type { Player } from "~/scripts/player";
 
 const players = ref<Player[]>();
 
 onMounted(async () => {
-	Axios.get("https://wordleapiewusergeitim.azurewebsites.net/Player/TopPlayers?numberOfPlayers=10")
+	Axios.get("Player/TopPlayers?numberOfPlayers=10")
   .then(response => {
     players.value = response.data;
   })
