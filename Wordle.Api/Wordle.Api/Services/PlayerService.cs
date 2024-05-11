@@ -19,7 +19,7 @@ public class PlayerService
 
     public async Task AddPlayer(Player playerDto)
     {
-	    Player existingPlayer = _context.Players.FirstOrDefault(player => player.name == playerDto.name);
+	    Player existingPlayer = Db.Players.FirstOrDefault(player => player.name == playerDto.name);
 
 	    if (existingPlayer != null)
 	    {
@@ -37,7 +37,9 @@ public class PlayerService
 		    await Db.Players.AddAsync(player);
 	    }
 	    
-	    return await Db.SaveChangesAsync();
+	    await Db.SaveChangesAsync();
+
+		return;
 
     }
     
