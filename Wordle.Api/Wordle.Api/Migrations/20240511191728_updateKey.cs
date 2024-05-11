@@ -63,9 +63,6 @@ namespace Wordle.Api.Migrations
                 name: "FK_Games_Words_WordId",
                 table: "Games");
 
-            migrationBuilder.DropTable(
-                name: "Players");
-
             migrationBuilder.AlterColumn<int>(
                 name: "WordOfTheDayId",
                 table: "Games",
