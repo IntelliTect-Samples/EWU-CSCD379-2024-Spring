@@ -10,7 +10,7 @@
 			</v-form>
 			<v-card-actions class="mx-4 mb-3">
 				<v-spacer></v-spacer>
-				<v-btn color="success" variant="elevated" text="Ok" @click="saveName" />
+				<v-btn color="success" variant="elevated" text="Ok" @click="saveName, $emit('startStopwatch')" />
 			</v-card-actions>
 		</v-card>
 	</v-dialog>

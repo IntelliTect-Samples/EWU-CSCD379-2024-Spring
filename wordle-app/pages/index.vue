@@ -26,7 +26,7 @@
           <v-icon class="mr-2" > mdi-account </v-icon> {{ nameUserNameDialog }}
         </v-chip>
         <v-chip color="secondary" class="mr-2">
-          <v-icon class="mr-2"> mdi-timer </v-icon> {{ stopwatch.seconds }}
+          <v-icon class="mr-2"> mdi-timer </v-icon> {{ seconds }} s.
         </v-chip>
       </v-card-text>
 
@@ -50,7 +50,7 @@
       </v-row>
     </v-card>
 
-    <UserNameDialog v-model:show="showUserNameDialog" v-model:userName="nameUserNameDialog" />
+    <UserNameDialog  v-model:show="showUserNameDialog" v-model:userName="nameUserNameDialog" />
     
   </v-container>
 </template>
@@ -60,7 +60,6 @@ import { Game, GameState } from "../scripts/game";
 import nuxtStorage from "nuxt-storage";
 import Axios from 'axios'
 import type { Player } from "../scripts/player";
-import { useStopwatch } from 'vue-timer-hook';
 
 const router = useRouter();
 const game = reactive(new Game());
@@ -72,7 +71,25 @@ const showUserNameDialog = ref(false);
 const nameUserNameDialog = ref("");
 
 // Stopwatch
-const stopwatch = useStopwatch();
+
+const seconds = ref(0);
+const interval = ref<number | undefined>();
+
+function startStopwatch() {
+  interval.value = setInterval(() => {
+    seconds.value++;
+  }, 1000);
+}
+
+function stopStopwatch() {
+  clearInterval(interval.value);
+}
+
+function resetStopwatch() {
+  clearInterval(interval.value);
+  seconds.value = 0;
+  startStopwatch();
+}
 
 var showWordsList = ref(false);
 
@@ -92,19 +109,13 @@ onMounted(() => {
   checkUserNameLocalStorage();
   checkUserName();
 
-  //Assignment 3 Task 3
-  // Start stopwatch
-  stopwatch.start();
-
-  
-  
 });
 
 
 onUnmounted(() => {
   window.removeEventListener("keyup", onKeyup);
 
-  stopwatch.pause();
+
 });
 
 async function getWordFromApi(): Promise<string> {
@@ -142,17 +153,11 @@ async function checkUserNameLocalStorage() {
 async function checkUserName() {
   const response = await Axios.get("/Player/Player?playerName=" + nameUserNameDialog.value);
   const player: Player = response.data;
-  // Print player
-  console.log("Player name: " + player.name);
-  console.log("Player game count: " + player.gameCount);
-  console.log("Player average attempts: " + player.averageAttempts);
-  console.log("Player average seconds per game: " + player.averageSecondsPerGame);
 }
 
 function postScore() {
-    stopwatch.pause();
     console.log("PostScoreEntered")
-    console.log("Stopwatch seconds: " + stopwatch.seconds.value)
+    //console.log("Stopwatch seconds: " + stopwatch.seconds.value)
     var attempts = 0;
     if(game.gameState == GameState.Won){
       attempts = game.guessIndex + 1;
@@ -163,13 +168,13 @@ function postScore() {
       Name: nameUserNameDialog.value,
       GameCount: 1,
       AverageAttempts: attempts,
-      AverageSecondsPerGame: stopwatch.seconds.value,
+      AverageSecondsPerGame: 5,
     })
     .then(res => {
       console.log(res.data);
     })
     .catch(err => {
-      console.log(err);
+      console.log("Error" + err);
     })
 }
 watch(() => game.gameState, (value) => {
@@ -177,6 +182,16 @@ watch(() => game.gameState, (value) => {
     postScore();
   }
 });
+
+
+// // Watch for showUserNameDialog, pause stopwatch if dialog is shown.
+// watch(() => showUserNameDialog.value, (value) => {
+//   if(value == false) {
+//     startStopwatch();
+//   } else {
+//     stopStopwatch();
+//   }
+// })
 
 
 
