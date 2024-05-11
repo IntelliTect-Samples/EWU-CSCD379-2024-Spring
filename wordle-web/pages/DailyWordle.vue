@@ -1,108 +1,120 @@
 <template>
   <v-container>
-    <v-sheet class="text-h1 text-center">Daily Wordle</v-sheet>
-    <v-row class="mb-3">
-      <v-col lg="4" md="12" class="d-none d-md-flex" />
-      <v-col lg="4" md="12" class="d-flex align-center flex-column flex-nowrap">
-        <GameBoardGuess
-          v-for="(guess, i) of game.guesses"
-          :key="i"
-          :guess="guess"
-        />
-      </v-col>
-      <v-col lg="4" md="12" class="my-3">
-        <v-row class="mb-1 justify-center">
-          <v-sheet
-            class="pa-2 cursor-pointer"
-            color="primary"
-            rounded
-            v-ripple
-            min-width="200px"
-            height="40px"
-            elevation="4"
-            @click="showNameDialog = !showNameDialog"
-          >
-            <v-icon icon="mdi-account" />
-            <strong>Username:</strong> {{ playerName }}
-          </v-sheet>
-        </v-row>
-        <v-row class="mb-1 justify-center">
-          <v-sheet
-            class="pa-2"
-            color="primary"
-            rounded
-            elevation="4"
-            min-width="200px"
-            height="40px"
-          >
-            <v-icon icon="mdi-timer" />
-            <strong> Current Time:</strong> {{ stopwatch.getCurrentTime() }}
-          </v-sheet>
-        </v-row>
-        <v-row
-          v-if="game.gameState === GameState.Playing"
-          class="mb-1 justify-center"
+    <v-progress-linear
+      v-if="game.gameState === GameState.Initializing"
+      color="primary"
+      indeterminate
+    />
+    <v-sheet v-else>
+      <div class="text-h3 text-center mb-5">Daily Wordle</div>
+      <v-row class="mb-3">
+        <v-col lg="4" md="12" class="d-none d-md-flex" />
+        <v-col
+          lg="4"
+          md="12"
+          class="d-flex align-center flex-column flex-nowrap"
         >
-          <v-sheet
-            color="primary"
-            min-width="200px"
-            height="40px"
-            v-ripple
-            class="mx-auto pa-2 cursor-pointer"
-            elevation="4"
-            rounded
-            @click="showWordsList = !showWordsList"
+          <GameBoardGuess
+            v-for="(guess, i) of game.guesses"
+            :key="i"
+            :guess="guess"
+          />
+        </v-col>
+        <v-col lg="4" md="12" class="my-3">
+          <v-row class="mb-1 justify-center">
+            <v-sheet
+              class="pa-2 cursor-pointer"
+              color="primary"
+              rounded
+              v-ripple
+              min-width="200px"
+              height="40px"
+              elevation="4"
+              @click="showNameDialog = !showNameDialog"
+            >
+              <v-icon icon="mdi-account" />
+              <strong>Username:</strong> {{ playerName }}
+            </v-sheet>
+          </v-row>
+          <v-row class="mb-1 justify-center">
+            <v-sheet
+              class="pa-2"
+              color="primary"
+              rounded
+              elevation="4"
+              min-width="200px"
+              height="40px"
+            >
+              <v-icon icon="mdi-timer" />
+              <strong> Current Time:</strong> {{ stopwatch.getCurrentTime() }}
+            </v-sheet>
+          </v-row>
+          <v-row
+            v-if="game.gameState === GameState.Playing"
+            class="mb-1 justify-center"
           >
-            <v-icon icon="mdi-book" />
+            <v-sheet
+              color="primary"
+              min-width="200px"
+              height="40px"
+              v-ripple
+              class="mx-auto pa-2 cursor-pointer"
+              elevation="4"
+              rounded
+              @click="showWordsList = !showWordsList"
+            >
+              <v-icon icon="mdi-book" />
 
-            <strong> Words List:</strong> {{ validWordsNum }}
-          </v-sheet>
-        </v-row>
-        <v-row class="mb-1 justify-center">
-          <v-sheet
-            @click="isGameOver = true"
-            color="primary"
-            min-width="200px"
-            height="40px"
-            v-ripple
-            class="mx-auto pa-2 cursor-pointer font-weight-bold"
-            elevation="4"
-            rounded
-          >
-            <v-icon icon="mdi-flag-variant" />
-            {{ game.gameState === GameState.Playing ? "Give Up" : "Results" }}
-          </v-sheet>
-        </v-row>
-      </v-col>
-    </v-row>
+              <strong> Words List:</strong> {{ validWordsNum }}
+            </v-sheet>
+          </v-row>
+          <v-row class="mb-1 justify-center">
+            <v-sheet
+              @click="isGameOver = true"
+              color="primary"
+              min-width="200px"
+              height="40px"
+              v-ripple
+              class="mx-auto pa-2 cursor-pointer font-weight-bold"
+              elevation="4"
+              rounded
+            >
+              <v-icon icon="mdi-flag-variant" />
+              {{ game.gameState === GameState.Playing ? "Give Up" : "Results" }}
+            </v-sheet>
+          </v-row>
+        </v-col>
+      </v-row>
 
-    <Keyboard />
-    <v-dialog v-model="isGameOver" class="mx-auto" max-width="500">
-      <v-card
-        :color="gameStateColor"
-        tile
-        class="pa-5 text-center text-white"
-        rounded
-      >
-        <v-card-title class="text-h5">
-          {{ gameMessage }}
-        </v-card-title>
-        <v-card-text v-if="game.gameState !== GameState.Playing" class="my-3">
-          The word was: <strong>{{ game.secretWord }}</strong>
-        </v-card-text>
-        <v-card-text v-else class="my-3">
-          You still have <strong>{{ 6 - game.guessIndex }}</strong> attempts
-          left..
-        </v-card-text>
-        <v-card-actions class="mx-auto">
-          <v-btn variant="outlined" @click="closeGameDialog">
-            <v-icon size="large" class="mr-2"> mdi-restart </v-icon> Restart
-          </v-btn>
-        </v-card-actions>
-      </v-card>
-    </v-dialog>
-    <NameDialog v-model:show="showNameDialog" v-model:name="playerName" />
-    <WordList v-model="showWordsList" @validWordsUpdate="captureValidWords" />
+      <Keyboard />
+
+      <v-dialog v-model="isGameOver" class="mx-auto" max-width="500">
+        <v-card
+          :color="gameStateColor"
+          tile
+          class="pa-5 text-center text-white"
+          rounded
+        >
+          <v-card-title class="text-h5">
+            {{ gameMessage }}
+          </v-card-title>
+          <v-card-text v-if="game.gameState !== GameState.Playing" class="my-3">
+            The word was: <strong>{{ game.secretWord }}</strong>
+          </v-card-text>
+          <v-card-text v-else class="my-3">
+            You still have <strong>{{ 6 - game.guessIndex }}</strong> attempts
+            left..
+          </v-card-text>
+          <v-card-actions class="mx-auto">
+            <v-btn variant="outlined" @click="closeGameDialog">
+              <v-icon size="large" class="mr-2"> mdi-restart </v-icon> Restart
+            </v-btn>
+          </v-card-actions>
+        </v-card>
+      </v-dialog>
+      <NameDialog v-model:show="showNameDialog" v-model:name="playerName" />
+      <WordList v-model="showWordsList" @validWordsUpdate="captureValidWords" />
+    </v-sheet>
   </v-container>
 </template>
 
@@ -123,7 +135,9 @@ const isGameOver = ref(false);
 const playerName = ref("");
 const showNameDialog = ref(false);
 const validWordsNum = ref(0);
-const game: Ref<Game> = ref(new Game("GAMES"));
+
+const game = reactive(new Game());
+game.startNewGame();
 provide("GAME", game);
 const stopwatch = ref(new Stopwatch());
 
@@ -135,14 +149,14 @@ const captureValidWords = (num: number) => {
 function closeGameDialog() {
   isGameOver.value = false;
   setTimeout(() => {
-    game.value?.startNewGame();
+    game.startNewGame();
   }, 300);
   stopwatch.value.reset();
   stopwatch.value.start();
 }
 
 const gameMessage = computed(() => {
-  switch (game.value?.gameState) {
+  switch (game.gameState) {
     case GameState.Won:
       return "Congratulations! You won! 🥳";
     case GameState.Lost:
@@ -153,7 +167,7 @@ const gameMessage = computed(() => {
 });
 
 const gameStateColor = computed(() => {
-  switch (game.value?.gameState) {
+  switch (game.gameState) {
     case GameState.Won:
       return "win";
     case GameState.Lost:
@@ -163,19 +177,11 @@ const gameStateColor = computed(() => {
   }
 });
 
-async function getWordFromApi(): Promise<string> {
-  let wordUrl = "word/wordOfTheDay";
-
-  const response = await Axios.get(wordUrl);
-  console.log("Response from API: " + response.data);
-  return response.data;
-}
-
 async function saveScore() {
   let scoreUrl = "player/saveScore";
   let data = {
     name: playerName.value,
-    attempts: game.value?.guessIndex + 1,
+    attempts: game.guessIndex + 1,
     seconds: stopwatch.value.getCurrentTime(),
   };
   await Axios.post(scoreUrl, data, {
@@ -194,7 +200,7 @@ watch(showNameDialog, () => {
 });
 
 watch(
-  () => game.value?.gameState,
+  () => game.gameState,
   (newState) => {
     switch (newState) {
       case GameState.Won:
@@ -218,9 +224,6 @@ watch(
 );
 
 onMounted(() => {
-  getWordFromApi().then((word) => {
-    game.value = new Game(word);
-  });
   window.addEventListener("keyup", onKeyup);
   const defaultName = nuxtStorage.localStorage.getData("name");
   showNameDialog.value = defaultName === null || defaultName === "Guest";
@@ -241,17 +244,17 @@ function onKeyup(event: KeyboardEvent) {
     return;
   }
   if (event.key === "Enter") {
-    let currentGuessIndex = game.value?.guessIndex;
-    game.value?.submitGuess();
-    if (currentGuessIndex !== game.value?.guessIndex) {
+    let currentGuessIndex = game.guessIndex;
+    game.submitGuess();
+    if (currentGuessIndex !== game.guessIndex) {
       playEnterSound();
     }
   } else if (event.key == "Backspace") {
     playClickSound();
-    game.value?.removeLastLetter();
+    game.removeLastLetter();
   } else if (event.key.match(/[A-z]/) && event.key.length === 1) {
     playClickSound();
-    game.value?.addLetter(event.key.toUpperCase());
+    game.addLetter(event.key.toUpperCase());
   }
 }
 </script>
