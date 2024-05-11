@@ -17,7 +17,7 @@ public class PlayerService
         return await Db.Players.FirstOrDefaultAsync(p => p.name == playerName);
     }
 
-    public async Task AddPlayer(PlayerDTO playerDto)
+    public async Task AddPlayer(Player playerDto)
     {
 	    Player existingPlayer = _context.Players.FirstOrDefault(player => player.Name == playerDto.Name);
 
