@@ -23,9 +23,8 @@ public class PlayerController(PlayerService playerService) : ControllerBase
     }
     
     [HttpPost("AddPlayer")]
-	public async Task Post(Player player)
+	public async Task Post(PlayerDTO player)
 	{
-		//await playerService.AddPlayer(player);
-		return;
+		await playerService.AddPlayer(player);
 	}
 }
