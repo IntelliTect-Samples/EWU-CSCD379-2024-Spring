@@ -1,4 +1,4 @@
-# EWU-CSCD378-2022-Spring
+# EWU-CSCD379-2024-Spring
 
 Azure Web Site URL: https://gray-sea-0956dd21e.5.azurestaticapps.net
 
