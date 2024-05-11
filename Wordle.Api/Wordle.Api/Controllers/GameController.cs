@@ -32,7 +32,7 @@ public class GameController(WordleDbContext db) : ControllerBase
             // Attempt to find the WOTD that best matches todays date
             WordOfTheDay = word.WordsOfTheDays
                 .OrderByDescending(wotd => wotd.Date)
-                .FirstOrDefault(wotd => wotd.Date < today.AddDays(-1)),
+                .FirstOrDefault(wotd => wotd.Date == today),
             Word = word
         };
 

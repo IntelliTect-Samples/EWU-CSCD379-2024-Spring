@@ -11,9 +11,9 @@ namespace Wordle.Api.Controllers;
 public class StatisticsController(WordStatisticsService WordStatisticsService) : ControllerBase
 {
 
-    [HttpGet("word/{word}")]
-    public async Task<IEnumerable<Game>> GetWordStatistics(string word){
-        return await WordStatisticsService.GetStatistics(word);
+    [HttpGet("LastDailyWordles")]
+    public async Task<WordStatsDto> GetWordStatistics(){
+        return await WordStatisticsService.GetStatistics();
     }
 
 
