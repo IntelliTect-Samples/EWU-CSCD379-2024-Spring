@@ -13,19 +13,19 @@ public class PlayerController(PlayerService playerService) : ControllerBase
     [HttpGet("Player")]
     public async Task<Player?> GetPlayer(string playerName = "Guest")
     {
-        return await _service.GetPlayer(playerName) ?? null;
+        return await playerService.GetPlayer(playerName) ?? null;
     }
     
     [HttpGet("TopPlayers")]
     public async Task<Player[]> GetTopPlayers(int numberOfPlayers = 10)
     {
-        return await _service.GetTopPlayers(numberOfPlayers);
+        return await playerService.GetTopPlayers(numberOfPlayers);
     }
     
     [HttpPost("AddPlayer")]
 	public async Task Post(Player player)
 	{
-		await _service.AddPlayer(request);
-		return request;
+		//await playerService.AddPlayer(player);
+		return player;
 	}
 }

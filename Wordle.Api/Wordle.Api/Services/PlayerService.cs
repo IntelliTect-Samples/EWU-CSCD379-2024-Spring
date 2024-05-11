@@ -6,7 +6,7 @@ namespace Wordle.Api.Services;
 
 public class PlayerService
 {
-    public WordleDbContext Db { get; set; } = Db;
+    public WordleDbContext { get; set; } = Db;
 
     private static object updateLock = new();
 	private static object addLock = new();
@@ -19,7 +19,7 @@ public class PlayerService
 
     public async Task AddPlayer(Player playerDto)
     {
-	    Player existingPlayer = _context.Players.FirstOrDefault(player => player.Name == playerDto.Name);
+	    Player existingPlayer = _context.Players.FirstOrDefault(player => player.name == playerDto.name);
 
 	    if (existingPlayer != null)
 	    {
@@ -29,10 +29,10 @@ public class PlayerService
 	    {
 		    Player player = new()
 		    {
-			    Name = playerDto.Name,
-			    GameCount = playerDto.GameCount,
-			    AverageAttempts = playerDto.AverageAttempts,
-			    AverageSecondsPerGame = playerDto.AverageSecondsPerGame
+			    Name = playerDto.name,
+			    GameCount = playerDto.gameCount,
+			    AverageAttempts = playerDto.averageAttempts,
+			    AverageSecondsPerGame = playerDto.averageSecondsPerGame
 		    };
 		    await _context.Players.AddAsync(player);
 	    }
