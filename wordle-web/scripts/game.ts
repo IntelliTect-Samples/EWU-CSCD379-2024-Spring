@@ -1,23 +1,33 @@
 import { LetterState, type Letter } from "./letter";
 import { Word } from "./word";
-import { WordList } from "./wordList";
+import Axios from "axios";
 
 export class Game {
   public maxAttempts: number;
   public guesses: Word[] = [];
-  public secretWord: string = "";
   public guessIndex: number = 0;
   public gameState: GameState = GameState.Playing;
   public guessedLetters: Letter[] = [];
   public timeElapsed: number = 0;
 
-  constructor(secretWord: string, maxAttempts: number = 6) {
-    this.maxAttempts = maxAttempts;
-    this.secretWord = secretWord.toUpperCase();
-    this.startNewGame();
+  private _secretWord: string = "";
+  private set secretWord(value: string){
+    this._secretWord = value.toUpperCase();
+  }
+  public get secretWord(): string {
+    return this._secretWord;
   }
 
-  public startNewGame() {
+  constructor(maxAttempts: number = 6) {
+    this.maxAttempts = maxAttempts;
+    this.gameState = GameState.Initializing;
+  }
+
+  public async startNewGame(word?: string | undefined) {
+    // Load the game
+    this.gameState = GameState.Initializing;
+
+    // Reset default values
     this.guessIndex = 0;
     this.timeElapsed= 0;
     this.gameState = GameState.Playing;
@@ -30,10 +40,21 @@ export class Game {
         new Word({ maxNumberOfLetters: this.secretWord.length })
       );
     }
+
+    // Start the game
+    this.gameState = GameState.Playing;
   }
 
   public get guess() {
     return this.guesses[this.guessIndex];
+  }
+
+  public setGuessLetters(word: string){
+    // Loop through the word and add new letters
+    this.guess.clear();
+    for (let i = 0; i < word.length; i++) {
+      this.addLetter(word[i].toUpperCase());
+    }
   }
 
   public removeLastLetter() {
@@ -90,10 +111,26 @@ export class Game {
       }
     }
   }
+
+  public async getWordOfTheDayFromApi(): Promise<string> {
+    try {
+      let wordUrl = "word/wordOfTheDay";
+    
+      const response = await Axios.get(wordUrl);
+
+      console.log("Response from API: " + response.data);
+      console.log("Secret Word: " + this.secretWord);
+      return response.data;
+    } catch (error) {
+      console.error("Error fetching word of the day:", error);
+      return "ERROR" // Probably best to print the error on screen, but this is kind of funny. :)
+    }
+  }
 }
 
 export enum GameState {
   Playing,
   Won,
   Lost,
+  Initializing,
 }

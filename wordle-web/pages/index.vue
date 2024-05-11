@@ -1,4 +1,4 @@
-﻿<template>
+<template>
   <v-container>
     <v-row class="mb-3">
       <v-col lg="4" md="12" class="d-none d-md-flex" />
