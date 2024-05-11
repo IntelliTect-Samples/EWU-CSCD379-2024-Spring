@@ -4,6 +4,8 @@
       <div class="before"></div>
       <div class="after"></div>
     </div>
+    <v-fab :extended="true">Hfffffffffffffffsdfsdfi</v-fab>
+
     <v-progress-linear
       v-if="isLeaderboardLoading"
       class="mx-auto"
@@ -46,8 +48,8 @@
               <td>{{ player.averageAttempts.toFixed(2) }}</td>
               <td>{{ player.averageSeconds.toFixed(2) }}</td>
             </tr>
-          </tbody></v-table
-        >
+          </tbody>
+        </v-table>
       </v-card-item>
 
       <v-spacer />
