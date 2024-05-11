@@ -1,7 +1,7 @@
 export interface Player {
-	PlayerId: number;
-	Name: string;
-	GameCount: number;
-	AverageAttempts: number;
-	AverageSecondsPerGame: number;
+	playerId: number;
+	name: string;
+	gameCount: number;
+	averageAttempts: number;
+	averageSecondsPerGame: number;
 }

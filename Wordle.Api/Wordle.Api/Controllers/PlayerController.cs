@@ -26,6 +26,6 @@ public class PlayerController(PlayerService playerService) : ControllerBase
 	public async Task Post(Player player)
 	{
 		//await playerService.AddPlayer(player);
-		return player;
+		return;
 	}
 }
