@@ -40,7 +40,6 @@
 <script setup lang="ts">
 import { useTheme } from "vuetify";
 import nuxtStorage from "nuxt-storage";
-import logo from './public/image.svg'
 
 const router = useRouter();
 const theme = useTheme();
