@@ -5,7 +5,7 @@
       color="primary"
       indeterminate
     />
-    <v-card v-else>
+    <v-sheet v-else>
       <v-row class="mb-3">
         <v-col lg="4" md="12" class="d-none d-md-flex" />
         <v-col
@@ -86,33 +86,34 @@
       </v-row>
 
       <Keyboard />
-    </v-card>
-    <v-dialog v-model="isGameOver" class="mx-auto" max-width="500">
-      <v-card
-        :color="gameStateColor"
-        tile
-        class="pa-5 text-center text-white"
-        rounded
-      >
-        <v-card-title class="text-h5">
-          {{ gameMessage }}
-        </v-card-title>
-        <v-card-text v-if="game.gameState !== GameState.Playing" class="my-3">
-          The word was: <strong>{{ game.secretWord }}</strong>
-        </v-card-text>
-        <v-card-text v-else class="my-3">
-          You still have <strong>{{ 6 - game.guessIndex }}</strong> attempts
-          left..
-        </v-card-text>
-        <v-card-actions class="mx-auto">
-          <v-btn variant="outlined" @click="closeGameDialog">
-            <v-icon size="large" class="mr-2"> mdi-restart </v-icon> Restart
-          </v-btn>
-        </v-card-actions>
-      </v-card>
-    </v-dialog>
-    <NameDialog v-model:show="showNameDialog" v-model:name="playerName" />
-    <WordList v-model="showWordsList" @validWordsUpdate="captureValidWords" />
+
+      <v-dialog v-model="isGameOver" class="mx-auto" max-width="500">
+        <v-card
+          :color="gameStateColor"
+          tile
+          class="pa-5 text-center text-white"
+          rounded
+        >
+          <v-card-title class="text-h5">
+            {{ gameMessage }}
+          </v-card-title>
+          <v-card-text v-if="game.gameState !== GameState.Playing" class="my-3">
+            The word was: <strong>{{ game.secretWord }}</strong>
+          </v-card-text>
+          <v-card-text v-else class="my-3">
+            You still have <strong>{{ 6 - game.guessIndex }}</strong> attempts
+            left..
+          </v-card-text>
+          <v-card-actions class="mx-auto">
+            <v-btn variant="outlined" @click="closeGameDialog">
+              <v-icon size="large" class="mr-2"> mdi-restart </v-icon> Restart
+            </v-btn>
+          </v-card-actions>
+        </v-card>
+      </v-dialog>
+      <NameDialog v-model:show="showNameDialog" v-model:name="playerName" />
+      <WordList v-model="showWordsList" @validWordsUpdate="captureValidWords" />
+    </v-sheet>
   </v-container>
 </template>
 
