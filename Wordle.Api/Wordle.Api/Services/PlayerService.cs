@@ -6,7 +6,7 @@ namespace Wordle.Api.Services;
 
 public class PlayerService
 {
-    public WordleDbContext { get; set; } = Db;
+    public WordleDbContext Db { get; set; } = Db;
 
     private static object updateLock = new();
 	private static object addLock = new();
