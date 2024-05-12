@@ -5,7 +5,7 @@ export default defineNuxtConfig({
     transpile: ["vuetify"],
   },
   plugins: ["@/plugins/axios.ts"],
-  devtools: { enabled: true },
+  devtools: { enabled: false },
   nitro: {
     prerender: {
       concurrency: 250,

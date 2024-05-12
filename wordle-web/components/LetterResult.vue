@@ -108,7 +108,7 @@ watch([display.sm, display.xs, display.md], () => {
 
 function updateSize() {
   if (display.xs.value) {
-    boxSize.value = 45;
+    boxSize.value = 40;
     keySize.value = 30;
   } else if (display.sm.value) {
     boxSize.value = 60;

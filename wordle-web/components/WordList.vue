@@ -7,6 +7,7 @@
         :items="validWords()"
         placeholder="Enter a Word!"
         @update:modelValue="updatePage"
+        :disabled="game.gameState !== GameState.Playing"
       />
       <v-btn
         height="40px"
@@ -14,10 +15,11 @@
         :key="word"
         @click="addGuess(word)"
         flat
+        :disabled="game.gameState !== GameState.Playing"
       >
         {{ word.toUpperCase() }}
       </v-btn>
-      <v-card-item class="ma-3">
+      <v-card-item>
         <v-pagination
           v-if="totalPages > 1"
           density="compact"
@@ -37,10 +39,10 @@
 
 <script setup lang="ts">
 import { WordList } from "~/scripts/wordList";
-import { Game } from "~/scripts/game";
+import { Game, GameState } from "~/scripts/game";
 import { filterValidWords } from "~/scripts/wordListUtils";
 
-const game: Game | undefined = inject("GAME");
+const game = inject("GAME");
 
 const selectedWord = ref("");
 const words = WordList;

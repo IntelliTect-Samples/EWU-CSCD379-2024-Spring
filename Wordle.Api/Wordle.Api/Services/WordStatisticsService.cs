@@ -30,10 +30,10 @@ public class WordStatisticsService(WordleDbContext Db)
 
         WordOfTheDay? wordOfTheDay = await Db.WordsOfTheDays
             .Include(wotd => wotd.Games)
-            .Include(word => word.Word)
+            .Include(wotd => wotd.Word)
             .FirstOrDefaultAsync(wordOfTheDay => wordOfTheDay.Date == dateOnly);
 
-        WordStatsDto? wordStatsDto;
+        WordStatsDto wordStatsDto;
 
         if(wordOfTheDay is not null && wordOfTheDay.Games.Count != 0)
         {
@@ -41,7 +41,7 @@ public class WordStatisticsService(WordleDbContext Db)
             {
                 Date = dateOnly,
                 AverageAttempts = wordOfTheDay.Games.Average(game => game.Attempts),
-                TotalGamesPlayed = wordOfTheDay.Games.Count(),
+                TotalGamesPlayed = wordOfTheDay.Games.Count,
                 NumberOfWins = wordOfTheDay.Games.Select(game => game.IsWin == true).Count(),
                 Games = wordOfTheDay.Games
                 .Select(game => new GameDto()
@@ -61,12 +61,10 @@ public class WordStatisticsService(WordleDbContext Db)
                 AverageAttempts = 0,
                 TotalGamesPlayed = 0,
                 NumberOfWins = 0,
-            }; ;
+            };
         }
 
-
         return wordStatsDto;
-
 
     }
 }

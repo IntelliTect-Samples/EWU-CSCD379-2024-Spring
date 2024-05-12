@@ -13,8 +13,7 @@
     rounded
     width="75%"
   />
-
-  <v-table>
+  <v-table density="compact">
     <thead>
       <tr class="bg-primary">
         <th class="text-center font-weight-bold">Rank</th>
@@ -26,14 +25,22 @@
     </thead>
     <tbody>
       <tr v-for="(player, i) in players" :key="i" class="bg-background">
-        <td v-if="i < 3">
+        <td class="text-center" v-if="i < 3">
           <v-icon :class="[getTrophyColor(i), 'rotate']">mdi-trophy</v-icon>
         </td>
-        <td v-else>{{ i + 1 }}</td>
-        <td class="w-25">{{ player.name }}</td>
-        <td>{{ player.gameCount }}</td>
-        <td>{{ player.averageAttempts.toFixed(2) }}</td>
-        <td>{{ player.averageSeconds.toFixed(2) }}</td>
+        <td class="text-center" v-else>{{ i + 1 }}</td>
+        <v-tooltip location="top">
+          <template v-slot:activator="{ props }">
+            <td icon v-bind="props">
+              {{ player.name }}
+            </td>
+          </template>
+          <span> {{ player.name }}</span>
+        </v-tooltip>
+        <td class="text-center">{{}}</td>
+        <td class="text-center">{{ player.gameCount }}</td>
+        <td class="text-center">{{ player.averageAttempts.toFixed(2) }}</td>
+        <td class="text-center">{{ player.averageSeconds.toFixed(2) }}</td>
       </tr>
     </tbody>
   </v-table>
@@ -62,6 +69,10 @@
 //apply to v-card now
 .rotate {
   animation: rotate3d 3s linear infinite;
+}
+
+td {
+  width: 0;
 }
 </style>
 
