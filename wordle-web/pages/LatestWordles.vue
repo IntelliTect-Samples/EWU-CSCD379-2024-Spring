@@ -1,26 +1,43 @@
 <template>
-  <v-table>
-    <thead>
-      <tr>
-        <th>Date</th>
-        <th>Average Attempts</th>
-        <th>Total Games Played</th>
-        <th>Number of Wins</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr v-for="(wordStat, i) in wordStats" :key="i">
-        <td>{{ wordStat.date }}</td>
-        <td>{{ wordStat.averageAttempts }}</td>
-        <td>{{ wordStat.totalGamesPlayed }}</td>
-        <td>{{ wordStat.numberOfWins }}</td>
-      </tr>
-    </tbody>
-  </v-table>
+  <v-progress-linear
+    v-if="isDailyWordlesLoading"
+    class="mx-auto"
+    color="primary"
+    height="10"
+    indeterminate
+    rounded
+    width="75%"
+  />
+  <div v-else>
+    <v-tabs center-active v-model="selectedDate">
+      <v-tab v-for="(wordStat, i) in wordStats" :key="i">
+        {{ wordStat.date }}
+      </v-tab>
+    </v-tabs>
+    <v-tabs-window v-model="selectedDate">
+      <v-card>
+        <v-card-text
+          >Average Attemps:
+          {{ wordStats[selectedDate].averageAttempts }}</v-card-text
+        >
+        <v-card-text
+          >Number of Wins:
+          {{ wordStats[selectedDate].numberOfWins }}</v-card-text
+        >
+        <v-card-text
+          >Total Games Played:
+          {{ wordStats[selectedDate].totalGamesPlayed }}</v-card-text
+        >
+      </v-card>
+    </v-tabs-window>
+  </div>
 </template>
 
 <script setup lang="ts">
 import Axios from "axios";
+
+const selectedDate = ref(0);
+const isDailyWordlesLoading = ref(true);
 
 interface WordStats {
   date: string;
@@ -35,14 +52,16 @@ onMounted(() => {
   Axios.get("api/Statistics/GetWordStats?numDays=10")
     .then((res: { data: any }) => res.data)
     .then((data: any) =>
-      data.map((player: any) => ({
-        date: player.date,
-        averageAttempts: player.averageAttempts,
-        totalGamesPlayed: player.totalGamesPlayed,
-        numberOfWins: player.numberOfWins,
+      data.map((word: any) => ({
+        date: word.date,
+        averageAttempts: word.averageAttempts,
+        totalGamesPlayed: word.totalGamesPlayed,
+        numberOfWins: word.numberOfWins,
       }))
     )
     .then((wordStatsData: WordStats[]) => {
+      console.log(wordStatsData);
+      isDailyWordlesLoading.value = false;
       wordStats.value = wordStatsData;
     });
 });
