@@ -86,7 +86,7 @@
             width="200px"
             height="40px"
           >
-            <v-icon icon="mdi-timer" /> Time
+            <v-icon icon="mdi-timer" /> Time:
             {{ stopwatch.getCurrentTime() }}
           </v-sheet>
         </v-col>

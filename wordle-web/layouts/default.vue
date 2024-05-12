@@ -10,9 +10,15 @@
         />
       </v-app-bar-title>
 
-      <v-btn icon="mdi-help-circle" @click="$router.push('/instructions')" />
-      <v-btn icon="mdi-cog" @click="showSettingsDialog = true" />
-      <v-btn icon="mdi-trophy-variant" @click="$router.push('/leaderboard')" />
+      <v-app-bar-nav-icon
+        icon="mdi-help-circle"
+        @click="$router.push('/instructions')"
+      />
+      <v-app-bar-nav-icon icon="mdi-cog" @click="showSettingsDialog = true" />
+      <v-app-bar-nav-icon
+        icon="mdi-trophy-variant"
+        @click="$router.push('/leaderboard')"
+      />
 
       <v-app-bar-nav-icon
         variant="text"

@@ -1,7 +1,7 @@
 <template>
   <v-dialog v-model="showModel" max-width="500" persistent>
     <v-card>
-      <v-sheet color="secondary">
+      <v-sheet color="primary">
         <v-card-title class="text-wrap"
           >Enter your name to start playing!</v-card-title
         >
@@ -21,7 +21,7 @@
               variant="elevated"
               justify-center
             >
-              Ssave
+              Save
             </v-btn>
           </v-card-actions>
         </v-form>
