@@ -21,7 +21,7 @@
         <v-icon class="rotate2d" color="primary">mdi-star</v-icon>
       </v-card-title>
 
-      <v-table density="compact">
+      <v-table>
         <thead>
           <tr>
             <th
