@@ -1,6 +1,11 @@
 <template>
 	<v-container class="text-center">
-		<v-card class="mx-auto" max-width="800" outlined>
+		<v-progress-linear 
+		v-if="players === undefined"
+		color="primary"
+		indeterminate
+		/>
+		<v-card v-else class="mx-auto" max-width="800" outlined>
 			<v-card-title class="text-h5" >Leaderboard</v-card-title>
 			<v-card-text>
 				<v-table>
@@ -19,6 +24,7 @@
 							<td>{{ player.name }}</td>
 							<td>{{ player.averageAttempts }}</td>
 							<td>{{ player.gameCount }}</td>
+							<td>{{ player.averageSecondsPerGame }} sec.</td>
 						</tr>
 					</tbody>
 				</v-table>
@@ -44,3 +50,9 @@ onMounted(async () => {
 });
 
 </script>
+
+<style scoped>
+th {
+	text-align: center !important;
+}
+</style>

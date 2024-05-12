@@ -10,10 +10,10 @@
             max-height="95"
           ></v-img>
       </v-app-bar-title>
-        <template v-slot:prepend>
+        <!-- <template v-slot:prepend>
           <v-btn icon = mdi-book
             @click="router.push('/')"></v-btn>
-        </template>
+        </template> -->
         
         <v-btn icon="mdi-cog" @click="showSettingsDialog = true" />
         <!-- <v-btn icon="mdi-cog" @click="toggleMenu" /> -->
