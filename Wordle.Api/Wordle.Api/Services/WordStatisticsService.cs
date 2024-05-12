@@ -6,26 +6,37 @@ namespace Wordle.Api.Services;
 
 public class WordStatisticsService(WordleDbContext Db)
 {
-    private static object _lock = new();
     public WordleDbContext Db { get; set; } = Db;
 
 
-    public async Task<WordStatsDto> GetStatistics()
+    public async Task<List<WordStatsDto>> GetStatisticsRange(int numDays)
     {
-        var today = DateOnly.FromDateTime(DateTime.UtcNow);
+        List<WordStatsDto> statistics = [];
+        DateTime endDate = DateTime.Now.AddDays(-numDays);
+        for (DateTime date = DateTime.Now; date >= endDate; date = date.AddDays(-1))
+        {
+            WordStatsDto stats = await GetStatistics(date);
+            statistics.Add(stats);
+        }
+
+        return statistics;
+    }
+
+    public async Task<WordStatsDto> GetStatistics(DateTime date)
+    {
+        var dateOnly = DateOnly.FromDateTime(date);
 
         WordOfTheDay? wordOfTheDay = await Db.WordsOfTheDays
             .Include(wotd => wotd.Games)
-            .FirstOrDefaultAsync(wordOfTheDay => wordOfTheDay.Date == today);
-        Console.WriteLine(wordOfTheDay);
+            .FirstOrDefaultAsync(wordOfTheDay => wordOfTheDay.Date == dateOnly);
 
-        WordStatsDto wordStatsDto;
+        WordStatsDto? wordStatsDto;
 
-        if(wordOfTheDay is not null)
+        if(wordOfTheDay is not null && wordOfTheDay.Games.Count != 0)
         {
             wordStatsDto = new WordStatsDto()
             {
-                Date = today,
+                Date = dateOnly,
                 AverageAttempts = wordOfTheDay.Games.Average(game => game.Attempts),
                 TotalGamesPlayed = wordOfTheDay.Games.Count(),
                 NumberOfWins = wordOfTheDay.Games.Select(game => game.IsWin == true).Count(),
@@ -33,7 +44,13 @@ public class WordStatisticsService(WordleDbContext Db)
         }
         else
         {
-            wordStatsDto = null;
+            wordStatsDto = new WordStatsDto()
+            {
+                Date = dateOnly,
+                AverageAttempts = 0,
+                TotalGamesPlayed = 0,
+                NumberOfWins = 0,
+            }; ;
         }
 
 

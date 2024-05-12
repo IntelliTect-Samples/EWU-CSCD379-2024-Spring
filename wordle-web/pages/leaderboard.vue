@@ -1,68 +1,42 @@
 <template>
-  <v-container>
-    <div class="pyro">
-      <div class="before"></div>
-      <div class="after"></div>
-    </div>
-    <v-fab :extended="true">Hfffffffffffffffsdfsdfi</v-fab>
+  <div class="pyro">
+    <div class="before"></div>
+    <div class="after"></div>
+  </div>
 
-    <v-progress-linear
-      v-if="isLeaderboardLoading"
-      class="mx-auto"
-      color="primary"
-      height="10"
-      indeterminate
-      rounded
-      width="75%"
-    />
-    <v-card
-      v-else
-      color="secondary"
-      class="mx-auto pa-8 w-75 rounded text-center"
-      elevation="4"
-    >
-      <v-card-title class="text-h5 mb-2 text-background">
-        <v-icon icon="mdi-star" />Leaderboard<v-icon icon="mdi-star"
-      /></v-card-title>
-      <v-card-item>
-        <v-table>
-          <thead>
-            <tr class="bg-primary">
-              <th class="text-center font-weight-bold">Rank</th>
-              <th class="text-center font-weight-bold">Player</th>
-              <th class="text-center font-weight-bold">Games Played</th>
-              <th class="text-center font-weight-bold">Average Attempts</th>
-              <th class="text-center font-weight-bold">Average Seconds</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr v-for="(player, i) in players" :key="i" class="bg-background">
-              <td v-if="i < 3">
-                <v-icon :class="[getTrophyColor(i), 'rotate']"
-                  >mdi-trophy</v-icon
-                >
-              </td>
-              <td v-else>{{ i + 1 }}</td>
-              <td class="w-25">{{ player.name }}</td>
-              <td>{{ player.gameCount }}</td>
-              <td>{{ player.averageAttempts.toFixed(2) }}</td>
-              <td>{{ player.averageSeconds.toFixed(2) }}</td>
-            </tr>
-          </tbody>
-        </v-table>
-      </v-card-item>
+  <v-progress-linear
+    v-if="isLeaderboardLoading"
+    class="mx-auto"
+    color="primary"
+    height="10"
+    indeterminate
+    rounded
+    width="75%"
+  />
 
-      <v-spacer />
-      <v-card-actions class="d-flex justify-center">
-        <v-btn
-          color="white"
-          class="bg-primary pa-2 px-5"
-          to="/"
-          text="Go Home"
-        />
-      </v-card-actions>
-    </v-card>
-  </v-container>
+  <v-table>
+    <thead>
+      <tr class="bg-primary">
+        <th class="text-center font-weight-bold">Rank</th>
+        <th class="text-center font-weight-bold">Player</th>
+        <th class="text-center font-weight-bold">Games Played</th>
+        <th class="text-center font-weight-bold">Average Attempts</th>
+        <th class="text-center font-weight-bold">Average Seconds</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr v-for="(player, i) in players" :key="i" class="bg-background">
+        <td v-if="i < 3">
+          <v-icon :class="[getTrophyColor(i), 'rotate']">mdi-trophy</v-icon>
+        </td>
+        <td v-else>{{ i + 1 }}</td>
+        <td class="w-25">{{ player.name }}</td>
+        <td>{{ player.gameCount }}</td>
+        <td>{{ player.averageAttempts.toFixed(2) }}</td>
+        <td>{{ player.averageSeconds.toFixed(2) }}</td>
+      </tr>
+    </tbody>
+  </v-table>
 </template>
 
 <style lang="scss" scoped>

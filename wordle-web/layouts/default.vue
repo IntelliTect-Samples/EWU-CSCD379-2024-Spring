@@ -26,7 +26,13 @@
       temporary
     >
       <v-list
-        v-for="item in ['Daily Wordle', 'About', 'Leaderboard', 'Instructions']"
+        v-for="item in [
+          'Daily Wordle',
+          'About',
+          'Leaderboard',
+          'Instructions',
+          'Latest Wordles',
+        ]"
         :key="item"
       >
         <v-list-item
@@ -36,7 +42,7 @@
         </v-list-item>
       </v-list>
     </v-navigation-drawer>
-    <v-main class="mt-5">
+    <v-main>
       <slot />
     </v-main>
     <SettingsDialogue v-model="showSettingsDialog" />

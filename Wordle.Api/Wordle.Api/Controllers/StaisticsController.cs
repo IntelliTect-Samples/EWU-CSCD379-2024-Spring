@@ -11,9 +11,9 @@ namespace Wordle.Api.Controllers;
 public class StatisticsController(WordStatisticsService WordStatisticsService) : ControllerBase
 {
 
-    [HttpGet("LastDailyWordles")]
-    public async Task<WordStatsDto> GetWordStatistics(){
-        return await WordStatisticsService.GetStatistics();
+    [HttpGet("GetWordStats")]
+    public async Task<List<WordStatsDto>> GetWordStatistics(int numDays){
+        return await WordStatisticsService.GetStatisticsRange(numDays);
     }
 
 
