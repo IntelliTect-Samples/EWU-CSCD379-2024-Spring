@@ -10,7 +10,7 @@
 			</v-form>
 			<v-card-actions class="mx-4 mb-3">
 				<v-spacer></v-spacer>
-				<v-btn color="success" variant="elevated" text="Ok" @click="saveName, $emit('startStopwatch')" />
+				<v-btn color="success" variant="elevated" text="Ok" @click="saveName(), okayClicked()" />
 			</v-card-actions>
 		</v-card>
 	</v-dialog>
@@ -18,6 +18,14 @@
 
 <script setup lang="ts">
 import nuxtStorage from "nuxt-storage";
+
+const emits = defineEmits<{
+	(e: 'okay',): void;
+}>();
+
+function okayClicked() {
+	emits('okay');
+}
 
 const showModel = defineModel<boolean>('show');
 const nameModel = defineModel<string>('userName');

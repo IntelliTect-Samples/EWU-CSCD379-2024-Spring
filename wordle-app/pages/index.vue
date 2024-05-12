@@ -50,7 +50,7 @@
       </v-row>
     </v-card>
 
-    <UserNameDialog  v-model:show="showUserNameDialog" v-model:userName="nameUserNameDialog" />
+    <UserNameDialog @okay="nameDialogClosed()"  v-model:show="showUserNameDialog" v-model:userName="nameUserNameDialog" />
     
   </v-container>
 </template>
@@ -70,24 +70,8 @@ provide("GAME", game);
 const showUserNameDialog = ref(false);
 const nameUserNameDialog = ref("");
 
-// Stopwatch
-
-const seconds = ref(0);
-const interval = ref<number | undefined>();
-
-function startStopwatch() {
-  interval.value = setInterval(() => {
-    seconds.value++;
-  }, 1000);
-}
-
-function stopStopwatch() {
-  clearInterval(interval.value);
-}
-
-function resetStopwatch() {
-  clearInterval(interval.value);
-  seconds.value = 0;
+function nameDialogClosed() {
+  showUserNameDialog.value = false;
   startStopwatch();
 }
 
@@ -109,13 +93,15 @@ onMounted(() => {
   checkUserNameLocalStorage();
   checkUserName();
 
+  if(!showUserNameDialog.value){
+    startStopwatch();
+  }
+
 });
 
 
 onUnmounted(() => {
   window.removeEventListener("keyup", onKeyup);
-
-
 });
 
 async function getWordFromApi(): Promise<string> {
@@ -168,7 +154,7 @@ function postScore() {
       Name: nameUserNameDialog.value,
       GameCount: 1,
       AverageAttempts: attempts,
-      AverageSecondsPerGame: 5,
+      AverageSecondsPerGame: seconds.value,
     })
     .then(res => {
       console.log(res.data);
@@ -180,18 +166,61 @@ function postScore() {
 watch(() => game.gameState, (value) => {
   if(value == GameState.Won || value == GameState.Lost){
     postScore();
+    stopStopwatch();
+  }
+
+  if(value == GameState.Initializing){
+    resetStopwatch();
   }
 });
 
 
-// // Watch for showUserNameDialog, pause stopwatch if dialog is shown.
-// watch(() => showUserNameDialog.value, (value) => {
-//   if(value == false) {
-//     startStopwatch();
-//   } else {
-//     stopStopwatch();
-//   }
-// })
+// Watch for showUserNameDialog, pause stopwatch if dialog is shown.
+watch(() => showUserNameDialog.value, (value) => {
+  if(value == false) {
+    startStopwatch();
+  } else {
+    stopStopwatch();
+  }
+})
+
+
+// Stopwatch implementation
+let running = false;
+
+const seconds = ref(0);
+const interval = ref<number | undefined>();
+
+function startStopwatch() {
+  if(running) return;
+
+  interval.value = setInterval(() => {
+    seconds.value++;
+  }, 1000);
+
+  running = true;
+}
+
+function stopStopwatch() {
+  if(interval.value) {
+    clearInterval(interval.value);
+    interval.value = undefined;
+  }
+
+  running = false;
+}
+
+function resetStopwatch() {
+  seconds.value = 0;
+
+  if(interval.value) {
+    clearInterval(interval.value);
+    interval.value = undefined;
+  }
+
+  running = false;
+  startStopwatch();
+}
 
 
 
