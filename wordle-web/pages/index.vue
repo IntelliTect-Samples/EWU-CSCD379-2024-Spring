@@ -1,5 +1,5 @@
 ﻿<template>
-  <v-container>
+  <v-container class="mt-2">
     <v-progress-linear
       v-if="game.gameState === GameState.Initializing"
       color="primary"

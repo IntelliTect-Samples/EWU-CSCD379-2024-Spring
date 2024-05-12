@@ -19,11 +19,7 @@
         icon="mdi-trophy-variant"
         @click="$router.push('/leaderboard')"
       />
-
-      <v-app-bar-nav-icon
-        variant="text"
-        @click="drawer = !drawer"
-      ></v-app-bar-nav-icon>
+      <v-app-bar-nav-icon variant="text" @click="drawer = !drawer" />
     </v-app-bar>
     <v-navigation-drawer
       v-model="drawer"

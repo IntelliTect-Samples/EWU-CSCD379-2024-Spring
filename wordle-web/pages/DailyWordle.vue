@@ -1,36 +1,35 @@
 <template>
-  <v-container>
+  <v-container class="mt-2">
     <v-progress-linear
       v-if="game.gameState === GameState.Initializing"
       color="primary"
       indeterminate
     />
-    <v-sheet v-else>
-      <div class="text-h3 text-center mb-5">Daily Wordle</div>
-      <v-row class="mb-3">
-        <v-col lg="4" md="12" class="d-none d-md-flex" />
-        <v-col
-          lg="4"
-          md="12"
-          class="d-flex align-center flex-column flex-nowrap"
-        >
+    <v-sheet v-else color="transparent">
+      <v-card-title class="text-h4 text-center text-primary">
+        Daily Wordle</v-card-title
+      >
+      <v-row>
+        <v-col lg="4" v-if="$vuetify.display.mdAndUp" />
+        <v-col lg="4">
           <GameBoardGuess
             v-for="(guess, i) of game.guesses"
             :key="i"
             :guess="guess"
           />
         </v-col>
-        <v-col lg="4" md="12" class="my-3">
+        <v-col lg="4" v-if="$vuetify.display.mdAndUp" class="my-3">
           <v-row class="mb-1 justify-center">
             <v-sheet
-              class="pa-2 cursor-pointer"
+              class="pa-2 cursor-pointer text-no-wrap"
               color="primary"
               rounded
               v-ripple
-              min-width="200px"
+              width="200px"
               height="40px"
               elevation="4"
               @click="showNameDialog = !showNameDialog"
+              style="white-space: nowrap"
             >
               <v-icon icon="mdi-account" />
               <strong>Username:</strong> {{ playerName }}
@@ -49,10 +48,7 @@
               <strong> Current Time:</strong> {{ stopwatch.getCurrentTime() }}
             </v-sheet>
           </v-row>
-          <v-row
-            v-if="game.gameState === GameState.Playing"
-            class="mb-1 justify-center"
-          >
+          <v-row class="mb-1 justify-center">
             <v-sheet
               color="primary"
               min-width="200px"
@@ -84,7 +80,39 @@
             </v-sheet>
           </v-row>
         </v-col>
+        <v-col cols="12" v-else class="d-flex justify-center">
+          <v-sheet
+            class="pa-1 mb-3 d-flex justify-center align-center"
+            color="primary"
+            rounded
+            elevation="4"
+            width="200px"
+            height="40px"
+          >
+            <v-icon icon="mdi-timer" /> Time:
+            {{ stopwatch.getCurrentTime() }}
+          </v-sheet>
+        </v-col>
       </v-row>
+      <v-bottom-navigation
+        v-if="!$vuetify.display.mdAndUp"
+        v-model="itemSelect"
+        grow
+      >
+        <v-btn cols="5" value="showNameDialog">
+          <v-icon icon="mdi-account" />
+          {{ playerName }}
+        </v-btn>
+        <v-btn value="showWordsList">
+          <v-icon icon="mdi-book" />
+          {{ validWordsNum }}
+        </v-btn>
+
+        <v-btn value="showResult">
+          <v-icon icon="mdi-flag-variant" />
+          {{ game.gameState === GameState.Playing ? "Give Up" : "Results" }}
+        </v-btn>
+      </v-bottom-navigation>
 
       <Keyboard />
 
@@ -95,7 +123,7 @@
           class="pa-5 text-center text-white"
           rounded
         >
-          <v-card-title class="text-h5">
+          <v-card-title class="text-h5 text-wrap">
             {{ gameMessage }}
           </v-card-title>
           <v-card-text v-if="game.gameState !== GameState.Playing" class="my-3">
@@ -135,6 +163,19 @@ const isGameOver = ref(false);
 const playerName = ref("");
 const showNameDialog = ref(false);
 const validWordsNum = ref(0);
+const itemSelect = ref("");
+
+watch(itemSelect, () => {
+  if (itemSelect.value === "showNameDialog") {
+    showNameDialog.value = true;
+  } else if (itemSelect.value === "showWordsList") {
+    showWordsList.value = true;
+  } else if (itemSelect.value === "showResult") {
+    isGameOver.value = true;
+  }
+
+  itemSelect.value = "";
+});
 
 const game = reactive(new Game());
 game.startNewGame();
@@ -226,8 +267,7 @@ watch(
 onMounted(() => {
   window.addEventListener("keyup", onKeyup);
   const defaultName = nuxtStorage.localStorage.getData("name");
-  showNameDialog.value = defaultName === null || defaultName === "Guest";
-  playerName.value = showNameDialog.value ? "Guest" : defaultName;
+  playerName.value = defaultName === null ? "Guest" : defaultName;
 
   stopwatch.value.start();
 });
