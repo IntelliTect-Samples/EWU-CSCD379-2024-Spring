@@ -29,6 +29,23 @@
           {{ wordStats[selectedDate].totalGamesPlayed }}</v-card-text
         >
       </v-card>
+
+      <v-table>
+        <thead>
+          <tr class="bg-primary">
+            <th class="text-center font-weight-bold">Word</th>
+            <th class="text-center font-weight-bold">isWin</th>
+            <th class="text-center font-weight-bold">Attempts</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr v-for="(game, i) in wordStats[selectedDate].games" :key="i">
+            <td>{{ game.word }}</td>
+            <td>{{ game.isWin }}</td>
+            <td>{{ game.attempts }}</td>
+          </tr>
+        </tbody>
+      </v-table>
     </v-tabs-window>
   </div>
 </template>
@@ -39,11 +56,18 @@ import Axios from "axios";
 const selectedDate = ref(0);
 const isDailyWordlesLoading = ref(true);
 
+interface Game {
+  word: string;
+  isWin: boolean;
+  attempts: number;
+}
+
 interface WordStats {
   date: string;
   averageAttempts: number;
   totalGamesPlayed: number;
   numberOfWins: number;
+  games: Game[];
 }
 
 const wordStats = ref<WordStats[]>([]);
@@ -57,6 +81,7 @@ onMounted(() => {
         averageAttempts: word.averageAttempts,
         totalGamesPlayed: word.totalGamesPlayed,
         numberOfWins: word.numberOfWins,
+        games: word.games,
       }))
     )
     .then((wordStatsData: WordStats[]) => {

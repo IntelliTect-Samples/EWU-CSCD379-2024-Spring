@@ -1,6 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using System;
 using Wordle.Api.Dtos;
 using Wordle.Api.Models;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace Wordle.Api.Services;
 
@@ -28,6 +30,7 @@ public class WordStatisticsService(WordleDbContext Db)
 
         WordOfTheDay? wordOfTheDay = await Db.WordsOfTheDays
             .Include(wotd => wotd.Games)
+            .Include(word => word.Word)
             .FirstOrDefaultAsync(wordOfTheDay => wordOfTheDay.Date == dateOnly);
 
         WordStatsDto? wordStatsDto;
@@ -40,7 +43,15 @@ public class WordStatisticsService(WordleDbContext Db)
                 AverageAttempts = wordOfTheDay.Games.Average(game => game.Attempts),
                 TotalGamesPlayed = wordOfTheDay.Games.Count(),
                 NumberOfWins = wordOfTheDay.Games.Select(game => game.IsWin == true).Count(),
-            };
+                Games = wordOfTheDay.Games
+                .Select(game => new GameDto()
+                {
+
+                    Word = wordOfTheDay.Word.Text,
+                    Attempts = game.Attempts,
+                    IsWin = game.IsWin
+                }).ToList()
+             };
         }
         else
         {

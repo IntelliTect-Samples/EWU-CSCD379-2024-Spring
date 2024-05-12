@@ -15,7 +15,5 @@ public class StatisticsController(WordStatisticsService WordStatisticsService) :
     public async Task<List<WordStatsDto>> GetWordStatistics(int numDays){
         return await WordStatisticsService.GetStatisticsRange(numDays);
     }
-
-
 }
 
