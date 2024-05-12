@@ -60,6 +60,7 @@ import { Game, GameState } from "../scripts/game";
 import nuxtStorage from "nuxt-storage";
 import Axios from 'axios'
 import type { Player } from "../scripts/player";
+import UserNameDialog from "~/components/UserNameDialog.vue";
 
 const router = useRouter();
 const game = reactive(new Game());
@@ -139,6 +140,10 @@ async function checkUserNameLocalStorage() {
 async function checkUserName() {
   const response = await Axios.get("/Player/Player?playerName=" + nameUserNameDialog.value);
   const player: Player = response.data;
+
+  if(player.name == "Guest"){
+    showUserNameDialog.value = true;
+  }
 }
 
 function postScore() {
@@ -165,6 +170,10 @@ function postScore() {
 }
 watch(() => game.gameState, (value) => {
   if(value == GameState.Won || value == GameState.Lost){
+    if(nameUserNameDialog.value == "Guest"){
+      showUserNameDialog.value = true;
+    }
+    
     postScore();
     stopStopwatch();
   }
