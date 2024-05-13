@@ -37,16 +37,6 @@ public class DatabaseTestBase
         context.Database.EnsureCreated();
     }
 
-    public static IEnumerable<PlayerDto> Requests { get; } = new PlayerDto[] {
-        new PlayerDto { Name = "Artemis Lightfoot", AverageAttempts = 3, GameCount = 1 },
-        new PlayerDto { Name = "Cedric the Bold", AverageAttempts = 2, GameCount = 1 },
-        new PlayerDto { Name = "Eldrin Starfire", AverageAttempts = 4, GameCount = 1 },
-        new PlayerDto { Name = "Mirabel the Wise", AverageAttempts = 2, GameCount = 1 },
-        new PlayerDto { Name = "Thorn Underleaf", AverageAttempts = 1, GameCount = 1 },
-        new PlayerDto { Name = "Lilith Darkweaver", AverageAttempts = 2, GameCount = 1 },
-    };
-}
-
     [TestCleanup]
     public void CloseDbConnection()
     {
