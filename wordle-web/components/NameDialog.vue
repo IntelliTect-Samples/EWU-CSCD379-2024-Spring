@@ -1,11 +1,9 @@
 <template>
-  <v-dialog v-model="showModel" max-width="350" persistent>
+  <v-dialog v-model="showModel" max-width="500" persistent>
     <v-card>
-      <v-sheet color="secondary">
-        <v-card-title>Enter Thy Name, Brave Adventurer!</v-card-title>
-      </v-sheet>
+      <v-sheet color="primary"><v-card-title>Enter Thy Name, Brave Adventurer!</v-card-title></v-sheet>
       <v-form>
-        <v-responsive hide-details="auto" width="350">
+        <v-responsive hide-details="auto" width="500">
           <v-text-field
             append-inner-icon="mdi-sword-cross"
             label="Name"
