@@ -43,4 +43,4 @@ const emits = defineEmits(['entered']);
 .v-btn {
   color: #bcaaa4; 
 }
-</stype>
+</style>
