@@ -9,7 +9,7 @@
           <v-text-field
             append-inner-icon="mdi-sword-cross"
             label="Name"
-            v-model="showName"
+            v-model="nameModel"
             @keydown.enter
             @click:append-inner="$emit('entered')"
             @keydown.enter.prevent></v-text-field>
@@ -20,10 +20,10 @@
 </template>
 
 <script setup lang="ts">
-import { ref, defineEmits } from 'vue';
-  
+
 const showModel = defineModel<boolean>('show');
-const showName = defineModel<string>('name');
+const nameModel = defineModel<string>('name');
+  
 defineEmits(['entered']);
   
 </script>
