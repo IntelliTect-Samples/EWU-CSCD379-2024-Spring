@@ -1,30 +1,51 @@
-using Microsoft.EntityFrameworkCore;
-using Wordle.Api.Data;
-using Microsoft.Data.Sqlite;
-using Wordle.Api.Dtos;
+<template>
+  <v-dialog v-model="showDialog" persistent max-width="400px">
+    <v-card class="elevation-12">
+      <v-card-title class="text-h3">🏰 Herald, State Thy Name!</v-card-title>
+      <v-card-text>
+        <v-text-field
+          v-model="userName"
+          label="Enter Your Heroic Name"
+          outlined
+          dense
+          solo
+          placeholder="e.g., Elwin Shadowbane"
+        ></v-text-field>
+      </v-card-text>
+      <v-card-actions>
+        <v-spacer></v-spacer>
+        <v-btn color="deep-purple accent-4" dark @click="saveName">
+          <v-icon left>mdi-shield-check</v-icon>
+          Proclaim
+        </v-btn>
+      </v-card-actions>
+    </v-card>
+  </v-dialog>
+</template>
 
-namespace Wordle.Api.Tests;
-public abstract class DatabaseTestBase
-{
-	private SqliteConnection SqliteConnection { get; set; } = null!;
-	protected DbContextOptions<AppDbContext> Options { get; private set; } = null!;
+<script>
+export default {
+  data() {
+    return {
+      showDialog: !localStorage.getItem('userName'),
+      userName: localStorage.getItem('userName') || 'Adventurous Soul'
+    };
+  },
+  methods: {
+    saveName() {
+      if (this.userName.trim() === '') {
+        this.userName = 'Adventurous Soul'; // Default name if empty
+      }
+      localStorage.setItem('userName', this.userName);
+      this.showDialog = false;
+    }
+  }
+};
+</script>
 
-	[TestInitialize]
-	public void InitializeDb()
-	{
-		SqliteConnection = new SqliteConnection("DataSource=:memory:");
-		SqliteConnection.Open();
-
-		Options = new DbContextOptionsBuilder<AppDbContext>()
-			.UseSqlite(SqliteConnection)
-			.Options;
-
-		using var context = new AppDbContext(Options);
-		context.Database.EnsureCreated();
-	}
-
-	[TestCleanup]
-	public void CloseDbConnection()
-	{
-		SqliteConnection.Close();
-	}
+<style scoped>
+.elevation-12 {
+  background-image: linear-gradient(to right, #5433ff, #20bdff, #a5fecb);
+  border-radius: 8px;
+}
+</style>
