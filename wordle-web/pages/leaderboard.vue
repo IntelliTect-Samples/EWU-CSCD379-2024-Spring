@@ -1,17 +1,17 @@
 <template>
-  <v-card class="my-7 mx-auto w-75">
-    <v-sheet color="secondary">
-      <v-card-title>Leaderboard</v-card-title>
+  <v-card class="my-7 mx-auto w-75" elevation="2">
+    <v-sheet color="deep-purple accent-4">
+      <v-card-title class="white--text">Hall of Heroes</v-card-title>
     </v-sheet>
-    <v-table class="table mt-7 mx-auto w-75">
+    <v-table class="table mt-7 mx-auto w-75" dense>
       <thead>
         <tr>
-          <th class="text-h6 text-center Name"><strong>Player Name</strong></th>
+          <th class="text-h6 text-center Name"><strong>Adventurer</strong></th>
           <th class="text-h6 text-center GameCount">
-            <strong>Game Count</strong>
+            <strong>Quests Completed</strong>
           </th>
           <th class="text-center text-h6 AverageAttempts">
-            <strong>Average Guesses</strong>
+            <strong>Average Spells Cast</strong>
           </th>
         </tr>
       </thead>
@@ -24,9 +24,9 @@
       </tbody>
     </v-table>
     <v-container class="text-center">
-      <v-btn color="secondary" class="mb-5" @click="$router.push('/')"
-        >Home</v-btn
-      >
+      <v-btn color="amber darken-2" class="mb-5" @click="$router.push('/')">
+        Return to Realm
+      </v-btn>
     </v-container>
   </v-card>
 </template>
@@ -41,38 +41,25 @@ interface Player {
   averageAttempts: number;
 }
 
-const topTenScores = ref<Player[]>();
+const topTenScores = ref<Player[]>([]);
 
-//need to make GET request to the server to get the leaderboard data
 Axios.get('/leaderboard/GetScores')
   .then(response => {
     topTenScores.value = response.data;
   })
-  .catch(error => {
-    console.log(error);
-  });
-//note to self need to implement animate.css for the leaderboard extra credit
+  .catch(console.error);
 </script>
-<style>
+
+<style scoped>
 .table {
-  background-color: unknownGradient;
+  background-color: #5c3c92;
   animation: colorChange 10s infinite;
 }
 @keyframes colorChange {
-  0% {
-    background-color: #b7afaf;
-  }
-  25% {
-    background-color: #ffd54f;
-  }
-  50% {
-    background-color: #9575cd;
-  }
-  75% {
-    background-color: #482e74;
-  }
-  100% {
-    background-color: #4f4f4f;
-  }
+  0%, 100% { background-color: #7c4dff; }
+  25% { background-color: #b39ddb; }
+  50% { background-color: #512da8; }
+  75% { background-color: #311b92; }
 }
 </style>
+
