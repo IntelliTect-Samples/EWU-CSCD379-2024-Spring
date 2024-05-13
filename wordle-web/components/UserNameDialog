@@ -1,0 +1,31 @@
+<template>
+  <v-dialog v-model="showDialog" persistent>
+    <v-card>
+      <v-card-title>Enter your name</v-card-title>
+      <v-card-text>
+        <v-text-field v-model="userName" label="Name" outlined></v-text-field>
+      </v-card-text>
+      <v-card-actions>
+        <v-spacer></v-spacer>
+        <v-btn color="green" @click="saveName">Save</v-btn>
+      </v-card-actions>
+    </v-card>
+  </v-dialog>
+</template>
+
+<script>
+export default {
+  data() {
+    return {
+      showDialog: !localStorage.getItem('userName'),
+      userName: localStorage.getItem('userName') || 'Guest'
+    };
+  },
+  methods: {
+    saveName() {
+      localStorage.setItem('userName', this.userName);
+      this.showDialog = false;
+    }
+  }
+};
+</script>
