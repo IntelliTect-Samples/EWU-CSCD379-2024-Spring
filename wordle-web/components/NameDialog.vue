@@ -28,13 +28,3 @@ defineEmits(['entered']);
   
 </script>
 
-<style scoped>
-.v-card {
-  background color: #3e2723;
-  color: #bcaaa4;
-}
-
-.v-btn {
-  color: #bcaaa4; 
-}
-</style>
