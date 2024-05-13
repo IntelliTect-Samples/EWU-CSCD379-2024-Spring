@@ -1,26 +1,53 @@
 <template>
-  <v-dialog v-model="showModel" max-width="350" persistent>
+  <v-dialog v-model="showDialog" max-width="350px" persistent>
     <v-card>
-      <v-sheet color="secondary">
-        <v-card-title> Enter Thy Name, Brave Adventurer!:</v-card-title>
-      </v-sheet>
-      <v-form>
-        <v-responsive hide-details="auto" width="350">
-          <v-text-field
-            append-inner-icon="mdi-arrow-right-bold-circle"
-            label="Name"
-            v-model="nameModel"
-            @keydown.enter
-            @click:append-inner="$emit('entered')"
-            @keydown.enter.prevent></v-text-field>
-        </v-responsive>
-      </v-form>
+      <v-card-title class="text-h6">
+        <v-icon left>mdi-account-circle</v-icon>
+        Enter Thy Name, Brave Adventurer!
+      </v-card-title>
+      <v-card-text>
+        <v-text-field
+          label="Name"
+          outlined
+          v-model="name"
+          append-icon="mdi-check"
+          @click:append="submitName"
+          @keydown.enter="submitName"
+          single-line
+          dense>
+        </v-text-field>
+      </v-card-text>
+      <v-card-actions>
+        <v-btn color="success" text @click="submitName">Commit to Quest</v-btn>
+      </v-card-actions>
     </v-card>
   </v-dialog>
 </template>
 
-<script setup lang="ts">
-const showModel = defineModel<boolean>('show');
-const nameModel = defineModel<string>('name');
-defineEmits(['entered']);
+<script setup>
+import { ref, defineProps, defineEmits } from 'vue';
+import { useStorage } from '@vueuse/core';
+
+const showDialog = ref(false);
+const name = useStorage('userName', 'Guest');
+
+const emit = defineEmits(['update:name']);
+
+function submitName() {
+  if (!name.value.trim()) {
+    name.value = 'Guest'; 
+  }
+  emit('update:name', name.value); 
+  showDialog.value = false;
+}
 </script>
+
+<style scoped>
+.v-dialog .v-card {
+  background-color: #4527a0;
+  color: #ffe082;
+}
+.v-btn {
+  color: #ffe082;
+}
+</style>
