@@ -8,7 +8,7 @@
       <v-sheet>
         <v-container height="150px">
           <v-sheet
-            @click="showNameDialog = !showNameDialog"
+            @click="nameDialog = !nameDialog"
             class="pa-2 mx-2 mt-2 cursor-pointer"
             color="deep-purple accent-4">
             {{ username }}
@@ -56,7 +56,7 @@
         View Hall of Heroes
       </v-btn>
       <NameDialog
-        v-model:show="showNameDialog"
+        v-model:show="nameDialog"
         v-model:name="username"
         @entered="enterName" />
       <GuestSaveDialog
