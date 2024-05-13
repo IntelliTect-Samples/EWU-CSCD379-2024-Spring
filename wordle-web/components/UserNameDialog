@@ -9,7 +9,7 @@
           outlined
           dense
           solo
-          placeholder="e.g., Elwin Shadowbane"
+          placeholder="e.g., Guest"
         ></v-text-field>
       </v-card-text>
       <v-card-actions>
@@ -28,13 +28,13 @@ export default {
   data() {
     return {
       showDialog: !localStorage.getItem('userName'),
-      userName: localStorage.getItem('userName') || 'Adventurous Soul'
+      userName: localStorage.getItem('userName') || 'Guest'
     };
   },
   methods: {
     saveName() {
       if (this.userName.trim() === '') {
-        this.userName = 'Adventurous Soul'; // Default name if empty
+        this.userName = 'Guest'; // Default name if empty
       }
       localStorage.setItem('userName', this.userName);
       this.showDialog = false;
