@@ -1,71 +1,25 @@
 <template>
-  <v-container>
-    <v-progress-linear
-      v-if="game.gameState === GameState.Initializing"
-      color="primary"
-      indeterminate
-    />
-    <v-card v-else class="text-center">
-      <v-alert
-        v-if="game.gameState != GameState.Playing"
-        :color="game.gameState == GameState.Won ? 'success' : 'error'"
-        class="mb-5"
-        tile
-      >
-        <h3>
-          You've
-          {{ game.gameState == GameState.Won ? "Won! 🥳" : "Lost... 😭" }}
-        </h3>
-        <v-card-text>
-          The word was: <strong>{{ game.secretWord }}</strong>
-        </v-card-text>
-        <v-btn variant="outlined" @click="game.startNewGame()">
-          <v-icon size="large" class="mr-2"> mdi-restart </v-icon> Restart Game
+  <v-app>
+    <v-card
+      color="secondary accent-4"
+      class="mx-auto mt-12 w-75 pa-8 rounded text-center"
+      elevation="12"
+    >
+      <v-card-title class="text-wrap" style="color: #E0E0E0;">
+         Welcome to LexiQuest! Dive into a world where words wield power and magic unfolds with each guess. Prepare for a spellbinding adventure!
+      </v-card-title>
+      <v-card-actions class="justify-center mx-2 my-4">
+        <v-btn
+          color="amber darken-3"
+          class="white--text"
+          :to="'/game'"
+          large
+          depressed
+          style="font-weight: bold;"
+        >
+          Begin LexiQuest!
         </v-btn>
-      </v-alert>
-      <v-card-title v-else>Wordle</v-card-title>
-
-      <GameBoardGuess
-        v-for="(guess, i) of game.guesses"
-        :key="i"
-        :guess="guess"
-      />
-
-      <div class="my-10">
-        <Keyboard />
-      </div>
-
-      <v-btn @click="game.submitGuess()" class="mb-5" color="primary">
-        Guess!
-      </v-btn>
+      </v-card-actions>
     </v-card>
-  </v-container>
+  </v-app>
 </template>
-
-<script setup lang="ts">
-import { Game, GameState } from "../scripts/game";
-
-const game = reactive(new Game());
-game.startNewGame();
-provide("GAME", game);
-
-const myGuess = ref("");
-
-onMounted(() => {
-  window.addEventListener("keyup", onKeyup);
-});
-
-onUnmounted(() => {
-  window.removeEventListener("keyup", onKeyup);
-});
-
-function onKeyup(event: KeyboardEvent) {
-  if (event.key === "Enter") {
-    game.submitGuess();
-  } else if (event.key == "Backspace") {
-    game.removeLastLetter();
-  } else if (event.key.match(/[A-z]/) && event.key.length === 1) {
-    game.addLetter(event.key.toUpperCase());
-  }
-}
-</script>
