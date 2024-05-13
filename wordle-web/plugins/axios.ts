@@ -8,7 +8,7 @@ export default defineNuxtPlugin(() => {
     ) {
       Axios.defaults.baseURL = "https://localhost:7266/";
     } else {
-      Axios.defaults.baseURL = "lexiquestapi.azurewebsites.net/";
+      Axios.defaults.baseURL = "https://lexiquestapi.azurewebsites.net/";
     }
   }
 })
