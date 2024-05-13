@@ -1,7 +1,11 @@
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Wordle.Api.Services;
 using Wordle.Api.Dtos;
 using Wordle.Api.Models;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace Wordle.Api.Controllers;
 
@@ -11,7 +15,7 @@ public class LeaderboardController : ControllerBase
 {
     private readonly WordleDbContext _context;
 
-    public LeaderboardController(WordleDbContext context)
+    public LeaderboardManagerController(WordleDbContext context)
     {
         _context = context;
     }
@@ -33,9 +37,14 @@ public class LeaderboardController : ControllerBase
         if (existingPlayer != null)
         {
             existingPlayer.GameCount += player.GameCount;
-            existingPlayer.AverageAttempts = ((existingPlayer.AverageAttempts * (existingPlayer.GameCount - 1)) + player.AverageAttempts) / existingPlayer.GameCount;
+            double totalAttempts = existingPlayer.AverageAttempts * (existingPlayer.GameCount - 1) + player.AverageAttempts;
+            existingPlayer.AverageAttempts = totalAttempts / existingPlayer.GameCount;
+            
             if (player.AverageSecondsPerGame.HasValue)
-                existingPlayer.AverageSecondsPerGame = ((existingPlayer.AverageSecondsPerGame.GetValueOrDefault() * (existingPlayer.GameCount - 1)) + player.AverageSecondsPerGame.Value) / existingPlayer.GameCount;
+            {
+                double totalSeconds = existingPlayer.AverageSecondsPerGame.GetValueOrDefault() * (existingPlayer.GameCount - 1) + player.AverageSecondsPerGame.Value;
+                existingPlayer.AverageSecondsPerGame = totalSeconds / existingPlayer.GameCount;
+            }
         }
         else
         {
