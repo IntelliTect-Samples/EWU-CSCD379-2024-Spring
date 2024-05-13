@@ -2,33 +2,33 @@
   <v-container>
     <v-progress-linear
       v-if="game.gameState === GameState.Initializing"
-      color="primary"
+      color="amber darken-2"
       indeterminate />
-    <v-card v-else class="text-center" elevation="0">
+    <v-card v-else class="text-center" elevation="2">
       <v-sheet>
         <v-container height="150px">
           <v-sheet
             @click="showNameDialog = !showNameDialog"
             class="pa-2 mx-2 mt-2 cursor-pointer"
-            color="secondary">
+            color="deep-purple accent-4">
             {{ username }}
           </v-sheet>
         </v-container>
       </v-sheet>
       <v-alert
         v-if="game.gameState != GameState.Playing"
-        :color="game.gameState == GameState.Won ? 'success' : 'error'"
+        :color="game.gameState == GameState.Won ? 'green' : 'red'"
         class="mb-5"
         tile>
         <h3>
           You've
-          {{ game.gameState == GameState.Won ? 'Won! 🥳' : 'Lost... 😭' }}
+          {{ game.gameState == GameState.Won ? 'triumphed! 🏰' : 'been defeated... 🌑' }}
         </h3>
         <v-card-text>
-          The word was: <strong>{{ game.secretWord }}</strong>
+          The secret word was: <strong>{{ game.secretWord }}</strong>
         </v-card-text>
         <v-btn variant="outlined" @click="game.startNewGame()">
-          <v-icon size="large" class="mr-2"> mdi-restart </v-icon> Restart Game
+          <v-icon size="large" class="mr-2"> mdi-restart </v-icon> Restart Quest
         </v-btn>
       </v-alert>
 
@@ -44,36 +44,17 @@
       </div>
 
       <v-btn
-        @click="
-          game.submitGuess();
-          playAudio();
-        "
+        @click="game.submitGuess(); playAudio();"
         class="mb-5"
-        color="primary">
-        Guess!
+        color="amber darken-2">
+        Cast Spell!
       </v-btn>
       <v-btn
-        class="mb-5 ml-5"
-        color="secondary"
-        @click="
-          showValidWordsDialog = !showValidWordsDialog;
-          playAudio();
-        "
-        >{{ validWordsCount }} possible words!</v-btn
-      >
-      <v-btn
-        @click="
-          $router.push('/leaderboard');
-          playAudio();
-        "
+        @click="$router.push('/leaderboard'); playAudio();"
         class="mb-5 mx-5"
-        color="primary">
-        Leaderboard
+        color="deep-purple darken-2">
+        View Hall of Heroes
       </v-btn>
-      <ValidWords
-        v-model:show="showValidWordsDialog"
-        v-model:validWordsCount="validWordsCount"
-        @chooseWord="word => selectWord(word)" />
       <NameDialog
         v-model:show="showNameDialog"
         v-model:name="username"
@@ -86,96 +67,64 @@
 </template>
 
 <script setup lang="ts">
-import { Game, GameState } from '../scripts/game';
-import { WordList } from '~/scripts/wordList';
+import { Game, GameState } from '~/scripts/game';
 import nuxtStorage from 'nuxt-storage';
 import Axios from 'axios';
 
 const game = reactive(new Game());
 game.startNewGame();
 provide('GAME', game);
-const showValidWordsDialog = ref(false);
-const validWordsCount = ref(WordList.length);
-const username = ref(' ');
+const username = ref('');
 const showNameDialog = ref(false);
 const showGuestSaveDialog = ref(false);
 
-const myGuess = ref('');
-function playAudio(): any {
-  const audio = new Audio('/clicker.mp3');
-  audio.volume = 0.9;
+function playAudio(): void {
+  const audio = new Audio('/magic-spell.mp3');
+  audio.volume = 0.8;
   audio.play();
 }
+
 onMounted(() => {
   window.addEventListener('keyup', onKeyup);
-  var defaultName = nuxtStorage.localStorage.getData('name');
-  showNameDialog.value = defaultName ? false : true;
-  username.value = showNameDialog.value ? 'Guest' : defaultName;
+  const defaultName = nuxtStorage.localStorage.getData('name');
+  showNameDialog.value = !defaultName;
+  username.value = defaultName || 'Guest';
 });
 
 onUnmounted(() => {
   window.removeEventListener('keyup', onKeyup);
 });
 
-watch(
-  () => game.gameState,
-  () => {
-    if (game.gameState == GameState.Won || game.gameState == GameState.Lost) {
-      if (username.value === 'Guest') {
-        showGuestSaveDialog.value = true;
-      } else {
-        postScore();
-      }
+watch(() => game.gameState, () => {
+  if (game.gameState == GameState.Won || game.gameState == GameState.Lost) {
+    showGuestSaveDialog.value = username.value === 'Guest';
+    if (!showGuestSaveDialog.value) {
+      postScore();
     }
   }
-);
+});
 
 function onKeyup(event: KeyboardEvent) {
-  // Check if text field automatically listens for 'Enter'
   if (showNameDialog.value) {
     if (event.key === 'Enter') {
       enterName();
     }
   } else {
-    if (event.key === 'Enter') {
-      playAudio();
-      game.submitGuess();
-    } else if (event.key == 'Backspace') {
-      playAudio();
-      game.removeLastLetter();
-    } else if (event.key.match(/[A-z]/) && event.key.length === 1) {
-      playAudio();
-      game.addLetter(event.key.toUpperCase());
-    }
+    game.handleKey(event);
   }
 }
 
-function selectWord(selected: string) {
-  game.guess.clear();
-  myGuess.value = '';
-  selected.split('').forEach(character => {
-    character = character.toUpperCase();
-    game.addLetter(character);
-    myGuess.value += character;
-  });
-}
-
 function enterName() {
-  if (username.value === '') {
+  if (username.value.trim() === '') {
     username.value = 'Guest';
   } else {
     nuxtStorage.localStorage.setData('name', username.value);
   }
-  showNameDialog.value = !showNameDialog.value;
+  showNameDialog.value = false;
 }
 
 function postScore() {
-  let attempts = 0;
-  if (game.gameState == GameState.Won) {
-    attempts = game.guessIndex + 1;
-  } else {
-    attempts = game.maxAttempts;
-  }
+  const attempts = game.gameState == GameState.Won ? game.guessIndex + 1 : game.maxAttempts;
   Axios.post('/leaderboard/postscore', {
     Name: username.value,
     GameCount: 1,
@@ -183,3 +132,4 @@ function postScore() {
   });
 }
 </script>
+
