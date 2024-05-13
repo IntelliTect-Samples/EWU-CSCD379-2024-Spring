@@ -84,14 +84,14 @@ function enterName() {
   showNameDialog.value = false;
 }
 
-function postScore() {
-  const attempts = game.guessIndex + 1; 
-  Axios.post('/leaderboard/postscore', {
-    Name: username.value,
-    GameCount: 1,
-    AverageAttempts: attempts,
-  });
-}
+// function postScore() {
+//   const attempts = game.guessIndex + 1; 
+//   Axios.post('/leaderboard/postscore', {
+//     Name: username.value,
+//     GameCount: 1,
+//     AverageAttempts: attempts,
+//   });
+// }
 
 onMounted(() => {
   window.addEventListener("keyup", onKeyup);
