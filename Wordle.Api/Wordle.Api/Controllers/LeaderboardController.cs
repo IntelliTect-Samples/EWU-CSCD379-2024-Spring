@@ -9,28 +9,27 @@ namespace Wordle.Api.Controllers;
 [Route("[controller]")]
 public class LeaderboardController : ControllerBase
 {
-    private readonly LeaderboardService _service;
+	private readonly LeaderboardService _service;
+	public LeaderboardController(LeaderboardService service)
+	{
+		_service = service;
+	}
 
-    public LeaderboardController(LeaderboardService service)
-    {
-        _service = service;
-    }
+	[HttpGet("GetScores")]
+	public async Task<List<PlayerDto>> Get()
+	{
+		return await _service.GetTopScoresAsync();
+	}
 
-    [HttpGet("GetScores")]
-    public async Task<ActionResult<List<PlayerDto>>> Get()
-    {
-        return Ok(await _service.GetTopScoresAsync());
-    }
-
-    [HttpPost("PostScore")]
-    public async Task<ActionResult<PlayerDto>> Post(PlayerDto request)
-    {
-        var player = await _service.PostScoreAsync(request);
-        return Ok(new PlayerDto
-        {
-            Name = player.Name,
-            GameCount = player.GameCount,
-            AverageAttempts = player.AverageAttempts
-        });
-    }
+	[HttpPost("PostScore")]
+	public async Task<PlayerDto> Post(PlayerDto request)
+	{
+		Player player = await _service.PostScoreAsync(request);
+		return new PlayerDto
+		{
+			Name = player.Name,
+			GameCount = player.GameCount,
+			AverageAttempts = player.AverageAttempts
+		};
+	}
 }
