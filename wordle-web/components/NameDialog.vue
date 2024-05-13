@@ -1,7 +1,7 @@
 <template>
-  <v-dialog v-model="showDialog" max-width="350px" persistent>
-    <v-card class="elevation-2">
-      <v-card-title class="text-h6">
+  <v-dialog v-model="show" max-width="350px">
+    <v-card>
+      <v-card-title>
         <v-icon left>mdi-account-circle</v-icon>
         Enter Thy Name, Brave Adventurer!
       </v-card-title>
@@ -14,8 +14,7 @@
           @click:append="submitName"
           @keydown.enter="submitName"
           single-line
-          dense>
-        </v-text-field>
+          dense />
       </v-card-text>
       <v-card-actions>
         <v-btn color="success" text @click="submitName">Commit to Quest</v-btn>
@@ -25,36 +24,19 @@
 </template>
 
 <script setup>
-import { ref, onMounted, watch } from 'vue';
-import { useStorage } from '@vueuse/core';
+import { ref, defineProps, defineEmits } from 'vue';
 
-const showDialog = ref(false);
-const name = useStorage('userName', 'Guest');
-
-onMounted(() => {
-  showDialog.value = !name.value || name.value === 'Guest';
+const props = defineProps({
+  show: Boolean,
+  name: String
 });
+const emit = defineEmits(['update:show', 'update:name']);
 
 function submitName() {
-  if (!name.value.trim()) {
-    name.value = 'Guest'; // Default name if empty
+  if (!props.name.trim()) {
+    props.name = 'Guest'; // Default name if empty
+    emit('update:name', 'Guest');
   }
-  showDialog.value = false;
+  emit('update:show', false);
 }
-
-watch(name, (newName) => {
-  if (newName && newName !== 'Guest') {
-    localStorage.setItem('userName', newName);
-  }
-});
 </script>
-
-<style scoped>
-.v-dialog .v-card {
-  background-color: #4527a0; /* Deep purple */
-  color: #ffe082; /* Amber accent */
-}
-.v-btn {
-  color: #ffe082;
-}
-</style>
