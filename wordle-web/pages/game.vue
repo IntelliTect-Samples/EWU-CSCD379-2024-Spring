@@ -1,6 +1,11 @@
 <template>
   <v-container>
-    <v-card class="text-center">
+    <v-progress-linear
+      v-if="game.gameState === GameState.Initializing"
+      color="primary"
+      indeterminate
+    />
+    <v-card v-else class="text-center">
       <v-alert
         v-if="game.gameState != GameState.Playing"
         :color="game.gameState == GameState.Won ? 'success' : 'error'"
@@ -9,7 +14,7 @@
       >
         <h3>
           You've
-          {{ game.gameState == GameState.Won ? "You Win! 🧙‍♂️" : "Defeat... 💀" }}
+          {{ game.gameState == GameState.Won ? "Won! 🥳" : "Lost... 😭" }}
         </h3>
         <v-card-text>
           The word was: <strong>{{ game.secretWord }}</strong>
@@ -18,7 +23,7 @@
           <v-icon size="large" class="mr-2"> mdi-restart </v-icon> Restart Game
         </v-btn>
       </v-alert>
-      <v-card-title v-else>LexiQuest!</v-card-title>
+      <v-card-title v-else>Wordle</v-card-title>
 
       <GameBoardGuess
         v-for="(guess, i) of game.guesses"
@@ -33,16 +38,15 @@
       <v-btn @click="game.submitGuess()" class="mb-5" color="primary">
         Guess!
       </v-btn>
-      <WordListDialog :valid-words="game.validWords" @word-selected="handleWordSelected" />
     </v-card>
   </v-container>
 </template>
 
 <script setup lang="ts">
 import { Game, GameState } from "../scripts/game";
-import WordListDialog from '../components/WordListDialog';
-const game: Game = reactive(new Game());
 
+const game = reactive(new Game());
+game.startNewGame();
 provide("GAME", game);
 
 const myGuess = ref("");
@@ -54,11 +58,6 @@ onMounted(() => {
 onUnmounted(() => {
   window.removeEventListener("keyup", onKeyup);
 });
-
-function handleWordSelected(word) {
-  // Use the word passed from the event to add the guess
-  game.addGuess(word);
-}
 
 function onKeyup(event: KeyboardEvent) {
   if (event.key === "Enter") {
