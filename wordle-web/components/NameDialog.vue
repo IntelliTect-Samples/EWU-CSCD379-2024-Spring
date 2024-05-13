@@ -1,37 +1,31 @@
 <template>
-  <v-dialog v-model="showModel" max-width="350px" persistent>
+  <v-dialog v-model="showModel" max-width="350" persistent>
     <v-card>
-      <v-sheet color="deep-purple accent-4">
-        <v-card-title class="white--text">Enter Thy Name, Brave Adventurer!</v-card-title>
+      <v-sheet color="secondary">
+        <v-card-title>Enter Thy Name, Brave Adventurer!</v-card-title>
       </v-sheet>
       <v-form>
         <v-responsive hide-details="auto" width="350">
           <v-text-field
             append-inner-icon="mdi-sword-cross"
             label="Name"
-            v-model="nameModel"
+            v-model="showName"
             @keydown.enter
             @click:append-inner="$emit('entered')"
-            @keydown.enter.prevent
-            outlined>
-          </v-text-field>
+            @keydown.enter.prevent></v-text-field>
         </v-responsive>
       </v-form>
-      <v-card-actions>
-        <v-btn color="green" text @click="$emit('entered')">Confirm</v-btn>
-      </v-card-actions>
     </v-card>
   </v-dialog>
 </template>
 
 <script setup lang="ts">
-import { defineProps, defineEmits } from 'vue';
-
-const props = defineProps({
-  showModel: Boolean,
-  nameModel: String
-});
-const emits = defineEmits(['entered']);
+import { ref, defineEmits } from 'vue';
+  
+const showModel = defineModel<boolean>('show');
+const showName = defineModel<string>('name');
+defineEmits(['entered']);
+  
 </script>
 
 <style scoped>
