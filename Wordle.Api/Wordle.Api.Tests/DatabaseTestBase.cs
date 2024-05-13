@@ -1,7 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using LexiQuest.Api.Data;
 using Microsoft.Data.Sqlite;
-using LexiQuest.Api.Dtos;
+using Wordle.Api.Dtos;
 
 namespace  Wordle.Api.Tests;
 public abstract class DatabaseTestBase
