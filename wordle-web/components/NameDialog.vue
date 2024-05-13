@@ -25,11 +25,11 @@
 import { ref } from 'vue';
 
 const showDialog = ref(true);
-const userName = ref(localStorage.getItem('userName') || 'Adventurous Soul');
+const userName = ref(localStorage.getItem('userName') || 'Guest');
 
 function saveName() {
   if (userName.value.trim() === '') {
-    userName.value = 'Adventurous Soul'; // Default name if empty
+    userName.value = 'Guest'; // Default name if empty
   }
   localStorage.setItem('userName', userName.value);
   showDialog.value = false;
