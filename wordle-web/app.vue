@@ -12,6 +12,8 @@
                 </template>
 
                 <v-spacer></v-spacer> <!-- This pushes the rest of the items to the right -->
+                <!-- Button to open leaderboard -->
+                <v-btn @click="router.push('/leaderboard')">Leaderboard</v-btn>
 
                 <v-btn icon="mdi-cog" @click="toggleSettingsDrawer" />
                 <v-btn icon="mdi-help-circle" @click="showHelpDialog = true" />
@@ -19,6 +21,9 @@
 
                 <HelpDialog v-model="showHelpDialog" />
             </v-app-bar>
+
+            <!-- NameDialog integration -->
+            <NameDialog v-model="showNameDialog" />
 
             <!-- Navigation Drawer for the About section -->
             <v-navigation-drawer v-model="drawer" location="right">
@@ -56,14 +61,17 @@
 
 <script setup lang="ts">
     import { useRouter } from 'vue-router';
-    import { ref } from 'vue';
+    import { ref, onMounted } from 'vue';
     import { useTheme } from "vuetify/lib/framework.mjs";
+    import nuxtStorage from 'nuxt-storage'; // Ensure nuxt-storage is correctly imported
+    import NameDialog from './NameDialog.vue'; // Adjust path as necessary
 
     const router = useRouter();
-    const theme = useTheme();
+    const theme = useTwitter();
     const showHelpDialog = ref(false);
     const drawer = ref(false);
     const settingsDrawer = ref(false);
+    const showNameDialog = ref(false);
 
     function toggleDrawer() {
         drawer.value = !drawer.value;
@@ -76,4 +84,11 @@
     function setTheme(themeName) {
         theme.global.name.value = themeName;
     }
+
+    onMounted(() => {
+        const username = nuxtStorage.localStorage.getData('username');
+        if (!username) {
+            showNameDialog.value = true;
+        }
+    });
 </script>
