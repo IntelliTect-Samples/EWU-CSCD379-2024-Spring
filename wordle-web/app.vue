@@ -43,7 +43,7 @@
           <v-row>
             <v-col cols="12">
               <v-img
-                src="https://media.giphy.com/media/l0ExsgrTuACbtPaqQ/giphy.gif"
+                src="/images/lexiquest_background.jpg"
                 alt="Animated spell casting"
                 max-height="200"
               />
