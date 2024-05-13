@@ -9,7 +9,7 @@
           <v-text-field
             append-inner-icon="mdi-sword-cross"
             label="Name"
-            v-model="submitName"
+            v-model="nameModel"
             @keydown.enter
             @click:append-inner="$emit('entered')"
             @keydown.enter.prevent
@@ -29,15 +29,15 @@ import { defineProps, defineEmits } from 'vue';
 
 const props = defineProps({
   showModel: Boolean,
-  submitName: String
+  nameModel: String
 });
 const emits = defineEmits(['entered']);
 </script>
 
 <style scoped>
 .v-card {
-  background-color: #3e2723;
-  color: #bcaaa4; 
+  background color: #3e2723;
+  color: #bcaaa4;
 }
 
 .v-btn {
