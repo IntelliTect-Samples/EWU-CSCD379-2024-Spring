@@ -3,7 +3,7 @@ using LexiQuest.Api.Data;
 using Microsoft.Data.Sqlite;
 using LexiQuest.Api.Dtos;
 
-namespace LexiQuest.Api.Tests;
+namespace  Wordle.Api.Tests;
 public abstract class DatabaseTestBase
 {
     private SqliteConnection SqliteConnection { get; set; } = null!;
