@@ -9,9 +9,9 @@ namespace Wordle.Api.Controllers;
 [Route("[controller]")]
 public class LeaderboardController : ControllerBase
 {
-    private readonly AppDbContext _context;
+    private readonly WordleDbContext _context;
 
-    public LeaderboardController(AppDbContext context)
+    public LeaderboardController(WordleDbContext context)
     {
         _context = context;
     }
