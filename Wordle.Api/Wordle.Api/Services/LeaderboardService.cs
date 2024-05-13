@@ -1,5 +1,5 @@
 using Microsoft.EntityFrameworkCore;
-using Wordle.Api.Data;
+using Wordle.Api.Services;
 using Wordle.Api.Dtos;
 using Wordle.Api.Models;
 
@@ -7,11 +7,11 @@ namespace Wordle.Api.Services;
 
 public class LeaderboardService
 {
-    private readonly AppDbContext _context;
+    private readonly WordleDbContext _context;
     private static readonly object _changingPlayerLock = new();
     private static readonly object _addingPlayerLock = new();
 
-    public LeaderboardService(AppDbContext context)
+    public LeaderboardService(WordleDbContext context)
     {
         _context = context;
     }
