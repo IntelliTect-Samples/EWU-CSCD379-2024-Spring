@@ -1,33 +1,33 @@
 using Microsoft.EntityFrameworkCore;
-using LexiQuest.Api.Data;
+using Wordle.Api.Data;
 using Microsoft.Data.Sqlite;
-using LexiQuest.Api.Dtos;
+using Wordle.Api.Dtos;
 
-namespace LexiQuest.Api.Tests;
+namespace Wordle.Api.Tests;
 public abstract class DatabaseTestBase
 {
-    private SqliteConnection SqliteConnection { get; set; } = null!;
-    protected DbContextOptions<AppDbContext> Options { get; private set; } = null!;
+	private SqliteConnection SqliteConnection { get; set; } = null!;
+	protected DbContextOptions<AppDbContext> Options { get; private set; } = null!;
 
-    [TestInitialize]
-    public void InitializeDb()
-    {
-        SqliteConnection = new SqliteConnection("DataSource=:memory:");
-        SqliteConnection.Open();
+	[TestInitialize]
+	public void InitializeDb()
+	{
+		SqliteConnection = new SqliteConnection("DataSource=:memory:");
+		SqliteConnection.Open();
 
-        Options = new DbContextOptionsBuilder<AppDbContext>()
-            .UseSqlite(SqliteConnection)
-            .Options;
+		Options = new DbContextOptionsBuilder<AppDbContext>()
+			.UseSqlite(SqliteConnection)
+			.Options;
 
-        using var context = new AppDbContext(Options);
-        context.Database.EnsureCreated();
-    }
+		using var context = new AppDbContext(Options);
+		context.Database.EnsureCreated();
+	}
 
-    [TestCleanup]
-    public void CloseDbConnection()
-    {
-        SqliteConnection.Close();
-    }
+	[TestCleanup]
+	public void CloseDbConnection()
+	{
+		SqliteConnection.Close();
+	}
 
     public static IEnumerable<PlayerDto> Requests { get; } =
         new PlayerDto[] {
