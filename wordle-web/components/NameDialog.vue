@@ -1,46 +1,26 @@
 <template>
-  <v-dialog v-model="showDialog" max-width="350px" persistent>
-    <v-card class="elevation-12">
-      <v-sheet color="deep-purple accent-4" dark>
-        <v-card-title class="headline">🏰 Herald, state thy name:</v-card-title>
+  <v-dialog v-model="showModel" max-width="350" persistent>
+    <v-card>
+      <v-sheet color="secondary">
+        <v-card-title>Enter your name:</v-card-title>
       </v-sheet>
       <v-form>
-        <v-container>
+        <v-responsive hide-details="auto" width="350">
           <v-text-field
-            v-model="userName"
-            label="Enter Your Heroic Name"
-            outlined
-            dense
-            append-icon="mdi-arrow-right-bold-circle"
-            @click:append="saveName"
-            @keydown.enter.prevent="saveName"
-          ></v-text-field>
-        </v-container>
+            append-inner-icon="mdi-arrow-right-bold-circle"
+            label="Name"
+            v-model="nameModel"
+            @keydown.enter
+            @click:append-inner="$emit('entered')"
+            @keydown.enter.prevent></v-text-field>
+        </v-responsive>
       </v-form>
     </v-card>
   </v-dialog>
 </template>
 
-<script setup>
-import { ref } from 'vue';
-
-const showDialog = ref(true);
-const userName = ref(localStorage.getItem('userName') || 'Adventurous Soul');
-
-function saveName() {
-  if (userName.value.trim() === '') {
-    userName.value = 'Adventurous Soul'; // Default name if empty
-  }
-  localStorage.setItem('userName', userName.value);
-  showDialog.value = false;
-  // Emit an event if you need to inform the parent component
-  emit('entered', userName.value);
-}
+<script setup lang="ts">
+const showModel = defineModel<boolean>('show');
+const nameModel = defineModel<string>('name');
+defineEmits(['entered']);
 </script>
-
-<style scoped>
-.elevation-12 {
-  background-image: linear-gradient(to right, #5433ff, #20bdff, #a5fecb);
-  border-radius: 8px;
-}
-</style>
