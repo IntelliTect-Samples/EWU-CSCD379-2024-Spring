@@ -16,22 +16,35 @@
           />
         </v-col>
         <v-col lg="4" v-if="$vuetify.display.mdAndUp" class="my-3">
-          <v-row class="mb-1 justify-center">
-            <v-sheet
-              class="pa-2 cursor-pointer text-no-wrap"
-              color="primary"
-              rounded
-              v-ripple
-              width="200px"
-              height="40px"
-              elevation="4"
-              @click="showNameDialog = !showNameDialog"
-              style="white-space: nowrap"
-            >
-              <v-icon icon="mdi-account" />
-              <strong>Username:</strong> {{ playerName }}
-            </v-sheet>
-          </v-row>
+          <v-hover v-slot="{ isHovering, props }">
+  <v-row class="mb-1 justify-center" v-bind="props">
+    <v-sheet
+      class="pa-2 cursor-pointer text-no-wrap"
+      color="primary"
+      rounded
+      v-ripple
+      width="200px"
+      height="40px"
+      elevation="4"
+      @click="showNameDialog = !showNameDialog"
+      style="white-space: nowrap"
+    >
+      <v-icon icon="mdi-account" />
+      <strong>Username:</strong> {{ truncate(playerName, 10, '...') }}
+
+      <v-expand-transition>
+        <div
+          v-if="isHovering"
+          class="d-flex transition-fast-in-fast-out bg-primary v-card--reveal text-s1"
+          style="height: 100%"
+        >
+          {{ playerName }}
+        </div>
+      </v-expand-transition>
+    </v-sheet>
+  </v-row>
+</v-hover>
+
           <v-row class="mb-1 justify-center">
             <v-sheet
               class="pa-2"
@@ -155,6 +168,13 @@ import {
   playWinSound,
 } from "../scripts/soundUtils";
 
+const truncate = (text: string, length: number, clamp: string) => {
+  clamp = clamp || '...';
+  const node = document.createElement('div');
+  node.innerHTML = text;
+  const content = node.textContent || '';
+  return content.length > length ? content.substring(0, length) + clamp : content;
+};
 const showWordsList = ref(false);
 const isGameOver = ref(false);
 const playerName = ref("");
