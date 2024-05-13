@@ -6,6 +6,7 @@ namespace Wordle.Api.Tests;
 [TestClass]
 public class WordOfTheDayServiceTests : DatabaseTestBase
 {
+
 	[TestMethod]
 	public void LoadWordList_SuccessfullyGetsWords()
 	{

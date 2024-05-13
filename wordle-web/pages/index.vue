@@ -5,16 +5,29 @@
       color="primary"
       indeterminate />
     <v-card v-else class="text-center" elevation="0">
-      <v-sheet>
-        <v-container height="150px">
-          <v-sheet
-            @click="showNameDialog = !showNameDialog"
-            class="pa-2 mx-2 mt-2 cursor-pointer"
-            color="secondary">
-            {{ username }}
+      <v-row>
+        <v-col cols="8">
+          <v-sheet>
+            <v-container height="150px">
+              <v-sheet
+                @click="showNameDialog = !showNameDialog"
+                class="pa-2 mx-2 mt-2 cursor-pointer"
+                color="secondary">
+                {{ username }}
+              </v-sheet>
+            </v-container>
           </v-sheet>
-        </v-container>
-      </v-sheet>
+        </v-col>
+        <v-col>
+          <v-select
+            density="compact"
+            tile
+            class="mt-6 mr-6"
+            label="Select Date"
+            :items="[1, 2, 3]">
+          </v-select>
+        </v-col>
+      </v-row>
       <v-alert
         v-if="game.gameState != GameState.Playing"
         :color="game.gameState == GameState.Won ? 'success' : 'error'"

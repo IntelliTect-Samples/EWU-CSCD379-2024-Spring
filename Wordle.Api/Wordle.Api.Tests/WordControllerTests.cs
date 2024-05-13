@@ -35,4 +35,21 @@ public class WordControllerTests
 		Assert.AreNotEqual("Test String", content);
 		Assert.IsFalse(string.IsNullOrWhiteSpace(content));
 	}
+
+	[TestMethod]
+	public async Task GetWordByDate_ReturnsWord()
+	{
+		// Arrange
+		var client = _factory.CreateClient();
+		var wordOfTheDayResponse = await client.GetAsync("/word/wordoftheday");
+		var wordOfTheDay = await wordOfTheDayResponse.Content.ReadAsStringAsync();
+		DateOnly date = DateOnly.FromDateTime(DateTime.UtcNow);
+
+		// Act
+		var response = await client.GetAsync($"/word/wordbydate/{date.Month}/{date.Day}/{date.Year}");
+		var content = await response.Content.ReadAsStringAsync();
+
+		// Assert
+		Assert.AreEqual(wordOfTheDay, content);
+	}
 }
