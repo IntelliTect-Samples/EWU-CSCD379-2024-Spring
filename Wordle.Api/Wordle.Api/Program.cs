@@ -1,4 +1,5 @@
 using Microsoft.EntityFrameworkCore;
+using Wordle.Api;
 using Wordle.Api.Data;
 using Wordle.Api.Services;
 
@@ -34,7 +35,7 @@ var app = builder.Build();
 
 using (var scope = app.Services.CreateScope())
 {
-    var db = scope.ServiceProvider.GetRequiredService<WordleDbContext>();
+    var db = scope.ServiceProvider.GetRequiredService<AppDbContext>();
     db.Database.Migrate();
     await Seeder.Seed(db);
 }

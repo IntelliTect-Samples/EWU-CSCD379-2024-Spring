@@ -1,10 +1,11 @@
 ﻿using Wordle.Api.Models;
 using Wordle.Api.Services;
+using Wordle.Api.Data;
 
 namespace Wordle.Api;
 public static class Seeder
 {
-    public static async Task Seed(WordleDbContext db)
+    public static async Task Seed(AppDbContext db)
     {
         if (!db.Words.Any())
         {

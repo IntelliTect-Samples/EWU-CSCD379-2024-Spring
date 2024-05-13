@@ -6,7 +6,13 @@
           >Would you like to save your score under 'Guest'?</v-card-title
         >
       </v-sheet>
-      <v-btn @click="$emit('saveGuestScore')">Yes</v-btn>
+      <v-btn
+        @click="
+          $emit('saveGuestScore');
+          showModel = false;
+        "
+        >Yes</v-btn
+      >
       <v-btn @click="showModel = false">No</v-btn>
     </v-card>
   </v-dialog>

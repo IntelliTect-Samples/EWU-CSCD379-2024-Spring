@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Wordle.Api.Dtos;
 using Wordle.Api.Models;
+using Wordle.Api.Data;
 
 namespace Wordle.Api.Controllers;
 
@@ -10,9 +11,9 @@ namespace Wordle.Api.Controllers;
 [ApiController]
 public class GameController : ControllerBase
 {
-    public WordleDbContext Db { get; set; }
+    public AppDbContext Db { get; set; }
 
-    public GameController(WordleDbContext db)
+    public GameController(AppDbContext db)
     {
         Db = db;
     }
