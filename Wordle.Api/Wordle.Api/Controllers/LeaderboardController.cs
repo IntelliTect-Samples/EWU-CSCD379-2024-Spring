@@ -1,11 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using Wordle.Api.Services;
-using Wordle.Api.Dtos;
 using Wordle.Api.Models;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace Wordle.Api.Controllers;
 
@@ -15,33 +10,38 @@ public class LeaderboardController : ControllerBase
 {
     private readonly WordleDbContext _context;
 
-    // Correcting the constructor name to match the class name
     public LeaderboardController(WordleDbContext context)
     {
         _context = context;
     }
 
-    [HttpGet]
+    [HttpGet("GetTopPlayers")]
     public async Task<ActionResult<IEnumerable<Player>>> GetTopPlayers()
     {
-        var players = await _context.Players
+        var topPlayers = await _context.Players
             .OrderByDescending(p => p.AverageAttempts)
             .Take(10)
             .ToListAsync();
-        return Ok(players);
+        return Ok(topPlayers);
     }
 
-    [HttpPost]
-    public async Data Task<ActionResult<Player>> PostPlayer([FromBody] Player player)
+    [HttpPost("PostPlayer")]
+    public async Task<ActionResult<Player>> PostPlayer([FromBody] Player player)
     {
-        var existingPlayer = await _context.Players.FirstOrDefaultAsync(p => p.Name == player.Name);
-        if (existingPlayer != null)
+        var existingPlayer = await _context.Players
+            .FirstOrDefaultAsync(p => p.Name == player.Name);
+
+        if (existing-Player != null)
         {
             existingPlayer.GameCount += player.GameCount;
-            existingPlayer.AverageAttempts = ((existingPlayer.AverageAttempts * (existingPlayer.GameCount - 1)) + player.AverageAttempts) / existingPlayer.GameCount;
-            
+            existingPlayer.AverageAttempts = 
+                ((existingPlayer.AverageAttempts * (existingPlayer.GameCount - 1)) + player.AverageAttempts) / existingPlayer.GameCount;
             if (player.AverageSecondsPerGame.HasValue)
-                existingPlayer.AverageSecondsPerGame = ((existingPlayer.AverageSecondsPerGame.GetValueOrDefault() * (existingPlayer.GameCount - 1)) + player.AverageSecondsPerGame.Value) / existingPlayer.GameCount;
+            {
+                existingPlayer.AverageSecondsPerGame =
+                    ((existingPlayer.AverageSecondsPerGame.GetValueOrDefault() * (existingPlayer.GameCount - 1)) + player.AverageSecondsPerGame.Value) / existingPlayer.GameCount;
+            }
+            _context.Players.Update(existingPlayer);
         }
         else
         {
