@@ -18,7 +18,7 @@
       <tbody>
         <tr v-for="player in topTenScores" :key="player.name">
           <td class="text-center">{{ player.name }}</td>
-          <td class="text-center">{{ player.gameCount }}</rd>
+          <td class="text-center">{{ player.gameCount }}</td>
           <td class="text-center">{{ player.averageAttempts }}</td>
         </tr>
       </tbody>
@@ -41,7 +41,7 @@ interface Player {
   averageAttempts: number;
 }
 
-const topTenScores = ref<Player[]>();
+const topTenDate = ref<Player[]>();
 
 Axios.get('/leaderboard/GetScores')
   .then(response => {
@@ -63,21 +63,6 @@ Axios.get('/leaderboard/GetScores')
   background-image: url('path_to_your_background_image');
   background-size: cover;
   background-repeat: no-repeat;
-}
-
-@keyframes colorChange {
-  0%, 100% {
-    background-color: #6a1b9a; /* deep purple */
-  }
-  25% {
-    background-color: #7c4dff; /* deep purple accent */
-  }
-  50% {
-    background-color: #ba68c8; /* medium purple */
-  }
-  75% {
-    background-color: #ce93d8; /* light purple */
-  }
 }
 
 .v-table thead th {
