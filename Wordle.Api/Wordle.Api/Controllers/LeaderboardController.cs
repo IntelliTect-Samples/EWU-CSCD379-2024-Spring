@@ -15,7 +15,8 @@ public class LeaderboardController : ControllerBase
 {
     private readonly WordleDbContext _context;
 
-    public LeaderboardManagerController(WordleDbContext context)
+    // Correcting the constructor name to match the class name
+    public LeaderboardController(WordleDbContext context)
     {
         _context = context;
     }
@@ -31,20 +32,16 @@ public class LeaderboardController : ControllerBase
     }
 
     [HttpPost]
-    public async Task<ActionResult<Player>> PostPlayer([FromBody] Player player)
+    public async Data Task<ActionResult<Player>> PostPlayer([FromBody] Player player)
     {
         var existingPlayer = await _context.Players.FirstOrDefaultAsync(p => p.Name == player.Name);
         if (existingPlayer != null)
         {
             existingPlayer.GameCount += player.GameCount;
-            double totalAttempts = existingPlayer.AverageAttempts * (existingPlayer.GameCount - 1) + player.AverageAttempts;
-            existingPlayer.AverageAttempts = totalAttempts / existingPlayer.GameCount;
+            existingPlayer.AverageAttempts = ((existingPlayer.AverageAttempts * (existingPlayer.GameCount - 1)) + player.AverageAttempts) / existingPlayer.GameCount;
             
             if (player.AverageSecondsPerGame.HasValue)
-            {
-                double totalSeconds = existingPlayer.AverageSecondsPerGame.GetValueOrDefault() * (existingPlayer.GameCount - 1) + player.AverageSecondsPerGame.Value;
-                existingPlayer.AverageSecondsPerGame = totalSeconds / existingPlayer.GameCount;
-            }
+                existingPlayer.AverageSecondsPerGame = ((existingPlayer.AverageSecondsPerGame.GetValueOrDefault() * (existingPlayer.GameCount - 1)) + player.AverageSecondsPerGame.Value) / existingPlayer.GameCount;
         }
         else
         {
