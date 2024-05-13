@@ -49,6 +49,7 @@ Axios.get('/leaderboard/GetScores')
   })
   .catch(error => {
     console.error('Failed to load scores:', error);
+    topTenScores.value = [];
   });
 </script>
 
