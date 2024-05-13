@@ -1,26 +1,51 @@
 <template>
-  <v-dialog v-model="showModel" max-width="350" persistent>
-    <v-card>
-      <v-sheet color="secondary">
-        <v-card-title>Enter your name:</v-card-title>
-      </v-sheet>
-      <v-form>
-        <v-responsive hide-details="auto" width="350">
-          <v-text-field
-            append-inner-icon="mdi-arrow-right-bold-circle"
-            label="Name"
-            v-model="nameModel"
-            @keydown.enter
-            @click:append-inner="$emit('entered')"
-            @keydown.enter.prevent></v-text-field>
-        </v-responsive>
-      </v-form>
+  <v-dialog v-model="showDialog" persistent max-width="400px">
+    <v-card class="elevation-12">
+      <v-card-title class="text-h3">🏰 Herald, State Thy Name!</v-card-title>
+      <v-card-text>
+        <v-text-field
+          v-model="userName"
+          label="Enter Your Heroic Name"
+          outlined
+          dense
+          solo
+          placeholder="e.g., Guest"
+        ></v-text-field>
+      </v-card-text>
+      <v-card-actions>
+        <v-spacer></v-spacer>
+        <v-btn color="deep-purple accent-4" dark @click="saveName">
+          <v-icon left>mdi-shield-check</v-icon>
+          Proclaim
+        </v-btn>
+      </v-card-actions>
     </v-card>
   </v-dialog>
 </template>
 
-<script setup lang="ts">
-const showModel = defineModel<boolean>('show');
-const nameModel = defineModel<string>('name');
-defineEmits(['entered']);
+<script>
+export default {
+  data() {
+    return {
+      showDialog: !localStorage.getItem('userName'),
+      userName: localStorage.getItem('userName') || 'Guest'
+    };
+  },
+  methods: {
+    saveName() {
+      if (this.userName.trim() === '') {
+        this.userName = 'Guest'; // Default name if empty
+      }
+      localStorage.setItem('userName', this.userName);
+      this.showDialog = false;
+    }
+  }
+};
 </script>
+
+<style scoped>
+.elevation-12 {
+  background-image: linear-gradient(to right, #5433ff, #20bdff, #a5fecb);
+  border-radius: 8px;
+}
+</style>
