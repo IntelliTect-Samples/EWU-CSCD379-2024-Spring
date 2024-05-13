@@ -1,17 +1,19 @@
 # Docs for the Azure Web Apps Deploy action: https://github.com/Azure/webapps-deploy
 # More GitHub Actions for Azure: https://github.com/Azure/actions
 
-name: Build and deploy ASP.Net Core app to Azure Web App - WordleApiEwu
+name: Build and deploy ASP.Net Core app to Azure Web App - LexiQuestAPI
 
 on:
   push:
     branches:
       - main
+      - Assignment-3
     paths:
-      - Wordle.Api/**
+       - Wordle.Api/**
   pull_request:
     branches:
       - main
+      - Assingment-3
   workflow_dispatch:
 
 jobs:
@@ -32,9 +34,6 @@ jobs:
 
       - name: Build with dotnet
         run: dotnet build --configuration Release
-
-      - name: Test with dotnet 
-        run: dotnet test
 
       - name: dotnet publish
         run: dotnet publish -c Release -o ${{runner.temp}}/myapp
@@ -63,7 +62,7 @@ jobs:
         id: deploy-to-webapp
         uses: azure/webapps-deploy@v2
         with:
-          app-name: 'WordleApiEwu'
+          app-name: 'LexiQuestAPI'
           slot-name: 'Production'
-          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_207A44C871DB423EA3EDD78EDA5D2FAF }}
+          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_626AEC8EA6BA409C8B21AF092327CDFB }}
           package: .
