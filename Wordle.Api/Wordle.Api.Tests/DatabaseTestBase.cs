@@ -1,45 +1,46 @@
-﻿using Microsoft.Data.Sqlite;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Logging;
-using Wordle.Api.Models;
+using Wordle.Api.Data;
+using Microsoft.Data.Sqlite;
+using Wordle.Api.Dtos;
 
 namespace Wordle.Api.Tests;
-public class DatabaseTestBase
+public abstract class DatabaseTestBase
 {
-    private SqliteConnection SqliteConnection { get; set; } = null!;
-    protected DbContextOptions<WordleDbContext> Options { get; private set; } = null!;
+	private SqliteConnection SqliteConnection { get; set; } = null!;
+	protected DbContextOptions<AppDbContext> Options { get; private set; } = null!;
 
-    private static ILoggerFactory GetLoggerFactory()
-    {
-        IServiceCollection serviceCollection = new ServiceCollection();
-        serviceCollection.AddLogging(builder =>
-        {
-            builder.AddConsole();
-        });
-        return serviceCollection.BuildServiceProvider().
-            GetService<ILoggerFactory>()!;
-    }
+	[TestInitialize]
+	public void InitializeDb()
+	{
+		SqliteConnection = new SqliteConnection("DataSource=:memory:");
+		SqliteConnection.Open();
 
-    [TestInitialize]
-    public void InitializeDb()
-    {
-        SqliteConnection = new SqliteConnection("DataSource=:memory:");
-        SqliteConnection.Open();
+		Options = new DbContextOptionsBuilder<AppDbContext>()
+			.UseSqlite(SqliteConnection)
+			.Options;
 
-        Options = new DbContextOptionsBuilder<WordleDbContext>()
-            .UseSqlite(SqliteConnection)
-            .UseLoggerFactory(GetLoggerFactory())
-            .EnableSensitiveDataLogging()
-            .Options;
+		using var context = new AppDbContext(Options);
+		context.Database.EnsureCreated();
+	}
 
-        using var context = new WordleDbContext(Options);
-        context.Database.EnsureCreated();
-    }
+	[TestCleanup]
+	public void CloseDbConnection()
+	{
+		SqliteConnection.Close();
+	}
 
-    [TestCleanup]
-    public void CloseDbConnection()
-    {
-        SqliteConnection.Close();
-    }
+	public static IEnumerable<PlayerDto> Requests { get; } =
+		new PlayerDto[] {
+			new PlayerDto { Name = "Jimbob I", AverageAttempts = 1, GameCount = 1 },
+			new PlayerDto { Name = "Jimbob II", AverageAttempts = 2, GameCount = 1 },
+			new PlayerDto { Name = "Jimbob III", AverageAttempts = 2, GameCount = 1 },
+			new PlayerDto { Name = "Jimbob Jr I", AverageAttempts = 1, GameCount = 1},
+			new PlayerDto { Name = "Jimbob Jr II", AverageAttempts = 2, GameCount = 1},
+			new PlayerDto { Name = "Jimbob Jr III", AverageAttempts = 1, GameCount = 1},
+			new PlayerDto { Name = "Jimbob Sr I", AverageAttempts = 2, GameCount = 1},
+			new PlayerDto { Name = "Jimbob Sr II", AverageAttempts = 1, GameCount = 1},
+			new PlayerDto { Name = "Jimbob Sr III", AverageAttempts = 2, GameCount = 1},
+			new PlayerDto { Name = "Jimbob Sr IIII", AverageAttempts = 1, GameCount = 1},
+			new PlayerDto { Name = "Jimbobby", AverageAttempts = 2, GameCount = 1}
+		};
 }

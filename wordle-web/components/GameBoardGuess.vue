@@ -1,14 +1,17 @@
 <template>
   <v-row dense class="justify-center">
-    <v-col :class="isShaking ? 'shaking' : ''" cols="auto" v-for="(letter, k) of guess.letters" :key="k">
+    <v-col
+      :class="isShaking ? 'shaking' : ''"
+      cols="auto"
+      v-for="(letter, k) of guess.letters"
+      :key="k">
       <LetterResult :letter="letter" />
     </v-col>
   </v-row>
 </template>
 
 <script setup lang="ts">
-import { Word } from "~/scripts/word";
-import { defineProps } from "vue";
+import { Word } from '~/scripts/word';
 
 const props = defineProps<{
   guess: Word;
@@ -16,15 +19,23 @@ const props = defineProps<{
 
 const isShaking = ref(false);
 
-watch(() => props.guess.isFilled,
-() => {
-  if(!props.guess.isFilled){
-    isShaking.value = true;
-    setTimeout(() => {
-      isShaking.value = false;
-    }, 300);
+watch(
+  () => props.guess.isFilled,
+  () => {
+    let count = 0;
+    for (let index = 0; index < props.guess.letters.length; index++) {
+      if (props.guess.letters[index].char !== '') {
+        count++;
+      }
+    }
+    if (count === 0) {
+      isShaking.value = true;
+      setTimeout(() => {
+        isShaking.value = false;
+      }, 300);
+    }
   }
-});
+);
 </script>
 
 <style scoped>

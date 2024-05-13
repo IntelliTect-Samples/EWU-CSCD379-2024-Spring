@@ -1,40 +1,126 @@
 // import this after install `@mdi/font` package
-import "@mdi/font/css/materialdesignicons.css";
+import '@mdi/font/css/materialdesignicons.css';
 
-import "vuetify/styles";
-import { createVuetify } from "vuetify";
+import 'vuetify/styles';
+import { createVuetify } from 'vuetify';
 
-export default defineNuxtPlugin((app) => {
+export default defineNuxtPlugin(app => {
   const vuetify = createVuetify({
     theme: {
-      defaultTheme: "dark",
+      defaultTheme: 'regularDark',
       themes: {
-        light: {
+        regularLight: {
+          dark: false,
           colors: {
-            primary: "#673AB7",
-            secondary: "#FF9800",
-            error: "#FF5252",
-            info: "#2196F3",
-            success: "#4CAF50",
-            warning: "#FFC107",
-            correct:"#4CAF50",
-            misplaced:"#FFC107",
-            wrong:"#afafaf",
-            unknown: "#d6d6d6"
+            primary: '#FFD54F',
+            secondary: '#9575CD',
+            error: '#FF5252',
+            info: '#2196F3',
+            success: '#4CAF50',
+            warning: '#FFC107',
+            correct: '#4CAF50',
+            correctGradient: '#81C784',
+            misplaced: '#FFC107',
+            misplacedGradient: '#FFE082',
+            wrong: '#BDBDBD',
+            wrongGradient: '#E0E0E0',
+            unknown: '#e5e5e5',
+            unknownGradient: '#f2f2f2',
           },
         },
-        dark: {
+        regularDark: {
+          dark: true,
           colors: {
-            primary: "#673AB7",
-            secondary: "#FF9800",
-            error: "#FF5252",
-            info: "#2196F3",
-            success: "#4CAF50",
-            warning: "#FFC107",
-            correct:"#4CAF50",
-            misplaced:"#FFC107",
-            wrong:"#616161",
-            unknown: "#424242"
+            primary: '#9575CD',
+            secondary: '#FFD54F',
+            error: '#FF5252',
+            info: '#2196F3',
+            success: '#4CAF50',
+            warning: '#FFC107',
+            correct: '#4CAF50',
+            correctGradient: '#81C784',
+            misplaced: '#FFC107',
+            misplacedGradient: '#FFE082',
+            wrong: '#616161',
+            wrongGradient: '#757575',
+            unknown: '#424242',
+            unknownGradient: '#4f4f4f',
+          },
+        },
+        jungleLight: {
+          dark: false,
+          colors: {
+            primary: '#B2FF59',
+            secondary: '#388E3C',
+            error: '#FF5252',
+            info: '#2196F3',
+            success: '#4CAF50',
+            warning: '#FFC107',
+            correct: '#4CAF50',
+            correctGradient: '#81C784',
+            misplaced: '#FFC107',
+            misplacedGradient: '#FFE082',
+            wrong: '#BDBDBD',
+            wrongGradient: '#E0E0E0',
+            unknown: '#e5e5e5',
+            unknownGradient: '#f2f2f2',
+          },
+        },
+        jungleDark: {
+          dark: true,
+          colors: {
+            primary: '#388E3C',
+            secondary: '#B2FF59',
+            error: '#FF5252',
+            info: '#2196F3',
+            success: '#4CAF50',
+            warning: '#FFC107',
+            correct: '#4CAF50',
+            correctGradient: '#81C784',
+            misplaced: '#FFC107',
+            misplacedGradient: '#FFE082',
+            wrong: '#616161',
+            wrongGradient: '#757575',
+            unknown: '#424242',
+            unknownGradient: '#4f4f4f',
+          },
+        },
+        flamingoLight: {
+          dark: false,
+          colors: {
+            primary: '#F48FB1',
+            secondary: '#EC407A',
+            error: '#FF5252',
+            info: '#2196F3',
+            success: '#4CAF50',
+            warning: '#FFC107',
+            correct: '#4CAF50',
+            correctGradient: '#81C784',
+            misplaced: '#FFC107',
+            misplacedGradient: '#FFE082',
+            wrong: '#BDBDBD',
+            wrongGradient: '#E0E0E0',
+            unknown: '#e5e5e5',
+            unknownGradient: '#f2f2f2',
+          },
+        },
+        flamingoDark: {
+          dark: true,
+          colors: {
+            primary: '#EC407A',
+            secondary: '#F48FB1',
+            error: '#FF5252',
+            info: '#2196F3',
+            success: '#4CAF50',
+            warning: '#FFC107',
+            correct: '#4CAF50',
+            correctGradient: '#81C784',
+            misplaced: '#FFC107',
+            misplacedGradient: '#FFE082',
+            wrong: '#616161',
+            wrongGradient: '#757575',
+            unknown: '#424242',
+            unknownGradient: '#4f4f4f',
           },
         },
       },

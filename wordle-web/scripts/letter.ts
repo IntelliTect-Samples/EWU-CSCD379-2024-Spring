@@ -17,13 +17,26 @@ export class Letter {
   public get color(): string {
     switch (this.state) {
       case LetterState.Correct:
-        return "correct";
+        return 'correct';
       case LetterState.Misplaced:
-        return "misplaced";
+        return 'misplaced';
       case LetterState.Wrong:
-        return "wrong";
+        return 'wrong';
       default:
-        return "unknown";
+        return 'unknown';
+    }
+  }
+
+  public get colorGradient(): string {
+    switch (this.state) {
+      case LetterState.Correct:
+        return 'correctGradient';
+      case LetterState.Misplaced:
+        return 'misplacedGradient';
+      case LetterState.Wrong:
+        return 'wrongGradient';
+      default:
+        return 'unknownGradient';
     }
   }
 }

@@ -1,17 +1,15 @@
 # Docs for the Azure Web Apps Deploy action: https://github.com/Azure/webapps-deploy
 # More GitHub Actions for Azure: https://github.com/Azure/actions
 
-name: Build and deploy ASP.Net Core app to Azure Web App - WordleApiEwu
+name: Build and deploy ASP.Net Core app to Azure Web App - wordlewebapijoshua
 
 on:
   push:
-    branches:
-      - main
     paths:
       - Wordle.Api/**
   pull_request:
     branches:
-      - main
+      - Assignment3
   workflow_dispatch:
 
 jobs:
@@ -33,7 +31,7 @@ jobs:
       - name: Build with dotnet
         run: dotnet build --configuration Release
 
-      - name: Test with dotnet 
+      - name: dotnet test
         run: dotnet test
 
       - name: dotnet publish
@@ -47,7 +45,7 @@ jobs:
 
   deploy:
     runs-on: windows-latest
-    if: (github.ref == 'refs/heads/main' || github.event_name == 'workflow_dispatch')
+    if: (github.ref == 'refs/heads/Assignment3' || github.event_name == 'workflow_dispatch')
     needs: build
     environment:
       name: 'Production'
@@ -63,7 +61,7 @@ jobs:
         id: deploy-to-webapp
         uses: azure/webapps-deploy@v2
         with:
-          app-name: 'WordleApiEwu'
+          app-name: 'wordlewebapijoshua'
           slot-name: 'Production'
-          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_207A44C871DB423EA3EDD78EDA5D2FAF }}
+          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_C15DE2B9B4DE4CA7A965FEECAE723DC3 }}
           package: .

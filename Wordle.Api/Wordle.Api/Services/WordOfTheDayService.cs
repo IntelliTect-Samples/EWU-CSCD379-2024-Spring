@@ -1,5 +1,6 @@
-﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 using Wordle.Api.Models;
+using Wordle.Api.Data;
 
 namespace Wordle.Api.Services;
 
@@ -8,9 +9,9 @@ public class WordOfTheDayService
     private readonly List<string> words = WordList();
     private static object _lock = new();
 
-    public WordleDbContext Db { get; set; }
+    public AppDbContext Db { get; set; }
 
-    public WordOfTheDayService(WordleDbContext db)
+    public WordOfTheDayService(AppDbContext db)
     {
         Db = db;
     }
