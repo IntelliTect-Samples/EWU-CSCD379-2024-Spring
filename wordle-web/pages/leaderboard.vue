@@ -60,7 +60,7 @@ Axios.get('/leaderboard/GetScores')
 }
 
 .v-card {
-  background-image: url('path_to_your_background_image');
+  background-image: url('/images/lexiquest_background.jpg');
   background-size: cover;
   background-repeat: no-repeat;
 }
