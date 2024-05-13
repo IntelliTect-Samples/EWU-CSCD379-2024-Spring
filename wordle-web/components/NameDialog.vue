@@ -1,46 +1,41 @@
 <template>
-  <v-dialog v-model="showDialog" persistent max-width="400px">
+  <v-dialog v-model="showDialog" max-width="350px" persistent>
     <v-card class="elevation-12">
-      <v-card-title class="text-h3">🏰 Herald, State Thy Name!</v-card-title>
-      <v-card-text>
-        <v-text-field
-          v-model="userName"
-          label="Enter Your Heroic Name"
-          outlined
-          dense
-          solo
-          placeholder="e.g., Guest"
-        ></v-text-field>
-      </v-card-text>
-      <v-card-actions>
-        <v-spacer></v-spacer>
-        <v-btn color="deep-purple accent-4" dark @click="saveName">
-          <v-icon left>mdi-shield-check</v-icon>
-          Proclaim
-        </v-btn>
-      </v-card-actions>
+      <v-sheet color="deep-purple accent-4" dark>
+        <v-card-title class="headline">state thy name:</v-card-title>
+      </v-sheet>
+      <v-form>
+        <v-container>
+          <v-text-field
+            v-model="userName"
+            label="Enter Your Heroic Name"
+            outlined
+            dense
+            append-icon="mdi-arrow-right-bold-circle"
+            @click:append="saveName"
+            @keydown.enter.prevent="saveName"
+          ></v-text-field>
+        </v-container>
+      </v-form>
     </v-card>
   </v-dialog>
 </template>
 
-<script>
-export default {
-  data() {
-    return {
-      showDialog: !localStorage.getItem('userName'),
-      userName: localStorage.getItem('userName') || 'Guest'
-    };
-  },
-  methods: {
-    saveName() {
-      if (this.userName.trim() === '') {
-        this.userName = 'Guest'; // Default name if empty
-      }
-      localStorage.setItem('userName', this.userName);
-      this.showDialog = false;
-    }
+<script setup>
+import { ref } from 'vue';
+
+const showDialog = ref(true);
+const userName = ref(localStorage.getItem('userName') || 'Adventurous Soul');
+
+function saveName() {
+  if (userName.value.trim() === '') {
+    userName.value = 'Adventurous Soul'; // Default name if empty
   }
-};
+  localStorage.setItem('userName', userName.value);
+  showDialog.value = false;
+  // Emit an event if you need to inform the parent component
+  emit('entered', userName.value);
+}
 </script>
 
 <style scoped>
