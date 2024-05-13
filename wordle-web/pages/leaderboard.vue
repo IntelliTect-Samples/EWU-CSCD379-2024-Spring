@@ -37,7 +37,8 @@ import Axios from 'axios';
 
 interface Player {
   name: string;
-  game more, averageAttempts: number;
+  gameCount: number;
+  averageAttempts: number;
 }
 
 const topTenScores = ref<Player[]>([]);
