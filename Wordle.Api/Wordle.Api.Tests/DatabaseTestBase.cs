@@ -1,25 +1,13 @@
-﻿using Microsoft.Data.Sqlite;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Logging;
-using Wordle.Api.Models;
+using LexiQuest.Api.Data;
+using Microsoft.Data.Sqlite;
+using LexiQuest.Api.Dtos;
 
-namespace Wordle.Api.Tests;
-public class DatabaseTestBase
+namespace LexiQuest.Api.Tests;
+public abstract class DatabaseTestBase
 {
     private SqliteConnection SqliteConnection { get; set; } = null!;
-    protected DbContextOptions<WordleDbContext> Options { get; private set; } = null!;
-
-    private static ILoggerFactory GetLoggerFactory()
-    {
-        IServiceCollection serviceCollection = new ServiceCollection();
-        serviceCollection.AddLogging(builder =>
-        {
-            builder.AddConsole();
-        });
-        return serviceCollection.BuildServiceProvider().
-            GetService<ILoggerFactory>()!;
-    }
+    protected DbContextOptions<AppDbContext> Options { get; private set; } = null!;
 
     [TestInitialize]
     public void InitializeDb()
@@ -27,13 +15,11 @@ public class DatabaseTestBase
         SqliteConnection = new SqliteConnection("DataSource=:memory:");
         SqliteConnection.Open();
 
-        Options = new DbContextOptionsBuilder<WordleDbContext>()
+        Options = new DbContextOptionsBuilder<AppDbContext>()
             .UseSqlite(SqliteConnection)
-            .UseLoggerFactory(GetLoggerFactory())
-            .EnableSensitiveDataLogging()
             .Options;
 
-        using var context = new WordleDbContext(Options);
+        using var context = new AppDbContext(Options);
         context.Database.EnsureCreated();
     }
 
@@ -42,4 +28,14 @@ public class DatabaseTestBase
     {
         SqliteConnection.Close();
     }
+
+    public static IEnumerable<PlayerDto> Requests { get; } =
+        new PlayerDto[] {
+            new PlayerDto { Name = "Artemis Lightfoot", AverageAttempts = 3, GameCount = 1 },
+            new PlayerDto { Name = "Cedric the Bold", AverageAttempts = 2, GameCount = 1 },
+            new PlayerDto { Name = "Eldrin Starfire", AverageAttempts = 4, GameCount = 1 },
+            new PlayerDto { Name = "Mirabel the Wise", AverageAttempts = 2, GameCount = 1 },
+            new PlayerDto { Name = "Thorn Underleaf", AverageAttempts = 1, GameCount = 1 },
+            new PlayerDto { Name = "Lilith Darkweaver", AverageAttempts = 2, GameCount = 1 },
+        };
 }
