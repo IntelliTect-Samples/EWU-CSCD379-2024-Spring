@@ -1,53 +1,46 @@
 <template>
   <v-dialog v-model="showDialog" max-width="350px" persistent>
-    <v-card>
-      <v-card-title class="text-h6">
-        <v-icon left>mdi-account-circle</v-icon>
-        Enter Thy Name, Brave Adventurer!
-      </v-card-title>
-      <v-card-text>
-        <v-text-field
-          label="Name"
-          outlined
-          v-model="name"
-          append-icon="mdi-check"
-          @click:append="submitName"
-          @keydown.enter="submitName"
-          single-line
-          dense>
-        </v-text-field>
-      </v-card-text>
-      <v-card-actions>
-        <v-btn color="success" text @click="submitName">Commit to Quest</v-btn>
-      </v-card-actions>
+    <v-card class="elevation-12">
+      <v-sheet color="deep-purple accent-4" dark>
+        <v-card-title class="headline">🏰 Herald, state thy name:</v-card-title>
+      </v-sheet>
+      <v-form>
+        <v-container>
+          <v-text-field
+            v-model="userName"
+            label="Enter Your Heroic Name"
+            outlined
+            dense
+            append-icon="mdi-arrow-right-bold-circle"
+            @click:append="saveName"
+            @keydown.enter.prevent="saveName"
+          ></v-text-field>
+        </v-container>
+      </v-form>
     </v-card>
   </v-dialog>
 </template>
 
 <script setup>
-import { ref, defineProps, defineEmits } from 'vue';
-import { useStorage } from '@vueuse/core';
+import { ref } from 'vue';
 
-const showDialog = ref(false);
-const name = useStorage('userName', 'Guest');
+const showDialog = ref(true);
+const userName = ref(localStorage.getItem('userName') || 'Adventurous Soul');
 
-const emit = defineEmits(['update:name']);
-
-function submitName() {
-  if (!name.value.trim()) {
-    name.value = 'Guest'; 
+function saveName() {
+  if (userName.value.trim() === '') {
+    userName.value = 'Adventurous Soul'; // Default name if empty
   }
-  emit('update:name', name.value); 
+  localStorage.setItem('userName', userName.value);
   showDialog.value = false;
+  // Emit an event if you need to inform the parent component
+  emit('entered', userName.value);
 }
 </script>
 
 <style scoped>
-.v-dialog .v-card {
-  background-color: #4527a0;
-  color: #ffe082;
-}
-.v-btn {
-  color: #ffe082;
+.elevation-12 {
+  background-image: linear-gradient(to right, #5433ff, #20bdff, #a5fecb);
+  border-radius: 8px;
 }
 </style>
