@@ -1,5 +1,6 @@
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Mvc;
+using Wordle.Api.Services;
+using Wordle.Api.Dtos;
 using Wordle.Api.Models;
 
 namespace Wordle.Api.Controllers;
@@ -8,47 +9,27 @@ namespace Wordle.Api.Controllers;
 [Route("[controller]")]
 public class LeaderboardController : ControllerBase
 {
-    private readonly WordleDbContext _context;
+	private readonly LeaderboardService _service;
+	public LeaderboardController(LeaderboardService service)
+	{
+		_service = service;
+	}
 
-    public LeaderboardController(WordleDbContext context)
-    {
-        _context = context;
-    }
+	[HttpGet("GetScores")]
+	public async Task<List<PlayerDto>> Get()
+	{
+		return await _service.GetTopScoresAsync();
+	}
 
-    [HttpGet("GetTopPlayers")]
-    public async Task<ActionResult<IEnumerable<Player>>> GetTopPlayers()
-    {
-        var topPlayers = await _context.Players
-            .OrderByDescending(p => p.AverageAttempts)
-            .Take(10)
-            .ToListAsync();
-        return Ok(topPlayers);
-    }
-
-    [HttpPost("PostPlayer")]
-    public async Task<ActionResult<Player>> PostPlayer([FromBody] Player player)
-    {
-        var existingPlayer = await _context.Players
-            .FirstOrDefaultAsync(p => p.Name == player.Name);
-
-        if (existing-Player != null)
-        {
-            existingPlayer.GameCount += player.GameCount;
-            existingPlayer.AverageAttempts = 
-                ((existingPlayer.AverageAttempts * (existingPlayer.GameCount - 1)) + player.AverageAttempts) / existingPlayer.GameCount;
-            if (player.AverageSecondsPerGame.HasValue)
-            {
-                existingPlayer.AverageSecondsPerGame =
-                    ((existingPlayer.AverageSecondsPerGame.GetValueOrDefault() * (existingPlayer.GameCount - 1)) + player.AverageSecondsPerGame.Value) / existingPlayer.GameCount;
-            }
-            _context.Players.Update(existingPlayer);
-        }
-        else
-        {
-            _context.Players.Add(player);
-        }
-
-        await _context.SaveChangesAsync();
-        return Ok(player);
-    }
+	[HttpPost("PostScore")]
+	public async Task<PlayerDto> Post(PlayerDto request)
+	{
+		Player player = await _service.PostScoreAsync(request);
+		return new PlayerDto
+		{
+			Name = player.Name,
+			GameCount = player.GameCount,
+			AverageAttempts = player.AverageAttempts
+		};
+	}
 }
