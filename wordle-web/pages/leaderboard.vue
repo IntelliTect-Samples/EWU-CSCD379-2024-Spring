@@ -41,7 +41,7 @@ interface Player {
   averageAttempts: number;
 }
 
-const topTenDate = ref<Player[]>();
+const topTenScores = ref<Player[]>();
 
 Axios.get('/leaderboard/GetScores')
   .then(response => {
