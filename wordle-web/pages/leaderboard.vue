@@ -41,16 +41,21 @@ interface Player {
   averageAttempts: number;
 }
 
-const topTenScores = ref<Player[]>();
-
-Axios.get('/leaderboard/GetScores')
-  .then(response => {
-    topTenScores.value = response.data;
-  })
-  .catch(error => {
-    console.error('Failed to load scores:', error);
-    topTenScores.value = [];
-  });
+cconst topTenScores = ref<Player[]>([]);
+if (process.server && process.static) {
+  topTenScores.value = [
+    // Provide mock data here
+  ];
+} else {
+  Axios.get('/leaderboard/GetScores')
+    .then(response => {
+      topTenScores.value = response.data;
+    })
+    .catch(error => {
+      console.error('Failed to load scores:', error);
+      topTenScores.value = [];
+    });
+}
 </script>
 
 <style scoped>
