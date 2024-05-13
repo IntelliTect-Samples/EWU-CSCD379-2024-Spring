@@ -41,22 +41,22 @@ interface Player {
   averageAttempts: number;
 }
 
-const topTenScores = ref<Player[]>([]);
-if (process.server && process.static) {
-  // Use mock data during prerendering if necessary
-  topTenScores.value = [
-    // Provide mock data here
-  ];
-} else {
-  Axios.get('/leaderboard/GetScores')
-    .then(response => {
-      topTenScores.value = response.data;
-    })
-    .catch(error => {
-      console.error('Failed to load scores:', error);
-      topTenScores.value = [];
-    });
-}
+// const topTenScores = ref<Player[]>([]);
+// if (process.server && process.static) {
+//   // Use mock data during prerendering if necessary
+//   topTenScores.value = [
+//     // Provide mock data here
+//   ];
+// } else {
+//   Axios.get('/leaderboard/GetScores')
+//     .then(response => {
+//       topTenScores.value = response.data;
+//     })
+//     .catch(error => {
+//       console.error('Failed to load scores:', error);
+//       topTenScores.value = [];
+//     });
+// }
 </script>
 
 <style scoped>
