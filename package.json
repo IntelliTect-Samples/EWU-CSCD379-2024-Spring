@@ -1,5 +1,7 @@
 {
   "dependencies": {
+    "axios": "^1.6.8",
+    "vue": "^3.4.27",
     "vuetify": "^3.6.0-beta.0.0"
   }
 }

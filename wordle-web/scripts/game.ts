@@ -1,6 +1,7 @@
-import { LetterState, type Letter } from "./letter";
+import { LetterState, Letter } from "./letter";
 import { Word } from "./word";
 import { WordList } from "./wordList";
+import axios from 'axios';
 
 export class Game {
   public maxAttempts: number;
@@ -67,26 +68,45 @@ export class Game {
     }
   }
 
-  public submitGuess() {
-    if (this.gameState !== GameState.Playing) return;
-    if (!this.guess.isFilled) return;
-    if (!this.guess.isValidWord()) {
-      this.guess.clear();
-      return;
+    public async submitGuess() {
+        if (this.gameState !== GameState.Playing) return;
+        if (!this.guess.isFilled) return;
+        if (!this.guess.isValidWord()) {
+            this.guess.clear();
+            return;
+        }
+
+        const isCorrect = this.guess.compare(this.secretWord);
+        this.updateGuessedLetters();
+
+        if (isCorrect) {
+            this.gameState = GameState.Won;
+            await this.submitScore();
+        } else {
+            if (this.guessIndex === this.maxAttempts - 1) {
+                this.gameState = GameState.Lost;
+                await this.submitScore();
+            } else {
+                this.guessIndex++;
+            }
+        }
     }
 
-    const isCorrect = this.guess.compare(this.secretWord);
-    this.updateGuessedLetters();
+  public async submitScore() {
+        if (this.gameState === GameState.Won || this.gameState === GameState.Lost) {
+            const payload = {
+                name: localStorage.getItem('userName') || 'Guest', // Ensure you handle the user name appropriately
+                gameCount: 1,
+                averageAttempts: this.guessIndex + 1 // +1 because index is zero-based
+            };
 
-    if (isCorrect) {
-      this.gameState = GameState.Won;
-    } else {
-      if (this.guessIndex === this.maxAttempts - 1) {
-        this.gameState = GameState.Lost;
-      } else {
-        this.guessIndex++;
-      }
-    }
+            try {
+                await axios.post('http://localhost:5000/leaderboard', payload);
+                console.log("Score submitted successfully.");
+            } catch (error) {
+                console.error("Error submitting score:", error);
+            }
+        }
   }
 }
 
