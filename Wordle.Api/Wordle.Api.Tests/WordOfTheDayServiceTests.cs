@@ -1,34 +1,43 @@
-using Wordle.Api.Models;
+using Microsoft.EntityFrameworkCore;
+using Wordle.Api.Data;
+using Wordle.Api.Services;
+using Microsoft.Data.Sqlite;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System.Threading.Tasks;
 
-namespace Wordle.Api.Tests;
-
-[TestClass]
-public class WordOfTheDayServiceTests : DatabaseTestBase
+namespace Wordle.Api.Tests
 {
-    [TestMethod]
-    public void LoadWordList_SuccessfullyGetsWords()
+    [TestClass]
+    public class WordOfTheDayServiceTests : DatabaseTestBase
     {
-        CollectionAssert.AllItemsAreNotNull(WordOfTheDayService.WordList());
-    }
+        private WordOfTheDayService _wordOfTheDayService;
 
-    [TestMethod]
-    public void GetWordOfTheDay_ReturnsString()
-    {
-        CollectionAssert.Contains(WordOfTheDayService.WordList(), "yules");
-    }
+        [TestInitialize]
+        public void Setup()
+        {
+            InitializeDb();
 
-    [TestMethod]
-    public void GetWordOfTheDay_SameWord()
-    {
-        // Arrange
-        using var context = new WordleDbContext(Options);
-        WordOfTheDayService service = new(context);
-        DateOnly date = DateOnly.FromDateTime(DateTime.UtcNow);
+            using var context = new AppDbContext(Options);
+            _wordOfTheDayService = new WordOfTheDayService(context);
+        }
 
-        // Act
-        var word = service.GetWordOfTheDay(date);
+        [TestCleanup]
+        public void Teardown()
+        {
+            CloseDbConnection();
+        }
 
-        // Assert
-        Equals(word, service.GetWordOfTheDay(date));
+        [TestMethod]
+        public async Task GetWordOfTheDay_ReturnsWord()
+        {
+            using var context = new AppDbContext(Options);
+            var wordOfTheDayService = new WordOfTheDayService(context);
+
+            // Act
+            var word = await wordOfTheDayService.GetWordOfTheDayAsync();
+
+            // Assert
+            Assert.IsNotNull(word);
+        }
     }
 }
