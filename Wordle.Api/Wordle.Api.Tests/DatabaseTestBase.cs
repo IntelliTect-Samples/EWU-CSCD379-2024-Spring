@@ -3,6 +3,7 @@ using Wordle.Api.Data;
 using Microsoft.Data.Sqlite;
 using Wordle.Api.Dtos;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System.Collections.Generic;
 
 namespace Wordle.Api.Tests
 {
