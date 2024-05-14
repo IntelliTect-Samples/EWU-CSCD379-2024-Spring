@@ -2,6 +2,7 @@ import axios from "~/plugins/axios";
 import { LetterState, type Letter } from "./letter";
 import { Word } from "./word";
 import Axios from "axios";
+import { GameStats } from "./gameStats";
 
 export class Game {
   public maxAttempts: number;
@@ -10,6 +11,7 @@ export class Game {
   public gameState: GameState = GameState.Playing;
   public guessedLetters: Letter[] = [];
   public isBusy: boolean = false;
+  public stats: GameStats | null = null;
 
   private _secretWord: string = "";
   private set secretWord(value: string) {
@@ -32,6 +34,7 @@ export class Game {
     // Reset default values
     this.guessIndex = 0;
     this.guessedLetters = [];
+    this.stats = null;
 
     // Get a word
     if (!word) {
@@ -49,6 +52,7 @@ export class Game {
     }
 
     // Start the game
+    this.gameState = GameState.Playing;
     this.isBusy = false;
   }
 
@@ -125,7 +129,9 @@ export class Game {
         isWin: this.gameState === GameState.Won,
         word: this.secretWord,
       })
-      console.log("Result posted to API: ", result);
+      this.stats = new GameStats();
+      Object.assign(this.stats, result.data);
+      console.log(this.stats);
       this.isBusy = false;
     }
   }

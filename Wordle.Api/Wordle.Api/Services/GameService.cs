@@ -54,4 +54,25 @@ public class GameService
 
         return stats;
     }
+
+    public IQueryable<AllWordStats> StatsForAllWords()
+    {
+        IQueryable<AllWordStats> result = Db.Games
+            .Include(g => g.Word)
+            .GroupBy(g => g.Word!.Text)
+            .Select(g => new AllWordStats()
+            {
+                Word = g.Key,
+                AverageGuesses = g.Average(x => x.Attempts)
+            });
+
+        return result;
+    }
+}
+
+public class AllWordStats()
+{
+    public required string Word { get; set; }
+
+    public double AverageGuesses { get; set; }
 }
