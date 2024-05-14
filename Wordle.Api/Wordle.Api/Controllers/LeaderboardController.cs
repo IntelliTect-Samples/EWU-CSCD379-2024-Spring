@@ -2,8 +2,7 @@ using Microsoft.AspNetCore.Mvc;
 using Wordle.Api.Services;
 using Wordle.Api.Dtos;
 using Wordle.Api.Models;
-using System.Threading.Tasks;
-using System.Collections.Generic;
+using Microsoft.Extensions.Logging;
 
 namespace Wordle.Api.Controllers;
 
@@ -12,10 +11,12 @@ namespace Wordle.Api.Controllers;
 public class LeaderboardController : ControllerBase
 {
     private readonly LeaderboardService _service;
+    private readonly ILogger<LeaderboardController> _logger;
 
-    public LeaderboardController(LeaderboardService service)
+    public LeaderboardController(LeaderboardService service, ILogger<LeaderboardController> logger)
     {
         _service = service;
+        _logger = logger;
     }
 
     [HttpGet("GetScores")]
@@ -28,7 +29,8 @@ public class LeaderboardController : ControllerBase
         }
         catch (Exception ex)
         {
-            return StatusCode(500, new { message = ex.Message });
+            _logger.LogError(ex, "An error occurred while getting scores");
+            return StatusCode(500, new { message = "An error occurred while getting scores. Please try again later." });
         }
     }
 
@@ -47,7 +49,8 @@ public class LeaderboardController : ControllerBase
         }
         catch (Exception ex)
         {
-            return StatusCode(500, new { message = ex.Message });
+            _logger.LogError(ex, "An error occurred while posting score");
+            return StatusCode(500, new { message = "An error occurred while posting score. Please try again later." });
         }
     }
 }
