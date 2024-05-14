@@ -48,8 +48,7 @@ Axios.get('https://lexiquestapi.azurewebsites.net/leaderboard/GetScores')
 
 <style scoped>
 .fantasy-card {
-  background: url('path/to/your/fantasy-background.jpg') no-repeat center center;
-  background-size: cover;
+  background-color: #5c3c92;
   border-radius: 15px;
   overflow: hidden;
 }
@@ -89,3 +88,4 @@ Axios.get('https://lexiquestapi.azurewebsites.net/leaderboard/GetScores')
   75% { background-color: rgba(49, 27, 146, 0.9); }
 }
 </style>
+
