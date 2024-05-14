@@ -1,5 +1,5 @@
 using Microsoft.EntityFrameworkCore;
-using Wordle.Api.Data;
+using Wordle.Api.Models;
 using Microsoft.Data.Sqlite;
 using Wordle.Api.Dtos;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -10,7 +10,7 @@ namespace Wordle.Api.Tests
     public abstract class DatabaseTestBase
     {
         private SqliteConnection SqliteConnection { get; set; } = null!;
-        protected DbContextOptions<AppDbContext> Options { get; private set; } = null!;
+        protected DbContextOptions<WordleDbContext> Options { get; private set; } = null!;
 
         [TestInitialize]
         public void InitializeDb()
@@ -18,11 +18,11 @@ namespace Wordle.Api.Tests
             SqliteConnection = new SqliteConnection("DataSource=:memory:");
             SqliteConnection.Open();
 
-            Options = new DbContextOptionsBuilder<AppDbContext>()
+            Options = new DbContextOptionsBuilder<WordleDbContext>()
                 .UseSqlite(SqliteConnection)
                 .Options;
 
-            using var context = new AppDbContext(Options);
+            using var context = new WordleDbContext(Options);
             context.Database.EnsureCreated();
         }
 
@@ -48,3 +48,4 @@ namespace Wordle.Api.Tests
             };
     }
 }
+
