@@ -22,7 +22,7 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection") ?? throw new InvalidOperationException("Unable to connect to 'DefaultConnection'");
-builder.Services.AddDbContext<AppDbContext>(options =>
+builder.Services.AddDbContext<WordleDbContext>(options =>
 {
     options.UseSqlServer(connectionString);
 });
@@ -33,7 +33,7 @@ var app = builder.Build();
 
 using (var scope = app.Services.CreateScope())
 {
-    var db = scope.ServiceProvider.GetRequiredService<AppDbContext>();
+    var db = scope.ServiceProvider.GetRequiredService<WordleDbContext>();
     db.Database.Migrate();
 }
 
