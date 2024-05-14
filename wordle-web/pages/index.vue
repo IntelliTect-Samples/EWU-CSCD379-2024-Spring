@@ -90,9 +90,9 @@ function postScore(playerNameIn: string, attemptsIn: number, timeIn: number){
   console.log("score data " + playerNameIn + " " + attemptsIn + " " + 0);
   let postScoreUrl ="Score/UpdateScore";
   Axios.post(postScoreUrl, {
-    PlayerName: playerNameIn,
-    Attempts: attemptsIn,
-    Time: timeIn
+    playerName: playerNameIn,
+    attempts: attemptsIn,
+    time: timeIn
   }).then((response) => {
     console.log("response from api " + response.data + " " + response.status);
   });
