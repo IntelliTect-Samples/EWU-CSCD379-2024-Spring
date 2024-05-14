@@ -185,16 +185,12 @@
 - Posting the results of a game
 - Returning a DTO with statistics for a word/WOTD
 - Axios using Post
-
 - Redirecting root on API to the Wordle site
 - Word of the day controller and tests
-
 - Miscellaneous
   - Custom favicon
   - New starting page and default route
-
 - Vue services (Provide and Inject)
-
 
 ### Lecture 14. 5/16:
 - Unique indexes
