@@ -140,7 +140,6 @@
 - Creating a context
 - Creating models
 - Migrations
-
 - Initial EF Context
 - Word object
 - Word migration
