@@ -1,36 +1,37 @@
 <template>
-  <UserNameDialog v-model ="showUserNameDialog" />
-    <v-card class="text-center">
-      <v-alert v-if="game.gameState != GameState.Playing" :color="game.gameState == GameState.Won ? 'success' : 'error'"
-        class="mb-5" tile >
-        <div></div>
-        <h3>
-          You've
-          {{ game.gameState == GameState.Won ? "Won" : "Lost" }}
-        </h3>
-        <v-card-text>
-          The word was: <strong>{{ game.secretWord }}</strong>
-        </v-card-text>
-        <v-btn variant="outlined" @click="game.startNewGame()">
-          <v-icon size="large" class="mr-2"> mdi-restart </v-icon> Restart Game
-        </v-btn>
-      </v-alert>
-      <v-card-title v-else>Wordle</v-card-title>
-      
-      <GameBoardGuess v-for="(guess, i) of game.guesses" :key="i" :guess="guess"/>
+  <UserNameDialog v-model="showUserNameDialog" />
+  <v-card class="text-center">
+    <v-alert v-if="game.gameState != GameState.Playing" :color="game.gameState == GameState.Won ? 'success' : 'error'"
+      class="mb-5" tile>
+      <div></div>
+      <h3>
+        You've
+        {{ game.gameState == GameState.Won ? "Won" : "Lost" }}
+      </h3>
+      <v-card-text>
+        The word was: <strong>{{ game.secretWord }}</strong>
+      </v-card-text>
+      <v-btn variant="outlined" @click="game.startNewGame()">
+        <v-icon size="large" class="mr-2"> mdi-restart </v-icon> Restart Game
+      </v-btn>
+    </v-alert>
+    <v-card-title>Wordle Of The Day</v-card-title>
+    <v-card-subtitle>select a day and play the wordle from that day!</v-card-subtitle>
 
-      <div class="my-10">
-        <Keyboard />
-      </div>
+    <GameBoardGuess v-for="(guess, i) of game.guesses" :key="i" :guess="guess" />
 
-      <div class="my-5">
-        <ValidWord />
-      </div>
+    <div class="my-10">
+      <Keyboard />
+    </div>
 
-      <v-btn @click="game.submitGuess()" class="mb-5" color="primary">Guess!</v-btn>
+    <div class="my-5">
+      <ValidWord />
+    </div>
 
-      <v-btn class ="mb-5 ml-5" color="primary" variant ="flat" @click = "router.push('/leaderboard')">Leaderboard</v-btn>
-    </v-card>
+    <v-btn @click="game.submitGuess()" class="mb-5" color="primary">Guess!</v-btn>
+
+    <v-btn class="mb-5 ml-5" color="primary" variant="flat" @click="router.push('/leaderboard')">Leaderboard</v-btn>
+  </v-card>
 
 </template>
 
@@ -77,18 +78,18 @@ function onKeyup(event: KeyboardEvent) {
   }
 
 }
-function calcAttempts(){
+function calcAttempts() {
   var attempts = 0;
-  if(game.value.gameState == GameState.Won){
+  if (game.value.gameState == GameState.Won) {
     attempts = game.value.guessIndex + 1;
-  }else{
+  } else {
     attempts = game.value.guesses.length + 5;
   }
   return attempts;
 }
-function postScore(playerNameIn: string, attemptsIn: number, timeIn: number){
+function postScore(playerNameIn: string, attemptsIn: number, timeIn: number) {
   console.log("score data " + playerNameIn + " " + attemptsIn + " " + 0);
-  let postScoreUrl ="Score/UpdateScore";
+  let postScoreUrl = "Score/UpdateScore";
   Axios.post(postScoreUrl, {
     PlayerName: playerNameIn,
     Attempts: attemptsIn,
@@ -98,23 +99,22 @@ function postScore(playerNameIn: string, attemptsIn: number, timeIn: number){
   });
 }
 watch(() => game.value.gameState, (value) => {
-  if(value == GameState.Won || value == GameState.Lost){
-    if(userName === "guest" || userName ===""){
+  if (value == GameState.Won || value == GameState.Lost) {
+    if (userName === "guest" || userName === "") {
       showUserNameDialog.value = true;
       watch(() => showUserNameDialog.value, (value) => {
-        if(value == false){
+        if (value == false) {
           postScore(userName.value as string, calcAttempts(), calcSecond());
         }
       });
-      
-    }else{
+
+    } else {
       postScore(userName.value as string, calcAttempts(), calcSecond());
     }
-    
+
     //I know userName is showing an error but the api only gets the data when its set up like that
   }
-  function calcSecond()
-  {
+  function calcSecond() {
     var endTime = new Date().getTime();
     var timeDiff = endTime - startTime;
     return timeDiff / 1000;

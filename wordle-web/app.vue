@@ -51,6 +51,7 @@
 import { useTheme } from "vuetify";
 import nuxtStorage from "nuxt-storage";
 import { defineProps } from "vue";
+import Wordlegame from "./pages/wordleOfTheDay.vue";
 const router = useRouter();
 const theme = useTheme();
 const showHelpDialog = ref(false);
@@ -74,6 +75,7 @@ const pages = [
   { name: "Home", path: "/" },
   { name: "About", path: "/about" },
   { name: "Leaderboard", path: "/leaderboard" },
+  { name: "wordle of the day", path:"/wordleOfTheDay"}
 ];
 onMounted(() => {
   var defaultTheme = nuxtStorage.localStorage.getData('theme');
