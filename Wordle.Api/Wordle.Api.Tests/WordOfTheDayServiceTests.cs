@@ -1,28 +1,34 @@
+using Wordle.Api.Models;
+
 namespace Wordle.Api.Tests;
 
 [TestClass]
-public class WordOfTheDayServiceTests
+public class WordOfTheDayServiceTests : DatabaseTestBase
 {
     [TestMethod]
     public void LoadWordList_SuccessfullyGetsWords()
     {
-        CollectionAssert.AllItemsAreNotNull(WordOfTheDayService.LoadWordList());
+        CollectionAssert.AllItemsAreNotNull(WordOfTheDayService.WordList());
     }
 
     [TestMethod]
     public void GetWordOfTheDay_ReturnsString()
     {
-        CollectionAssert.Contains(WordOfTheDayService.LoadWordList(), "yules");
+        CollectionAssert.Contains(WordOfTheDayService.WordList(), "yules");
     }
 
+    [TestMethod]
+    public void GetWordOfTheDay_SameWord()
+    {
+        // Arrange
+        using var context = new WordleDbContext(Options);
+        WordOfTheDayService service = new(context);
+        DateOnly date = DateOnly.FromDateTime(DateTime.UtcNow);
 
-    // TODO: Add a database to test with!
-    //[TestMethod]
-    //public void GetWordOfTheDay_SameWord()
-    //{
-    //    WordOfTheDayService service = new();
-    //    var word = service.GetRandomWord();
-    //    CollectionAssert.Equals(word, service.GetRandomWord());
-    //}
+        // Act
+        var word = service.GetWordOfTheDay(date);
 
+        // Assert
+        Equals(word, service.GetWordOfTheDay(date));
+    }
 }
