@@ -41,7 +41,9 @@ Axios.get('https://lexiquestapi.azurewebsites.net/leaderboard/GetScores')
   .then(response => {
     topTenScores.value = response.data;
   })
-  .catch(console.error);
+  .catch(error => {
+    console.error('Error fetching leaderboard:', error);
+  });
 </script>
 
 <style scoped>
