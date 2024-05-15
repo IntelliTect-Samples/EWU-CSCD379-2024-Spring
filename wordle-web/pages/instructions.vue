@@ -5,23 +5,37 @@
       class="mx-auto pa-8 rounded text-center"
       elevation="4"
     >
-      <v-card-title class="text-wrap">
+      <v-card-title class="text-wrap text-h5">
         How to play Aesthetic Wordle
       </v-card-title>
-      <v-card-text>
+      <v-card-text class="text-body-1">
         Wordle is a poetic journey through language, where each guess paints a
         delicate picture of meaning on the canvas of possibility, revealing the
         hidden hues of words until the final stroke unveils the masterpiece of
         understanding.
       </v-card-text>
-      <v-card-text class="ml-3">
-        <ul>
-          <li>Is in the correct position and is the right letter.</li>
-          <li>Is in the word but is in a misplaced position.</li>
-          <li>Is not in the word at all and is wrong.</li>
-        </ul>
+      <v-card-text class="ml-3 text-body-1">
+        <v-row>
+          <v-col>
+            <v-icon color="correct">mdi-checkbox-blank-circle</v-icon>
+            <span>Is in the correct position and is the right letter.</span>
+          </v-col>
+        </v-row>
+        <v-row>
+          <v-col>
+            <v-icon color="misplaced">mdi-checkbox-blank-circle</v-icon>
+            <span>Is in the word but is in a misplaced position.</span>
+          </v-col>
+        </v-row>
+
+        <v-row>
+          <v-col>
+            <v-icon color="wrong">mdi-checkbox-blank-circle</v-icon>
+            <span>Is not in the word at all and is wrong.</span>
+          </v-col>
+        </v-row>
       </v-card-text>
-      <v-card-text>
+      <v-card-text class="text-body-1">
         For example, if the word is "DAISY" and you guess "BASED", the feedback
         might look like this:
       </v-card-text>
@@ -30,7 +44,7 @@
       </v-card-item>
 
       <v-card-item>
-        <v-label>Color Codes</v-label>
+        <v-label class="text-body-1">Color Codes</v-label>
         <v-container class="d-flex flex-row ga-5 justify-center">
           <LetterResult
             v-for="letter in key.letters"
