@@ -1,8 +1,8 @@
-import axios from "~/plugins/axios";
-import { LetterState, type Letter } from "./letter";
-import { Word } from "./word";
-import Axios from "axios";
-import { GameStats } from "./gameStats";
+import axios from '~/plugins/axios';
+import { LetterState, type Letter } from './letter';
+import { Word } from './word';
+import Axios from 'axios';
+import { GameStats } from './gameStats';
 
 export class Game {
   public maxAttempts: number;
@@ -13,7 +13,7 @@ export class Game {
   public isBusy: boolean = false;
   public stats: GameStats | null = null;
 
-  private _secretWord: string = "";
+  private _secretWord: string = '';
   private set secretWord(value: string) {
     this._secretWord = value.toUpperCase();
   }
@@ -124,42 +124,29 @@ export class Game {
 
     if (this.gameState === GameState.Won || this.gameState === GameState.Lost) {
       this.isBusy = true;
-      var result = await Axios.post("game/result", {
+      var result = await Axios.post('game/result', {
         attempts: this.guessIndex + 1,
         isWin: this.gameState === GameState.Won,
         word: this.secretWord,
-      })
+      });
       this.stats = new GameStats();
       Object.assign(this.stats, result.data);
       console.log(this.stats);
       this.isBusy = false;
     }
   }
-  public validateWord(word: string): Array<string> {
-    const myList = new Array<string>();
-
-    if (word == '') {
-      return myList;
-    }
-    for (let i = 0; i < WordList.length; i++) {
-      if (WordList[i].startsWith(word.toUpperCase())) {
-        myList.push(WordList[i]);
-      }
-    }
-    return myList;
-  }
 
   public async getWordOfTheDayFromApi(): Promise<string> {
     try {
-      let wordUrl = "word/wordOfTheDay";
+      let wordUrl = 'word/wordOfTheDay';
 
       const response = await Axios.get(wordUrl);
 
-      console.log("Response from API: " + response.data);
+      console.log('Response from API: ' + response.data);
       return response.data;
     } catch (error) {
-      console.error("Error fetching word of the day:", error);
-      return "ERROR"; // Probably best to print the error on screen, but this is kind of funny. :)
+      console.error('Error fetching word of the day:', error);
+      return 'ERROR'; // Probably best to print the error on screen, but this is kind of funny. :)
     }
   }
 }

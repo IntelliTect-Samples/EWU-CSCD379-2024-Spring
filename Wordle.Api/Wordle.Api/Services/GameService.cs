@@ -1,13 +1,14 @@
 using Microsoft.EntityFrameworkCore;
+using Wordle.Api.Data;
 using Wordle.Api.Dtos;
 using Wordle.Api.Models;
 
 namespace Wordle.Api.Services;
 public class GameService
 {
-    public WordleDbContext Db { get; set; }
+    public AppDbContext Db { get; set; }
 
-    public GameService(WordleDbContext db)
+    public GameService(AppDbContext db)
     {
         Db = db;
     }

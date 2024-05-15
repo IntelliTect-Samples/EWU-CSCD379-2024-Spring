@@ -53,6 +53,7 @@ Axios.get('/leaderboard/GetScores')
   });
 //note to self need to implement animate.css for the leaderboard extra credit
 </script>
+
 <style>
 .table {
   background-color: unknownGradient;
