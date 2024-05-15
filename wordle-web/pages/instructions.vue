@@ -31,7 +31,7 @@
 
       <v-card-item>
         <v-label>Color Codes</v-label>
-        <v-container class="d-flex flex-row ga-5">
+        <v-container class="d-flex flex-row ga-5 justify-center">
           <LetterResult
             v-for="letter in key.letters"
             :key="letter.char"
