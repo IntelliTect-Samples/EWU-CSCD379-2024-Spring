@@ -16,30 +16,28 @@
           />
         </v-col>
         <v-col lg="4" v-if="$vuetify.display.mdAndUp" class="my-3">
-          <v-hover v-slot="{ isHovering, props }">
-            <v-row class="mb-1 justify-center" v-bind="props">
-              <v-tooltip :text="playerName" location="bottom">
-                <template v-slot:activator="{ props }">
-                  <v-sheet
-                    class="pa-2 cursor-pointer text-no-wrap"
-                    color="primary"
-                    rounded
-                    v-ripple
-                    width="200px"
-                    height="40px"
-                    elevation="4"
-                    v-bind="props"
-                    @click="showNameDialog = !showNameDialog"
-                    style="white-space: nowrap"
-                  >
-                    <v-icon icon="mdi-account" />
-                    <strong>Username:</strong>
-                    {{ truncate(playerName, 8, "...") }}
-                  </v-sheet>
-                </template>
-              </v-tooltip>
-            </v-row>
-          </v-hover>
+          <v-row class="mb-1 justify-center">
+            <v-tooltip :text="playerName" location="bottom">
+              <template v-slot:activator="{ props }">
+                <v-sheet
+                  class="pa-2 cursor-pointer text-no-wrap"
+                  color="primary"
+                  rounded
+                  v-ripple
+                  width="200px"
+                  height="40px"
+                  elevation="4"
+                  v-bind="props"
+                  @click="showNameDialog = !showNameDialog"
+                  style="white-space: nowrap"
+                >
+                  <v-icon icon="mdi-account" />
+                  <strong>Username:</strong>
+                  {{ truncate(playerName, 8, "...") }}
+                </v-sheet>
+              </template>
+            </v-tooltip>
+          </v-row>
 
           <v-row class="mb-1 justify-center">
             <v-sheet
