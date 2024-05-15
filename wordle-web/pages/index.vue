@@ -95,7 +95,7 @@
       <ValidWords
         v-model:show="showValidWordsDialog"
         v-model:validWordsCount="validWordsCount"
-        @chooseWord="selectWord(word)" />
+        @chooseWord="word => selectWord(word)" />
       <NameDialog
         v-model:show="showNameDialog"
         v-model:name="username"
@@ -113,7 +113,6 @@ import { WordList } from '~/scripts/wordList';
 import nuxtStorage from 'nuxt-storage';
 import Axios from 'axios';
 
-const props = defineProps<string>();
 const game = reactive(new Game());
 game.startNewGame();
 provide('GAME', game);
