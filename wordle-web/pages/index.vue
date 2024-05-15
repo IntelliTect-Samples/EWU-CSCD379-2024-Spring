@@ -30,7 +30,7 @@
       style="white-space: nowrap"
     >
       <v-icon icon="mdi-account" />
-      <strong>Username:</strong> {{ truncate(playerName, 10, '...') }}
+      <strong>Username:</strong> {{ truncate(playerName, 8, '...') }}
 
       <v-expand-transition>
         <div
