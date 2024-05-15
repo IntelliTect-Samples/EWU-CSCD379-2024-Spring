@@ -1,8 +1,8 @@
-import axios from 'axios';
-import { LetterState, type Letter } from './letter';
-import { Word } from './word';
-import { WordList } from './wordList';
-import Axios from 'axios';
+import axios from "~/plugins/axios";
+import { LetterState, type Letter } from "./letter";
+import { Word } from "./word";
+import Axios from "axios";
+import { GameStats } from "./gameStats";
 
 export class Game {
   public maxAttempts: number;
@@ -10,8 +10,10 @@ export class Game {
   public guessIndex: number = 0;
   public gameState: GameState = GameState.Playing;
   public guessedLetters: Letter[] = [];
+  public isBusy: boolean = false;
+  public stats: GameStats | null = null;
 
-  private _secretWord: string = '';
+  private _secretWord: string = "";
   private set secretWord(value: string) {
     this._secretWord = value.toUpperCase();
   }
@@ -21,16 +23,18 @@ export class Game {
 
   constructor(maxAttempts: number = 6) {
     this.maxAttempts = maxAttempts;
-    this.gameState = GameState.Initializing;
+    this.isBusy = true;
+    this.gameState = GameState.Playing;
   }
 
   public async startNewGame(word?: string | undefined) {
     // Load the game
-    this.gameState = GameState.Initializing;
+    this.isBusy = true;
 
     // Reset default values
     this.guessIndex = 0;
     this.guessedLetters = [];
+    this.stats = null;
 
     // Get a word
     if (!word) {
@@ -49,6 +53,7 @@ export class Game {
 
     // Start the game
     this.gameState = GameState.Playing;
+    this.isBusy = false;
   }
 
   public get guess() {
@@ -96,7 +101,7 @@ export class Game {
     }
   }
 
-  public submitGuess() {
+  public async submitGuess() {
     if (this.gameState !== GameState.Playing) return;
     if (!this.guess.isFilled) return;
     if (!this.guess.isValidWord()) {
@@ -116,6 +121,19 @@ export class Game {
         this.guessIndex++;
       }
     }
+
+    if (this.gameState === GameState.Won || this.gameState === GameState.Lost) {
+      this.isBusy = true;
+      var result = await Axios.post("game/result", {
+        attempts: this.guessIndex + 1,
+        isWin: this.gameState === GameState.Won,
+        word: this.secretWord,
+      })
+      this.stats = new GameStats();
+      Object.assign(this.stats, result.data);
+      console.log(this.stats);
+      this.isBusy = false;
+    }
   }
   public validateWord(word: string): Array<string> {
     const myList = new Array<string>();
@@ -133,15 +151,15 @@ export class Game {
 
   public async getWordOfTheDayFromApi(): Promise<string> {
     try {
-      const response = await axios.get('/word/wordOfTheDay');
-      this.secretWord = response.data;
+      let wordUrl = "word/wordOfTheDay";
 
-      console.log('Response from API: ' + response.data);
-      console.log('Secret Word: ' + this.secretWord);
+      const response = await Axios.get(wordUrl);
+
+      console.log("Response from API: " + response.data);
       return response.data;
     } catch (error) {
-      console.error('Error fetching word of the day:', error);
-      return 'ERROR'; // Probably best to print the error on screen, but this is kind of funny. :)
+      console.error("Error fetching word of the day:", error);
+      return "ERROR"; // Probably best to print the error on screen, but this is kind of funny. :)
     }
   }
 }
@@ -150,5 +168,4 @@ export enum GameState {
   Playing,
   Won,
   Lost,
-  Initializing,
 }

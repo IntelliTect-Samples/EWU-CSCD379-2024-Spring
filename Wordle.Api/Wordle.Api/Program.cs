@@ -29,6 +29,7 @@ builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseSqlServer(connectionString);
 });
 builder.Services.AddScoped<WordOfTheDayService>();
+builder.Services.AddScoped<GameService>();
 builder.Services.AddScoped<LeaderboardService>();
 
 var app = builder.Build();
