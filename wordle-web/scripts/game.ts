@@ -12,6 +12,7 @@ export class Game {
   public guessedLetters: Letter[] = [];
   public isBusy: boolean = false;
   public stats: GameStats | null = null;
+  public option: GameOption;
 
   private _secretWord: string = '';
   private set secretWord(value: string) {
@@ -21,7 +22,8 @@ export class Game {
     return this._secretWord;
   }
 
-  constructor(maxAttempts: number = 6) {
+  constructor(option: GameOption, maxAttempts: number = 6) {
+    this.option = option;
     this.maxAttempts = maxAttempts;
     this.isBusy = true;
     this.gameState = GameState.Playing;
@@ -38,7 +40,11 @@ export class Game {
 
     // Get a word
     if (!word) {
-      this.secretWord = await this.getWordOfTheDayFromApi();
+      if (this.option === GameOption.WordleOfTheDay) {
+        this.secretWord = await this.getWordOfTheDayFromApi();
+      } else if (this.option === GameOption.Random) {
+        this.secretWord = await this.getRandomWordFromApi();
+      }
     } else {
       this.secretWord = word;
     }
@@ -149,10 +155,29 @@ export class Game {
       return 'ERROR'; // Probably best to print the error on screen, but this is kind of funny. :)
     }
   }
+
+  public async getRandomWordFromApi(): Promise<string> {
+    try {
+      let wordUrl = 'word/randomWord';
+
+      const response = await Axios.get(wordUrl);
+
+      console.log('Response from API: ' + response.data);
+      return response.data;
+    } catch (error) {
+      console.error('Error fetching word of the day:', error);
+      return 'ERROR'; // Probably best to print the error on screen, but this is kind of funny. :)
+    }
+  }
 }
 
 export enum GameState {
   Playing,
   Won,
   Lost,
+}
+
+export enum GameOption {
+  WordleOfTheDay,
+  Random,
 }

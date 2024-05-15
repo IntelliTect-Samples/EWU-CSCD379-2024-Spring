@@ -24,4 +24,9 @@ public class GameController : ControllerBase
 
         return stats;
     }
+
+    [HttpGet("LastTenWords")]
+    public List<GameStatsDto> GetLastTenWords() {
+        return [];
+    }
 }

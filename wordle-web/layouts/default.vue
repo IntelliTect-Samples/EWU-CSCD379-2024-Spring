@@ -25,17 +25,25 @@
         </v-list-item>
         <v-divider />
         <v-list-item @click="router.push('/')">
-          <v-list-item-title> Whurdle </v-list-item-title>
+          <v-list-item-title> Whurd of The Day </v-list-item-title>
         </v-list-item>
         <v-divider />
         <v-list-item @click="router.push('/leaderboard')"
           >Leaderboard</v-list-item
         >
         <v-divider />
+        <v-list-item @click="router.push('/randomWordGame')"
+          >Random words!</v-list-item
+        >
+        <v-divider />
         <v-list-item @click="showSettingsDialog = true">
           <v-list-item-title>
             <v-icon>mdi-cog</v-icon>
           </v-list-item-title>
+        </v-list-item>
+        <v-divider />
+        <v-list-item @click="router.push('/wordStatistics')">
+          <v-list-item-title> Last Ten Words </v-list-item-title>
         </v-list-item>
       </v-list>
     </v-navigation-drawer>
