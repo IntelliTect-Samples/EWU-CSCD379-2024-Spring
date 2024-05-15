@@ -1,6 +1,7 @@
 <template>
   <v-container>
-    <v-card class="text-center">
+    <v-progress-linear v-if="game.isBusy" color="primary" indeterminate />
+    <v-card v-else class="text-center">
       <v-alert
         v-if="game.gameState != GameState.Playing"
         :color="game.gameState == GameState.Won ? 'success' : 'error'"
@@ -14,6 +15,34 @@
         <v-card-text>
           The word was: <strong>{{ game.secretWord }}</strong>
         </v-card-text>
+        <v-row v-if="game.stats" class="mb-1" justify="center">
+          <v-col cols="auto">
+            <v-progress-circular
+              size="75"
+              width="10"
+              v-model="game.stats.winPercentage"
+            >
+              {{ game.stats.winPercentage }} %
+            </v-progress-circular>
+            <br />
+            <i class="text-caption">
+              Success Rate
+            </i>
+          </v-col>
+          <v-col cols="auto">
+            <v-progress-circular
+              size="75"
+              width="10"
+              :model-value="game.stats.averageGuessesPercent(game.maxAttempts)"
+            >
+              {{ game.stats.averageGuessesPercent(game.maxAttempts).toFixed(0) }} %
+            </v-progress-circular>
+            <br />
+            <i class="text-caption">
+              Average Guesses
+            </i>
+          </v-col>
+        </v-row>
         <v-btn variant="outlined" @click="game.startNewGame()">
           <v-icon size="large" class="mr-2"> mdi-restart </v-icon> Restart Game
         </v-btn>
@@ -39,8 +68,9 @@
 
 <script setup lang="ts">
 import { Game, GameState } from "../scripts/game";
-const game: Game = reactive(new Game());
 
+const game = reactive(new Game());
+game.startNewGame();
 provide("GAME", game);
 
 const myGuess = ref("");

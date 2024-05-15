@@ -1,32 +1,47 @@
+import axios from "~/plugins/axios";
 import { LetterState, type Letter } from "./letter";
 import { Word } from "./word";
-import { WordList } from "./wordList";
-import Axios from 'axios';
+import Axios from "axios";
+import { GameStats } from "./gameStats";
 
 export class Game {
   public maxAttempts: number;
   public guesses: Word[] = [];
-  public secretWord: string = "";
   public guessIndex: number = 0;
   public gameState: GameState = GameState.Playing;
   public guessedLetters: Letter[] = [];
+  public isBusy: boolean = false;
+  public stats: GameStats | null = null;
+
+  private _secretWord: string = "";
+  private set secretWord(value: string) {
+    this._secretWord = value.toUpperCase();
+  }
+  public get secretWord(): string {
+    return this._secretWord;
+  }
 
   constructor(maxAttempts: number = 6) {
     this.maxAttempts = maxAttempts;
-    this.startNewGame();
+    this.isBusy = true;
+    this.gameState = GameState.Playing;
   }
 
-  public async startNewGame() {
+  public async startNewGame(word?: string | undefined) {
+    // Load the game
+    this.isBusy = true;
+
+    // Reset default values
     this.guessIndex = 0;
-    this.gameState = GameState.Playing;
     this.guessedLetters = [];
+    this.stats = null;
 
-    // Get random word from word list
-    await this.getWordFromApi();
-
-    this.secretWord =
-      WordList[Math.floor(Math.random() * WordList.length)].toUpperCase();
-    console.log(this.secretWord);
+    // Get a word
+    if (!word) {
+      this.secretWord = await this.getWordOfTheDayFromApi();
+    } else {
+      this.secretWord = word;
+    }
 
     // Populate guesses with the correct number of empty words
     this.guesses = [];
@@ -35,17 +50,22 @@ export class Game {
         new Word({ maxNumberOfLetters: this.secretWord.length })
       );
     }
-  }
 
-  private async getWordFromApi() {
-    let wordUrl = "https://wordleapiewu.azurewebsites.net/word";
-
-    const response = await Axios.get(wordUrl);
-    console.log(response.data);
+    // Start the game
+    this.gameState = GameState.Playing;
+    this.isBusy = false;
   }
 
   public get guess() {
     return this.guesses[this.guessIndex];
+  }
+
+  public setGuessLetters(word: string) {
+    // Loop through the word and add new letters
+    this.guess.clear();
+    for (let i = 0; i < word.length; i++) {
+      this.addLetter(word[i].toUpperCase());
+    }
   }
 
   public removeLastLetter() {
@@ -81,7 +101,7 @@ export class Game {
     }
   }
 
-  public submitGuess() {
+  public async submitGuess() {
     if (this.gameState !== GameState.Playing) return;
     if (!this.guess.isFilled) return;
     if (!this.guess.isValidWord()) {
@@ -100,6 +120,33 @@ export class Game {
       } else {
         this.guessIndex++;
       }
+    }
+
+    if (this.gameState === GameState.Won || this.gameState === GameState.Lost) {
+      this.isBusy = true;
+      var result = await Axios.post("game/result", {
+        attempts: this.guessIndex + 1,
+        isWin: this.gameState === GameState.Won,
+        word: this.secretWord,
+      })
+      this.stats = new GameStats();
+      Object.assign(this.stats, result.data);
+      console.log(this.stats);
+      this.isBusy = false;
+    }
+  }
+
+  public async getWordOfTheDayFromApi(): Promise<string> {
+    try {
+      let wordUrl = "word/wordOfTheDay";
+
+      const response = await Axios.get(wordUrl);
+
+      console.log("Response from API: " + response.data);
+      return response.data;
+    } catch (error) {
+      console.error("Error fetching word of the day:", error);
+      return "ERROR"; // Probably best to print the error on screen, but this is kind of funny. :)
     }
   }
 }
