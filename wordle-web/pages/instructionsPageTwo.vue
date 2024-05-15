@@ -9,7 +9,7 @@
         How to play Aesthetic Wordle (Cont)
       </v-card-title>
       <v-card-text class="text-body-1">
-        There is two variations of the game you can play -
+        There are two variations of the game you can play -
         <b>Daily Wordle</b> and <b>Random Wordle.</b> Simply choose your desired
         game mode. We have many features on the right during the game to help.
       </v-card-text>

@@ -2,12 +2,7 @@
   <v-app>
     <v-app-bar color="primary" :elevation="2">
       <v-app-bar-title @click="$router.push('/')" style="cursor: pointer">
-        <v-img
-          src="../public/logo.svg"
-          alt="Logo"
-          max-width="180"
-          max-height="95"
-        />
+        <v-img :src="logoPath" alt="Logo" max-width="180" max-height="95" />
       </v-app-bar-title>
 
       <v-app-bar-nav-icon
@@ -55,9 +50,28 @@
 import { useTheme } from "vuetify";
 import nuxtStorage from "nuxt-storage";
 
+const logoPaths = {
+  Standard: "/logo_Standard.svg",
+  SapphireDeepSeaDive: "/logo_SapphireDeepSeaDive.svg",
+  EmeraldIsle: "/logo_EmeraldIsle.svg",
+  AmethystTwilightMist: "/logo_AmethystTwilightMist.svg",
+  RubyRoyale: "/logo_RubyRoyale.svg",
+  OpalOpulence: "/logo_OpalOpulence.svg",
+};
+
 const theme = useTheme();
 const showSettingsDialog = ref(false);
 const drawer = ref(false);
+
+const logoPath = computed(() => {
+  const themeName = theme.global.name.value.replace("Dark", "");
+  return logoPaths[themeName] || logoPaths["Standard"];
+});
+
+watch(theme.global.name, (newVal) => {
+  //watcher is just here to react to changes. logo update is handled by the computed property.
+});
+
 onMounted(() => {
   var defaultTheme = nuxtStorage.localStorage.getData("theme");
   theme.global.name.value = defaultTheme ?? "light";
