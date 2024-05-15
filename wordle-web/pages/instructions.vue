@@ -12,26 +12,29 @@
         Wordle is a poetic journey through language, where each guess paints a
         delicate picture of meaning on the canvas of possibility, revealing the
         hidden hues of words until the final stroke unveils the masterpiece of
-        understanding.
+        understanding. Just start guessing and the magic begins!
+      </v-card-text>
+      <v-card-text class="text-h6 text-weight-bold">
+        The color codes mean:
       </v-card-text>
       <v-card-text class="ml-3 text-body-1">
         <v-row>
           <v-col>
             <v-icon color="correct">mdi-checkbox-blank-circle</v-icon>
-            <span>Is in the correct position and is the right letter.</span>
+            Is in the correct position and is the right letter.
           </v-col>
         </v-row>
         <v-row>
           <v-col>
             <v-icon color="misplaced">mdi-checkbox-blank-circle</v-icon>
-            <span>Is in the word but is in a misplaced position.</span>
+            Is in the word but is in a misplaced position.
           </v-col>
         </v-row>
 
         <v-row>
           <v-col>
             <v-icon color="wrong">mdi-checkbox-blank-circle</v-icon>
-            <span>Is not in the word at all and is wrong.</span>
+            Is not in the word at all and is wrong.
           </v-col>
         </v-row>
       </v-card-text>
@@ -44,7 +47,7 @@
       </v-card-item>
 
       <v-card-item>
-        <v-label class="text-body-1">Color Codes</v-label>
+        <v-label class="text-body-1"></v-label>
         <v-container class="d-flex flex-row ga-5 justify-center">
           <LetterResult
             v-for="letter in key.letters"
@@ -61,8 +64,9 @@
         <v-btn
           color="white"
           class="bg-primary pa-2 px-5"
-          to="/"
-          text="Go Home"
+          to="instructionsPageTwo"
+          text="Page 2"
+          append-icon="mdi-arrow-right"
         />
       </v-card-actions>
     </v-card>
@@ -90,3 +94,4 @@ const key = {
   ],
 };
 </script>
+
