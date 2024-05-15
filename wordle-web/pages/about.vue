@@ -7,7 +7,7 @@ import { useDisplay } from 'vuetify/lib/framework.mjs';
       elevation="4"
     >
       <v-img
-        src="../public/logo.svg"
+        :src="logoPath"
         alt="Logo"
         max-width="240"
         max-height="130"
@@ -43,3 +43,25 @@ import { useDisplay } from 'vuetify/lib/framework.mjs';
     </v-card>
   </v-container>
 </template>
+
+<script setup lang="ts">
+import { useTheme } from "vuetify";
+
+const logoPaths = {
+  Standard: "/logo_Standard.svg",
+  SapphireDeepSeaDive: "/logo_SapphireDeepSeaDive.svg",
+  EmeraldIsle: "/logo_EmeraldIsle.svg",
+  AmethystTwilightMist: "/logo_AmethystTwilightMist.svg",
+  RubyRoyale: "/logo_RubyRoyale.svg",
+  OpalOpulence: "/logo_OpalOpulence.svg",
+};
+
+const theme = useTheme();
+
+const logoPath = computed(() => {
+  const themeName = theme.global.name.value.replace("Dark", "");
+  return logoPaths[themeName] || logoPaths["Standard"];
+});
+
+watch(theme.global.name, (newVal) => {});
+</script>
