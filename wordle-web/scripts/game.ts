@@ -138,7 +138,7 @@ export class Game {
 
   public async getWordOfTheDayFromApi(): Promise<string> {
     try {
-      let wordUrl = "word/wordOfTheDay";
+      let wordUrl = "Word/WordOfTheDay";
 
       const response = await Axios.get(wordUrl);
 
