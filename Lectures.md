@@ -26,6 +26,7 @@
 
 ### Lecture 2: 4/4: Deployment (Assignment 1) 🟢
 - Complete application 
+- Classes in C#/Java and TS/JS
 - Basic unit testing with Jest
   - Add testing: `npm i --save-dev @nuxt/test-utils vitest @vue/test-utils happy-dom playwright-core`
 - Build deployment for front-end in Azure.
@@ -139,7 +140,6 @@
 - Creating a context
 - Creating models
 - Migrations
-
 - Initial EF Context
 - Word object
 - Word migration
@@ -148,6 +148,7 @@
 ### Lecture 10. 5/2: 🟢
 - Word Service
 - Word Controller that returns a word
+- Handling multi-threading issues with creating the word of the day.
 - Service Dependency Injection
 - Deployment (Site and Database)
 - API configuration: Swagger in production
@@ -172,25 +173,20 @@
 
 
 ### Lecture 12. 5/09: 
-- Axios using Post
 - EF Querying
   - Querying with Includes
 - EF unit testing
+- EF unit test base
 - Model builder cascade deletes
-- Returning a DTO with statistics for a word
-
-- Miscellaneous
-  - Custom favicon
-  - New starting page and default route
-
-- Vue services (Provide and Inject)
 
 ## Week 7
 ### Lecture 13. 5/14: 
-- Classes in C#/Java and TS/JS
+- Posting the results of a game
+- Returning a DTO with statistics for a word/WOTD
+- Axios using Post
 - Redirecting root on API to the Wordle site
 - Word of the day controller and tests
-- Handling multi-threading issues with creating the word of the day.
+- GroupBy: Returning stats for all words
 
 ### Lecture 14. 5/16:
 - Unique indexes
@@ -199,6 +195,10 @@
 - Get method query parameters on API endpoints
 - Load Word of the day in App
 - Integration testing
+- Miscellaneous
+  - Custom favicon
+  - New starting page and default route
+- Vue services (Provide and Inject)
 
 ## Week 8
 ### Lecture 15. 5/21: 
