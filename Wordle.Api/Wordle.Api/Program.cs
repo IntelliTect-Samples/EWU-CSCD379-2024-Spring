@@ -13,7 +13,7 @@ var connectionString = builder.Configuration.GetConnectionString("DefaultConnect
 builder.Services.AddDbContext<WordleDbContext>(options =>
     options.UseSqlServer(connectionString));
 //builder.Services.AddDatabaseDeveloperPageExceptionFilter();
-//test for workflow
+//test for workflow pt 2 can delete
 
 // Add services to the container.
 builder.Services.AddCors(options =>
