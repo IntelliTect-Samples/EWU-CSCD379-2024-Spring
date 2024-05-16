@@ -26,7 +26,7 @@ public class GameController : ControllerBase
     }
 
     [HttpGet("LastTenWords")]
-    public List<GameStatsDto> GetLastTenWords() {
-        return [];
+    public async Task<List<WordStatsDto>> GetLastTenWords() {
+        return await GameService.GetLastTenWordStatsDtos();
     }
 }
