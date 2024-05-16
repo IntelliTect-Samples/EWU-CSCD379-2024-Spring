@@ -1,28 +1,56 @@
-namespace Wordle.Api.Tests;
+using Microsoft.EntityFrameworkCore;
+using Wordle.Api.Models;
+using Wordle.Api.Services;
+using Microsoft.Data.Sqlite;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System.Threading.Tasks;
 
-[TestClass]
-public class WordOfTheDayServiceTests
+namespace Wordle.Api.Tests
 {
-    [TestMethod]
-    public void LoadWordList_SuccessfullyGetsWords()
+    [TestClass]
+    public class WordOfTheDayServiceTests : DatabaseTestBase
     {
-        CollectionAssert.AllItemsAreNotNull(WordOfTheDayService.LoadWordList());
+        private WordOfTheDayService _wordOfTheDayService;
+
+        [TestInitialize]
+        public void Setup()
+        {
+            InitializeDb();
+
+            using var context = new WordleDbContext(Options);
+            _wordOfTheDayService = new WordOfTheDayService(context);
+        }
+
+        [TestCleanup]
+        public void Teardown()
+        {
+            CloseDbConnection();
+        }
+
+        [TestMethod]
+        public async Task GetRandomWord_ReturnsWord()
+        {
+            using var context = new WordleDbContext(Options);
+            var wordOfTheDayService = new WordOfTheDayService(context);
+
+            // Act
+            var word = await wordOfTheDayService.GetRandomWord();
+
+            // Assert
+            Assert.IsNotNull(word);
+        }
+
+        [TestMethod]
+        public async Task GetWordOfTheDay_ReturnsWord()
+        {
+            using var context = new WordleDbContext(Options);
+            var wordOfTheDayService = new WordOfTheDayService(context);
+
+            // Act
+            var word = await wordOfTheDayService.GetWordOfTheDay(DateOnly.FromDateTime(DateTime.Now));
+
+            // Assert
+            Assert.IsNotNull(word);
+        }
     }
-
-    [TestMethod]
-    public void GetWordOfTheDay_ReturnsString()
-    {
-        CollectionAssert.Contains(WordOfTheDayService.LoadWordList(), "yules");
-    }
-
-
-    // TODO: Add a database to test with!
-    //[TestMethod]
-    //public void GetWordOfTheDay_SameWord()
-    //{
-    //    WordOfTheDayService service = new();
-    //    var word = service.GetRandomWord();
-    //    CollectionAssert.Equals(word, service.GetRandomWord());
-    //}
-
 }

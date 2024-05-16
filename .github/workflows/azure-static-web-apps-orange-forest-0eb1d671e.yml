@@ -5,6 +5,8 @@ on:
     branches:
       - main
       - Assignment-3
+    paths:
+      - "wordle-web/**"
   pull_request:
     types: [opened, synchronize, reopened, closed]
     branches:
