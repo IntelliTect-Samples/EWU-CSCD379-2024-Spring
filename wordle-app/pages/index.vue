@@ -80,12 +80,6 @@ var showWordsList = ref(false);
 
 onMounted(() => {
 
-  // Get random word from word list
-  getWordFromApi().then((word) => {
-    game.secretWord = word;
-    console.log("Secret word from API is: " + game.secretWord);
-  })
-
   window.addEventListener("keyup", onKeyup);
 
 

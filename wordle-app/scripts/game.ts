@@ -26,7 +26,7 @@ export class Game {
     this.gameState = GameState.Initializing;
   }
 
-  public async startNewGame() {
+  public async startNewGame(word?: string | undefined) {
     // Load the game
     this.gameState = GameState.Initializing;
 
@@ -35,7 +35,13 @@ export class Game {
     this.guessedLetters = [];
 
     // Get a random word
-    await this.getWordOfTheDayFromApi();
+    if(!word){
+      this.secretWord = await this.getWordOfTheDayFromApi();
+    }
+    else{
+      this.secretWord = word;
+    }
+    //await this.getWordOfTheDayFromApi();
 
     // Populate guesses with the correct number of empty words
     this.guesses = [];
@@ -51,6 +57,14 @@ export class Game {
 
   public get guess() {
     return this.guesses[this.guessIndex];
+  }
+
+  public setGuessLetters(word: string){
+    // Loop through the word and add new letters
+    this.guess.clear();
+    for (let i = 0; i < word.length; i++) {
+      this.addLetter(word[i].toUpperCase());
+    }
   }
 
   public removeLastLetter() {
@@ -109,17 +123,19 @@ export class Game {
     }
   }
 
-  public async getWordOfTheDayFromApi() {
+  public async getWordOfTheDayFromApi(): Promise<string>{
     try {
       let wordUrl = "https://wordleapiewusergeitim.azurewebsites.net/Word/WordOfTheDay";
       const response = await Axios.get(wordUrl);
       console.log("Response from API:" + response.data);
 
       this.secretWord = response.data;
+      return response.data;
 
     } catch (error) {
       console.error("Error fetching word of the day:", error);
       this.secretWord = "ERROR";
+      return "ERROR";
     }
   }
 }

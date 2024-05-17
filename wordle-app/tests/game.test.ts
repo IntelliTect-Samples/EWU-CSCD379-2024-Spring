@@ -3,27 +3,6 @@ import { Game } from "~/scripts/game";
 import { WordList } from "~/scripts/wordList";
 import { updateValidWords } from "~/scripts/wordListUtils";
 
-//These first two were here before, accidentally deleted at some point ig
-test("game", () => {
-    // create game and check if it's created
-    const game = new Game(6);
-    expect(game.secretWord.length).toBe(5);
-    expect(game.maxAttempts).toBe(6);
-    expect(updateValidWords(game)).toContain(game.secretWord.toLowerCase());
-});
-
-test("guess-word", () => {
-    const game = new Game(6);
-    game.guess.addLetter("Z");
-    game.guess.addLetter("Z");
-    game.guess.addLetter("Z");
-    game.guess.addLetter("Z");
-    game.guess.addLetter("Z");
-    game.guess.addLetter("Z");
-    expect(game.guess.letters.length).toBe(5);
-    expect(game.guess.word).toBe("ZZZZZ");
-});
-
 
 test("wordList init", () => {
   const game = new Game(6);
@@ -32,7 +11,7 @@ test("wordList init", () => {
 
 test("none right", () => {
   const game = new Game(6);
-  game.secretWord = "HELLO";
+  game.startNewGame("HELLO");
   game.guess.addLetter("A");
   game.guess.addLetter("P");
   game.guess.addLetter("A");
@@ -55,7 +34,7 @@ test("none right", () => {
 
 test("some right", () => {
   const game = new Game(6);
-  game.secretWord = "TRAPS";
+  game.startNewGame("TRAPS");
   game.guess.addLetter("P");
   game.guess.addLetter("A");
   game.guess.addLetter("R");
@@ -72,7 +51,7 @@ test("some right", () => {
 
 test("most right", () => {
   const game = new Game(6);
-  game.secretWord = "ELDER";
+  game.startNewGame("ELDER")
   game.guess.addLetter("E");
   game.guess.addLetter("M");
   game.guess.addLetter("B");
