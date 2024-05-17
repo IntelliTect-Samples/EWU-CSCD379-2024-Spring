@@ -6,7 +6,7 @@ name: Build and deploy ASP.Net Core app to Azure Web App - WordleApiEwuSergeiTim
 on:
   push:
     branches:
-      - Assignment3
+      - Assignment4
     paths:
       - Wordle.Api/**
   workflow_dispatch:
