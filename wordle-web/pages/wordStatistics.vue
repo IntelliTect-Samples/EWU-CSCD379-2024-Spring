@@ -12,10 +12,20 @@
       </tr>
     </thead>
     <tbody>
-      <tr v-for="(wordStatsDto, index) in lastTenWords" :key="index">
+      <tr
+        class="stat cursor-pointer"
+        v-for="(wordStatsDto, index) in lastTenWords"
+        :key="index"
+        @click="
+          $router.push(`/selectedWordGame?date=${wordStatsDto.date.toString()}`)
+        ">
         <td class="text-center">{{ wordStatsDto.date }}</td>
         <td class="text-center">{{ wordStatsDto.numberOfPlays }}</td>
-        <td class="text-center">{{ wordStatsDto.averageScore }}</td>
+        <td class="text-center">
+          {{
+            wordStatsDto.averageScore === -1 ? 'N/A' : wordStatsDto.averageScore
+          }}
+        </td>
       </tr>
     </tbody>
   </v-table>
@@ -23,7 +33,9 @@
 
 <script setup lang="ts">
 import Axios from 'axios';
+import { useTheme } from 'vuetify';
 
+const theme = useTheme();
 interface WordStatsDto {
   date: Date;
   numberOfPlays: number;
@@ -38,3 +50,9 @@ try {
   console.error('Error fetching word of the day:', error);
 }
 </script>
+
+<style scoped>
+tr.stat:hover {
+  background-color: v-bind('theme.global.current.value.colors.primary');
+}
+</style>

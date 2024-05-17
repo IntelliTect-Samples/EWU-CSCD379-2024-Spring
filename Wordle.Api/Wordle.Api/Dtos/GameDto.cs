@@ -6,6 +6,8 @@ namespace Wordle.Api.Dtos
     {
         public int Attempts { get; set; }
 
+        public int Seconds { get; set; }
+
         public bool IsWin { get; set; }
 
         public required string Word {  get; set; }

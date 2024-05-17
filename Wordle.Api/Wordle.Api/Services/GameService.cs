@@ -19,27 +19,15 @@ public class GameService
 		var wordOfTheDays = await Db.WordsOfTheDays.
 			OrderByDescending(wordOfTheDay => wordOfTheDay.Date).
 			Take(10).
+			Include(wordOfTheDay => wordOfTheDay.Games).
 			ToListAsync();
-		var wordOfTheDaysIds = wordOfTheDays.
-			Select(wordOfTheDay => wordOfTheDay.WordOfTheDayId).
-			ToList();
-		var games = Db.Games.
-			Where(game => game.WordOfTheDayId != null).
-			Where(game => wordOfTheDaysIds.Contains((int)game.WordOfTheDayId!)).
-			Include(game => game.WordOfTheDay).
-			ToList();
-		var playsDictionary = games.
-			GroupBy(game => game.WordOfTheDayId).
-			Select(group => new KeyValuePair<int, int>((int)group.Key!, group.Count())).
-			ToDictionary();
-
-		var result = games.
-			GroupBy(game => (int) game.WordOfTheDayId!).
-			Select(group => new WordStatsDto
+		var result = wordOfTheDays.
+			Select(wordOfTheDay => new WordStatsDto
 			{
-				Date = wordOfTheDays.First(wordOfTheDay => wordOfTheDay.WordOfTheDayId == group.Key).Date,
-				NumberOfPlays = playsDictionary.GetValueOrDefault(group.Key),
-				AverageScore = group.Average(group => group.Attempts),
+				Date = wordOfTheDay.Date,
+				NumberOfPlays = wordOfTheDay.Games.Count(),
+				AverageScore = wordOfTheDay.Games.Count() == 0 ? -1 : wordOfTheDay.Games.Average(game => game.Attempts),
+				AverageSeconds = wordOfTheDay.Games.Count() == 0 ? -1 : wordOfTheDay.Games.Average(game => game.SecondsToComplete),
 			}).ToList();
 		return result;
 	}
@@ -63,6 +51,7 @@ public class GameService
 		Game game = new()
 		{
 			Attempts = gameDto.Attempts,
+			SecondsToComplete = gameDto.Seconds,
 			IsWin = gameDto.IsWin,
 			// Attempt to find the WOTD that best matches todays date
 			WordOfTheDay = word.WordsOfTheDays

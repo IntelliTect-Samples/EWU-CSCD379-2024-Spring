@@ -92,6 +92,7 @@
         color="primary">
         Leaderboard
       </v-btn>
+      <v-chip class="mb-5" color="secondary">{{ seconds }}</v-chip>
       <ValidWords
         v-model:show="showValidWordsDialog"
         v-model:validWordsCount="validWordsCount"
@@ -114,16 +115,29 @@ import nuxtStorage from 'nuxt-storage';
 import Axios from 'axios';
 import { useDisplay } from 'vuetify/lib/framework.mjs';
 
-const props = defineProps<{ option: GameOption }>();
+const props = defineProps<{ option: GameOption; word?: string }>();
 const game = reactive(new Game(props.option));
-game.startNewGame();
+game.startNewGame(props.word);
 provide('GAME', game);
 const showValidWordsDialog = ref(false);
 const validWordsCount = ref(WordList.length);
 const username = ref(' ');
 const showNameDialog = ref(false);
 const showGuestSaveDialog = ref(false);
-const display = reactive(useDisplay());
+const seconds = ref(0);
+const interval = ref();
+
+function startSeconds() {
+  interval.value = setInterval(() => {
+    seconds.value++;
+  }, 1000);
+}
+
+function stopSeconds() {
+  if (interval.value) {
+    clearInterval(interval.value);
+  }
+}
 
 const myGuess = ref('');
 function playAudio(): any {
@@ -136,6 +150,7 @@ onMounted(() => {
   var defaultName = nuxtStorage.localStorage.getData('name');
   showNameDialog.value = defaultName ? false : true;
   username.value = showNameDialog.value ? 'Guest' : defaultName;
+  startSeconds();
 });
 
 onUnmounted(() => {
@@ -146,6 +161,8 @@ watch(
   () => game.gameState,
   () => {
     if (game.gameState == GameState.Won || game.gameState == GameState.Lost) {
+      stopSeconds();
+      game.seconds = seconds.value;
       if (username.value === 'Guest') {
         showGuestSaveDialog.value = true;
       } else {
@@ -205,6 +222,7 @@ function postScore() {
     Name: username.value,
     GameCount: 1,
     AverageAttempts: attempts,
+    AverageSeconds: seconds.value,
   });
 }
 </script>
