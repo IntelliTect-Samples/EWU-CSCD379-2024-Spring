@@ -27,6 +27,7 @@ public class GameService
 				Date = wordOfTheDay.Date,
 				NumberOfPlays = wordOfTheDay.Games.Count(),
 				AverageScore = wordOfTheDay.Games.Count() == 0 ? -1 : wordOfTheDay.Games.Average(game => game.Attempts),
+				AverageSeconds = wordOfTheDay.Games.Count() == 0 ? -1 : wordOfTheDay.Games.Average(game => game.SecondsToComplete),
 			}).ToList();
 		return result;
 	}
@@ -50,6 +51,7 @@ public class GameService
 		Game game = new()
 		{
 			Attempts = gameDto.Attempts,
+			SecondsToComplete = gameDto.Seconds,
 			IsWin = gameDto.IsWin,
 			// Attempt to find the WOTD that best matches todays date
 			WordOfTheDay = word.WordsOfTheDays

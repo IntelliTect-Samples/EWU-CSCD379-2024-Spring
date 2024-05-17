@@ -35,8 +35,11 @@ public class LeaderboardService
 			lock (_changingPlayerLock)
 			{
 				double attempts = foundPlayer.AverageAttempts * foundPlayer.GameCount + request.AverageAttempts;
+				double seconds = foundPlayer.AverageSeconds * foundPlayer.GameCount + request.AverageSeconds;
 				foundPlayer.GameCount += request.GameCount;
 				foundPlayer.AverageAttempts = attempts / foundPlayer.GameCount;
+				foundPlayer.AverageSeconds = seconds / foundPlayer.GameCount;
+
 				_context.SaveChanges();
 				return foundPlayer;
 			}
