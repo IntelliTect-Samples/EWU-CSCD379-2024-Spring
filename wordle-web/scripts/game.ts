@@ -13,6 +13,7 @@ export class Game {
   public isBusy: boolean = false;
   public stats: GameStats | null = null;
   public option: GameOption;
+  public seconds: number = 0;
 
   private _secretWord: string = '';
   private set secretWord(value: string) {
@@ -135,6 +136,7 @@ export class Game {
         attempts: this.guessIndex + 1,
         isWin: this.gameState === GameState.Won,
         word: this.secretWord,
+        seconds: this.seconds,
       });
       this.stats = new GameStats();
       Object.assign(this.stats, result.data);

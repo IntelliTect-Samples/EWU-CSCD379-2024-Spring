@@ -92,6 +92,7 @@
         color="primary">
         Leaderboard
       </v-btn>
+      <v-chip class="mb-5" color="secondary">{{ seconds }}</v-chip>
       <ValidWords
         v-model:show="showValidWordsDialog"
         v-model:validWordsCount="validWordsCount"
@@ -122,6 +123,20 @@ const validWordsCount = ref(WordList.length);
 const username = ref(' ');
 const showNameDialog = ref(false);
 const showGuestSaveDialog = ref(false);
+const seconds = ref(0);
+const interval = ref();
+
+function startSeconds() {
+  interval.value = setInterval(() => {
+    seconds.value++;
+  }, 1000);
+}
+
+function stopSeconds() {
+  if (interval.value) {
+    clearInterval(interval.value);
+  }
+}
 
 const myGuess = ref('');
 function playAudio(): any {
@@ -134,6 +149,7 @@ onMounted(() => {
   var defaultName = nuxtStorage.localStorage.getData('name');
   showNameDialog.value = defaultName ? false : true;
   username.value = showNameDialog.value ? 'Guest' : defaultName;
+  startSeconds();
 });
 
 onUnmounted(() => {
@@ -144,6 +160,8 @@ watch(
   () => game.gameState,
   () => {
     if (game.gameState == GameState.Won || game.gameState == GameState.Lost) {
+      stopSeconds();
+      game.seconds = seconds.value;
       if (username.value === 'Guest') {
         showGuestSaveDialog.value = true;
       } else {
@@ -203,6 +221,7 @@ function postScore() {
     Name: username.value,
     GameCount: 1,
     AverageAttempts: attempts,
+    AverageSeconds: seconds.value,
   });
 }
 </script>
