@@ -1,3 +1,7 @@
 <template>
-  <Game />
+  <Game :option="GameOption.WordleOfTheDay" />
 </template>
+
+<script setup lang="ts">
+import { GameOption } from '~/scripts/game';
+</script>

@@ -113,9 +113,9 @@ import { WordList } from '~/scripts/wordList';
 import nuxtStorage from 'nuxt-storage';
 import Axios from 'axios';
 
-const props = defineProps<{ option: GameOption }>();
+const props = defineProps<{ option: GameOption; word?: string }>();
 const game = reactive(new Game(props.option));
-game.startNewGame();
+game.startNewGame(props.word);
 provide('GAME', game);
 const showValidWordsDialog = ref(false);
 const validWordsCount = ref(WordList.length);

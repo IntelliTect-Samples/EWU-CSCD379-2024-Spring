@@ -46,6 +46,7 @@ export class Game {
         this.secretWord = await this.getRandomWordFromApi();
       }
     } else {
+      // this.option == GameOption.SelectedWord
       this.secretWord = word;
     }
 
@@ -180,4 +181,5 @@ export enum GameState {
 export enum GameOption {
   WordleOfTheDay,
   Random,
+  SelectedWord,
 }
