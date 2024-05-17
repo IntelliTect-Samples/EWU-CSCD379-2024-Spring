@@ -32,6 +32,11 @@
           >Leaderboard</v-list-item
         >
         <v-divider />
+        <v-divider />
+        <v-list-item @click="router.push('/instructions')"
+          >Instructions</v-list-item
+        >
+        <v-divider />
         <v-list-item @click="router.push('/randomWordGame')"
           >Random words!</v-list-item
         >

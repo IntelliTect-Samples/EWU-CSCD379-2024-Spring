@@ -1,16 +1,23 @@
 <template>
-  <v-card class="my-7 mx-auto w-75">
+  <v-card :width="cardWidth"
+          class="my-7 mx-auto cardWidth">
     <v-sheet color="secondary">
       <v-card-title>Leaderboard</v-card-title>
     </v-sheet>
     <v-table class="table mt-7 mx-auto w-75">
       <thead>
         <tr>
-          <th class="text-h6 text-center Name"><strong>Player Name</strong></th>
-          <th class="text-h6 text-center GameCount">
+          <th :height="cardHeight"
+              
+              class="textSize text-center Name"><strong>Player Name</strong></th>
+          <th :height="cardHeight" 
+              
+              class="textSize text-center GameCount">
             <strong>Game Count</strong>
           </th>
-          <th class="text-center text-h6 AverageAttempts">
+          <th :height="cardHeight" 
+              
+              class="textSize text-center AverageAttempts">
             <strong>Average Guesses</strong>
           </th>
         </tr>
@@ -34,6 +41,31 @@
 <script setup lang="ts">
 import { ref } from 'vue';
 import Axios from 'axios';
+import { useDisplay } from 'vuetify';
+const cardHeight = ref(100);
+let cardWidth = "h-75";
+let textSize = "text-h6";
+const display = useDisplay();
+
+watch([display.sm, display.xs, display.md, display.lgAndUp], () => {
+  if (display.xs.value) {
+    cardHeight.value = 30;
+    cardWidth = "h-25";
+    textSize = "text-body-2";
+  } else if (display.sm.value) {
+    cardHeight.value = 40;
+    cardWidth = "h-50";
+    textSize = "text-subtitle-2";
+  } else if (display.md.value) {
+    cardHeight.value = 100;
+    cardWidth = "h-75";
+    textSize = "text-h5";
+  }else{
+    cardHeight.value = 100;
+    cardWidth = "h-100";
+    textSize = "text-h3";
+  }
+});
 
 interface Player {
   name: string;
