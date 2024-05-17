@@ -112,6 +112,7 @@ import { Game, GameState, GameOption } from '../scripts/game';
 import { WordList } from '~/scripts/wordList';
 import nuxtStorage from 'nuxt-storage';
 import Axios from 'axios';
+import { useDisplay } from 'vuetify/lib/framework.mjs';
 
 const props = defineProps<{ option: GameOption }>();
 const game = reactive(new Game(props.option));
@@ -122,6 +123,7 @@ const validWordsCount = ref(WordList.length);
 const username = ref(' ');
 const showNameDialog = ref(false);
 const showGuestSaveDialog = ref(false);
+const display = reactive(useDisplay());
 
 const myGuess = ref('');
 function playAudio(): any {
