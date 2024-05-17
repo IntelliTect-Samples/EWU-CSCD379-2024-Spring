@@ -186,10 +186,7 @@
 - Axios using Post
 - Redirecting root on API to the Wordle site
 - Word of the day controller and tests
-- Miscellaneous
-  - Custom favicon
-  - New starting page and default route
-- Vue services (Provide and Inject)
+- GroupBy: Returning stats for all words
 
 ### Lecture 14. 5/16:
 - Unique indexes
@@ -198,6 +195,10 @@
 - Get method query parameters on API endpoints
 - Load Word of the day in App
 - Integration testing
+- Miscellaneous
+  - Custom favicon
+  - New starting page and default route
+- Vue services (Provide and Inject)
 
 ## Week 8
 ### Lecture 15. 5/21: 
