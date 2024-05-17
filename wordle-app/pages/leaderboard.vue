@@ -40,7 +40,7 @@ import Axios from "axios";
 const players = ref<Player[]>();
 
 onMounted(async () => {
-	await Axios.get("https://localhost:7108/Player/TopPlayers?numberOfPlayers=10")
+	await Axios.get("/Player/TopPlayers?numberOfPlayers=10")
   .then(response => {
     players.value = response.data;
   })
