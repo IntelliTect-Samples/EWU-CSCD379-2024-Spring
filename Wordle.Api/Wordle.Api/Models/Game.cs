@@ -6,6 +6,7 @@ public class Game
     public int GameId { get; set; }
 
     public int Attempts { get; set; }
+    public int Seconds {  get; set; }
 
     public bool IsWin {  get; set; }
 
