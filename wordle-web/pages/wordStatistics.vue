@@ -2,21 +2,39 @@
   <v-table class="table mt-7 mx-auto w-75">
     <thead>
       <tr>
-        <th class="text-h6 text-center Name"><strong>Player Name</strong></th>
-        <th class="text-h6 text-center GameCount">
-          <strong>Game Count</strong>
+        <th class="text-h6 text-center"><strong>Date</strong></th>
+        <th class="text-h6 text-center">
+          <strong># of plays</strong>
         </th>
-        <th class="text-center text-h6 AverageAttempts">
-          <strong>Average Guesses</strong>
+        <th class="text-center text-h6">
+          <strong>Average score</strong>
         </th>
       </tr>
     </thead>
     <tbody>
-      <tr v-for="index in 10" :key="index" @click="$router.push('/')">
-        <td class="text-center">1</td>
-        <td class="text-center">hi</td>
-        <td class="text-center">hi</td>
+      <tr v-for="(wordStatsDto, index) in lastTenWords" :key="index">
+        <td class="text-center">{{ wordStatsDto.date }}</td>
+        <td class="text-center">{{ wordStatsDto.numberOfPlays }}</td>
+        <td class="text-center">{{ wordStatsDto.averageScore }}</td>
       </tr>
     </tbody>
   </v-table>
 </template>
+
+<script setup lang="ts">
+import Axios from 'axios';
+
+interface WordStatsDto {
+  date: Date;
+  numberOfPlays: number;
+  averageScore: number;
+}
+const lastTenWords = ref<WordStatsDto[]>();
+try {
+  const gameUrl = 'game/lastTenWords';
+  const response = await Axios.get(gameUrl);
+  lastTenWords.value = response.data;
+} catch (error) {
+  console.error('Error fetching word of the day:', error);
+}
+</script>
