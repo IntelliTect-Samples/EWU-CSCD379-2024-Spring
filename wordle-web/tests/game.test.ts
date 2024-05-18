@@ -6,12 +6,14 @@ import { Game, GameOption } from '~/scripts/game';
 test('game', () => {
   // create game and check if it's created
   const game = new Game(GameOption.SelectedWord);
+  game.postScores = false;
   game.startNewGame('autos');
   expect(game.secretWord.length).toBe(5);
 });
 
 test('guess-word', () => {
   const game = new Game(GameOption.SelectedWord);
+  game.postScores = false;
   game.startNewGame('autos');
   game.setGuessLetters('tangs');
   game.submitGuess();
