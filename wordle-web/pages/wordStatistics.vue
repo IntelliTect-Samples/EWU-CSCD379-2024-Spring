@@ -9,6 +9,9 @@
         <th class="text-center text-h6">
           <strong>Average score</strong>
         </th>
+        <th class="text-center text-h6">
+          <strong>Average seconds taken</strong>
+        </th>
       </tr>
     </thead>
     <tbody>
@@ -26,6 +29,13 @@
             wordStatsDto.averageScore === -1 ? 'N/A' : wordStatsDto.averageScore
           }}
         </td>
+        <td class="text-center">
+          {{
+            wordStatsDto.averageSeconds === -1
+              ? 'N/A'
+              : wordStatsDto.averageSeconds + 's'
+          }}
+        </td>
       </tr>
     </tbody>
   </v-table>
@@ -40,6 +50,7 @@ interface WordStatsDto {
   date: Date;
   numberOfPlays: number;
   averageScore: number;
+  averageSeconds: number;
 }
 const lastTenWords = ref<WordStatsDto[]>();
 try {

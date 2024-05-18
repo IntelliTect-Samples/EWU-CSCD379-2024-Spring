@@ -181,6 +181,7 @@ function onKeyup(event: KeyboardEvent) {
   } else {
     if (event.key === 'Enter') {
       playAudio();
+      game.seconds = seconds.value;
       game.submitGuess();
     } else if (event.key == 'Backspace') {
       playAudio();
@@ -222,7 +223,7 @@ function postScore() {
     Name: username.value,
     GameCount: 1,
     AverageAttempts: attempts,
-    AverageSeconds: seconds.value,
+    AverageSeconds: game.seconds,
   });
 }
 </script>
