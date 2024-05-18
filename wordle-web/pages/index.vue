@@ -93,3 +93,56 @@ function onKeyup(event: KeyboardEvent) {
   }
 }
 </script>
+
+<style scoped>
+
+.desktop1080p-container{
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.tablet-ipadAir-container{
+  max-width: 768px;
+  margin: 0 auto;
+  padding: 15px;
+}
+
+.mobile-galaxyS20-container{
+  max-width: 400px;
+  margin: 0 auto;
+  padding: 10px;
+}
+
+.mobile-iPhoneSE-container{
+  max-width: 320px;
+  margin: 0 auto;
+  padding: 5px;
+}
+
+/* Responsive Styles */
+@media (min-width: 1024px) {
+  /* Styles for iPad Air and larger */
+  .tablet-ipadAir-container,
+  .desktop1080p-container {
+    font-size: 16px;
+  }
+}
+
+@media (max-width: 1023px) and (min-width: 576px) {
+  /* Styles for Samsung Galaxy S20 Ultra Super Mega Excellent */
+  .mobile-galaxyS20-container {
+    /* Add styles here */
+    font-size: 14px;
+  }
+}
+
+@media (max-width: 575px) {
+  /* Styles for iPhone SE */
+  .mobile-iPhoneSE-container {
+    /* Add styles here */
+    font-size: 12px;
+  }
+}
+
+</style>
