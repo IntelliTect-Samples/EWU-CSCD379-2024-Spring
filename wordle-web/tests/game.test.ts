@@ -1,17 +1,17 @@
 // @vitest-environment nuxt
 import { test, expect } from 'vitest';
 import { LetterState } from '~/scripts/letter';
-import { Game } from '~/scripts/game';
+import { Game, GameOption } from '~/scripts/game';
 
 test('game', () => {
   // create game and check if it's created
-  const game = new Game();
+  const game = new Game(GameOption.SelectedWord);
   game.startNewGame('autos');
   expect(game.secretWord.length).toBe(5);
 });
 
 test('guess-word', () => {
-  const game = new Game();
+  const game = new Game(GameOption.SelectedWord);
   game.startNewGame('autos');
   game.setGuessLetters('tangs');
   game.submitGuess();
