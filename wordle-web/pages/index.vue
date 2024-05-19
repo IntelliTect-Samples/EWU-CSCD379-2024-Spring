@@ -1,22 +1,53 @@
 <template>
-  <UserNameDialog v-model="showUserNameDialog" />
-  <v-card class="text-center">
-    <v-alert v-if="game.gameState != GameState.Playing" :color="game.gameState == GameState.Won ? 'success' : 'error'"
-      class="mb-5" tile>
-      <div></div>
-      <h3>
-        You've
-        {{ game.gameState == GameState.Won ? "Won" : "Lost" }}
-      </h3>
-      <v-card-text>
-        The word was: <strong>{{ game.secretWord }}</strong>
-      </v-card-text>
-      <v-btn variant="outlined" @click="game.startNewGame()">
-        <v-icon size="large" class="mr-2"> mdi-restart </v-icon> Restart Game
-      </v-btn>
-    </v-alert>
-    <v-card-title v-else>Wordle</v-card-title>
-    <v-card-subtitle>Play Todays Wordle!</v-card-subtitle>
+  <v-container>
+    <v-progress-linear v-if="game.isBusy" color="primary" indeterminate />
+    <v-card v-else class="text-center">
+      <v-alert
+        v-if="game.gameState != GameState.Playing"
+        :color="game.gameState == GameState.Won ? 'success' : 'error'"
+        class="mb-5"
+        tile
+      >
+        <h3>
+          You've
+          {{ game.gameState == GameState.Won ? "Won! 🥳" : "Lost... 😭" }}
+        </h3>
+        <v-card-text>
+          The word was: <strong>{{ game.secretWord }}</strong>
+        </v-card-text>
+        <v-row v-if="game.stats" class="mb-1" justify="center">
+          <v-col cols="auto">
+            <v-progress-circular
+              size="75"
+              width="10"
+              v-model="game.stats.winPercentage"
+            >
+              {{ game.stats.winPercentage }} %
+            </v-progress-circular>
+            <br />
+            <i class="text-caption">
+              Success Rate
+            </i>
+          </v-col>
+          <v-col cols="auto">
+            <v-progress-circular
+              size="75"
+              width="10"
+              :model-value="game.stats.averageGuessesPercent(game.maxAttempts)"
+            >
+              {{ game.stats.averageGuessesPercent(game.maxAttempts).toFixed(0) }} %
+            </v-progress-circular>
+            <br />
+            <i class="text-caption">
+              Average Guesses
+            </i>
+          </v-col>
+        </v-row>
+        <v-btn variant="outlined" @click="game.startNewGame()">
+          <v-icon size="large" class="mr-2"> mdi-restart </v-icon> Restart Game
+        </v-btn>
+      </v-alert>
+      <v-card-title v-else>Wordle</v-card-title>
 
     <GameBoardGuess v-for="(guess, i) of game.guesses" :key="i" :guess="guess" />
 
@@ -71,11 +102,11 @@ async function getWordFromApi(): Promise<string> {
 
 function onKeyup(event: KeyboardEvent) {
   if (event.key === "Enter") {
-    game.value?.submitGuess();
+    game.submitGuess();
   } else if (event.key == "Backspace") {
-    game.value?.removeLastLetter();
+    game.removeLastLetter();
   } else if (event.key.match(/[A-z]/) && event.key.length === 1) {
-    game.value?.addLetter(event.key.toUpperCase());
+    game.addLetter(event.key.toUpperCase());
   }
 
 }
