@@ -10,7 +10,7 @@
     </v-card>
   </v-container>
   <div class="image-container">
-    <v-img :height="imageHeight" :width="imageWidth" cover src="../public/landingPageImage.jpg">
+    <v-img :height="imgHeight" :width="imgWidth" cover src="../public/landingPageImage.jpg">
       <v-divider>
       </v-divider>
       <v-card-actions>
@@ -29,12 +29,24 @@
 import { useDisplay }  from "vuetify";
 const display = useDisplay();
 const imgHeight = ref(630);
-const imgWidth = ref(1200);
+const imgWidth = computed(() => calculateWidth());
+
+const calculateWidth = () => {
+  if(display.xs){
+    return '100%';
+  }
+  else if(display.sm){
+    return '90%';
+  }
+  else {
+    return '75%';
+  }
+};
 
 </script>
 
 <style>
 .image-container{
-  width: 1800px;
+  width: 100%;
 }
 </style>

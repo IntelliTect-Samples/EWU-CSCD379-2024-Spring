@@ -1,5 +1,5 @@
 <template>
-  <v-container>
+  <v-container class="game-container" fluid>
     <v-progress-linear v-if="game.isBusy" color="primary" indeterminate />
     <v-card v-else class="text-center">
       <v-alert
@@ -96,6 +96,33 @@ function onKeyup(event: KeyboardEvent) {
 
 <style scoped>
 
+.game-container {
+  background-image: url("../public/landingPageImage.jpg");
+  background-size: cover;
+  background-position: center;
+  min-height: 100vh;
+}
+
+@media screen and (max-width: 600px){
+  .game-container {
+    background-size: contain;
+  }
+}
+
+@media screen and (max-width: 1440px){
+  .game-container {
+    background-size: cover;
+  }
+}
+
+
+
+
+
+
+
+/*
+
 .desktop1080p-container{
   max-width: 1200px;
   margin: 0 auto;
@@ -120,9 +147,9 @@ function onKeyup(event: KeyboardEvent) {
   padding: 5px;
 }
 
-/* Responsive Styles */
+// Responsive Styles 
 @media (min-width: 1024px) {
-  /* Styles for iPad Air and larger */
+  // Styles for iPad Air and larger 
   .tablet-ipadAir-container,
   .desktop1080p-container {
     font-size: 16px;
@@ -130,19 +157,19 @@ function onKeyup(event: KeyboardEvent) {
 }
 
 @media (max-width: 1023px) and (min-width: 576px) {
-  /* Styles for Samsung Galaxy S20 Ultra Super Mega Excellent */
+  // Styles for Samsung Galaxy S20 Ultra Super Mega Excellent 
   .mobile-galaxyS20-container {
-    /* Add styles here */
+    // Add styles here 
     font-size: 14px;
   }
 }
 
 @media (max-width: 575px) {
-  /* Styles for iPhone SE */
+  // Styles for iPhone SE 
   .mobile-iPhoneSE-container {
-    /* Add styles here */
+    // Add styles here 
     font-size: 12px;
   }
 }
-
+*/
 </style>
