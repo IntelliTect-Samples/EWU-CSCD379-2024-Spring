@@ -15,30 +15,37 @@ namespace Wordle.Api.Services
             Db = db;
         }
 
-        public string GetRandomWord()
+        public async Task<Word> GetRandomWord()
         {
+            var numberOfWords = await Db.Words.CountAsync();
+
             Random random = new();
-            int index = random.Next(words.Count);
-            return words[index];
+            int randomIndex = random.Next(numberOfWords);
+
+            return await Db.Words.Skip(randomIndex).FirstAsync();
         }
 
         public async Task<string> GetWordOfTheDay(DateOnly date)
         {
-            WordOfTheDay? wordOfTheDay = await Db.WordsOfTheDays.FirstOrDefaultAsync(words => words.Date == date);
+            WordOfTheDay? wordOfTheDay = await Db.WordsOfTheDays
+                .Include(wordOfTheDay => wordOfTheDay.Word)
+                .FirstOrDefaultAsync(wordOfTheDay => wordOfTheDay.Date == date);
 
             if (wordOfTheDay is null)
             {
                 lock (_lock)
                 {
-                    wordOfTheDay = Db.WordsOfTheDays.FirstOrDefault(words => words.Date == date);
+                    wordOfTheDay = Db.WordsOfTheDays
+                        .Include(wordOfTheDay => wordOfTheDay.Word)
+                        .FirstOrDefault(wordOfTheDay => wordOfTheDay.Date == date);
                     if (wordOfTheDay is null)
                     {
+                        var randomWordTask = GetRandomWord();
+                        randomWordTask.Wait();
+                        var randomWord = randomWordTask.Result;
                         wordOfTheDay = new()
                         {
-                            Word = new Word()
-                            {
-                                Text = GetRandomWord()
-                            },
+                            Word = randomWord,
                             Date = date,
                         };
 

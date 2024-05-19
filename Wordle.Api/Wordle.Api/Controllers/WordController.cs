@@ -8,9 +8,10 @@ namespace Wordle.Api.Controllers
     public class WordController(WordOfTheDayService wordOfTheDayService) : ControllerBase
     {
         [HttpGet("RandomWord")]
-        public string GetRandomWord()
+        public async Task<string> GetRandomWord()
         {
-            return wordOfTheDayService.GetRandomWord();
+            var randomWord = await wordOfTheDayService.GetRandomWord();
+            return randomWord.Text;
         }
 
         /// <summary>
