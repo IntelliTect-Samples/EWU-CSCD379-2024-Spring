@@ -33,14 +33,20 @@
           <v-list-item link @click="router.push('/instructionsPage')">
             <v-list-item-title>Instructions</v-list-item-title>
           </v-list-item>
-          <v-list-item>
+          <!--<v-list-item>
             <v-btn @click="showHelpDialog = true">Help</v-btn>
             <HelpDialog v-model="showHelpDialog"/>
           </v-list-item>
           <v-list-item>
             <v-btn icon="mdi-theme-light-dark" @click="toggleTheme" />
-          </v-list-item>
+</v-list-item> -->
+          <v-spacer></v-spacer>
         </v-list>
+        <v-card-actions class="mt-auto">
+          <v-btn @click="showHelpDialog = true">Help</v-btn>
+          <HelpDialog v-model="showHelpDialog"/>
+          <v-btn icon="mdi-theme-light-dark" @click="toggleTheme" />
+        </v-card-actions>
       </v-navigation-drawer>
 
       <v-main>
