@@ -28,6 +28,9 @@
         <v-list>
           <v-list-item @click="router.push('/Leaderboard')" class="text-center">Leaderboard</v-list-item>
         </v-list>
+        <v-list>
+          <v-list-item @click="router.push('/WordHistory')" class="text-center">Word History</v-list-item>
+        </v-list>
       </v-navigation-drawer>
       <v-main>
         <NuxtPage />

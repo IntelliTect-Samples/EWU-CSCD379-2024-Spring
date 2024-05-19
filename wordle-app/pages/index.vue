@@ -162,6 +162,31 @@ function postScore() {
       console.log("Error" + err);
     })
 }
+
+function updateWordDate() {
+    console.log("UpdateWordDateEntered")
+    var attempts = 0;
+    if(game.gameState == GameState.Won){
+      attempts = game.guessIndex + 1;
+    }else{
+      attempts = game.guesses.length + 5;
+    }
+    var nameList = new Array(nameUserNameDialog.value);
+    var curDate = Date.now().toString();
+    Axios.post("WordDate/AddWordDate", {
+      Date: curDate,
+      GameCount: 1,
+      AverageAttempts: attempts,
+      AverageSecondsPerGame: seconds.value,
+      PlayerList: nameList
+    })
+    .then(res => {
+      console.log(res.data);
+    })
+    .catch(err => {
+      console.log("Error" + err);
+    })
+}
 watch(() => game.gameState, (value) => {
   if(value == GameState.Won || value == GameState.Lost){
     if(nameUserNameDialog.value == "Guest"){
@@ -169,6 +194,7 @@ watch(() => game.gameState, (value) => {
     }
     
     postScore();
+    updateWordDate();
     stopStopwatch();
   }
 
