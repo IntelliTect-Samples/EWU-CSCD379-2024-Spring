@@ -10,7 +10,7 @@
       >
         <h3>
           You've
-          {{ game.gameState == GameState.Won ? "Won! 🥳" : "Lost... 😭" }}
+          {{ game.gameState == GameState.Won ? "Won!" : "Lost :()" }}
         </h3>
         <v-card-text>
           The word was: <strong>{{ game.secretWord }}</strong>
@@ -25,9 +25,7 @@
               {{ game.stats.winPercentage }} %
             </v-progress-circular>
             <br />
-            <i class="text-caption">
-              Success Rate
-            </i>
+            <i class="text-caption"> Success Rate </i>
           </v-col>
           <v-col cols="auto">
             <v-progress-circular
@@ -35,12 +33,13 @@
               width="10"
               :model-value="game.stats.averageGuessesPercent(game.maxAttempts)"
             >
-              {{ game.stats.averageGuessesPercent(game.maxAttempts).toFixed(0) }} %
+              {{
+                game.stats.averageGuessesPercent(game.maxAttempts).toFixed(0)
+              }}
+              %
             </v-progress-circular>
             <br />
-            <i class="text-caption">
-              Average Guesses
-            </i>
+            <i class="text-caption"> Average Guesses </i>
           </v-col>
         </v-row>
         <v-btn variant="outlined" @click="game.startNewGame()">
@@ -49,26 +48,38 @@
       </v-alert>
       <v-card-title v-else>Wordle</v-card-title>
 
-    <GameBoardGuess v-for="(guess, i) of game.guesses" :key="i" :guess="guess" />
+      <GameBoardGuess
+        v-for="(guess, i) of game.guesses"
+        :key="i"
+        :guess="guess"
+      />
 
-    <div class="my-10">
-      <Keyboard />
-    </div>
+      <div class="my-10">
+        <Keyboard />
+      </div>
 
-    <div class="my-5">
-      <ValidWord />
-    </div>
+      <div class="my-5">
+        <ValidWord />
+      </div>
 
-    <v-btn @click="game.submitGuess()" class="mb-5" color="primary">Guess!</v-btn>
+      <v-btn @click="game.submitGuess()" class="mb-5" color="primary"
+        >Guess!</v-btn
+      >
 
-    <v-btn class="mb-5 ml-5" color="primary" variant="flat" @click="router.push('/leaderboard')">Leaderboard</v-btn>
-  </v-card>
-
+      <v-btn
+        class="mb-5 ml-5"
+        color="primary"
+        variant="flat"
+        @click="router.push('/leaderboard')"
+        >Leaderboard</v-btn
+      >
+    </v-card>
+  </v-container>
 </template>
 
 <script setup lang="ts">
 import { Game, GameState } from "../scripts/game";
-import Axios from "axios" //npm install axios 
+import Axios from "axios"; //npm install axios
 
 const router = useRouter();
 const userName = inject("userName");
@@ -108,7 +119,6 @@ function onKeyup(event: KeyboardEvent) {
   } else if (event.key.match(/[A-z]/) && event.key.length === 1) {
     game.addLetter(event.key.toUpperCase());
   }
-
 }
 function calcAttempts() {
   var attempts = 0;
@@ -125,31 +135,36 @@ function postScore(playerNameIn: string, attemptsIn: number, timeIn: number) {
   Axios.post(postScoreUrl, {
     playerName: playerNameIn,
     attempts: attemptsIn,
-    time: timeIn
+    time: timeIn,
   }).then((response) => {
     console.log("response from api " + response.data + " " + response.status);
   });
 }
-watch(() => game.value.gameState, (value) => {
-  if (value == GameState.Won || value == GameState.Lost) {
-    if (userName === "guest" || userName === "") {
-      showUserNameDialog.value = true;
-      watch(() => showUserNameDialog.value, (value) => {
-        if (value == false) {
-          postScore(userName.value as string, calcAttempts(), calcSecond());
-        }
-      });
+watch(
+  () => game.value.gameState,
+  (value) => {
+    if (value == GameState.Won || value == GameState.Lost) {
+      if (userName === "guest" || userName === "") {
+        showUserNameDialog.value = true;
+        watch(
+          () => showUserNameDialog.value,
+          (value) => {
+            if (value == false) {
+              postScore(userName.value as string, calcAttempts(), calcSecond());
+            }
+          }
+        );
+      } else {
+        postScore(userName.value as string, calcAttempts(), calcSecond());
+      }
 
-    } else {
-      postScore(userName.value as string, calcAttempts(), calcSecond());
+      //I know userName is showing an error but the api only gets the data when its set up like that
     }
-
-    //I know userName is showing an error but the api only gets the data when its set up like that
+    function calcSecond() {
+      var endTime = new Date().getTime();
+      var timeDiff = endTime - startTime;
+      return timeDiff / 1000;
+    }
   }
-  function calcSecond() {
-    var endTime = new Date().getTime();
-    var timeDiff = endTime - startTime;
-    return timeDiff / 1000;
-  }
-});
+);
 </script>
