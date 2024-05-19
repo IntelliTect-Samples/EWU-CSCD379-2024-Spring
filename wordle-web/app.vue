@@ -9,6 +9,7 @@
         <v-app-bar-title>WordleApp</v-app-bar-title>
 
         <v-btn @click="router.push('/')">Home</v-btn>
+        <v-btn @click="router.push('/wordOfTheDay')">WOTD</v-btn>
         <v-btn @click="router.push('/test')">Test</v-btn>
         <v-btn icon="mdi-theme-light-dark" @click="toggleTheme" />
         <v-btn icon="mdi-help-circle" @click="showHelpDialog = true" />
