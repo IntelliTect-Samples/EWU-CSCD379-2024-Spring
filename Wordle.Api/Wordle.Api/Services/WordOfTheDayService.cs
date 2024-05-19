@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Wordle.Api.Models;
+using Wordle.Api.Dtos;
 
 namespace Wordle.Api.Services;
 
@@ -60,6 +61,25 @@ public class WordOfTheDayService
         return wordOfTheDay.Word!.Text;
     }
 
+    //Attempted Api Service for getting stats
+    /* 
+    public async Task<GameStatsDto> GetWordStats(string word)
+    {
+      var wordStats = await Db.Words
+        .Where(w => w.Text.Equals(word, StringComparison.OrdinalIgnoreCase))
+        .Select(w => new GameStatsDto
+        {
+          Word = w.Text,
+          AverageGuesses = w.AverageGuesses,
+          TotalTimesPlayed = w.TotalTimesPlayed,
+          TotalWins = w.TotalWins,
+          TotalLosses = w.TotalLosses
+        })
+        .FirstOrDefaultAsync();
+
+        return wordStats ?? new GameStatsDto{ Word = word };
+    }
+*/
     #region WordList
     public static List<string> WordList()
     {

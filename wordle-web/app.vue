@@ -30,7 +30,7 @@
           <v-list-item link @click="router.push('/wordOfTheDay')">
             <v-list-item-title>WOTD</v-list-item-title>
           </v-list-item>
-          <v-list-item link @click="router.push('/instructionsPage')">
+          <v-list-item link @click="router.push('/instructions')">
             <v-list-item-title>Instructions</v-list-item-title>
           </v-list-item>
           <!--<v-list-item>

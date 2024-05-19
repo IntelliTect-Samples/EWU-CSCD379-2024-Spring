@@ -12,12 +12,12 @@
       </v-divider>
       <v-card-actions>
         <v-box class="elevation-3" color="primary">
-          <v-btn color="secondary" @click="router.push('/wordOfTheDay')">Wordle - Word of the Day</v-btn>
+          <v-btn color="secondary" @click="router.push('../wordOfTheDay')">Wordle - Word of the Day</v-btn>
         </v-box>
       </v-card-actions>
       <v-card-actions>
         <v-box class="elevation-3" color="primary">
-          <v-btn color="secondary" @click="router.push('/')">Wordle - Last 10 Days</v-btn>
+          <v-btn color="secondary" @click="router.push('../lastTenDays')">Wordle - Last 10 Days</v-btn>
         </v-box>
       </v-card-actions>
   </v-container>
@@ -29,6 +29,7 @@ import { useDisplay }  from "vuetify";
 const display = useDisplay();
 const imgHeight = ref(630);
 const imgWidth = computed(() => calculateWidth());
+const router = useRouter();
 
 const calculateWidth = () => {
   if(display.xs){
