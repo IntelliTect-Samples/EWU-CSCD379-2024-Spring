@@ -3,8 +3,8 @@
     <v-app>
       <v-app-bar color="primary" :elevation="2">
         <v-app-bar-title @click="router.push('/')">
-          Wordle Web
-          <v-icon @click="router.push('/')"> mdi-lightbulb-on-outline </v-icon>
+          HillBiddle
+          <v-icon @click="router.push('/')"> mdi-greenhouse </v-icon>
         </v-app-bar-title>
       </v-app-bar>
 
@@ -32,30 +32,44 @@
             @click="router.push('/')"
           />
           <v-list-item
+            prepend-icon="mdi-halloween"
+            title="Instructions"
+            @click="router.push('/Instructions')"
+          />
+          <v-list-item
+            prepend-icon="mdi-bat"
+            title="Random Word Wordle"
+            @click="router.push('/randomWordGame')"
+          />
+          <v-list-item
+            prepend-icon="mdi-sword-cross"
+            title="Word Of The Day Wordle"
+            @click="router.push('/wordOfTheDay')"
+          />
+          <v-list-item
             prepend-icon="mdi-cog-outline"
             title="Settings"
             @click="settingsDialog = true"
           />
-          <v-list-item
-            prepend-icon="mdi-help-circle"
-            title="About"
-            @click="router.push('/aboutPage')"
-          />
-          <v-list-item
-            prepend-icon="mdi-weather-night"
-            title="Light vs Dark"
-            @click="toggleTheme()"
-          />
-          <v-list-item
-            prepend-icon="mdi-help"
-            title="Help"
-            @click="showHelpDialog = true"
-          />
+          
           <v-list-item
             prepend-icon="mdi-trophy"
             title="LEADERBOARD"
             @click="router.push('/leaderboard')"
           />
+
+          <v-list-item
+            prepend-icon="mdi-help"
+            title="Help"
+            @click="showHelpDialog = true"
+          />
+
+          <v-list-item
+            prepend-icon="mdi-help-circle"
+            title="About"
+            @click="router.push('/aboutPage')"
+          />
+          
         </v-list>
       </v-navigation-drawer>
 
