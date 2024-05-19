@@ -17,6 +17,9 @@
     </v-alert>
     <v-card-title>Wordle Of The Day</v-card-title>
     <v-card-subtitle>select a day and play the wordle from that day!</v-card-subtitle>
+    <div class="d-flex justify-center my-5">
+      <v-date-picker v-model="selectedDate" />
+    </div>
 
     <GameBoardGuess v-for="(guess, i) of game.guesses" :key="i" :guess="guess" />
 
@@ -46,6 +49,8 @@ provide("GAME", game);
 const showUserNameDialogInject = inject("showUserNameDialog");
 const showUserNameDialog = ref(false);
 var startTime = new Date().getTime();
+var selectedDate;
+
 onMounted(() => {
   // Get random word from word list
   getWordFromApi().then((word) => {

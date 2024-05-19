@@ -46,6 +46,7 @@ provide("GAME", game);
 const showUserNameDialogInject = inject("showUserNameDialog");
 const showUserNameDialog = ref(false);
 var startTime = new Date().getTime();
+
 onMounted(() => {
   // Get random word from word list
   getWordFromApi().then((word) => {

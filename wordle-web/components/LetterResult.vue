@@ -1,7 +1,7 @@
 <template>
   <v-card
-    :height="boxSize"
-    :width="boxSize"
+    :height="boxHeight"
+    :width="boxWidth"
     :elevation="4"
     flat
     :class="[
@@ -26,6 +26,7 @@ const props = withDefaults(
   defineProps<{
     letter: Letter;
     clickable?: boolean;
+    widthPercentOfHeight?: string;
   }>(),
   {
     clickable: false,
@@ -48,10 +49,12 @@ function correctState(letterState: LetterState) {
 const game: Ref<Game> | undefined = inject("GAME", undefined);
 const boxSize = ref(60);
 const display = useDisplay();
+const boxHeight = ref(60);
+const boxWidth = ref(60);
+updateWidth();
 
 function onClicked() {
-  if(!game) return;
-
+  if (!game) return;
 
   if (props.letter.char === "⌫ ") {
     game.value.removeLastLetter();
@@ -62,13 +65,24 @@ function onClicked() {
 
 watch([display.sm, display.xs, display.md], () => {
   if(display.xs.value){
-    boxSize.value = 30;
+    boxHeight.value = 30;
   }else if (display.sm.value) {
-    boxSize.value = 40;
+    boxHeight.value = 40;
   } else {
-    boxSize.value = 60;
+    boxHeight.value = 60;
   }
+  updateWidth();
 });
+
+function updateWidth() {
+  if (props.widthPercentOfHeight !== undefined) {
+    boxWidth.value = Math.floor(
+      (parseInt(props.widthPercentOfHeight) / 100) * boxHeight.value
+    );
+  } else {
+    boxWidth.value = boxHeight.value;
+  }
+}
 </script>
 
 <style scoped>
