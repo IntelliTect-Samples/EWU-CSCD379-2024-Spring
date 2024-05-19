@@ -35,7 +35,10 @@ namespace Wordle.Api.Services
                     {
                         wordOfTheDay = new()
                         {
-                            Word = GetRandomWord(),
+                            Word = new Word()
+                            {
+                                Text = GetRandomWord()
+                            },
                             Date = date,
                         };
 
@@ -45,7 +48,7 @@ namespace Wordle.Api.Services
                 }
             }
 
-            return wordOfTheDay.Word;
+            return wordOfTheDay.Word!.Text;
         }
 
 

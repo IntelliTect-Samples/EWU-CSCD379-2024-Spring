@@ -10,10 +10,10 @@ namespace Wordle.Api.Controllers;
 public class GameController(WordleDbContext Db) : ControllerBase
 {
     [HttpPost("Game")]
-    public async Task<bool> PostGame(WordOfTheDayGameDto gameDto)
+    public async Task<bool> PostGame(GameDto gameDto)
     {
         var wordOfTheDay = Db.WordsOfTheDays
-            .Where(word => word.Word == gameDto.WordOfTheDay)
+            .Where(word => word.WordId == gameDto.WordOfTheDayId)
             .OrderByDescending(word => word.Date)
             .FirstOrDefault();
         
@@ -22,14 +22,14 @@ public class GameController(WordleDbContext Db) : ControllerBase
             return false;
         }
         
-        WordOfTheDayGame game = new()
+        Game game = new()
         {
             Attempts = gameDto.Attempts,
             IsWin = gameDto.IsWin,
             WordOfTheDay = wordOfTheDay,
         };
 
-        Db.WordOfTheDayGames.Add(game);
+        Db.Games.Add(game);
         await Db.SaveChangesAsync();
         return true;
     }
