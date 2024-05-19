@@ -10,12 +10,16 @@
     </v-card>
   </v-container>
   <div class="image-container">
-    <v-img :height="imageHeight" :width="imageWidth" cover src="../public/wordleLandingImage.png">
+    <v-img :height="imageHeight" :width="imageWidth" cover src="../public/landingPageImage.jpg">
       <v-divider>
       </v-divider>
       <v-card-actions>
-        <v-btn color="secondary" @click="router.push('/wordOfTheDay')">Wordle - Word of the Day</v-btn>
-        <v-btn color="secondary" @click="router.push('/')">Wordle - Last 10 Days</v-btn>
+        <v-box class="elevation-3" color="primary">
+          <v-btn color="secondary" @click="router.push('/wordOfTheDay')">Wordle - Word of the Day</v-btn>
+        </v-box>
+        <v-box class="elevation-3" color="primary">
+          <v-btn color="secondary" @click="router.push('/')">Wordle - Last 10 Days</v-btn>
+        </v-box>
       </v-card-actions>
     </v-img>
   </div>
