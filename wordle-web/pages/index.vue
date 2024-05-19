@@ -1,28 +1,27 @@
 <template>
-  <v-container class="intro">
-    <v-card>
+  <v-container class="game-container" fluid>
+    <v-card color="primary">
       <v-card-title>
-        <h1 class="display-1 text-md-center">Wordle</h1>
+        <h1 class="display-1 text-md-center" color="primary">Wordle</h1>
       </v-card-title>
       <v-card-text>
-        <p class="display-2 text-md-center">Welcome to the Game of Words</p>
+        <p class="display-2 text-md-center" color ="primary">Welcome to the Game of Words</p>
       </v-card-text>
     </v-card>
-  </v-container>
-  <div class="image-container">
-    <v-img :height="imgHeight" :width="imgWidth" cover src="../public/landingPageImage.jpg">
       <v-divider>
       </v-divider>
       <v-card-actions>
         <v-box class="elevation-3" color="primary">
           <v-btn color="secondary" @click="router.push('/wordOfTheDay')">Wordle - Word of the Day</v-btn>
         </v-box>
+      </v-card-actions>
+      <v-card-actions>
         <v-box class="elevation-3" color="primary">
           <v-btn color="secondary" @click="router.push('/')">Wordle - Last 10 Days</v-btn>
         </v-box>
       </v-card-actions>
-    </v-img>
-  </div>
+  </v-container>
+
 </template>
 
 <script setup lang="ts">
@@ -49,4 +48,24 @@ const calculateWidth = () => {
 .image-container{
   width: 100%;
 }
+
+.game-container {
+  background-image: url("../public/landingPageImage.jpg");
+  background-size: cover;
+  background-position: center;
+  min-height: 100vh;
+}
+
+@media screen and (max-width: 600px){
+  .game-container {
+    background-size: contain;
+  }
+}
+
+@media screen and (max-width: 1440px){
+  .game-container {
+    background-size: cover;
+  }
+}
+
 </style>
