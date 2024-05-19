@@ -6,7 +6,6 @@ import { findValidWords } from "./ValidWordList";
 import Axios from "axios";
 import { GameStats } from "./gameStats";
 
-
 export class Game {
   public maxAttempts: number;
   public guesses: Word[] = [];
@@ -30,7 +29,7 @@ export class Game {
     this.gameState = GameState.Playing;
   }
 
-  public async startNewGame(word?: string | undefined) {
+  public async startNewGameAPI(word?: string | undefined) {
     // Load the game
     this.isBusy = true;
 
@@ -42,6 +41,36 @@ export class Game {
     // Get a word
     if (!word) {
       this.secretWord = await this.getWordOfTheDayFromApi();
+    } else {
+      this.secretWord = word;
+    }
+
+    // Populate guesses with the correct number of empty words
+    this.guesses = [];
+    for (let i = 0; i < this.maxAttempts; i++) {
+      this.guesses.push(
+        new Word({ maxNumberOfLetters: this.secretWord.length })
+      );
+    }
+
+    // Start the game
+    this.gameState = GameState.Playing;
+    this.isBusy = false;
+  }
+  public async startNewGameRandom(word?: string | undefined) {
+    // Load the game
+    this.isBusy = true;
+
+    // Reset default values
+    this.guessIndex = 0;
+    this.guessedLetters = [];
+    this.stats = null;
+
+    // Get a word
+    if (!word) {
+      this.secretWord =
+        WordList[Math.floor(Math.random() * WordList.length)].toUpperCase();
+      console.log(this.secretWord);
     } else {
       this.secretWord = word;
     }
@@ -103,7 +132,7 @@ export class Game {
     }
   }
 
-  public async submitGuess() {
+  public async submitGuess(withApi: boolean) {
     if (this.gameState !== GameState.Playing) return;
     if (!this.guess.isFilled) return;
     if (!this.guess.isValidWord()) {
@@ -114,7 +143,6 @@ export class Game {
     const isCorrect = this.guess.compare(this.secretWord);
     this.updateGuessedLetters();
     //this.validWordList = findValidWords(this.guesses, this.guessIndex, this.validWordList);
-
 
     if (isCorrect) {
       this.gameState = GameState.Won;
@@ -128,15 +156,17 @@ export class Game {
 
     if (this.gameState === GameState.Won || this.gameState === GameState.Lost) {
       this.isBusy = true;
-      var result = await Axios.post("game/result", {
-        attempts: this.guessIndex + 1,
-        isWin: this.gameState === GameState.Won,
-        word: this.secretWord,
-      })
-      this.stats = new GameStats();
-      Object.assign(this.stats, result.data);
-      console.log(this.stats);
-      this.isBusy = false;
+      if (!withApi) {
+        var result = await Axios.post("Score/UpdateScore", {
+          attempts: this.guessIndex + 1,
+          isWin: this.gameState === GameState.Won,
+          word: this.secretWord,
+        });
+        this.stats = new GameStats();
+        Object.assign(this.stats, result.data);
+        console.log(this.stats);
+        this.isBusy = false;
+      }
     }
   }
 

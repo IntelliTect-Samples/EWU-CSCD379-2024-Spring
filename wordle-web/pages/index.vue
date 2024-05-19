@@ -83,18 +83,18 @@ import Axios from "axios"; //npm install axios
 
 const router = useRouter();
 const userName = inject("userName");
-const game = ref(new Game("GAMES"));
+const game = reactive(new Game());
+game.startNewGameAPI();
 provide("GAME", game);
-const showUserNameDialogInject = inject("showUserNameDialog");
 const showUserNameDialog = ref(false);
 var startTime = new Date().getTime();
 
 onMounted(() => {
   // Get random word from word list
-  getWordFromApi().then((word) => {
+  /*getWordFromApi().then((word) => {
     game.value = new Game(word);
     startTime = new Date().getTime();
-  });
+  });*/
 
   window.addEventListener("keyup", onKeyup);
 });
@@ -103,17 +103,9 @@ onUnmounted(() => {
   window.removeEventListener("keyup", onKeyup);
 });
 
-async function getWordFromApi(): Promise<string> {
-  let wordUrl = "Word/WordOfTheDay";
-
-  const response = await Axios.get(wordUrl);
-  console.log("Response from API : " + response.data);
-  return response.data;
-}
-
 function onKeyup(event: KeyboardEvent) {
   if (event.key === "Enter") {
-    game.submitGuess();
+    game.submitGuess(true);
   } else if (event.key == "Backspace") {
     game.removeLastLetter();
   } else if (event.key.match(/[A-z]/) && event.key.length === 1) {
@@ -122,10 +114,10 @@ function onKeyup(event: KeyboardEvent) {
 }
 function calcAttempts() {
   var attempts = 0;
-  if (game.value.gameState == GameState.Won) {
-    attempts = game.value.guessIndex + 1;
+  if (game.gameState == GameState.Won) {
+    attempts = game.guessIndex + 1;
   } else {
-    attempts = game.value.guesses.length + 5;
+    attempts = game.guesses.length + 5;
   }
   return attempts;
 }
@@ -141,7 +133,7 @@ function postScore(playerNameIn: string, attemptsIn: number, timeIn: number) {
   });
 }
 watch(
-  () => game.value.gameState,
+  () => game.gameState,
   (value) => {
     if (value == GameState.Won || value == GameState.Lost) {
       if (userName === "guest" || userName === "") {
