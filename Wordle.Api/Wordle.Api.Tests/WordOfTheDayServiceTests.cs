@@ -9,13 +9,13 @@ namespace Wordle.Api.Tests
         [TestMethod]
         public void LoadWordList_SuccessfullyGetsWords()
         {
-            CollectionAssert.AllItemsAreNotNull(WordOfTheDayService.LoadWordList());
+            CollectionAssert.AllItemsAreNotNull(WordOfTheDayService.WordList());
         }
 
         [TestMethod]
         public void GetWordOfTheDay_ReturnsString()
         {
-            CollectionAssert.Contains(WordOfTheDayService.LoadWordList(), "yules");
+            CollectionAssert.Contains(WordOfTheDayService.WordList(), "yules");
         }
 
         [TestMethod]
