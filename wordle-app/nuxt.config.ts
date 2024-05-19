@@ -9,6 +9,7 @@ export default defineNuxtConfig({
     '@/plugins/axios.ts'
   ],
   devtools: { enabled: true },
+  ssr: false,
   modules: [
     'nuxt-time',
     '@nuxt/test-utils/module',

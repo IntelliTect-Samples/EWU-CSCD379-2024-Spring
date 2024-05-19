@@ -125,8 +125,8 @@ export class Game {
 
   public async getWordOfTheDayFromApi(): Promise<string>{
     try {
-      let wordUrl = "https://wordleapiewusergeitim.azurewebsites.net/Word/WordOfTheDay";
-      const response = await Axios.get(wordUrl);
+      //let wordUrl = "https://wordleapiewusergeitim.azurewebsites.net/Word/WordOfTheDay";
+      const response = await Axios.get("Word/WordOfTheDay");
       console.log("Response from API:" + response.data);
 
       this.secretWord = response.data;
