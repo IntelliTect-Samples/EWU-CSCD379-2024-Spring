@@ -1,4 +1,4 @@
-﻿namespace Wordle.Api.DTOS;
+﻿namespace Wordle.Api.Dtos;
 
 public record PlayerDTO
 {

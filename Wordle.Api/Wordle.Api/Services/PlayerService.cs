@@ -1,6 +1,6 @@
 using Azure.Core;
 using Microsoft.EntityFrameworkCore;
-using Wordle.Api.DTOS;
+using Wordle.Api.Dtos;
 using Wordle.Api.Models;
 
 namespace Wordle.Api.Services;

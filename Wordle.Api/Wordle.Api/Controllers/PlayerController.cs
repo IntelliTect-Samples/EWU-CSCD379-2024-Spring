@@ -1,7 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Wordle.Api.Models;
 using Wordle.Api.Services;
-using Wordle.Api.DTOS;
+using Wordle.Api.Dtos;
 
 namespace Wordle.Api.Controllers;
 
