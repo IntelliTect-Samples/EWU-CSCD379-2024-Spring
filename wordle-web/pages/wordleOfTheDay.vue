@@ -1,94 +1,121 @@
 <template>
   <UserNameDialog v-model="showUserNameDialog" />
-  <v-card class="text-center">
-    <v-alert v-if="game.gameState != GameState.Playing" :color="game.gameState == GameState.Won ? 'success' : 'error'"
-      class="mb-5" tile>
-      <div></div>
-      <h3>
-        You've
-        {{ game.gameState == GameState.Won ? "Won" : "Lost" }}
-      </h3>
-      <v-card-text>
-        The word was: <strong>{{ game.secretWord }}</strong>
-      </v-card-text>
-      <v-btn variant="outlined" @click="game.startNewGame()">
-        <v-icon size="large" class="mr-2"> mdi-restart </v-icon> Restart Game
-      </v-btn>
-    </v-alert>
-    <v-card-title>Wordle Of The Day</v-card-title>
-    <v-card-subtitle>select a day and play the wordle from that day!</v-card-subtitle>
-    <div class="d-flex justify-center my-5">
-      <v-date-picker v-model="selectedDate" />
-    </div>
+  
+  <HelpDialog v-model="showHelpDialog" />
+  <v-container>
+    <v-btn icon="mdi-help-box" @click="showHelpDialog = true" />
+    <v-progress-linear v-if="game.isBusy" color="primary" indeterminate />
+    <v-card v-else class="text-center">
+      <v-alert
+        v-if="game.gameState != GameState.Playing"
+        :color="game.gameState == GameState.Won ? 'success' : 'error'"
+        class="mb-5"
+        tile
+      >
+        <h3>
+          You've
+          {{ game.gameState == GameState.Won ? "Won!" : "Lost :()" }}
+        </h3>
+        <v-card-text>
+          The word was: <strong>{{ game.secretWord }}</strong>
+        </v-card-text>
+        <v-row v-if="game.stats" class="mb-1" justify="center">
+          <v-col cols="auto">
+            <v-progress-circular
+              size="75"
+              width="10"
+              v-model="game.stats.winPercentage"
+            >
+              {{ game.stats.winPercentage }} %
+            </v-progress-circular>
+            <br />
+            <i class="text-caption"> Success Rate </i>
+          </v-col>
+          <v-col cols="auto">
+            <v-progress-circular
+              size="75"
+              width="10"
+              :model-value="game.stats.averageGuessesPercent(game.maxAttempts)"
+            >
+              {{
+                game.stats.averageGuessesPercent(game.maxAttempts).toFixed(0)
+              }}
+              %
+            </v-progress-circular>
+            <br />
+            <i class="text-caption"> Average Guesses </i>
+          </v-col>
+        </v-row>
+        <v-btn variant="outlined" @click="game.startNewGameAPI()">
+          <v-icon size="large" class="mr-2"> mdi-restart </v-icon> Restart Game
+        </v-btn>
+      </v-alert>
+      <v-card-title v-else>Wordle</v-card-title>
 
-    <GameBoardGuess v-for="(guess, i) of game.guesses" :key="i" :guess="guess" />
+      <GameBoardGuess
+        v-for="(guess, i) of game.guesses"
+        :key="i"
+        :guess="guess"
+      />
 
-    <div class="my-10">
-      <Keyboard />
-    </div>
+      <div class="my-10">
+        <Keyboard />
+      </div>
 
-    <div class="my-5">
-      <ValidWord />
-    </div>
+      <div class="my-5">
+        <ValidWord />
+      </div>
 
-    <v-btn @click="game.submitGuess()" class="mb-5" color="primary">Guess!</v-btn>
+      <v-btn @click="game.submitGuess(true)" class="mb-5" color="primary"
+        >Guess!</v-btn
+      >
 
-    <v-btn class="mb-5 ml-5" color="primary" variant="flat" @click="router.push('/leaderboard')">Leaderboard</v-btn>
-  </v-card>
-
+      <v-btn
+        class="mb-5 ml-5"
+        color="primary"
+        variant="flat"
+        @click="router.push('/leaderboard')"
+        >Leaderboard</v-btn
+      >
+    </v-card>
+  </v-container>
 </template>
 
 <script setup lang="ts">
 import { Game, GameState } from "../scripts/game";
-import Axios from "axios" //npm install axios 
+import Axios from "axios"; //npm install axios
 
 const router = useRouter();
+const showHelpDialog = ref(false);
 const userName = inject("userName");
-const game = ref(new Game("GAMES"));
+const game = reactive(new Game());
+game.startNewGameAPI();
 provide("GAME", game);
-const showUserNameDialogInject = inject("showUserNameDialog");
 const showUserNameDialog = ref(false);
 var startTime = new Date().getTime();
-var selectedDate;
+
+//watch for the route to change to this page, then check if the user is a guest or not then prompt the user to enter a name
 
 onMounted(() => {
-  // Get random word from word list
-  getWordFromApi().then((word) => {
-    game.value = new Game(word);
-    startTime = new Date().getTime();
-  });
-
+  checkUserName();
   window.addEventListener("keyup", onKeyup);
 });
 
-onUnmounted(() => {
-  window.removeEventListener("keyup", onKeyup);
-});
-
-async function getWordFromApi(): Promise<string> {
-  let wordUrl = "Word/WordOfTheDay";
-
-  const response = await Axios.get(wordUrl);
-  console.log("Response from API : " + response.data);
-  return response.data;
-}
-
 function onKeyup(event: KeyboardEvent) {
   if (event.key === "Enter") {
-    game.value?.submitGuess();
+    game.submitGuess(true);
   } else if (event.key == "Backspace") {
-    game.value?.removeLastLetter();
+    game.removeLastLetter();
   } else if (event.key.match(/[A-z]/) && event.key.length === 1) {
-    game.value?.addLetter(event.key.toUpperCase());
+    game.addLetter(event.key.toUpperCase());
   }
-
 }
 function calcAttempts() {
   var attempts = 0;
-  if (game.value.gameState == GameState.Won) {
-    attempts = game.value.guessIndex + 1;
+  if (game.gameState == GameState.Won) {
+    attempts = game.guessIndex + 1;
   } else {
-    attempts = game.value.guesses.length + 5;
+    attempts = game.guesses.length + 5;
   }
   return attempts;
 }
@@ -96,33 +123,45 @@ function postScore(playerNameIn: string, attemptsIn: number, timeIn: number) {
   console.log("score data " + playerNameIn + " " + attemptsIn + " " + 0);
   let postScoreUrl = "Score/UpdateScore";
   Axios.post(postScoreUrl, {
-    PlayerName: playerNameIn,
-    Attempts: attemptsIn,
-    Time: timeIn
+    playerName: playerNameIn,
+    attempts: attemptsIn,
+    time: timeIn,
   }).then((response) => {
     console.log("response from api " + response.data + " " + response.status);
   });
 }
-watch(() => game.value.gameState, (value) => {
-  if (value == GameState.Won || value == GameState.Lost) {
-    if (userName === "guest" || userName === "") {
-      showUserNameDialog.value = true;
-      watch(() => showUserNameDialog.value, (value) => {
-        if (value == false) {
-          postScore(userName.value as string, calcAttempts(), calcSecond());
-        }
-      });
+function calcSecond() {
+  var endTime = new Date().getTime();
+  var timeDiff = endTime - startTime;
+  return timeDiff / 1000;
+}
+function checkUserName() {
+  if (userName.value === "guest" || userName.value === "") {
+    showUserNameDialog.value = true;
+  }
+}
+watch(
+  () => game.gameState,
+  (value) => {
+    if (value == GameState.Won || value == GameState.Lost) {
+      if (userName.value === "guest" || userName.value === "") {
+        showUserNameDialog.value = true;
+        watch(
+          () => showUserNameDialog.value,
+          (value) => {
+            if (value == false) {
+              console.log("username after propmt " + userName.value);
+              postScore(userName.value as string, calcAttempts(), calcSecond());
+            }
+          }
+        );
+      } else {
+        console.log("username value given to api " + userName.value);
+        postScore(userName.value as string, calcAttempts(), calcSecond());
+      }
 
-    } else {
-      postScore(userName.value as string, calcAttempts(), calcSecond());
+      //I know userName is showing an error but the api only gets the data when its set up like that
     }
-
-    //I know userName is showing an error but the api only gets the data when its set up like that
   }
-  function calcSecond() {
-    var endTime = new Date().getTime();
-    var timeDiff = endTime - startTime;
-    return timeDiff / 1000;
-  }
-});
+);
 </script>

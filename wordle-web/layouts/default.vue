@@ -19,11 +19,8 @@
             <v-list-item v-for="page in pages" :key="page.name" @click="router.push(page.path)">
               <v-list-item-title>{{ page.name }}</v-list-item-title>
             </v-list-item>
-            <v-list-item @click="showHelpDialog = true">Help</v-list-item>
           </v-list>
         </v-menu>
-        <v-btn icon="mdi-help-box" @click="showHelpDialog = true" />
-        <HelpDialog v-model="showHelpDialog" />
         <v-btn icon @click="showSettingsDialog = true">
           <v-icon>mdi-cog</v-icon>
         </v-btn>
@@ -45,17 +42,15 @@ const showUserNameDialog = ref(false);
 const showSettingsDialog = ref(false);
 const userName = ref("guest");
 var dark = ref(true);
-const imageHeight = ref(625);
-const imageWidth = ref(1800);
 const props = defineProps<{
   userName: string
   showUserNameDialog: boolean
 }>();
 provide("userName", userName);
 
-
 const pages = [
-  { name: "Wordle", path: "/" },
+  { name: "Home", path: "/" },
+  {name: "Never Ending Wordle", path: "/neverEndingWordle"},
   { name: "Wordle Of The Day", path: "/wordleOfTheDay" },
   { name: "Leaderboard", path: "/leaderboard" },
   { name: "How To Play", path: "/helpPage"},
