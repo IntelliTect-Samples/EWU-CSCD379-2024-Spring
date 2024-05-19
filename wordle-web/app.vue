@@ -2,17 +2,18 @@
   <NuxtLayout>
     <v-app>
       <v-app-bar color="primary" :elevation="2">
-        <v-app-bar-title @click="router.push('/')">
+        <v-app-bar-title @click="router.push('/')" style="cursor: pointer">
           HillBiddle
           <v-icon @click="router.push('/')"> mdi-greenhouse </v-icon>
         </v-app-bar-title>
+        
       </v-app-bar>
-
+        
       <HelpDialog v-model="showHelpDialog" />
 
       <v-navigation-drawer expand-on-hover rail location="right">
-        <v-list>
-          <v-list-item
+        <v-list class = "bannerSmall" >
+          <v-list-item 
             prepend-avatar="https://i.ibb.co/kx64H0R/Picture1.jpg"
             subtitle="Webdev"
             title="Cynthia"
@@ -51,7 +52,7 @@
             title="Settings"
             @click="settingsDialog = true"
           />
-          
+
           <v-list-item
             prepend-icon="mdi-trophy"
             title="LEADERBOARD"
@@ -72,7 +73,7 @@
           
         </v-list>
       </v-navigation-drawer>
-
+      
       <!-- Settings Dialog -->
       <v-dialog v-model="settingsDialog" max-width="500">
         <v-card style="outline-style: inset" color="primary">
@@ -156,7 +157,7 @@
           </v-card-text>
         </v-card>
       </v-dialog>
-
+      
       <v-main>
         <NuxtPage />
       </v-main>
@@ -192,8 +193,6 @@ function themeSettings(item: string) {
   theme.global.name.value = item;
   nuxtStorage.localStorage.setData("themes", theme.global.name.value);
 }
-
-
 </script>
 
 <style>
@@ -203,4 +202,12 @@ function themeSettings(item: string) {
   border: 2px;
   margin-bottom: 10px;
 }
+/*<v-img class = "banner" 
+src="../public/HillBiddle1.png"
+alt="Logo"
+max-width="180"
+max-height="95"
+
+/>*/ 
 </style>
+

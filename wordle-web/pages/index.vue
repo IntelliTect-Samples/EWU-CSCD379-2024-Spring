@@ -1,10 +1,13 @@
 <template>
-  <v-container class="index">
-    <v-card>
+  
+  <v-container class="index" >
+    
+    <v-card >
       <v-card-title class = "banner">
         <h1 class="display-1 text-md-center" color="secondary">HILLBIDDLE</h1>
       </v-card-title>
     </v-card>
+    
   </v-container>
   <v-divider :width="cardWidth"> </v-divider>
   <br><br>
@@ -66,7 +69,19 @@ const cardWidth = ref(1200);
 .banner {
   padding: 20px;
   background-color: #8747ff21;
-  color: blanchedalmond;
+  color: rgb(19, 81, 161);/*blanchedalmond*/
+  font-size: 24px;
+  transform-origin: center center;
+  animation: ban 2s infinite;
+}
+.bannerSmall {
+  padding-right: 20px;
+  padding-left: 0px;
+  padding-top: 20px;
+  padding-bottom: 20px;
+  padding-inline-start: 8%;
+  background-color: #8747ff21;
+  color: rgb(19, 81, 161);/*blanchedalmond*/
   font-size: 24px;
   transform-origin: center center;
   animation: ban 2s infinite;
