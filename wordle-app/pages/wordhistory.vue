@@ -26,7 +26,7 @@
                             <td>Placeholder</td>
                             <td>{{ wordDate.gameCount }}</td>
 							<td>{{ wordDate.averageAttempts }}</td>
-							<td>{{ wordDate.averageSecondsPerGame }} sec.</td>
+							<td>{{ wordDate.averageSeconds }} sec.</td>
 						</tr>
 					</tbody>
 				</v-table>

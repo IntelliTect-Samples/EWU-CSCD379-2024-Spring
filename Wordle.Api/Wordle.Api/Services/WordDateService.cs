@@ -20,8 +20,8 @@ public class WordDateService(WordleDbContext Db)
 	    if (existingWordDate != null)
 	    {   //GameCount, AverageAttempts, AverageSeconds, PlayerList
             wordDateDTO.GameCount = existingWordDate.GameCount + 1;
-            wordDateDTO.AverageAttempts = ((existingWordDate.AverageAttempts * existingWordDate.GameCount) / wordDateDTO.GameCount);
-            wordDateDTO.AverageSeconds = ((existingWordDate.AverageSeconds * existingWordDate.GameCount) / wordDateDTO.GameCount);
+            wordDateDTO.AverageAttempts = (((existingWordDate.AverageAttempts * existingWordDate.GameCount) + wordDateDTO.AverageAttempts)/ wordDateDTO.GameCount);
+            wordDateDTO.AverageSeconds = (((existingWordDate.AverageSeconds * existingWordDate.GameCount) + wordDateDTO.AverageSeconds) / wordDateDTO.GameCount);
             string name = wordDateDTO.PlayerList[0];
             wordDateDTO.PlayerList = existingWordDate.PlayerList;
             wordDateDTO.PlayerList.push(name);

@@ -3,6 +3,6 @@ export interface WordDate {
 	date: string;
 	gameCount: number;
 	averageAttempts: number;
-	averageSecondsPerGame: number;
+	averageSeconds: number;
     playerList: Array<string>;
 }

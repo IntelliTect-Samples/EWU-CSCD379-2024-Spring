@@ -177,7 +177,7 @@ function updateWordDate() {
       Date: curDate,
       GameCount: 1,
       AverageAttempts: attempts,
-      AverageSecondsPerGame: seconds.value,
+      AverageSeconds: seconds.value,
       PlayerList: nameList
     })
     .then(res => {
