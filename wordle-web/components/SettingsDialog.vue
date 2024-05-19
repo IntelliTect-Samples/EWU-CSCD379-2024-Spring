@@ -20,7 +20,7 @@
             color="secondary"
             v-model="selectedTheme"
             label="Select theme"
-            :items="['Regular', 'Jungle', 'Flamingo']"></v-select>
+            :items="['Regular', 'Jungle', 'Flamingo', 'Whurdle']"></v-select>
           <v-btn
             color="secondary"
             @click="changeColorScheme"

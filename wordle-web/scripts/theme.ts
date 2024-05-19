@@ -9,4 +9,6 @@ export enum Theme {
   jungleDark,
   flamingoLight,
   flamingoDark,
+  WhurdleLight,
+  whurdleDark,
 }

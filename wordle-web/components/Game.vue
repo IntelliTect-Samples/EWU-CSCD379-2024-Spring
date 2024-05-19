@@ -227,3 +227,11 @@ function postScore() {
   });
 }
 </script>
+
+<style scoped>
+.v-card {
+  background-color: var(--v-card-base) !important;
+}
+
+</style>
+
