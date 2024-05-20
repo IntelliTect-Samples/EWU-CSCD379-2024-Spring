@@ -12,29 +12,7 @@
 </template>
 
 <script>
-export default {
-  data() {
-    return {
-      gameStats: [
-        {
-          word: "ExampleWord1",
-          averageGuesses: 4.5,
-          totalTimesPlayed: 20,
-          totalWins: 15,
-          totalLosses: 5
-        },
-        {
-          word: "ExampleWord2",
-          averageGuesses: 3.2,
-          totalTimesPlayed: 25,
-          totalWins: 18,
-          totalLosses: 7
-        },
-        // Add more instances of GameStatsDto here...
-      ]
-    };
-  }
-};
+
 </script>
 
 <style scoped>
