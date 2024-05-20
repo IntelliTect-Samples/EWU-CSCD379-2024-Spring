@@ -4,7 +4,7 @@ on:
   push:
     branches:
       - main
-      - Assignment-3
+      - Assignment-4
     paths:
       - "wordle-web/**"
   pull_request:
