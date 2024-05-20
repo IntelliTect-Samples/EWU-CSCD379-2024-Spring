@@ -1,7 +1,11 @@
 <template>
   
   <v-container class="index" >
-    
+    <!-- <v-progress-linear
+      v-if="game.gameState === GameState.Initializing"
+      color="primary"
+      indeterminate
+    /> -->
     <v-card >
       <v-card-title class = "banner">
         <h1 class="display-1 text-md-center" color="secondary">HILLBIDDLE</h1>
