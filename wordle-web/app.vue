@@ -55,10 +55,14 @@
 
           <v-list-item
             prepend-icon="mdi-trophy"
-            title="LEADERBOARD"
+            title="leaderboard"
             @click="router.push('/leaderboard')"
           />
-
+          <v-list-item
+            prepend-icon="mdi-trophy"
+            title="statistics"
+            @click="router.push('/statistics')"
+          />
           <v-list-item
             prepend-icon="mdi-help"
             title="Help"
