@@ -47,7 +47,7 @@
           <v-icon size="large" class="mr-2"> mdi-restart </v-icon> Restart Game
         </v-btn>
       </v-alert>
-      <v-card-title v-else>Word Of The Day Game</v-card-title>
+      <v-card-title v-else>Random Word Game</v-card-title>
 
       <v-card-text class="d-flex  flex-row justify-end">
         <v-chip color="secondary" class="mr-2" @click="showUserNameDialog=true">
@@ -69,7 +69,7 @@
           <WordList v-if="game.gameState === GameState.Playing" v-model="showWordsList" />
         </v-col>
         <v-col  cols="12" sm="4">
-          <v-btn @click="game.submitGuess()" color="primary">
+          <v-btn @click="game.startNewGame()" color="primary">
             Guess!
           </v-btn>
         </v-col>
@@ -173,63 +173,12 @@ async function checkUserName() {
     showUserNameDialog.value = true;
   }
 }
-
-function postScore() {
-    console.log("PostScoreEntered")
-    //console.log("Stopwatch seconds: " + stopwatch.seconds.value)
-    var attempts = 0;
-    if(game.gameState == GameState.Won){
-      attempts = game.guessIndex + 1;
-    }else{
-      attempts = game.guesses.length + 5;
-    }
-    Axios.post("Player/AddPlayer", {
-      Name: nameUserNameDialog.value,
-      GameCount: 1,
-      AverageAttempts: attempts,
-      AverageSecondsPerGame: seconds.value,
-    })
-    .then(res => {
-      console.log(res.data);
-    })
-    .catch(err => {
-      console.log("Error" + err);
-    })
-}
-
-function updateWordDate() {
-    console.log("UpdateWordDateEntered")
-    var attempts = 0;
-    if(game.gameState == GameState.Won){
-      attempts = game.guessIndex + 1;
-    }else{
-      attempts = game.guesses.length + 5;
-    }
-    var nameList = new Array(nameUserNameDialog.value);
-    const today = new Date();
-    var curDate = today.getMonth() + "/" + today.getDay() + "/" + today.getFullYear();
-    Axios.post("WordDate/AddWordDate", {
-      Date: curDate,
-      GameCount: 1,
-      AverageAttempts: attempts,
-      AverageSeconds: seconds.value,
-      //PlayerList: nameList
-    })
-    .then(res => {
-      console.log(res.data);
-    })
-    .catch(err => {
-      console.log("Error" + err);
-    })
-}
 watch(() => game.gameState, (value) => {
   if(value == GameState.Won || value == GameState.Lost){
     if(nameUserNameDialog.value == "Guest"){
       showUserNameDialog.value = true;
     }
-    
-    postScore();
-    updateWordDate();
+
     stopStopwatch();
   }
 

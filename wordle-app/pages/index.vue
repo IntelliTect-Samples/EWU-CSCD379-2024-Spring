@@ -25,6 +25,7 @@
           <v-card 
           class="game-card pa-5 d-flex flex-column align-center justify-center"
           outlined 
+          @click="router.push('/RandomWordGame')"
           @mousedown="pressEffect"
           @mouseup="releaseEffect"
           @mouseleave="releaseEffect"
