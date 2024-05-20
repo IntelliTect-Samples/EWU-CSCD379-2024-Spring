@@ -1,10 +1,8 @@
 <template>
-	<v-container class="ma-auto">
-		<v-row justify="center">
-			<v-col cols="12" md="8">
-				<h1 class="ext-h4 my-4 text-center">
-					About Our Game
-				</h1>
+	<v-container class="text-center">
+		<v-card class="mx-auto" max-width="800" outlined>
+			<v-card-title class="text-h5" >About Our Game</v-card-title>
+			<v-card-text>
 				<div class="text-body-1 mb-3">
 					Welcome to <strong>[Not a copy of] Wordle</strong>,
 					a tribute to the wildly popular word puzzle game,
@@ -32,25 +30,14 @@
 					and improve, we welcome your feedback and suggestions. Enjoy the challenge, share it with friends, and thank
 					you for playing!
 				</div>
-			</v-col>
-		</v-row>
-		<v-row justify="center">
-			<v-col cols="12" md="8">
-				<h1 class="ext-h4 my-4 text-center">
-					About Our Teachers
-				</h1>
+				<v-card-title class="text-h5" >About Our Teachers</v-card-title>
 				<div class="text-body-1 mb-3">
 					<strong>Grant</strong> and <strong>Mag</strong> are the instructors for this course. They are both very
 					knowledgeable and helpful. They are always willing to help and answer any questions you may have.
 				</div>
-			</v-col>
-		</v-row>
-		<!-- New row for the button -->
-		<v-row justify="center">
-			<v-col cols="12" class="text-center">
-				<v-btn color="primary" variant="elevated" elevation="8" @click="router.push('/')">Home</v-btn>
-			</v-col>
-		</v-row>
+			</v-card-text>
+		</v-card>
+		<v-btn color="primary" variant="elevated" elevation="8" @click="router.push('/')">Home</v-btn>
 	</v-container>
 </template>
 
