@@ -15,7 +15,7 @@
         <v-menu>
           <template v-slot:activator="{ props }">
             <v-btn icon v-bind="props">
-              <v-icon>mdi-book-open-page-variant</v-icon>
+              <v-icon>mdi-menu</v-icon>
             </v-btn>
           </template>
           <v-list>
