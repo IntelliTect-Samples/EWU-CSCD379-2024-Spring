@@ -11,6 +11,9 @@ namespace Wordle.Api.Migrations
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.DropTable(
+                name: "Words");
+
             migrationBuilder.DropColumn(
                 name: "Word",
                 table: "WordOfTheDay");
