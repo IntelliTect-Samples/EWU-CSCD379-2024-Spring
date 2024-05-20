@@ -61,10 +61,10 @@
 </template>
 
 <script setup lang="ts">
-    import { Game, GameState } from "../scripts/game";
-    import { GameOption } from '~/scripts/game';
+    import { Game, GameOption, GameState } from "../scripts/game";
+   // import { GameOption } from '~/scripts/game';
 
-const game = reactive(new Game());
+const game = reactive(new Game( GameOption.Random));
 game.startNewGame();
 provide("GAME", game);
 

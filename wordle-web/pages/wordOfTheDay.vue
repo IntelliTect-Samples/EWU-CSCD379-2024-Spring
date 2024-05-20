@@ -1,6 +1,5 @@
 <template>
-
- 
+    <Game :option="GameOption.WordOfTheDay" />
 
     <v-container class="game-container" fluid>
         <v-progress-linear v-if="game.isBusy" color="primary" indeterminate />
@@ -62,10 +61,10 @@
 </template>
 
 <script setup lang="ts">
-    import { Game, GameOption, GameState } from "../scripts/game";
-   // import { GameOption } from '~/scripts/game';
+    import { Game, GameState } from "../scripts/game";
+   import { GameOption } from '~/scripts/game';
 
-const game = reactive(new Game());
+const game = reactive(new Game(GameOption.WordOfTheDay));
 game.startNewGame();
 provide("GAME", game);
 

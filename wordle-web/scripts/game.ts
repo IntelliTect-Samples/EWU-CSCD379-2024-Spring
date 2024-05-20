@@ -22,11 +22,12 @@ export class Game {
     return this._secretWord;
   }
 
-  constructor(maxAttempts: number = 6) {
-    this.maxAttempts = maxAttempts;
-    this.isBusy = true;
-    this.gameState = GameState.Playing;
-  }
+    constructor(option: GameOption, maxAttempts: number = 6) {
+        this.option = option;
+        this.maxAttempts = maxAttempts;
+        this.isBusy = true;
+        this.gameState = GameState.Playing;
+    }
 
   public async startNewGame(word?: string | undefined) {
     // Load the game
