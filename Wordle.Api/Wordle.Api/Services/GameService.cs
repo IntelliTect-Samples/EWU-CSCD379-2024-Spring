@@ -79,7 +79,7 @@ public class GameService(WordleDbContext db)
 
         if (word is not null && word.Games.Count != 0)
         {
-            wordOfTheDayGames =  word.Games;
+            wordOfTheDayGames = word.Games;
 
             stats = new()
             {
@@ -103,14 +103,27 @@ public class GameService(WordleDbContext db)
             };
         }
 
-  
+
         return stats;
     }
-}
 
-public class AllWordStats()
-{
-    public required string Word { get; set; }
 
-    public double AverageGuesses { get; set; }
+    public async Task<List<GameStatsDto>> LastTenWordStats(DateTime date)
+    {
+
+        List<GameStatsDto> wordOfTheDayGames = []; ;
+
+        for(int i = 0; i < 10; i++)
+        {
+            wordOfTheDayGames.Add(await WordOfDayStats(date.AddDays(-i)));
+        }
+        return wordOfTheDayGames;
+    }
+
+    public class AllWordStats()
+    {
+        public required string Word { get; set; }
+
+        public double AverageGuesses { get; set; }
+    }
 }

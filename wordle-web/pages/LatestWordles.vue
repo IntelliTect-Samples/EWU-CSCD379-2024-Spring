@@ -1,57 +1,35 @@
 <template>
-  <v-progress-linear
-    v-if="isDailyWordlesLoading"
-    class="mx-auto"
-    color="primary"
-    height="10"
-    indeterminate
-    rounded
-    width="75%"
-  />
-  <div v-else>
-    <v-tabs center-active v-model="selectedDate">
-      <v-tab v-for="(wordStat, i) in wordStats" :key="i">
-        {{ wordStat.date }}
-      </v-tab>
-    </v-tabs>
-    <v-tabs-window v-model="selectedDate">
-      <v-card>
-        <v-card-text
-          >Average Attemps:
-          {{ wordStats[selectedDate].averageAttempts }}</v-card-text
-        >
-        <v-card-text
-          >Number of Wins:
-          {{ wordStats[selectedDate].numberOfWins }}</v-card-text
-        >
-        <v-card-text
-          >Total Games Played:
-          {{ wordStats[selectedDate].totalGamesPlayed }}</v-card-text
-        >
-      </v-card>
-
-      <v-table>
-        <thead>
-          <tr class="bg-primary">
-            <th class="text-center font-weight-bold">Word</th>
-            <th class="text-center font-weight-bold">isWin</th>
-            <th class="text-center font-weight-bold">Attempts</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr v-for="(game, i) in wordStats[selectedDate].games" :key="i">
-            <td>{{ game.word }}</td>
-            <td>{{ game.isWin }}</td>
-            <td>{{ game.attempts }}</td>
-          </tr>
-        </tbody>
-      </v-table>
-    </v-tabs-window>
-  </div>
+  <v-container>
+    <v-progress-linear
+      v-if="isDailyWordlesLoading"
+      class="mx-auto"
+      color="primary"
+      height="10"
+      indeterminate
+      rounded
+      width="75%"
+    />
+    <div v-else>
+      <v-row class="d-flex flex-row justify-center">
+        <v-col>
+          <wordle-stats-card
+            v-for="(gameStat, i) in gameStats"
+            :key="i"
+            :gameStat="gameStat"
+            :is-daily="true"
+            :isCurrentGame="false"
+            :hasPlayed="false"
+          />
+        </v-col>
+      </v-row>
+    </div>
+  </v-container>
 </template>
 
 <script setup lang="ts">
 import Axios from "axios";
+import { format } from "date-fns";
+import type { GameStats } from "~/Models/GameStas";
 
 const selectedDate = ref(0);
 const isDailyWordlesLoading = ref(true);
@@ -62,32 +40,27 @@ interface Game {
   attempts: number;
 }
 
-interface WordStats {
-  date: string;
-  averageAttempts: number;
-  totalGamesPlayed: number;
-  numberOfWins: number;
-  games: Game[];
-}
-
-const wordStats = ref<WordStats[]>([]);
+const gameStats = ref<GameStats[]>([]);
 
 onMounted(() => {
-  Axios.get("api/Statistics/GetWordStats?numDays=10")
+  const formatDate = format(new Date(), "MM-dd-yyyy");
+  Axios.get("/Game/LastTenWordOfTheDayStats/" + formatDate)
     .then((res: { data: any }) => res.data)
     .then((data: any) =>
-      data.map((word: any) => ({
-        date: word.date,
-        averageAttempts: word.averageAttempts,
-        totalGamesPlayed: word.totalGamesPlayed,
-        numberOfWins: word.numberOfWins,
-        games: word.games,
+      data.map((data: any) => ({
+        totalGames: data.totalTimesPlayed,
+        totalWins: data.totalWins,
+        totalLosses: data.totalLosses,
+        averageSeconds: data.averageSeconds,
+        date: data.date,
+        word: data.word,
+        averageGuesses: data.averageGuesses,
       }))
     )
-    .then((wordStatsData: WordStats[]) => {
-      console.log(wordStatsData);
+    .then((gameStatData: GameStats[]) => {
+      console.log(gameStatData);
       isDailyWordlesLoading.value = false;
-      wordStats.value = wordStatsData;
+      gameStats.value = gameStatData;
     });
 });
 </script>

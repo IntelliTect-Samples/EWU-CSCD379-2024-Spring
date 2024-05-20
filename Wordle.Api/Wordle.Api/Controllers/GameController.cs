@@ -33,4 +33,12 @@ public class GameController : ControllerBase
         return stats;
     }
 
+    [HttpGet("LastTenWordOfTheDayStats/{date}")]
+    public async Task<List<GameStatsDto>> GetLastTenDayWordStats(DateTime date)
+    {
+        var stats = await GameService.LastTenWordStats(date);
+
+        return stats;
+    }
+
 }

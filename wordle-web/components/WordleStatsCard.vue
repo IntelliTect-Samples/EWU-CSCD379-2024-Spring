@@ -55,8 +55,8 @@
     </v-row>
     <v-card-actions class="py-5">
       <v-spacer />
-      <v-btn v-if="!inCurrentGame" variant="flat" color="primary">Play</v-btn>
-      <v-btn variant="flat" color="primary">Go to Stats Page</v-btn>
+      <v-btn v-if="inCurrentGame" variant="flat" color="primary">Play</v-btn>
+      <v-btn v-else variant="flat" color="primary">Go to Stats Page</v-btn>
     </v-card-actions>
     <v-sheet color="primary" height="5px" />
   </v-card>
