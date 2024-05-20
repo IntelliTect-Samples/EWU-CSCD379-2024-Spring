@@ -11,6 +11,7 @@
   <v-table>
           <tbody>
             <tr>
+              <td class="text-center"></td>
               <td class="text-center">DateOfTheWord</td>
               <td class="text-center">Average Plays</td>
               <td class="text-center">Average Score</td>
@@ -18,6 +19,7 @@
             </tr>
 
             <tr v-for="(row, index) in tableData" :key="index">
+            <td class="text-center">{{ index+1 }}</td>
             <td class="text-center">{{ row.date }}</td>
             <td class="text-center">{{ row.averagePlays }}</td>
             <td class="text-center">{{ row.averageScore }}</td>
@@ -54,5 +56,10 @@ const tableData = ref([
   { date: '2024-05-04', averagePlays: 2, averageScore: 85, averageSeconds: 28 },
   { date: '2024-05-05', averagePlays: 13, averageScore: 72, averageSeconds: 40 },
   { date: '2024-05-06', averagePlays: 33, averageScore: 70, averageSeconds: 38 },
+  { date: '2024-05-06', averagePlays: 33, averageScore: 70, averageSeconds: 38 },
+  { date: '2024-05-06', averagePlays: 33, averageScore: 70, averageSeconds: 38 },
+  { date: '2024-05-06', averagePlays: 33, averageScore: 70, averageSeconds: 38 },
+  { date: '2024-05-06', averagePlays: 33, averageScore: 70, averageSeconds: 38 },
+
 ])
 </script>
