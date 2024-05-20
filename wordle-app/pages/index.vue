@@ -1,285 +1,86 @@
 <template>
   <v-container>
-    <v-progress-linear
-      v-if="game.isBusy"
-      color="primary"
-      indeterminate
-    />
-    <v-card v-else class="text-center">
-      <v-alert v-if="game.gameState != GameState.Playing" :color="game.gameState == GameState.Won ? 'success' : 'error'"
-        class="mb-5" tile>
-        <h3>
-          You've
-          {{ game.gameState == GameState.Won ? "Won! 🥳" : "Lost... 😭" }}
-        </h3>
-        <v-card-text>
-          The word was: <strong>{{ game.secretWord }}</strong>
-        </v-card-text>
-        <v-row v-if="game.stats" class="mb-1" justify="center">
-          <v-col cols="auto">
-            <v-progress-circular
-            size="75"
-            width="10"
-            v-model="game.stats.winPercentage"
-            >
-            {{ game.stats.winPercentage }}%
-            </v-progress-circular>
-            <br/>
-            <i class="text-caption">
-              Success Rate
-            </i>
-          </v-col>
-          <v-col cols="auto">
-            <v-progress-circular
-            size="75"
-            width="10"
-            :model-value="game.stats.averageGuessesPercent(game.maxAttempts)"
-            >
-            {{  game.stats.averageGuessesPercent(game.maxAttempts).toFixed(0) }}%
-            </v-progress-circular>
-            <br/>
-            <i class="text-caption">
-              Average Guesses
-            </i>
-          </v-col>
-        </v-row>
-        <v-btn variant="outlined" @click="game.startNewGame()">
-          <v-icon size="large" class="mr-2"> mdi-restart </v-icon> Restart Game
-        </v-btn>
-      </v-alert>
-      <v-card-title v-else>Wordle</v-card-title>
 
-      <v-card-text class="d-flex  flex-row justify-end">
-        <v-chip color="secondary" class="mr-2" @click="showUserNameDialog=true">
-          <v-icon class="mr-2" > mdi-account </v-icon> {{ nameUserNameDialog }}
-        </v-chip>
-        <v-chip color="secondary" class="mr-2">
-          <v-icon class="mr-2"> mdi-timer </v-icon> {{ seconds }} s.
-        </v-chip>
-      </v-card-text>
+      <!-- Single row to display multiple blocks of game pages -->
+      <v-row class="text-center pa-5">
+        <!-- Word of the Day Game Block -->
+        <v-col cols="12" md="6" class="mb-4">
+          <v-card 
+          class="game-card pa-5 d-flex flex-column align-center justify-center" 
+          outlined 
+          @click="router.push('/WordOfTheDayGame')"
+          @mousedown="pressEffect"
+          @mouseup="releaseEffect"
+          @mouseleave="releaseEffect"
+          elevation="2" 
+          hover>
+            <v-icon size="x-large">mdi-calendar-today</v-icon>
+            <h2>Word of The Day Game</h2>
+            <p>Challenge yourself with a new word every day!</p>
+          </v-card>
+        </v-col>
 
-      <GameBoardGuess v-for="(guess, i) of game.guesses" :key="i" :guess="guess" />
-
-      <div class="my-10">
-        <Keyboard />
-      </div>
-
-      <WordList v-if="game.gameState === GameState.Playing" v-model="showWordsList" />
-
-      <v-row justify="end">
-        <v-col cols="6">
-          <v-btn @click="game.submitGuess()" class="mb-5" color="primary">
-        Guess!
-      </v-btn>
-        </v-col >
-        <v-col cols="3">
-          <v-btn class="mb-5" color="primary" @click="router.push('/Leaderboard')">Leaderboard</v-btn>
+        <!-- Random Word Game Block -->
+        <v-col cols="12" md="6" class="mb-4">
+          <v-card 
+          class="game-card pa-5 d-flex flex-column align-center justify-center"
+          outlined 
+          @mousedown="pressEffect"
+          @mouseup="releaseEffect"
+          @mouseleave="releaseEffect"
+          elevation="2" 
+          hover>
+            <v-icon size="x-large">mdi-shuffle-variant</v-icon>
+            <h2>Random Word Game</h2>
+            <p>Guess the word with the fewest guesses!</p>
+          </v-card>
         </v-col>
       </v-row>
-    </v-card>
 
-    <UserNameDialog @okay="nameDialogClosed()"  v-model:show="showUserNameDialog" v-model:userName="nameUserNameDialog" />
-    
   </v-container>
 </template>
 
 <script setup lang="ts">
-import { Game, GameState } from "../scripts/game";
-import nuxtStorage from "nuxt-storage";
-import Axios from 'axios'
-import type { Player } from "../scripts/player";
-import UserNameDialog from "~/components/UserNameDialog.vue";
 
 const router = useRouter();
-const game = reactive(new Game());
-game.startNewGame();
-provide("GAME", game);
 
-// User name dialog
-const showUserNameDialog = ref(false);
-const nameUserNameDialog = ref("");
+const isPressed = ref(false);
 
-function nameDialogClosed() {
-  showUserNameDialog.value = false;
-  startStopwatch();
+function pressEffect() {
+  isPressed.value = true;
 }
 
-var showWordsList = ref(false);
-
-onMounted(() => {
-
-  window.addEventListener("keyup", onKeyup);
-
-
-  // Assignment 3 Task 2
-  // Check if user name is stored in local storage
-  checkUserNameLocalStorage();
-  checkUserName();
-
-  if(!showUserNameDialog.value){
-    startStopwatch();
-  }
-
-});
-
-
-onUnmounted(() => {
-  window.removeEventListener("keyup", onKeyup);
-});
-
-async function getWordFromApi(): Promise<string> {
-  let wordUrl = "word/wordOfTheDay";
-  const response = await Axios.get(wordUrl);
-  return response.data;
+function releaseEffect() {
+  isPressed.value = false;
 }
-
-function onKeyup(event: KeyboardEvent) {
-  if (!showUserNameDialog.value) {
-    if (event.key === "Enter") {
-      game.submitGuess();
-    } else if (event.key == "Backspace") {
-      game.removeLastLetter();
-    } else if (event.key.match(/[A-z]/) && event.key.length === 1) {
-      game.addLetter(event.key.toUpperCase());
-    }
-  }
-
-}
-
-async function checkUserNameLocalStorage() {
-  
-  if(nuxtStorage.localStorage.getData("userName") != null){
-    nameUserNameDialog.value = nuxtStorage.localStorage.getData("userName");
-    showUserNameDialog.value = false;
-  }
-  else {
-    nameUserNameDialog.value = "Guest";
-    showUserNameDialog.value = true;
-  }
-
-}
-
-async function checkUserName() {
-  const response = await Axios.get("/Player/Player?playerName=" + nameUserNameDialog.value);
-  const player: Player = response.data;
-
-  if(player.name == "Guest"){
-    showUserNameDialog.value = true;
-  }
-}
-
-function postScore() {
-    console.log("PostScoreEntered")
-    //console.log("Stopwatch seconds: " + stopwatch.seconds.value)
-    var attempts = 0;
-    if(game.gameState == GameState.Won){
-      attempts = game.guessIndex + 1;
-    }else{
-      attempts = game.guesses.length + 5;
-    }
-    Axios.post("Player/AddPlayer", {
-      Name: nameUserNameDialog.value,
-      GameCount: 1,
-      AverageAttempts: attempts,
-      AverageSecondsPerGame: seconds.value,
-    })
-    .then(res => {
-      console.log(res.data);
-    })
-    .catch(err => {
-      console.log("Error" + err);
-    })
-}
-
-function updateWordDate() {
-    console.log("UpdateWordDateEntered")
-    var attempts = 0;
-    if(game.gameState == GameState.Won){
-      attempts = game.guessIndex + 1;
-    }else{
-      attempts = game.guesses.length + 5;
-    }
-    var nameList = new Array(nameUserNameDialog.value);
-    const today = new Date();
-    var curDate = today.getMonth() + "/" + today.getDay() + "/" + today.getFullYear();
-    Axios.post("WordDate/AddWordDate", {
-      Date: curDate,
-      GameCount: 1,
-      AverageAttempts: attempts,
-      AverageSeconds: seconds.value,
-      //PlayerList: nameList
-    })
-    .then(res => {
-      console.log(res.data);
-    })
-    .catch(err => {
-      console.log("Error" + err);
-    })
-}
-watch(() => game.gameState, (value) => {
-  if(value == GameState.Won || value == GameState.Lost){
-    if(nameUserNameDialog.value == "Guest"){
-      showUserNameDialog.value = true;
-    }
-    
-    postScore();
-    updateWordDate();
-    stopStopwatch();
-  }
-
-  if(value == GameState.Initializing){
-    resetStopwatch();
-  }
-});
-
-
-// Watch for showUserNameDialog, pause stopwatch if dialog is shown.
-watch(() => showUserNameDialog.value, (value) => {
-  if(value == false) {
-    startStopwatch();
-  } else {
-    stopStopwatch();
-  }
-})
-
-
-// Stopwatch implementation
-let running = false;
-
-const seconds = ref(0);
-const interval = ref<number | undefined>();
-
-function startStopwatch() {
-  if(running) return;
-
-  interval.value = setInterval(() => {
-    seconds.value++;
-  }, 1000);
-
-  running = true;
-}
-
-function stopStopwatch() {
-  if(interval.value) {
-    clearInterval(interval.value);
-    interval.value = undefined;
-  }
-
-  running = false;
-}
-
-function resetStopwatch() {
-  seconds.value = 0;
-
-  if(interval.value) {
-    clearInterval(interval.value);
-    interval.value = undefined;
-  }
-
-  running = false;
-  startStopwatch();
-}
-
 
 
 </script>
+
+<style scoped>
+.v-card {
+  cursor: pointer;
+  transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+}
+
+.v-card:hover {
+  transform: scale(1.05); /* Scale up the card slightly */
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.25); /* Enhance shadow for depth */
+}
+
+.game-card {
+  transition: transform 0.1s ease;
+  cursor: pointer;
+  min-height: 300px;
+}
+
+@media(max-width: 600px) {
+  .game-card {
+    min-height: 200px;
+  }
+}
+
+.game-card:active {
+  transform: scale(0.95);
+}
+</style>
