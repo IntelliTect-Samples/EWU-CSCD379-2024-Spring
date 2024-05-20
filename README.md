@@ -1,3 +1,5 @@
+Link to site: https://zealous-sky-020793910.5.azurestaticapps.net
+
 # EWU-CSCD378-2022-Spring
 
 ## Assignment 4
