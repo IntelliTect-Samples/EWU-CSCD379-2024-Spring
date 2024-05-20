@@ -6,7 +6,7 @@
   </div>
   <v-container class="d-flex justify-center align-center">
     <v-img 
-      src="../public/HillBiddle2.png"
+      src="../public/HillBiddle1.png"
       alt="Logo"
       :height="imageHeight"
       :width="imageWidth"
