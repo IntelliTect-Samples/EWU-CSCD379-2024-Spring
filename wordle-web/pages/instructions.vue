@@ -3,7 +3,6 @@
     <v-card
       color="secondary"
       class="mx-auto pa-8 rounded text-center"
-      elevation="4"
     >
       <v-card-title class="text-wrap text-h5">
         How to play Aesthetic Wordle
