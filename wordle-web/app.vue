@@ -54,7 +54,7 @@
           />
 
           <v-list-item
-            prepend-icon="mdi-trophy"
+            prepend-icon="mdi-periodic-table"
             title="leaderboard"
             @click="router.push('/leaderboard')"
           />
