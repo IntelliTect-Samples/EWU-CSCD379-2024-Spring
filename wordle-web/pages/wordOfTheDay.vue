@@ -1,5 +1,5 @@
 <template>
-    <Game :option="GameOption.WordOfTheDay" />
+
 
     <v-container class="game-container" fluid>
         <v-progress-linear v-if="game.isBusy" color="primary" indeterminate />
