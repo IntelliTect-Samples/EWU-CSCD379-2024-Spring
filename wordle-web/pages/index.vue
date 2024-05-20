@@ -1,26 +1,31 @@
 <template>
-  <v-container class="game-container" fluid>
-    <v-card color="primary">
-      <v-card-title>
-        <h1 class="display-1 text-md-center" color="primary">Wordle</h1>
-      </v-card-title>
-      <v-card-text>
-        <p class="display-2 text-md-center" color ="primary">Welcome to the Game of Words</p>
-      </v-card-text>
-    </v-card>
-      <v-divider>
-      </v-divider>
-      <v-card-actions>
-        <v-box class="elevation-3" color="primary">
-          <v-btn color="secondary" @click="router.push('../wordOfTheDay')">Wordle - Word of the Day</v-btn>
-        </v-box>
-      </v-card-actions>
-      <v-card-actions>
-        <v-box class="elevation-3" color="primary">
-          <v-btn color="secondary" @click="router.push('../lastTenDays')">Wordle - Last 10 Days</v-btn>
-        </v-box>
-      </v-card-actions>
-  </v-container>
+    <v-container class="game-container" fluid>
+        <v-card color="primary">
+            <v-card-title>
+                <h1 class="display-1 text-md-center" color="primary">Wordle</h1>
+            </v-card-title>
+            <v-card-text>
+                <p class="display-2 text-md-center" color="primary">Welcome to the Game of Words</p>
+            </v-card-text>
+        </v-card>
+        <v-divider>
+        </v-divider>
+        <v-card-actions>
+            <v-box class="elevation-3" color="primary">
+                <v-btn color="secondary" @click="router.push('../wordOfTheDay')">Wordle - Word of the Day</v-btn>
+            </v-box>
+        </v-card-actions>
+        <v-card-actions>
+            <v-box class="elevation-3" color="primary">
+                <v-btn color="secondary" @click="router.push('../randomWord')">Wordle - Random Word</v-btn>
+            </v-box>
+        </v-card-actions>
+        <v-card-actions>
+            <v-box class="elevation-3" color="primary">
+                <v-btn color="secondary" @click="router.push('../lastTenDays')">Wordle - Last 10 Days</v-btn>
+            </v-box>
+        </v-card-actions>
+    </v-container>
 
 </template>
 

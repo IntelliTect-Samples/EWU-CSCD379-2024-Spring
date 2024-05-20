@@ -1,6 +1,5 @@
 <template>
-
- 
+    <Game :option="GameOption.Random" />
 
     <v-container class="game-container" fluid>
         <v-progress-linear v-if="game.isBusy" color="primary" indeterminate />
@@ -11,7 +10,7 @@
                      tile>
                 <h3>
                     You've
-                    {{ game.gameState == GameState.Won ? "Won! 🥳" : "Lost... 😭" }}
+                    {{ game.gameState == GameState.Won ? "Won! ??" : "Lost... ??" }}
                 </h3>
                 <v-card-text>
                     The word was: <strong>{{ game.secretWord }}</strong>
@@ -62,8 +61,8 @@
 </template>
 
 <script setup lang="ts">
-    import { Game, GameOption, GameState } from "../scripts/game";
-   // import { GameOption } from '~/scripts/game';
+    import { Game, GameState } from "../scripts/game";
+    import { GameOption } from '~/scripts/game';
 
 const game = reactive(new Game());
 game.startNewGame();
@@ -92,80 +91,80 @@ function onKeyup(event: KeyboardEvent) {
 
 <style scoped>
 
-.game-container {
-  background-image: url("../public/landingPageImage.jpg");
-  background-size: cover;
-  background-position: center;
-  min-height: 100vh;
-}
+        .game-container {
+            background-image: url("../public/landingPageImage.jpg");
+            background-size: cover;
+            background-position: center;
+            min-height: 100vh;
+        }
 
-@media screen and (max-width: 600px){
-  .game-container {
-    background-size: contain;
-  }
-}
+        @media screen and (max-width: 600px) {
+            .game-container {
+                background-size: contain;
+            }
+        }
 
-@media screen and (max-width: 1440px){
-  .game-container {
-    background-size: cover;
-  }
-}
-
-
+        @media screen and (max-width: 1440px) {
+            .game-container {
+                background-size: cover;
+            }
+        }
 
 
 
 
 
-/*
 
-.desktop1080p-container{
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 20px;
-}
 
-.tablet-ipadAir-container{
-  max-width: 768px;
-  margin: 0 auto;
-  padding: 15px;
-}
+        /*
 
-.mobile-galaxyS20-container{
-  max-width: 400px;
-  margin: 0 auto;
-  padding: 10px;
-}
+    .desktop1080p-container{
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 20px;
+    }
 
-.mobile-iPhoneSE-container{
-  max-width: 320px;
-  margin: 0 auto;
-  padding: 5px;
-}
+    .tablet-ipadAir-container{
+      max-width: 768px;
+      margin: 0 auto;
+      padding: 15px;
+    }
 
-// Responsive Styles 
-@media (min-width: 1024px) {
-  // Styles for iPad Air and larger 
-  .tablet-ipadAir-container,
-  .desktop1080p-container {
-    font-size: 16px;
-  }
-}
+    .mobile-galaxyS20-container{
+      max-width: 400px;
+      margin: 0 auto;
+      padding: 10px;
+    }
 
-@media (max-width: 1023px) and (min-width: 576px) {
-  // Styles for Samsung Galaxy S20 Ultra Super Mega Excellent 
-  .mobile-galaxyS20-container {
-    // Add styles here 
-    font-size: 14px;
-  }
-}
+    .mobile-iPhoneSE-container{
+      max-width: 320px;
+      margin: 0 auto;
+      padding: 5px;
+    }
 
-@media (max-width: 575px) {
-  // Styles for iPhone SE 
-  .mobile-iPhoneSE-container {
-    // Add styles here 
-    font-size: 12px;
-  }
-}
-*/
+    // Responsive Styles
+    @media (min-width: 1024px) {
+      // Styles for iPad Air and larger
+      .tablet-ipadAir-container,
+      .desktop1080p-container {
+        font-size: 16px;
+      }
+    }
+
+    @media (max-width: 1023px) and (min-width: 576px) {
+      // Styles for Samsung Galaxy S20 Ultra Super Mega Excellent
+      .mobile-galaxyS20-container {
+        // Add styles here
+        font-size: 14px;
+      }
+    }
+
+    @media (max-width: 575px) {
+      // Styles for iPhone SE
+      .mobile-iPhoneSE-container {
+        // Add styles here
+        font-size: 12px;
+      }
+    }
+    */
 </style>
