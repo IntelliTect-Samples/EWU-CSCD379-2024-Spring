@@ -5,7 +5,7 @@ namespace Wordle.Api.Services;
 
 public class WordOfTheDayService
 {
-    private readonly List<string> words = LoadWordList();
+    private readonly List<string> words = WordList();
     private static object _lock = new();
 
     public WordleDbContext Db { get; set; }
@@ -15,27 +15,39 @@ public class WordOfTheDayService
         Db = db;
     }
 
-    public string GetRandomWord()
+    public async Task<Word> GetRandomWord()
     {
+        var numberOfWords = await Db.Words.CountAsync();
+
         Random random = new();
-        int index = random.Next(words.Count);
-        return words[index];
+        int randomIndex = random.Next(numberOfWords);
+
+        return await Db.Words.Skip(randomIndex).FirstAsync();
     }
 
     public async Task<string> GetWordOfTheDay(DateOnly date)
     {
-        WordOfTheDay? wordOfTheDay = await Db.WordsOfTheDays.FirstOrDefaultAsync(words => words.Date == date);
+        WordOfTheDay? wordOfTheDay = await Db.WordsOfTheDays
+            .Include(wordOfTheDay => wordOfTheDay.Word)
+            .FirstOrDefaultAsync(wordOfTheDay => wordOfTheDay.Date == date);
 
         if (wordOfTheDay is null)
         {
             lock (_lock)
             {
-                wordOfTheDay = Db.WordsOfTheDays.FirstOrDefault(words => words.Date == date);
+                wordOfTheDay = Db.WordsOfTheDays
+                    .Include(wordOfTheDay => wordOfTheDay.Word)
+                    .FirstOrDefault(wordOfTheDay => wordOfTheDay.Date == date);
+
                 if (wordOfTheDay is null)
                 {
+                    var randomWordTask = GetRandomWord();
+                    randomWordTask.Wait();
+                    var randomWord = randomWordTask.Result;
+
                     wordOfTheDay = new()
                     {
-                        Word = GetRandomWord(),
+                        Word = randomWord,
                         Date = date
                     };
 
@@ -45,11 +57,11 @@ public class WordOfTheDayService
             }
         }
 
-        return wordOfTheDay.Word;
+        return wordOfTheDay.Word!.Text;
     }
 
     #region WordList
-    public static List<string> LoadWordList()
+    public static List<string> WordList()
     {
         return [
     "aargh",
