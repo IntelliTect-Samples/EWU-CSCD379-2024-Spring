@@ -11,8 +11,7 @@ namespace Wordle.Api.Migrations
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.DropTable(
-                name: "Words");
+            migrationBuilder.Sql("DELETE FROM WordOfTheDay");
 
             migrationBuilder.DropColumn(
                 name: "Word",
