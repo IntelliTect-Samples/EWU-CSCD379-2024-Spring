@@ -10,6 +10,8 @@
 
         public int TotalTimesPlayed { get; set; }
 
+        public double AverageSeconds { get; set; }
+
         public int TotalWins { get; set; }
 
         public int TotalLosses { get => TotalTimesPlayed - TotalWins; }

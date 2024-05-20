@@ -3,14 +3,9 @@ using Wordle.Api.Dtos;
 using Wordle.Api.Models;
 
 namespace Wordle.Api.Services;
-public class GameService
+public class GameService(WordleDbContext db)
 {
-    public WordleDbContext Db { get; set; }
-
-    public GameService(WordleDbContext db)
-    {
-        Db = db;
-    }
+    public WordleDbContext Db { get; set; } = db;
 
     public async Task<Game> PostGameResult(GameDto gameDto)
     {
@@ -31,8 +26,9 @@ public class GameService
             // Attempt to find the WOTD that best matches todays date
             WordOfTheDay = word.WordsOfTheDays
                 .OrderByDescending(wotd => wotd.Date)
-                .FirstOrDefault(wotd => wotd.Date < today.AddDays(-1)),
-            Word = word
+                .FirstOrDefault(wotd => wotd.Date <= today),
+            Word = word,
+            Seconds = gameDto.Seconds,
         };
 
         Db.Games.Add(game);
@@ -49,6 +45,7 @@ public class GameService
             Word = game.Word!.Text,
             AverageGuesses = await gamesForWord.AverageAsync(g => g.Attempts),
             TotalTimesPlayed = await gamesForWord.CountAsync(),
+            AverageSeconds = await gamesForWord.AverageAsync(g => g.Seconds),
             TotalWins = await gamesForWord.CountAsync(g => g.IsWin)
         };
 
