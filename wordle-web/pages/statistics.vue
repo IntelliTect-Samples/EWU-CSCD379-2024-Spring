@@ -11,6 +11,7 @@
   <v-table>
           <tbody>
             <tr>
+              <td class="text-center">DateOfTheWord</td>
               <td class="text-center">Average Plays</td>
               <td class="text-center">Average Score</td>
               <td class="text-center">Average Seconds</td>
