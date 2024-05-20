@@ -20,8 +20,9 @@
           <WordleStatsCard
             v-else
             :hasPlayed="false"
-            :gameState="gameStats!"
+            :gameStat="gameStats!"
             :isDaily="true"
+            :inCurrentGame="true"
           />
         </v-col>
         <v-col lg="4">
@@ -343,6 +344,7 @@ async function fetchDailyStats(date: Date) {
         totalGames: data.totalTimesPlayed,
         totalWins: data.totalWins,
         totalLosses: data.totalLosses,
+        averageSeconds: data.averageSeconds,
         date: data.date,
         word: data.word,
         averageGuesses: data.averageGuesses,

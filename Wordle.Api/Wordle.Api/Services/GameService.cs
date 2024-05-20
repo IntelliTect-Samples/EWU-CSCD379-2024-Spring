@@ -86,7 +86,8 @@ public class GameService(WordleDbContext db)
                 Date = word!.Date,
                 AverageGuesses = wordOfTheDayGames.Average(g => g.Attempts),
                 TotalTimesPlayed = wordOfTheDayGames.Count(),
-                TotalWins = wordOfTheDayGames.Count(g => g.IsWin)
+                TotalWins = wordOfTheDayGames.Count(g => g.IsWin),
+                AverageSeconds = wordOfTheDayGames.Average(w => w.Seconds)
             };
 
         }
@@ -97,7 +98,8 @@ public class GameService(WordleDbContext db)
                 Date = dateOnly,
                 AverageGuesses = 0,
                 TotalTimesPlayed = 0,
-                TotalWins = 0
+                TotalWins = 0,
+                AverageSeconds = 0
             };
         }
 
