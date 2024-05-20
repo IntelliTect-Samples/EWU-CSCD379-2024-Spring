@@ -25,7 +25,7 @@ public class GameController : ControllerBase
         return stats;
     }
 
-    [HttpPost("WordOfTheDayStats/{date}")]
+    [HttpGet("WordOfTheDayStats/{date}")]
     public async Task<GameStatsDto> GetWordOfTheDayStats (DateTime date)
     {
         var stats = await GameService.WordOfDayStats(date);

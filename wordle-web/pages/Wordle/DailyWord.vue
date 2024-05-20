@@ -7,11 +7,23 @@
     />
     <v-sheet v-else color="transparent">
       <v-card-title class="text-h4 text-center text-primary">
-        Random Wordle</v-card-title
+        Daily Wordle</v-card-title
       >
 
       <v-row>
-        <v-col lg="4" v-if="$vuetify.display.mdAndUp" />
+        <v-col lg="4" v-if="$vuetify.display.mdAndUp">
+          <v-skeleton-loader
+            type="card"
+            v-model="statsLoaded"
+            v-if="statsLoaded"
+          />
+          <WordleStatsCard
+            v-else
+            :hasPlayed="false"
+            :gameState="gameStats!"
+            :isDaily="true"
+          />
+        </v-col>
         <v-col lg="4">
           <GameBoardGuess
             v-for="(guess, i) of game.guesses"
@@ -159,12 +171,15 @@ import { Game, GameState } from "../../scripts/game";
 import { Stopwatch } from "~/scripts/stopwatch";
 import nuxtStorage from "nuxt-storage";
 import Axios from "axios";
+import { type GameStats } from "~/Models/GameStas";
+import { format } from "date-fns";
 import {
   playClickSound,
   playEnterSound,
   playLoseSound,
   playWinSound,
 } from "../../scripts/soundUtils";
+import WordleStatsCard from "~/components/WordleStatsCard.vue";
 
 const truncate = (text: string, length: number, clamp: string) => {
   clamp = clamp || "...";
@@ -181,6 +196,8 @@ const playerName = ref("");
 const showNameDialog = ref(false);
 const validWordsNum = ref(0);
 const itemSelect = ref("");
+const gameStats = ref<GameStats>();
+const statsLoaded = ref(true);
 
 watch(itemSelect, () => {
   if (itemSelect.value === "showNameDialog") {
@@ -286,7 +303,7 @@ onMounted(() => {
   const defaultName = nuxtStorage.localStorage.getData("name");
   showNameDialog.value = defaultName === null || defaultName === "Guest";
   playerName.value = showNameDialog.value ? "Guest" : defaultName;
-
+  fetchDailyStats(new Date());
   stopwatch.value.start();
 });
 
@@ -314,5 +331,28 @@ function onKeyup(event: KeyboardEvent) {
     playClickSound();
     game.addLetter(event.key.toUpperCase());
   }
+}
+async function fetchDailyStats(date: Date) {
+  const formattedDate = format(date, "MM-dd-yyyy");
+  let url = "game/WordOfTheDayStats/" + formattedDate;
+
+  const game = await Axios.get(url)
+    .then((res: { data: any }) => res.data)
+    .then((data: any) => {
+      const gameStatsData: GameStats = {
+        totalGames: data.totalTimesPlayed,
+        totalWins: data.totalWins,
+        totalLosses: data.totalLosses,
+        date: data.date,
+        word: data.word,
+        averageGuesses: data.averageGuesses,
+      };
+      console.log(gameStatsData); // Logging the assigned value
+      return gameStatsData; // Return the data for the next `then` block
+    })
+    .catch((err) => console.error(err));
+
+  gameStats.value = game!;
+  statsLoaded.value = false;
 }
 </script>

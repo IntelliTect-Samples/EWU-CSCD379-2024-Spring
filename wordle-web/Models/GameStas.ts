@@ -1,6 +1,6 @@
 export interface GameStats {
-  Date: Date;
-  Word: string;
+  date: Date;
+  word: string;
   averageGuesses: number;
   totalGames: number;
   totalWins: number;

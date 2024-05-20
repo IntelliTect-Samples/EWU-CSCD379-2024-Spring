@@ -77,10 +77,10 @@ public class GameService
             .Include(wotd => wotd.Games)
             .FirstOrDefaultAsync(wotd => wotd.Date == dateOnly);
 
-        IEnumerable<Game> wordOfTheDayGames = [];
+        IEnumerable<Game> wordOfTheDayGames;
         GameStatsDto stats;
 
-        if (word is not null)
+        if (word is not null && word.Games.Count != 0)
         {
             wordOfTheDayGames =  word.Games;
 
