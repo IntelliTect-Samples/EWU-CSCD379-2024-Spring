@@ -1,25 +1,23 @@
 <template>
-  
-  <v-container class="index" >
-    <!-- <v-progress-linear
+  <!-- <v-progress-linear
       v-if="game.gameState === GameState.Initializing"
       color="primary"
       indeterminate
     /> -->
+  <v-container class="index" >
     <v-card to="/logo" style="cursor: pointer">
       <v-card-title class = "banner" >
         <h1 class="display-1 text-md-center" color="secondary">HILLBIDDLE</h1>
       </v-card-title>
     </v-card>
-    
   </v-container>
   <v-divider :width="cardWidth"> </v-divider>
   <br><br>
   <v-container class="d-flex justify-center align-center;">
     <div class="d-flex justify-center align-center; image-container" >
       <v-img
-        :height="imageHeight"
-        :width="imageWidth"
+        :height="computedImageHeight"
+        :width="computedImageWidth"
         src="../public/landingpage-1.png"
       >
       </v-img>
@@ -27,16 +25,16 @@
   </v-container>
 
   <v-container>
-    <v-card-actions>
-      <<v-btn color="rgb(129, 197, 4)" to="/randomWordGame"
+    <v-card-actions class="d-flex flex-column flex-md-row justify-center align-center">
+      <v-btn color="rgb(129, 197, 4)" to="/randomWordGame"
         >Play Random Word</v-btn
-      >>
-      <v-divider> </v-divider>
-      <
+      >
+      <v-divider class="my-2 my-md-0 mx-md-2"> </v-divider>
+      
       <v-btn color="rgb(1, 156, 228)" to="/WordOfTheDay"
         >Play Wordle of the Day</v-btn
       >
-      >
+      
     </v-card-actions>
   </v-container>
 
@@ -48,25 +46,41 @@
 </template>
 
 <script setup lang="ts">
+import { ref, computed } from 'vue';
 import { useDisplay } from "vuetify";
 const display = useDisplay();
-const imageHeight = ref(625);
-const imageWidth = ref(1800);
-const cardWidth = ref(1200);
+// const imageHeight = ref(625);
+// const imageWidth = ref(1800);
+// const cardWidth = ref(1200);
+
+const cardWidth = ref('80%');
+
+const computedImageHeight = computed(() => {
+  if (display.mdAndUp) return 625;
+  if (display.smAndDown) return 300;
+  return 400;
+});
+
+const computedImageWidth = computed(() => {
+  if (display.mdAndUp) return 1800;
+  if (display.smAndDown) return '100%';
+  return '100%';
+});
 </script>
 
 <style>
 .image-container {
-  width: 2000px;
+  width: 100%;
+  max-width: 1800px;
   animation: peruPulse 2s infinite;
 }
 .index {
-  width: 2000px;
+  width: 100%;
   animation: classicPulse 2s infinite;
 }
 
 .simpleButton {
-  width: 2000px;
+  width: 100%;
   animation: classicButton 2s infinite;
 }
 
