@@ -10,11 +10,16 @@
       width="75%"
     />
     <div v-else>
-      <v-row class="d-flex flex-row justify-center">
-        <v-col>
+      <v-row cols="12">
+        <v-col
+          v-for="(gameStat, i) in gameStats"
+          :key="i"
+          cols="12"
+          sm="12"
+          md="6"
+          lg="4"
+        >
           <wordle-stats-card
-            v-for="(gameStat, i) in gameStats"
-            :key="i"
             :gameStat="gameStat"
             :is-daily="true"
             :isCurrentGame="false"
