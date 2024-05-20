@@ -8,6 +8,7 @@
           <v-card 
           class="game-card pa-5 d-flex flex-column align-center justify-center" 
           outlined 
+          @click="router.push('/WordOfTheDayGame')"
           @mousedown="pressEffect"
           @mouseup="releaseEffect"
           @mouseleave="releaseEffect"
@@ -42,6 +43,7 @@
 <script setup lang="ts">
 
 const router = useRouter();
+
 const isPressed = ref(false);
 
 function pressEffect() {

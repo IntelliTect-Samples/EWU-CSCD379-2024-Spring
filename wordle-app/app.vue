@@ -1,19 +1,22 @@
 <template>
   <NuxtLayout>
+
+    <!-- Video background -->
+    <video autoplay muted loop id="myVideo" style="position: absolute; right: 0; bottom: 0; min-width: 100%; min-height: 100%;">
+      <source src="./public/istockphoto-532528714-640_adpp_is.mp4" type="video/mp4">
+      Your browser does not support HTML5 video.
+    </video>
+
     <v-app>
       <v-app-bar color="primary" :elevation="2">
         <v-app-bar-title @click="$router.push('/')" style="cursor: pointer">
           <v-img
-            src="/image.png"
+            src="./public/image-Background-Removed.png"
             alt="Logo"
             max-width="180"
             max-height="95"
           ></v-img>
       </v-app-bar-title>
-        <!-- <template v-slot:prepend>
-          <v-btn icon = mdi-book
-            @click="router.push('/')"></v-btn>
-        </template> -->
         
         <v-btn icon="mdi-cog" @click="showSettingsDialog = true" />
         <!-- <v-btn icon="mdi-cog" @click="toggleMenu" /> -->
@@ -33,6 +36,7 @@
         <NuxtPage />
       </v-main>
     </v-app>
+    
   </NuxtLayout>
   <SettingsDialog v-model="showSettingsDialog" />
 </template>
