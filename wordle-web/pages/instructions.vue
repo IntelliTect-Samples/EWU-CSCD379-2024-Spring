@@ -32,7 +32,7 @@
       There is two modes of the game, one that is a random word each time you play, another is word of the day mode which only has one word per day based of time. 
     </v-card-text>
 
-    <v-btn @click="router.go(-1)" class="ma-4" color="secondary">HOME</v-btn>
+    <v-btn @click="router.go(-1)" class="ma-4" color="secondary">Take me Back</v-btn>
   </v-card>
 </template>
 <script setup lang="ts">
