@@ -68,7 +68,11 @@
             title="Help"
             @click="showHelpDialog = true"
           />
-
+          <v-list-item
+            prepend-icon="mdi-ufo"
+            title="LOGO"
+            @click="router.push('/logo')"
+          />
           <v-list-item
             prepend-icon="mdi-help-circle"
             title="About"
