@@ -147,7 +147,7 @@
 </template>
 
 <script setup lang="ts">
-import { Game, GameState } from "../scripts/game";
+import { Game, GameState } from "../../scripts/game";
 import { Stopwatch } from "~/scripts/stopwatch";
 import nuxtStorage from "nuxt-storage";
 import Axios from "axios";
@@ -156,7 +156,7 @@ import {
   playEnterSound,
   playLoseSound,
   playWinSound,
-} from "../scripts/soundUtils";
+} from "../../scripts/soundUtils";
 
 const showWordsList = ref(false);
 const isGameOver = ref(false);

@@ -9,14 +9,14 @@
       <v-btn
         class="glow-btn pa-2 px-5 mx-3 mb-4"
         color="white"
-        to="/RandomWordle"
+        to="/Wordle/RandomWord"
       >
         Random Wordle
       </v-btn>
       <v-btn
         class="glow-btn pa-2 px-5 mx-3 mb-4"
         color="white"
-        to="/DailyWordle"
+        to="/Wordle/DailyWord"
       >
         Daily Wordle
       </v-btn>
@@ -44,10 +44,6 @@ const drawer = ref(false);
 const logoPath = computed(() => {
   const themeName = theme.global.name.value.replace("Dark", "");
   return logoPaths[themeName] || logoPaths["Standard"];
-});
-
-watch(theme.global.name, (newVal) => {
-  //watcher is just here to react to changes. logo update is handled by the computed property.
 });
 
 onMounted(() => {

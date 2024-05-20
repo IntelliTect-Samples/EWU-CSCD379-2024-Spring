@@ -9,6 +9,7 @@
       <v-card-title class="text-h4 text-center text-primary">
         Random Wordle</v-card-title
       >
+
       <v-row>
         <v-col lg="4" v-if="$vuetify.display.mdAndUp" />
         <v-col lg="4">
@@ -154,7 +155,7 @@
 </template>
 
 <script setup lang="ts">
-import { Game, GameState } from "../scripts/game";
+import { Game, GameState } from "../../scripts/game";
 import { Stopwatch } from "~/scripts/stopwatch";
 import nuxtStorage from "nuxt-storage";
 import Axios from "axios";
@@ -163,7 +164,7 @@ import {
   playEnterSound,
   playLoseSound,
   playWinSound,
-} from "../scripts/soundUtils";
+} from "../../scripts/soundUtils";
 
 const truncate = (text: string, length: number, clamp: string) => {
   clamp = clamp || "...";

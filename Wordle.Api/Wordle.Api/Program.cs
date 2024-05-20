@@ -37,6 +37,7 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddScoped<WordOfTheDayService>();
 builder.Services.AddScoped<PlayerServices>();
 builder.Services.AddScoped<WordStatisticsService>();
+builder.Services.AddScoped<GameService>();
 
 // Identity Services
 builder.Services.AddIdentityCore<AppUser>(options => options.SignIn.RequireConfirmedAccount = false)

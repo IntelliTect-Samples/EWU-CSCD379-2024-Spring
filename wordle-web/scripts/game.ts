@@ -24,7 +24,7 @@ export class Game {
   constructor(maxAttempts: number = 6) {
     this.maxAttempts = maxAttempts;
     this.isBusy = true;
-    this.gameState = GameState.Playing;
+    this.gameState = GameState.Initializing;
   }
 
   public async startNewGame(word?: string | undefined) {
@@ -128,7 +128,7 @@ export class Game {
         attempts: this.guessIndex + 1,
         isWin: this.gameState === GameState.Won,
         word: this.secretWord,
-      })
+      });
       this.stats = new GameStats();
       Object.assign(this.stats, result.data);
       console.log(this.stats);
