@@ -9,6 +9,9 @@
         </template>
         <v-btn @click="showUserNameDialog = true">{{ userName }}</v-btn>
         <UserNameDialog v-model="showUserNameDialog" />
+        <v-btn icon @click="showSettingsDialog = true">
+          <v-icon>mdi-cog</v-icon>
+        </v-btn>
         <v-menu>
           <template v-slot:activator="{ props }">
             <v-btn icon v-bind="props">
@@ -21,9 +24,6 @@
             </v-list-item>
           </v-list>
         </v-menu>
-        <v-btn icon @click="showSettingsDialog = true">
-          <v-icon>mdi-cog</v-icon>
-        </v-btn>
         <SettingsDialog v-model="showSettingsDialog" />
       </v-app-bar>
       <v-main>
