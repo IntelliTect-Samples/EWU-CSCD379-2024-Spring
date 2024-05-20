@@ -7,7 +7,7 @@
     />
     <v-sheet v-else color="transparent">
       <v-card-title class="text-h4 text-center text-primary">
-        Radnom Wordle</v-card-title
+        Random Wordle</v-card-title
       >
       <v-row>
         <v-col lg="4" v-if="$vuetify.display.mdAndUp" />
