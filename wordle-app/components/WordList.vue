@@ -26,12 +26,8 @@
       </v-card>
     </v-bottom-sheet>
     <v-btn
-      position="fixed"
-      location="bottom left"
-      class="mr-3 mb-3"
       size="default"
       color="primary"
-      elevation="8"
       @click="modelValue = true"
       >Valid Words Left: {{ validWords().length }}</v-btn
     >
