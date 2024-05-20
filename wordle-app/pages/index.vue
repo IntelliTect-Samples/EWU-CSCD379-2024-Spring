@@ -207,7 +207,7 @@ function updateWordDate() {
       GameCount: 1,
       AverageAttempts: attempts,
       AverageSeconds: seconds.value,
-      PlayerList: nameList
+      //PlayerList: nameList
     })
     .then(res => {
       console.log(res.data);

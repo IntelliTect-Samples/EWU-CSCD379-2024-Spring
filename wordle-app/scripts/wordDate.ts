@@ -4,5 +4,5 @@ export interface WordDate {
 	gameCount: number;
 	averageAttempts: number;
 	averageSeconds: number;
-    playerList: Array<string>;
+    //playerList: Array<string>;
 }

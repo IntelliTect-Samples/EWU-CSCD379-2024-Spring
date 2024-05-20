@@ -15,16 +15,16 @@ public class WordDateService(WordleDbContext Db)
 
     public async Task AddWordDate(WordDateDTO wordDateDTO)
     {
-	    WordDate? existingWordDate = Db.WordDates.FirstOrDefault(wordDate => wordDate.date == wordDateDTO.Date);
+	    WordDate? existingWordDate = Db.WordDates.FirstOrDefault(wordDate => wordDate.Date == wordDateDTO.Date);
 
 	    if (existingWordDate != null)
 	    {   //GameCount, AverageAttempts, AverageSeconds, PlayerList
             wordDateDTO.GameCount = existingWordDate.GameCount + 1;
             wordDateDTO.AverageAttempts = (((existingWordDate.AverageAttempts * existingWordDate.GameCount) + wordDateDTO.AverageAttempts)/ wordDateDTO.GameCount);
             wordDateDTO.AverageSeconds = (((existingWordDate.AverageSeconds * existingWordDate.GameCount) + wordDateDTO.AverageSeconds) / wordDateDTO.GameCount);
-            string name = wordDateDTO.PlayerList[0];
-            wordDateDTO.PlayerList = existingWordDate.PlayerList;
-            wordDateDTO.PlayerList.push(name);
+            //string name = wordDateDTO.PlayerList[0];
+            //wordDateDTO.PlayerList = existingWordDate.PlayerList;
+            //wordDateDTO.PlayerList.push(name);
 		    Db.WordDates.Entry(existingWordDate).CurrentValues.SetValues(wordDateDTO);
 	    }
 	    else
@@ -35,7 +35,7 @@ public class WordDateService(WordleDbContext Db)
 			    GameCount = wordDateDTO.GameCount,
 			    AverageAttempts = wordDateDTO.AverageAttempts,
 			    AverageSeconds = wordDateDTO.AverageSeconds,
-                PlayerList = wordDateDTO.PlayerList
+                //PlayerList = wordDateDTO.PlayerList
 		    };
 		    await Db.WordDates.AddAsync(wordDate);
 	    }
@@ -46,6 +46,6 @@ public class WordDateService(WordleDbContext Db)
     
     public async Task<WordDate[]> GetRecentWordDates(int numberOfWordDates)
     {
-        return await Db.WordDate.OrderBy(p => p.Date).Take(numberOfWordDates).ToArrayAsync();
+        return await Db.WordDates.OrderBy(p => p.Date).Take(numberOfWordDates).ToArrayAsync();
     }
 }
