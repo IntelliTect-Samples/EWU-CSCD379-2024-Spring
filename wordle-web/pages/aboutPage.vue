@@ -1,11 +1,11 @@
 <template>
   <div class="about-container">
-    <div class="about-content" style="text-decoration-line: underline">
+    <div class="about-content">
       <h1 style="font-size: 2em">Welcome to the About Page</h1>
     </div>
   </div>
-  <v-card color = "secondary">
-  <p class="about-container" style="text-align: justify">
+  
+  <v-card-text class="about-container" style="text-align: justify">
     <br />
     This project is for EWU's 379 course. We're building on the wordle that we
     started in class, and making it more functional.<br />
@@ -15,17 +15,15 @@
     <br />
     Meg rocks and makes coding fun and easy to follow. Thanks Meg!
     <br />
-  </p>
-</v-card>
-  <v-card class="vertical-center" color="secondary">
+  </v-card-text>
+<div class="d-flex justify-center mt-3 mb-5" >
     <v-btn
       prepend-icon="mdi-home-export-outline"
       @click="router.push('/')"
       color="primary"
-      >Home</v-btn
-    >
+      >Home</v-btn>
+      </div>
     <p style="text-align: center"><br />Click above to go back home</p>
-</v-card>
 </template>
 
 <script setup lang="ts">
