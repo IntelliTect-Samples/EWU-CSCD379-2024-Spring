@@ -7,7 +7,7 @@
   <v-container class="index" >
     <v-card to="/logo" style="cursor: pointer">
       <v-card-title class = "banner" >
-        <h1 class="display-1 text-md-center" color="secondary">HILLBIDDLE</h1>
+        <h1 class="display-1 text-md-center hillbiddle-title" color="secondary">HILLBIDDLE</h1>
       </v-card-title>
     </v-card>
   </v-container>
@@ -53,7 +53,7 @@ const display = useDisplay();
 // const imageWidth = ref(1800);
 // const cardWidth = ref(1200);
 
-const cardWidth = ref('80%');
+const cardWidth = ref('100%');
 
 const computedImageHeight = computed(() => {
   if (display.mdAndUp) return 625;
@@ -69,28 +69,32 @@ const computedImageWidth = computed(() => {
 </script>
 
 <style>
+.index {
+  width: 100%;
+  justify-content: center;
+  align-items: center;
+  animation: classicPulse 2s infinite;
+}
 .image-container {
   width: 100%;
   max-width: 1800px;
   animation: peruPulse 2s infinite;
 }
-.index {
-  width: 100%;
-  animation: classicPulse 2s infinite;
-}
-
 .simpleButton {
   width: 100%;
   animation: classicButton 2s infinite;
 }
 
 .banner {
+  display: flex;
+  justify-content: center;
   padding: 20px;
   background-color: #8747ff21;
   color: rgb(19, 81, 161);/*blanchedalmond*/
   font-size: 24px;
   transform-origin: center center;
   animation: ban 2s infinite;
+  
 }
 .bannerSmall {
   padding-right: 20px;
@@ -164,4 +168,14 @@ const computedImageWidth = computed(() => {
   }
 }
 
+@media (max-width: 600px) {
+  .hillbiddle-title {
+    font-size: 8vw; /* Adjust font size for smaller screens */
+  }
+}
+@media (min-width: 1200px) {
+  .hillbiddle-title {
+    font-size: 2vw; /* Adjust font size for larger screens */
+  }
+}
 </style>
