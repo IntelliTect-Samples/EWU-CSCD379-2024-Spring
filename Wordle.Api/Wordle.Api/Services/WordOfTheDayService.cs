@@ -14,10 +14,6 @@ public class WordOfTheDayService(WordleDbContext Db)
     {
         var numberOfWords = await Db.Words.CountAsync();
 
-    public async Task<Word> GetRandomWord()
-    {
-        var numberOfWords = await Db.Words.CountAsync();
-
         Random random = new();
         int randomIndex = random.Next(numberOfWords);
 

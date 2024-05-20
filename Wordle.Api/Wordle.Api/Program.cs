@@ -3,7 +3,9 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using System;
+using System.Text;
 using Wordle.Api;
+using Wordle.Api.Identity;
 using Wordle.Api.Models;
 using Wordle.Api.Services;
 
