@@ -1,4 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 using Wordle.Api.Models;
 
 namespace Wordle.Api.Services;
@@ -9,6 +9,10 @@ public class WordOfTheDayService(WordleDbContext Db)
     private static object _lock = new();
 
     public WordleDbContext Db { get; set; } = Db;
+
+    public async Task<Word> GetRandomWord()
+    {
+        var numberOfWords = await Db.Words.CountAsync();
 
     public async Task<Word> GetRandomWord()
     {

@@ -1,5 +1,7 @@
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
 using System;
 using Wordle.Api;
 using Wordle.Api.Models;
@@ -33,6 +35,31 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddScoped<WordOfTheDayService>();
 builder.Services.AddScoped<PlayerServices>();
 builder.Services.AddScoped<WordStatisticsService>();
+
+// Identity Services
+builder.Services.AddIdentityCore<AppUser>(options => options.SignIn.RequireConfirmedAccount = false)
+    .AddRoles<IdentityRole>()
+    .AddEntityFrameworkStores<WordleDbContext>(); // Tell identity where to sstore things
+
+// JWT Token Setup
+JwtConfiguration jwtConfig = builder.Configuration
+    .GetSection("Jwt").Get<JwtConfiguration>() ?? throw new InvalidOperationException("JWT config not specified");
+builder.Services.AddSingleton(jwtConfig);
+
+builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+    .AddJwtBearer(options =>
+        options.TokenValidationParameters = new TokenValidationParameters
+        {
+            ValidateIssuer = true,
+            ValidateAudience = true,
+            ValidateLifetime = true,
+            ValidateIssuerSigningKey = true,
+            ValidIssuer = jwtConfig.Issuer,
+            ValidAudience = jwtConfig.Audience,
+
+            IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtConfig.Secret))
+        }
+    );
 
 var app = builder.Build();
 

@@ -1,43 +1,27 @@
-﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using Wordle.Api.Dtos;
 using Wordle.Api.Models;
+using Wordle.Api.Services;
 
 namespace Wordle.Api.Controllers;
 
-[Route("api/[controller]")]
+[Route("[controller]")]
 [ApiController]
-public class GameController(WordleDbContext db) : ControllerBase
+public class GameController : ControllerBase
 {
-    public WordleDbContext Db { get; set; } = db;
+    public GameService GameService { get; set; }
 
-    [HttpPost("GameWordOfTheDay")]
-    public async Task<bool> PostGame(GameDto gameDto)
+    public GameController(GameService gameService)
     {
-        // Get todays date
-        var today = DateOnly.FromDateTime(DateTime.UtcNow);
+        GameService = gameService;
+    }
 
-        // Get all the words that match our game word and load their WOTDs
-        var word = Db.Words
-            .Include(word => word.WordsOfTheDays)
-            .Where(word => word.Text == gameDto.Word)
-            .First();
+    [HttpPost("Result")]
+    public async Task<GameStatsDto> PostGame(GameDto gameDto)
+    {
+        Game game = await GameService.PostGameResult(gameDto);
+        var stats = await GameService.GetGameStats(game);
 
-        // Create a new game object to save to the DB
-        Game game = new()
-        {
-            Attempts = gameDto.Attempts,
-            IsWin = gameDto.IsWin,
-            // Attempt to find the WOTD that best matches todays date
-            WordOfTheDay = word.WordsOfTheDays
-                .OrderByDescending(wotd => wotd.Date)
-                .FirstOrDefault(wotd => wotd.Date == today),
-            Word = word
-        };
-
-        Db.Games.Add(game);
-        await Db.SaveChangesAsync();
-        return true;
+        return stats;
     }
 }
