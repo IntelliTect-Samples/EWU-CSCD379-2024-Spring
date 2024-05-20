@@ -59,7 +59,7 @@
             @click="router.push('/leaderboard')"
           />
           <v-list-item
-            prepend-icon="mdi-trophy"
+            prepend-icon="mdi-periodic-table"
             title="statistics"
             @click="router.push('/statistics')"
           />
