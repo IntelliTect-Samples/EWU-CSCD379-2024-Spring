@@ -55,12 +55,12 @@
 
           <v-list-item
             prepend-icon="mdi-trophy"
-            title="leaderboard"
+            title="Leaderboard"
             @click="router.push('/leaderboard')"
           />
           <v-list-item
             prepend-icon="mdi-periodic-table"
-            title="statistics"
+            title="Statistics"
             @click="router.push('/statistics')"
           />
           <v-list-item
