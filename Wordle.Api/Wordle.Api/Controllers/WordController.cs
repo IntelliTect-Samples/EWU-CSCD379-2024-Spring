@@ -24,4 +24,11 @@ public class WordController(WordOfTheDayService wordOfTheDayService) : Controlle
         DateOnly today = DateOnly.FromDateTime(DateTime.UtcNow.AddHours(offsetInHours));
         return await wordOfTheDayService.GetWordOfTheDay(today);
     }
+
+    [HttpGet("WordOfTheDay/{date}")]
+    public async Task<string> GetWordOfDay(DateTime date)
+    {
+        DateOnly dateOnly = DateOnly.FromDateTime(date);
+        return await wordOfTheDayService.GetWordOfTheDay(dateOnly);
+    }
 }

@@ -1,15 +1,18 @@
 <template>
-  <v-container>
-    <v-progress-linear
-      v-if="isDailyWordlesLoading"
-      class="mx-auto"
-      color="primary"
-      height="10"
-      indeterminate
-      rounded
-      width="75%"
-    />
-    <div v-else>
+  <v-progress-linear
+    v-if="isDailyWordlesLoading"
+    class="mx-auto"
+    color="primary"
+    height="10"
+    indeterminate
+    rounded
+    width="75%"
+  />
+  <v-container v-else>
+    <div>
+      <div class="text-h3 ma-5 text-center font-weight-bold text-primary">
+        Last Ten Wordles
+      </div>
       <v-row cols="12">
         <v-col
           v-for="(gameStat, i) in gameStats"
@@ -19,10 +22,10 @@
           md="6"
           lg="4"
         >
-          <wordle-stats-card
+          <WordleStatsCard
             :gameStat="gameStat"
-            :is-daily="true"
-            :isCurrentGame="false"
+            :isDaily="true"
+            :inCurrentGame="false"
             :hasPlayed="false"
           />
         </v-col>
@@ -34,11 +37,11 @@
 <script setup lang="ts">
 import Axios from "axios";
 import { format } from "date-fns";
+import WordleStatsCard from "~/components/WordleStatsCard.vue";
 import type { GameStats } from "~/Models/GameStas";
 
-const selectedDate = ref(0);
 const isDailyWordlesLoading = ref(true);
-
+const date = ref("");
 interface Game {
   word: string;
   isWin: boolean;
@@ -49,7 +52,8 @@ const gameStats = ref<GameStats[]>([]);
 
 onMounted(() => {
   const formatDate = format(new Date(), "MM-dd-yyyy");
-  Axios.get("/Game/LastTenWordOfTheDayStats/" + formatDate)
+  date.value = formatDate;
+  Axios.get("/Game/LastTenWordOfTheDayStats/" + "5-20-2024")
     .then((res: { data: any }) => res.data)
     .then((data: any) =>
       data.map((data: any) => ({

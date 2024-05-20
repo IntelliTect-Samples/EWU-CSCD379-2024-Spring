@@ -27,6 +27,7 @@
 <script setup lang="ts">
 import { useTheme } from "vuetify";
 import nuxtStorage from "nuxt-storage";
+import { format } from "date-fns";
 
 const logoPaths = {
   Standard: "/logo_Standard.svg",
@@ -40,6 +41,7 @@ const logoPaths = {
 const theme = useTheme();
 const showSettingsDialog = ref(false);
 const drawer = ref(false);
+const date = ref("");
 
 const logoPath = computed(() => {
   const themeName = theme.global.name.value.replace("Dark", "");
@@ -49,6 +51,7 @@ const logoPath = computed(() => {
 onMounted(() => {
   var defaultTheme = nuxtStorage.localStorage.getData("theme");
   theme.global.name.value = defaultTheme ?? "light";
+  date.value = format(new Date(), "MM-dd-yyyy");
 });
 </script>
 

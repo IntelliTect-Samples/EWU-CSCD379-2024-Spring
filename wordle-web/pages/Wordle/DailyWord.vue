@@ -11,20 +11,7 @@
       >
 
       <v-row>
-        <v-col lg="4" v-if="$vuetify.display.mdAndUp">
-          <v-skeleton-loader
-            type="card"
-            v-model="statsLoaded"
-            v-if="statsLoaded"
-          />
-          <WordleStatsCard
-            v-else
-            :hasPlayed="false"
-            :gameStat="gameStats!"
-            :isDaily="true"
-            :inCurrentGame="true"
-          />
-        </v-col>
+        <v-col lg="4" v-if="$vuetify.display.mdAndUp"> </v-col>
         <v-col lg="4">
           <GameBoardGuess
             v-for="(guess, i) of game.guesses"
@@ -191,6 +178,7 @@ const truncate = (text: string, length: number, clamp: string) => {
     ? content.substring(0, length) + clamp
     : content;
 };
+const route = useRoute();
 const showWordsList = ref(false);
 const isGameOver = ref(false);
 const playerName = ref("");
@@ -199,6 +187,7 @@ const validWordsNum = ref(0);
 const itemSelect = ref("");
 const gameStats = ref<GameStats>();
 const statsLoaded = ref(true);
+const secretWord = ref("");
 
 watch(itemSelect, () => {
   if (itemSelect.value === "showNameDialog") {
@@ -213,7 +202,6 @@ watch(itemSelect, () => {
 });
 
 const game = reactive(new Game());
-game.startNewGame();
 provide("GAME", game);
 const stopwatch = ref(new Stopwatch());
 
@@ -222,10 +210,22 @@ const captureValidWords = (num: number) => {
   validWordsNum.value = num;
 };
 
+const queryDate = computed(() => {
+  const path = route.path;
+
+  // Splitting the path by '/' and getting the last part
+  const parts = path.split("/");
+  const datePart = parts[parts.length - 1];
+
+  return datePart;
+});
+
+game.startNewGame(secretWord.value);
+
 function closeGameDialog() {
   isGameOver.value = false;
   setTimeout(() => {
-    game.startNewGame();
+    game.startNewGame(secretWord.value);
   }, 300);
   stopwatch.value.reset();
   stopwatch.value.start();
@@ -299,13 +299,14 @@ watch(
   }
 );
 
-onMounted(() => {
+onMounted(async () => {
   window.addEventListener("keyup", onKeyup);
   const defaultName = nuxtStorage.localStorage.getData("name");
   showNameDialog.value = defaultName === null || defaultName === "Guest";
   playerName.value = showNameDialog.value ? "Guest" : defaultName;
-  fetchDailyStats(new Date());
+  fetchDailyStats(new Date(queryDate.value));
   stopwatch.value.start();
+  secretWord.value = await getWOTD();
 });
 
 onUnmounted(() => {
@@ -356,5 +357,10 @@ async function fetchDailyStats(date: Date) {
 
   gameStats.value = game!;
   statsLoaded.value = false;
+}
+
+async function getWOTD(): Promise<string> {
+  const response = await Axios.get(queryDate.value);
+  return response.data.word;
 }
 </script>
