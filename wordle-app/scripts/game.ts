@@ -12,6 +12,7 @@ export class Game {
   public guessIndex: number = 0;
   public gameState: GameState = GameState.Playing;
   public guessedLetters: Letter[] = [];
+  public isBusy: boolean = false;
 
   private _secretWord: string = "";
   private set secretWord(value: string) {
@@ -23,12 +24,13 @@ export class Game {
 
   constructor(maxAttempts: number = 6) {
     this.maxAttempts = maxAttempts;
-    this.gameState = GameState.Initializing;
+    this.isBusy = true;
+    this.gameState = GameState.Playing;
   }
 
   public async startNewGame(word?: string | undefined) {
     // Load the game
-    this.gameState = GameState.Initializing;
+    this.isBusy = true;
 
     // Reset default values
     this.guessIndex = 0;
@@ -52,7 +54,7 @@ export class Game {
     }
 
     // Start the game
-    this.gameState = GameState.Playing;
+    this.isBusy = false;
   }
 
   public get guess() {
@@ -121,6 +123,19 @@ export class Game {
         this.guessIndex++;
       }
     }
+
+    if (this.gameState === GameState.Won || this.gameState === GameState.Lost) {
+      // Post to API
+      this.isBusy = true;
+      Axios.post("game/result", {
+        attempts: this.guessIndex + 1,
+        isWin: this.gameState === GameState.Won,
+        word: this.secretWord,
+      }).then((response) => {
+        console.log("Result posted to API: ", response.data);
+        this.isBusy = false;
+      });
+    }
   }
 
   public async getWordOfTheDayFromApi(): Promise<string>{
@@ -144,5 +159,4 @@ export enum GameState {
   Playing,
   Won,
   Lost,
-  Initializing,
 }

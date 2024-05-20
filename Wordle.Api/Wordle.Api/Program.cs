@@ -29,6 +29,7 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddScoped<WordOfTheDayService>();
+builder.Services.AddScoped<GameService>();
 builder.Services.AddScoped<PlayerService>();
 
 var app = builder.Build();

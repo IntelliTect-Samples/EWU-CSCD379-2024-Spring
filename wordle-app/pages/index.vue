@@ -1,7 +1,7 @@
 <template>
   <v-container>
     <v-progress-linear
-      v-if="game.gameState === GameState.Initializing"
+      v-if="game.isBusy"
       color="primary"
       indeterminate
     />
