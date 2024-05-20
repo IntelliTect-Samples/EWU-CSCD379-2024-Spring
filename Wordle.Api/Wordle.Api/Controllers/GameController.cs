@@ -9,28 +9,33 @@ namespace Wordle.Api.Controllers;
 [ApiController]
 public class GameController(WordleDbContext Db) : ControllerBase
 {
-    [HttpPost("Game")]
+    [HttpPost("GameWordOfTheDay")]
     public async Task<bool> PostGame(GameDto gameDto)
     {
-        var wordOfTheDay = Db.WordsOfTheDays
-            .Where(word => word.WordId == gameDto.WordOfTheDayId)
-            .OrderByDescending(word => word.Date)
-            .FirstOrDefault();
-        
-        if(wordOfTheDay == null)
-        {
-            return false;
-        }
-        
-        Game game = new()
-        {
-            Attempts = gameDto.Attempts,
-            IsWin = gameDto.IsWin,
-            WordOfTheDay = wordOfTheDay,
-        };
+       // Get todays date
+       var today = DateOnly.FromDateTime(DateTime.UtcNow);
+       
+       // Get all the words that match our game word and load their WOTDs
+       var word = Db.Words
+           .Include(word => word.WordsOfTheDays)
+           .Where(word => word.Text == gameDto.Word)
+           .First();
+       
+       // Create a new game object to save to the DB
+       Game game = new()
+       {
+           Attempts = gameDto.Attempts,
+           IsWin = gameDto.IsWin,
+           // Attempt to find the WOTD that best matches todays date
+           WordOfTheDay = word.WordsOfTheDays
+               .OrderByDescending(wotd => wotd.Date)
+               .FirstOrDefault(wotd => wotd.Date < today.AddDays(-1)),
+           Word = word
+       };
 
-        Db.Games.Add(game);
-        await Db.SaveChangesAsync();
-        return true;
+       Db.Games.Add(game);
+       await Db.SaveChangesAsync();
+       return true;
+
     }
 }

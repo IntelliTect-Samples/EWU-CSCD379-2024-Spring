@@ -8,7 +8,9 @@ public class Game
     public int Attempts { get; set; }
     public bool IsWin { get; set; }
     public DateTime DateAttempted { get; set; } = DateTime.UtcNow;
-    [Required]
-    public int WordOfTheDayId { get; set; }
+    public int? WordOfTheDayId { get; set; }
     public WordOfTheDay? WordOfTheDay { get; set; }
+    [Required]
+    public int WordId { get; set; }
+    public Word? Word { get; set; }
 }

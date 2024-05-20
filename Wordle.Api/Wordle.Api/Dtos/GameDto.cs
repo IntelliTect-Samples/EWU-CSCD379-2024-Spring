@@ -4,5 +4,5 @@ public class GameDto
 {
     public int Attempts { get; set; }
     public bool IsWin { get; set; }
-    public required int WordOfTheDayId { get; set; }
+    public required string Word { get; set; }
 }
