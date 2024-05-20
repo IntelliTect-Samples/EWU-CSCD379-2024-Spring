@@ -25,12 +25,27 @@
           </tr>
         </tbody>
       </v-table>
+      <div class="d-flex justify-center mt-3 mb-5" >
+    <v-btn
+      prepend-icon="mdi-home-export-outline"
+      @click="router.go(-1)" 
+      color="secondary"
+      >Back</v-btn>
+      </div>
 
+      <div class="d-flex justify-center mt-3 mb-5" >
+    <v-btn
+      prepend-icon="mdi-home-export-outline"
+      @click="router.push('/')"
+      color="secondary"
+      >Home</v-btn>
+      </div>
     </v-card>
   </div>
 </template>
 
 <script setup lang="ts">
+const router = useRouter();
 //fake data 
 const tableData = ref([
   { date: '2024-05-01', averagePlays: 24, averageScore: 80, averageSeconds: 30 },

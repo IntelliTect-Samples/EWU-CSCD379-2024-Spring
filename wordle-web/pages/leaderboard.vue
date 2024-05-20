@@ -22,14 +22,33 @@
               <td class="text-center">{{ row.AverageAttempts }}</td>
               <td class="text-center">{{ row.Plays }}</td>
           </tr>
+          
         </tbody>
+        
       </v-table>
+      <div class="d-flex justify-center mt-3 mb-5" >
+    <v-btn
+      prepend-icon="mdi-home-export-outline"
+      @click="router.go(-1)" 
+      color="secondary"
+      >Back</v-btn>
+      </div>
+      
+      <div class="d-flex justify-center mt-3 mb-5" >
+    <v-btn
+      prepend-icon="mdi-home-export-outline"
+      @click="router.push('/')"
+      color="secondary"
+      >Home</v-btn>
+      </div>
+      
 
     </v-card>
   </div>
 </template>
 
 <script setup lang="ts">
+const router = useRouter();
 import { ref } from 'vue';
 import Axios from 'axios';
 

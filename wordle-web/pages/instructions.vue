@@ -33,8 +33,15 @@
     </v-card-text>
 
     <div class="d-flex justify-center mt-3 mb-5" >
-    <v-btn @click="router.go(-1)" class="ma-4" color="secondary">Take me Back</v-btn>
+    <v-btn prepend-icon="mdi-home-export-outline" @click="router.go(-1)"color="secondary"> Back</v-btn>
   </div>
+  <div class="d-flex justify-center mt-3 mb-5" >
+    <v-btn
+      prepend-icon="mdi-home-export-outline"
+      @click="router.push('/')"
+      color="secondary"
+      >Home</v-btn>
+      </div>
   </v-card>
 </template>
 <script setup lang="ts">

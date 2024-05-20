@@ -17,7 +17,14 @@
       prepend-icon="mdi-home-export-outline"
       @click="router.go(-1)" 
       color="primary"
-      >Take me Back</v-btn>
+      >Back</v-btn>
+      </div>
+      <div class="d-flex justify-center mt-3 mb-5" >
+    <v-btn
+      prepend-icon="mdi-home-export-outline"
+      @click="router.push('/')"
+      color="primary"
+      >Home</v-btn>
       </div>
 </template>
 

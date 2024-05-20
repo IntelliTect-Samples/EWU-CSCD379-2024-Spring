@@ -20,7 +20,7 @@
     <v-btn
       prepend-icon="mdi-home-export-outline"
       @click="router.push('/')"
-      color="primary"
+      color="secondary"
       >Home</v-btn>
       </div>
     <p style="text-align: center"><br />Click above to go back home</p>
