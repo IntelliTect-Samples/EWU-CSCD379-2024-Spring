@@ -64,7 +64,7 @@
         <v-btn
           color="white"
           class="bg-primary pa-2 px-5"
-          to="instructionsPageTwo"
+          to="InstructionsPageTwo"
           text="Page 2"
           append-icon="mdi-arrow-right"
         />
