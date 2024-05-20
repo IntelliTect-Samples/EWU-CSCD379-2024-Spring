@@ -15,6 +15,34 @@
         <v-card-text>
           The word was: <strong>{{ game.secretWord }}</strong>
         </v-card-text>
+        <v-row v-if="game.stats" class="mb-1" justify="center">
+          <v-col cols="auto">
+            <v-progress-circular
+            size="75"
+            width="10"
+            v-model="game.stats.winPercentage"
+            >
+            {{ game.stats.winPercentage }}%
+            </v-progress-circular>
+            <br/>
+            <i class="text-caption">
+              Success Rate
+            </i>
+          </v-col>
+          <v-col cols="auto">
+            <v-progress-circular
+            size="75"
+            width="10"
+            :model-value="game.stats.averageGuessesPercent(game.maxAttempts)"
+            >
+            {{  game.stats.averageGuessesPercent(game.maxAttempts).toFixed(0) }}%
+            </v-progress-circular>
+            <br/>
+            <i class="text-caption">
+              Average Guesses
+            </i>
+          </v-col>
+        </v-row>
         <v-btn variant="outlined" @click="game.startNewGame()">
           <v-icon size="large" class="mr-2"> mdi-restart </v-icon> Restart Game
         </v-btn>

@@ -1,9 +1,7 @@
 import { LetterState, type Letter } from "./letter";
 import { Word } from "./word";
-import { WordList } from "./wordList";
-import nameUserNameDialog from "../pages/index.vue"
-import stopwatch from "../pages/index.vue"
 import Axios from "axios";
+import { GameStats } from "./gameStats";
 
 export class Game {
   public maxAttempts: number;
@@ -13,6 +11,8 @@ export class Game {
   public gameState: GameState = GameState.Playing;
   public guessedLetters: Letter[] = [];
   public isBusy: boolean = false;
+  public stats: GameStats | null = null;
+
 
   private _secretWord: string = "";
   private set secretWord(value: string) {
@@ -35,6 +35,7 @@ export class Game {
     // Reset default values
     this.guessIndex = 0;
     this.guessedLetters = [];
+    this.stats = null;
 
     // Get a random word
     if(!word){
@@ -54,6 +55,7 @@ export class Game {
     }
 
     // Start the game
+    this.gameState = GameState.Playing;
     this.isBusy = false;
   }
 
@@ -132,7 +134,9 @@ export class Game {
         isWin: this.gameState === GameState.Won,
         word: this.secretWord,
       }).then((response) => {
-        console.log("Result posted to API: ", response.data);
+        this.stats = new GameStats();
+        Object.assign(this.stats, response.data);
+        console.log("Stats: ", this.stats);
         this.isBusy = false;
       });
     }
