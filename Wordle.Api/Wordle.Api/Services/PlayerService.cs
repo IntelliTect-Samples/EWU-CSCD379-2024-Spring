@@ -18,8 +18,11 @@ public class PlayerService(WordleDbContext Db)
 	    Player? existingPlayer = Db.Players.FirstOrDefault(player => player.Name == playerDto.Name);
 
 	    if (existingPlayer != null)
-	    {
-		    Db.Players.Entry(existingPlayer).CurrentValues.SetValues(playerDto);
+	    {//Name, GameCount, AverageAttempts, AverageSecondsPerGame
+			playerDto.GameCount = existingPlayer.GameCount + 1;
+            playerDto.AverageAttempts = (((existingPlayer.AverageAttempts * existingPlayer.GameCount) + playerDto.AverageAttempts)/ playerDto.GameCount);
+		    playerDto.AverageSecondsPerGame = (((existingPlayer.AverageSecondsPerGame * existingPlayer.GameCount) + playerDto.AverageSecondsPerGame)/ playerDto.GameCount);
+			Db.Players.Entry(existingPlayer).CurrentValues.SetValues(playerDto);
 	    }
 	    else
 	    {
