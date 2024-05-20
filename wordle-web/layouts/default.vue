@@ -25,7 +25,7 @@
         </v-list-item>
         <v-divider />
         <v-list-item @click="router.push('/')">
-          <v-list-item-title> Whurd of The Day </v-list-item-title>
+          <v-list-item-title> Landing </v-list-item-title>
         </v-list-item>
         <v-divider />
         <v-list-item @click="router.push('/leaderboard')"

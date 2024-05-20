@@ -1,40 +1,45 @@
 <template>
-  <div class="image-container">
-      <v-img :height="imageHeight" :width="imageWidth" cover src="../public/vaporwave-landingPage.jpg">
+  <v-container fluid class="image-container">
+      <v-img src="../public/edited-vaporwave-landingPage.jpg">
         <v-divider>
         </v-divider>
         <v-card-actions>
+          <v-col>
               <v-btn color="secondary" to="/randomWordGame">Play Random Word</v-btn>
               <v-btn color="primary" to="/WordleOfTheDay">Play Wordle of the Day</v-btn>
-
               <v-btn color="secondary" @click="$router.push('/leaderboard')">Leaderboard</v-btn>
+            </v-col>
           </v-card-actions>
     </v-img>
-  </div>
+  </v-container>
   <v-divider></v-divider>
   <v-container class="intro">
-    <v-card :width="cardWidth">
+    
           <v-card-title>
-              <h1 class="display-1 text-md-center">Whurdle</h1>
+              <h1 class="display-1 text-center">Whurdle</h1>
           </v-card-title>
           <v-card-text>
-              <p class="display-2 text-md-center">Welcome to Whurdle!</p>
+              <p class="display-2 text-center">Welcome to Whurdle!</p>
               
           </v-card-text>
+          <v-img class="Whurdle mx-auto w-75" src="../public/WhurdleCompany.png" width="200" height="200"></v-img>
 
-      </v-card>
   </v-container>
 </template>
 <script setup lang="ts">
 import { useDisplay } from 'vuetify';
 const display = useDisplay();
-const imageHeight = ref(625);
 const imageWidth = ref(1800);
 const cardWidth = ref(1200);
 
 </script>
 
 <style>
+.Whurdle {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
 .image-container {
   width: 2000px; /* Adjust size as needed */
   animation: neonPulse 2s infinite;
