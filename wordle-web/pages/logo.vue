@@ -32,4 +32,3 @@ const imageWidth = ref(1800);
 const cardWidth = ref(1200);
 </script>
 
-<style></style>

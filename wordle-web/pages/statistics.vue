@@ -16,17 +16,28 @@
               <td class="text-center">Average Score</td>
               <td class="text-center">Average Seconds</td>
             </tr>
-          </tbody>
-  </v-table>
- 
-</v-card>
+
+            <tr v-for="(row, index) in tableData" :key="index">
+            <td class="text-center">{{ row.date }}</td>
+            <td class="text-center">{{ row.averagePlays }}</td>
+            <td class="text-center">{{ row.averageScore }}</td>
+            <td class="text-center">{{ row.averageSeconds }}</td>
+          </tr>
+        </tbody>
+      </v-table>
+
+    </v-card>
   </div>
 </template>
 
-<script lang="ts" setup>
-
+<script setup lang="ts">
+//fake data 
+const tableData = ref([
+  { date: '2024-05-01', averagePlays: 24, averageScore: 80, averageSeconds: 30 },
+  { date: '2024-05-02', averagePlays: 35, averageScore: 75, averageSeconds: 35 },
+  { date: '2024-05-03', averagePlays: 20, averageScore: 78, averageSeconds: 32 },
+  { date: '2024-05-04', averagePlays: 2, averageScore: 85, averageSeconds: 28 },
+  { date: '2024-05-05', averagePlays: 13, averageScore: 72, averageSeconds: 40 },
+  { date: '2024-05-06', averagePlays: 33, averageScore: 70, averageSeconds: 38 },
+])
 </script>
-
-<style>
-
-</style>
