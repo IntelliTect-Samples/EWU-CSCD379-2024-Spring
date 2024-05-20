@@ -36,7 +36,7 @@
         </v-card-item>
         <v-card-item class="text-center d-flex flex-column align-cetner">
           <v-card-text class="font-weight-bold text-h6"
-            >Win Percentaage</v-card-text
+            >Win Percentage</v-card-text
           >
           <v-progress-circular
             :rotate="360"
