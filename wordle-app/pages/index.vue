@@ -134,7 +134,13 @@ async function getWordFromApi(): Promise<string> {
 }
 
 function onKeyup(event: KeyboardEvent) {
-  if (!showUserNameDialog.value) {
+
+  if(showUserNameDialog.value) {
+    if(event.key === 'Enter') {
+      showUserNameDialog.value = false;
+      nuxtStorage.localStorage.setData("userName", nameUserNameDialog.value);
+    }
+  } else {
     if (event.key === "Enter") {
       game.submitGuess();
     } else if (event.key == "Backspace") {
@@ -143,6 +149,7 @@ function onKeyup(event: KeyboardEvent) {
       game.addLetter(event.key.toUpperCase());
     }
   }
+
 
 }
 

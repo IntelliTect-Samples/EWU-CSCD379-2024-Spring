@@ -5,7 +5,7 @@
 				<v-card-text>Enter your name</v-card-text>
 			</v-sheet>
 			<v-form class="mx-3 mt-5">
-				<v-text-field v-model="nameModel" label="Name" variant="outlined" clearable>
+				<v-text-field v-model="nameModel" label="Name" variant="outlined" clearable @keydown.enter @keydown.enter.prevent>
 				</v-text-field>
 			</v-form>
 			<v-card-actions class="mx-4 mb-3">
