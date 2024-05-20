@@ -41,7 +41,7 @@ onMounted(() => {
 })
 
 async function getScores(){
-    let scoreUrl = "Score/Leaderboard";
+    let scoreUrl = "Score/Leaderboard/10";
     await Axios.get(scoreUrl).then((response) => {
         scoresToDisplay.value = response.data;
     })
