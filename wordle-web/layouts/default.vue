@@ -31,6 +31,13 @@
       </v-main>
     </v-app>
 </template>
+<style>
+.v-main{
+  background-image: url('/public/assets/minnie.jpg');
+  background-size: cover;
+  
+  }
+</style>
 <script setup lang="ts">
 import { useTheme } from "vuetify";
 import nuxtStorage from "nuxt-storage";

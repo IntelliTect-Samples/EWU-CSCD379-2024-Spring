@@ -29,7 +29,7 @@ public class GameController : ControllerBase
     [HttpGet("GetGames/{date}")]
     public async Task<List<GameStatsDto>> GetGames(DateTime date)
     {
-        var stats = await GameService.GetGames(date, 10);
+        var stats = await GameService.GetGames(date);
         return stats;
     }
 }
