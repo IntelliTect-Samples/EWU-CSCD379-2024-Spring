@@ -17,6 +17,7 @@
           <v-card>
             <v-card-text>
               <v-btn
+              v-if="!tokenService.isLoggedIn()"
                 @click="showLoginDialog = true"
                 class="mb-5"
                 flat
@@ -25,6 +26,9 @@
                 <v-icon> mdi-lock </v-icon>
                 Login
               </v-btn>
+              <div v-else>
+                {{  tokenService.getUserName() }}
+              </div>
               <br />
               <v-btn @click="toggleTheme" class="mb-5" flat color="primary">
                 <v-icon> mdi-theme-light-dark </v-icon>
@@ -51,11 +55,14 @@
 <script setup lang="ts">
 import { useTheme } from "vuetify";
 import nuxtStorage from "nuxt-storage";
+import TokenService from "@/scripts/TokenService";
 
 const router = useRouter();
 const theme = useTheme();
 const showHelpDialog = ref(false);
 const showLoginDialog = ref(false);
+
+const tokenService = new TokenService();
 
 onMounted(() => {
   var defaultTheme = nuxtStorage.localStorage.getData("theme");

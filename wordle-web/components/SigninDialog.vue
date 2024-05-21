@@ -30,6 +30,9 @@
 
 <script setup lang="ts">
 import axios from "axios";
+import TokenService from "@/scripts/TokenService";
+
+const tokenService = new TokenService();
 
 const modelValue = defineModel<boolean>({ default: false });
 const showPassword = ref(false);
@@ -38,13 +41,14 @@ const password = ref("");
 const errorMessage = ref("");
 
 function signIn() {
-    errorMessage.value = "";
+  errorMessage.value = "";
   axios
     .post("/Token/GetToken", {
       username: userName.value,
       password: password.value,
     })
     .then((response) => {
+      tokenService.setToken(response.data.token);
       modelValue.value = false;
     })
     .catch((error) => {
