@@ -15,15 +15,6 @@
         <v-card-text class="font-weight-bold text-h6"
           >Average Seconds: {{ gameStat.averageSeconds }}</v-card-text
         >
-        <v-chip
-          color="success"
-          class="font-weight-bold text-h6 mx-3 mt-2"
-          v-if="hasPlayed"
-          >Completed</v-chip
-        >
-        <v-chip color="error" class="font-weight-bold text-h6 mx-3 mt-2" v-else
-          >Not Completed</v-chip
-        >
       </v-col>
       <v-col>
         <v-card-text class="font-weight-bold text-h6 text-center"

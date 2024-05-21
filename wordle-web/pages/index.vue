@@ -16,12 +16,12 @@
               max-height="190"
             />
           </v-row>
-          <v-card-text>Today is {{ date }}</v-card-text>
+          <v-card-text>Today is {{ formattedDate }}</v-card-text>
           <v-card-text class="pa-6">Choose your game mode:</v-card-text>
           <v-btn
             class="glow-btn pa-2 px-5 mx-3 mb-4"
             color="white"
-            to="/Wordle/Radndom"
+            to="/Wordle/Random"
           >
             Random Wordle
           </v-btn>
@@ -66,7 +66,12 @@ onMounted(() => {
   theme.global.name.value = defaultTheme ?? "light";
   date.value = format(new Date(), "MM-dd-yyyy");
 });
+
+const formattedDate = computed(() => {
+  return format(new Date(), "MMMM dd, yyyy");
+});
 </script>
+
 <style scoped>
 @import url("https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap");
 

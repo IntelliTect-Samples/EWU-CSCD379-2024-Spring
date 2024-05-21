@@ -24,8 +24,8 @@
     >
       <v-list
         v-for="item in [
-          'Wordle/ Daily',
-          'Wordle/ Random',
+          'Wordle/Daily?date=' + format(new Date(), 'MM-dd-yyyy'),
+          'Wordle/Random',
           'About',
           'Leaderboard',
           'Instructions',
@@ -50,6 +50,7 @@
 <script setup lang="ts">
 import { useTheme } from "vuetify";
 import nuxtStorage from "nuxt-storage";
+import { format } from "date-fns";
 
 const logoPaths = {
   Standard: "/logo_Standard.svg",

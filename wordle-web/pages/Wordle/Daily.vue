@@ -9,7 +9,7 @@
       <v-card-title
         class="text-h6 text-center text-primary font-weight-bold mb-3"
       >
-        Daily Wordle</v-card-title
+        Daily Wordle: {{ formattedDate }}</v-card-title
       >
       <v-row>
         <v-col lg="4" v-if="$vuetify.display.mdAndUp"> </v-col>
@@ -320,4 +320,8 @@ function onKeyup(event: KeyboardEvent) {
     game.addLetter(event.key.toUpperCase());
   }
 }
+
+const formattedDate = computed(() => {
+  return format(new Date(date || ""), "MMMM dd, yyyy");
+});
 </script>
