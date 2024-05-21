@@ -24,9 +24,11 @@
 
         <v-card-item>
           <v-col>
-            <v-btn color="primary" to="/leaderboard" small class="responsive align-center justify-center text-wrap"
-              >check out leaderboard</v-btn
-            >
+            <v-btn
+              class="bg-primary pa-2 px-5"
+              to="/leaderboard"
+              text="View Leaderboard"
+            />
           </v-col>
         </v-card-item>
 
@@ -45,8 +47,8 @@
         </v-card-item>
         <v-card-item>
           <v-col>
-            We also have a <v-icon> mdi-account</v-icon> username box to
-            edit and save your name for our leaderboard. Have fun!
+            We also have a <v-icon> mdi-account</v-icon> username box to edit
+            and save your name for our leaderboard. Have fun!
           </v-col>
         </v-card-item>
       </v-card-text>
