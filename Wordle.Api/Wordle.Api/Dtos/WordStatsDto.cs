@@ -6,4 +6,5 @@ public class WordStatsDto
 	public int NumberOfPlays { get; set; }
 	public double AverageScore { get; set; }
 	public double AverageSeconds { get; set; }
+	public bool HasUserPlayed { get; set; }
 }

@@ -139,6 +139,10 @@ function stopSeconds() {
   }
 }
 
+watch(username, () => {
+  game.username = username.value;
+});
+
 const myGuess = ref('');
 function playAudio(): any {
   const audio = new Audio('/clicker.mp3');
