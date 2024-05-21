@@ -38,7 +38,8 @@ export class Game {
 
     // Get a word
     if (date) {
-      this.secretWord = await this.getWordOfTheDayFromApi();
+      console.log(date);
+      this.secretWord = await this.getWordOfTheDayFromApi(date);
     } else {
       this.secretWord = await this.getRadnomWordFromApi();
     }
@@ -136,9 +137,9 @@ export class Game {
     }
   }
 
-  public async getWordOfTheDayFromApi(): Promise<string> {
+  public async getWordOfTheDayFromApi(date: string): Promise<string> {
     try {
-      let wordUrl = "word/wordOfTheDay";
+      let wordUrl = "word/wordOfTheDay/" + date;
 
       const response = await Axios.get(wordUrl);
 

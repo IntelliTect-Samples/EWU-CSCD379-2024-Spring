@@ -49,7 +49,7 @@ const gameStats = ref<GameStats[]>([]);
 onMounted(() => {
   const formatDate = format(new Date(), "MM-dd-yyyy");
   date.value = formatDate;
-  Axios.get("/Game/LastTenWordOfTheDayStats/" + "5-20-2024")
+  Axios.get("/Game/LastTenWordOfTheDayStats/" + formatDate)
     .then((res: { data: any }) => res.data)
     .then((data: any) =>
       data.map((data: any) => ({

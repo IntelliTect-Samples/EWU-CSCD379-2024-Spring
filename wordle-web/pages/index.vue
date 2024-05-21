@@ -3,9 +3,7 @@
     <v-container
       class="full-page-gradient fill-height flex-column pa-0 ma-0 d-flex"
     >
-      <v-sheet
-        class="full-page-gradient d-flex flex-column"
-      >
+      <v-sheet class="full-page-gradient d-flex flex-column">
         <v-card class="border-thin bg-primary pa-9 text-center">
           <v-row class="align-center justify-center mb-4">
             <v-col class="d-flex justify-center" cols="auto">
@@ -23,14 +21,14 @@
           <v-btn
             class="glow-btn pa-2 px-5 mx-3 mb-4"
             color="white"
-            to="/Wordle/RandomWord"
+            to="/Wordle/Radndom"
           >
             Random Wordle
           </v-btn>
           <v-btn
             class="glow-btn pa-2 px-5 mx-3 mb-4"
             color="white"
-            to="/Wordle/DailyWord"
+            :to="`/Wordle/Daily?date=${date}`"
           >
             Daily Wordle
           </v-btn>

@@ -6,7 +6,9 @@
       indeterminate
     />
     <v-sheet v-else color="transparent">
-      <v-card-title class="text-h4 text-center text-primary">
+      <v-card-title
+        class="text-h6 text-center text-primary font-weight-bold mb-3"
+      >
         Random Wordle</v-card-title
       >
       <v-row>

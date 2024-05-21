@@ -6,10 +6,11 @@
       indeterminate
     />
     <v-sheet v-else color="transparent">
-      <v-card-title class="text-h4 text-center text-primary">
+      <v-card-title
+        class="text-h6 text-center text-primary font-weight-bold mb-3"
+      >
         Daily Wordle</v-card-title
       >
-
       <v-row>
         <v-col lg="4" v-if="$vuetify.display.mdAndUp"> </v-col>
         <v-col lg="4">
@@ -185,6 +186,7 @@ const playerName = ref("");
 const showNameDialog = ref(false);
 const validWordsNum = ref(0);
 const itemSelect = ref("");
+const date = route.query.date?.toString();
 
 watch(itemSelect, () => {
   if (itemSelect.value === "showNameDialog") {
@@ -206,12 +208,12 @@ const captureValidWords = (num: number) => {
   validWordsNum.value = num;
 };
 
-game.startNewGame("date");
+game.startNewGame(date);
 
 function closeGameDialog() {
   isGameOver.value = false;
   setTimeout(() => {
-    game.startNewGame("date");
+    game.startNewGame(date);
   }, 300);
   stopwatch.value.reset();
   stopwatch.value.start();
