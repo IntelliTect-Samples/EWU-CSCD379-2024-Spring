@@ -126,7 +126,7 @@ export class Game {
 
     if (this.gameState === GameState.Won || this.gameState === GameState.Lost) {
       this.isBusy = true;
-      var result = await Axios.post("game/result", {
+      var result = await Axios.post("/game/result", {
         attempts: this.guessIndex + 1,
         isWin: this.gameState === GameState.Won,
         word: this.secretWord,
