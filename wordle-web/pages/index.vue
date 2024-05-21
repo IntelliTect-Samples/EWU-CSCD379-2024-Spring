@@ -1,10 +1,7 @@
-<template>
-  <v-app class="full-page-gradient">
-    <v-container class="ma-auto mr-auto d-flex align-center justify-center">
-      <v-row>
-        <v-col>
+﻿<template>
+    <v-container>
           <v-card
-            class="mx-autopa-8 border-thin bg-primary pa-9 text-center align-center justify-center"
+            class="border-thin bg-primary pa-9 text-center mx-auto"
           >
             <v-row class="align-center justify-center mb-4">
               <v-col>
@@ -40,10 +37,8 @@
               Daily Wordle
             </v-btn>
           </v-card>
-        </v-col>
-      </v-row>
+
     </v-container>
-  </v-app>
 </template>
 
 <script setup lang="ts">
@@ -80,19 +75,6 @@ const formattedDate = computed(() => {
 </script>
 
 <style scoped>
-@import url("https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap");
-
-.full-page-gradient {
-  width: 100vw;
-  height: 100vh;
-  background: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab);
-  background-size: 400% 400%;
-  animation: gradient 15s ease infinite;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-}
 
 .glow-btn {
   position: relative;

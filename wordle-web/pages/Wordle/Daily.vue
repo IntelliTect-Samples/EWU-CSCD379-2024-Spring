@@ -7,7 +7,7 @@
     />
     <v-sheet v-else color="transparent">
       <v-card-title
-        class="text-h6 text-center text-primary font-weight-bold mb-3"
+        class="font-text -h6 text-center text-wrap text-white font-weight-bold mb-3"
       >
         Daily Wordle: {{ formattedDate }}</v-card-title
       >
@@ -325,3 +325,12 @@ const formattedDate = computed(() => {
   return format(new Date(date || ""), "MMMM dd, yyyy");
 });
 </script>
+
+<style scoped>
+@import url("https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap");
+
+.font-text {
+  font-size: 1.4rem;
+  font-family: "Press Start 2P", sans-serif;
+}
+</style>
