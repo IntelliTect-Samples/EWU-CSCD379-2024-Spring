@@ -35,7 +35,7 @@
       >
         <v-list-item
           @click="
-            if (item === 'wordle/daily') {
+            if (item === 'Wordle/Daily') {
               $router.push(
                 '/wordle/daily?date=' + format(new Date(), 'MMMM dd, yyyy')
               );
