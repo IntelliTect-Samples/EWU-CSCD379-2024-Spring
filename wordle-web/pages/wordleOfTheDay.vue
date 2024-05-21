@@ -1,6 +1,6 @@
 <template>
   <UserNameDialog v-model="showUserNameDialog" />
-  
+
   <HelpDialog v-model="showHelpDialog" />
   <v-container>
     <v-btn icon="mdi-help-box" @click="showHelpDialog = true" />
@@ -87,7 +87,7 @@ import Axios from "axios"; //npm install axios
 
 const router = useRouter();
 const showHelpDialog = ref(false);
-const userName = inject("userName");
+const userName: Ref<string> = inject("userName")! as Ref<string>;
 const game = reactive(new Game());
 game.startNewGameAPI();
 provide("GAME", game);
