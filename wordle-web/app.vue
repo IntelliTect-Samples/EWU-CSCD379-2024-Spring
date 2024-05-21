@@ -24,8 +24,8 @@
     >
       <v-list
         v-for="item in [
-          'Wordle/Daily',
-          'Wordle/Random',
+          'wordle/daily',
+          'wordle/random',
           'About',
           'Leaderboard',
           'Instructions',
@@ -35,9 +35,9 @@
       >
         <v-list-item
           @click="
-            if (item === 'Wordle/Daily') {
+            if (item === 'wordle/daily') {
               $router.push(
-                '/Wordle/Daily?date=' + format(new Date(), 'MMMM dd, yyyy')
+                '/wordle/daily?date=' + format(new Date(), 'MMMM dd, yyyy')
               );
             } else $router.push('/' + item.toLowerCase().replaceAll(' ', ''));
           "
@@ -48,7 +48,7 @@
     </v-navigation-drawer>
     <v-main>
       <NuxtLayout>
-        <NuxtPage  />
+        <NuxtPage />
       </NuxtLayout>
     </v-main>
     <SettingsDialogue v-model="showSettingsDialog" />
@@ -89,12 +89,10 @@ onMounted(() => {
 </script>
 
 <style scoped>
-
 .full-page-gradient {
   width: 100%;
   height: 100%;
   background: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab);
-  background-size: 400% 400%;
   animation: gradient 15s ease infinite;
 
 }

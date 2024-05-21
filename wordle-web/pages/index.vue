@@ -1,23 +1,42 @@
 <template>
   <v-app class="full-page-gradient">
-    <v-container class = "ma-auto mr-auto d-flex align-center justify-center">
+    <v-container class="ma-auto mr-auto d-flex align-center justify-center">
       <v-row>
         <v-col>
-          <v-card class="mx-autopa-8 border-thin bg-primary pa-9 text-center align-center justify-center">
+          <v-card
+            class="mx-autopa-8 border-thin bg-primary pa-9 text-center align-center justify-center"
+          >
             <v-row class="align-center justify-center mb-4">
               <v-col>
                 <v-card-text class="welcome-text">Welcome to</v-card-text>
               </v-col>
             </v-row>
             <v-row class="align-center justify-center mb-4">
-              <v-img class="mx-auto" max-width="300" max-height="300" :src="logoPath" />
+              <v-img
+                class="mx-auto"
+                max-width="300"
+                max-height="300"
+                :src="logoPath"
+              />
             </v-row>
-            <v-card-text class="welcome-text">Today is {{ formattedDate }}</v-card-text>
-            <v-card-text class="welcome-text pa-6">Choose your game mode:</v-card-text>
-            <v-btn class="button-text glow-btn pa-2 mx-3 mb-4" color="white" to="/Wordle/Random">
+            <v-card-text class="welcome-text"
+              >Today is {{ formattedDate }}</v-card-text
+            >
+            <v-card-text class="welcome-text pa-6"
+              >Choose your game mode:</v-card-text
+            >
+            <v-btn
+              class="button-text glow-btn pa-2 mx-3 mb-4"
+              color="white"
+              to="/wordle/random"
+            >
               Random Wordle
             </v-btn>
-            <v-btn class="button-text glow-btn pa-2 mx-3 mb-4" color="white" :to="`/Wordle/Daily?date=${formattedDate}`">
+            <v-btn
+              class="button-text glow-btn pa-2 mx-3 mb-4"
+              color="white"
+              :to="`/wordle/daily?date=${formattedDate}`"
+            >
               Daily Wordle
             </v-btn>
           </v-card>
@@ -94,7 +113,7 @@ const formattedDate = computed(() => {
   font-family: "Press Start 2P", sans-serif;
 }
 .button-text {
-  font-size: .9rem; /* Smaller font size for buttons */
+  font-size: 0.9rem; /* Smaller font size for buttons */
   font-family: "Press Start 2P", sans-serif;
 }
 </style>
