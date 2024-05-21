@@ -1,9 +1,12 @@
 <template>
   <NuxtLayout>
-
     <NuxtPage />
   </NuxtLayout>
 </template>
-<script setup lang="ts">
-import "./public/assets/background.css";
-</script>
+
+<style>
+.v-app {
+  background-image: url("public/assets/Pentagram.jpg");
+  background-size: cover;
+}
+</style>

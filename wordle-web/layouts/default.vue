@@ -1,6 +1,5 @@
 <template>
     <v-app>
-      <div :style="{'background-image': `url(${require('@/public/assets/minnie.jpg')})`}"></div>
       <v-app-bar color="primary">
         <v-app-bar-title>Pentagram</v-app-bar-title>
         <template v-slot:prepend>
