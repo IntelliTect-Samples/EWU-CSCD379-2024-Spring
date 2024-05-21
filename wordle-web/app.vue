@@ -39,6 +39,8 @@
               $router.push(
                 '/Wordle/Daily?date=' + format(new Date(), 'MMMM dd, yyyy')
               );
+            } else if (item === 'Wordle/Random') {
+              $router.push('/Wordle/Random');
             } else $router.push('/' + item.toLowerCase().replaceAll(' ', ''));
           "
         >
