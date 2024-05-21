@@ -3,14 +3,10 @@ using Wordle.Api.Dtos;
 using Wordle.Api.Models;
 
 namespace Wordle.Api.Services;
-public class GameService
+public class GameService(WordleDbContext db)
 {
-    public WordleDbContext Db { get; set; }
+    public WordleDbContext Db { get; set; } = db;
 
-    public GameService(WordleDbContext db)
-    {
-        Db = db;
-    }
 
     public async Task<Game> PostGameResult(GameDto gameDto)
     {
@@ -31,7 +27,7 @@ public class GameService
             // Attempt to find the WOTD that best matches todays date
             WordOfTheDay = word.WordsOfTheDays
                 .OrderByDescending(wotd => wotd.Date)
-                .FirstOrDefault(wotd => wotd.Date < today.AddDays(-1)),
+                .FirstOrDefault(wotd => wotd.Date < today),
             Word = word
         };
 
