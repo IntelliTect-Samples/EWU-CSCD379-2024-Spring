@@ -1,39 +1,28 @@
 <template>
-  <v-app>
-    <v-container
-      class="full-page-gradient fill-height flex-column pa-0 ma-0 d-flex"
-    >
-      <v-sheet class="full-page-gradient d-flex flex-column">
-        <v-card class="border-thin bg-primary pa-9 text-center">
-          <v-row class="align-center justify-center mb-4">
-            <v-col class="d-flex justify-center" cols="auto">
-              <v-card-text class="welcome-text">Welcome to</v-card-text>
-            </v-col>
-            <v-img
-              :src="logoPath"
-              alt="Logo"
-              max-width="200"
-              max-height="190"
-            />
-          </v-row>
-          <v-card-text>Today is {{ formattedDate }}</v-card-text>
-          <v-card-text class="pa-6">Choose your game mode:</v-card-text>
-          <v-btn
-            class="glow-btn pa-2 px-5 mx-3 mb-4"
-            color="white"
-            to="/Wordle/Random"
-          >
-            Random Wordle
-          </v-btn>
-          <v-btn
-            class="glow-btn pa-2 px-5 mx-3 mb-4"
-            color="white"
-            :to="`/Wordle/Daily?date=${formattedDate}`"
-          >
-            Daily Wordle
-          </v-btn>
-        </v-card>
-      </v-sheet>
+  <v-app class="full-page-gradient">
+    <v-container class = "ma-auto mr-auto d-flex align-center justify-center">
+      <v-row>
+        <v-col>
+          <v-card class="mx-autopa-8 border-thin bg-primary pa-9 text-center align-center justify-center">
+            <v-row class="align-center justify-center mb-4">
+              <v-col>
+                <v-card-text class="welcome-text">Welcome to</v-card-text>
+              </v-col>
+            </v-row>
+            <v-row class="align-center justify-center mb-4">
+              <v-img class="mx-auto" max-width="300" max-height="300" :src="logoPath" />
+            </v-row>
+            <v-card-text class="welcome-text">Today is {{ formattedDate }}</v-card-text>
+            <v-card-text class="welcome-text pa-6">Choose your game mode:</v-card-text>
+            <v-btn class="button-text glow-btn pa-2 mx-3 mb-4" color="white" to="/Wordle/Random">
+              Random Wordle
+            </v-btn>
+            <v-btn class="button-text glow-btn pa-2 mx-3 mb-4" color="white" :to="`/Wordle/Daily?date=${formattedDate}`">
+              Daily Wordle
+            </v-btn>
+          </v-card>
+        </v-col>
+      </v-row>
     </v-container>
   </v-app>
 </template>
@@ -42,7 +31,6 @@
 import { useTheme } from "vuetify";
 import nuxtStorage from "nuxt-storage";
 import { format } from "date-fns";
-import { ref, computed, onMounted } from "vue";
 
 const logoPaths = {
   Standard: "/logo_Standard.svg",
@@ -75,15 +63,18 @@ const formattedDate = computed(() => {
 <style scoped>
 @import url("https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap");
 
-html,
-body,
-#app,
-.v-application,
-.v-application--wrap {
-  height: 100%;
-  margin: 0;
-  font-family: "Press Start 2P", sans-serif;
+.full-page-gradient {
+  width: 100vw;
+  height: 100vh;
+  background: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab);
+  background-size: 400% 400%;
+  animation: gradient 15s ease infinite;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
+
 .glow-btn {
   position: relative;
   background-color: #444;
@@ -98,37 +89,12 @@ body,
   box-shadow: 0 0 20px rgb(233, 238, 81);
 }
 
-.fill-height {
-  height: 100vh;
-}
-
 .welcome-text {
-  font-size: 1.6rem;
+  font-size: 1.4rem;
   font-family: "Press Start 2P", sans-serif;
 }
-
-.full-page-gradient {
-  width: 100vw;
-  height: 100vh;
-  background: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab);
-  background-size: 400% 400%;
-  animation: gradient 15s ease infinite;
-  border-radius: 0;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-}
-
-@keyframes gradient {
-  0% {
-    background-position: 0% 50%;
-  }
-  50% {
-    background-position: 100% 50%;
-  }
-  100% {
-    background-position: 0% 50%;
-  }
+.button-text {
+  font-size: .9rem; /* Smaller font size for buttons */
+  font-family: "Press Start 2P", sans-serif;
 }
 </style>

@@ -186,7 +186,7 @@ export default defineNuxtPlugin((app) => {
             misplaced: colors.yellow.darken1,
             wrong: colors.grey.lighten1,
             unknown: colors.grey.lighten3,
-            background: "#FFFFFF",
+           // background: "#FFFFFF",
           },
         },
         dark: {
@@ -202,7 +202,7 @@ export default defineNuxtPlugin((app) => {
             misplaced: colors.yellow.darken1,
             wrong: colors.grey.darken2,
             unknown: colors.grey.darken3,
-            background: "#121212",
+           // background: "#121212",
           },
         },
       },
