@@ -46,7 +46,7 @@ function correctState(letterState: LetterState) {
   }
 }
 
-const game: Ref<Game> | undefined = inject("GAME", undefined);
+const game: Game | undefined = inject("GAME", undefined);;
 const boxSize = ref(60);
 const display = useDisplay();
 const boxHeight = ref(60);
@@ -57,9 +57,9 @@ function onClicked() {
   if (!game) return;
 
   if (props.letter.char === "⌫ ") {
-    game.value.removeLastLetter();
+    game.removeLastLetter();
   } else {
-    game.value.addLetter(props.letter.char.toUpperCase());
+    game.addLetter(props.letter.char.toUpperCase());
   }
 }
 

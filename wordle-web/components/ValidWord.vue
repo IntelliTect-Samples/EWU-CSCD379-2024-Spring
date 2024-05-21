@@ -16,16 +16,16 @@
 import { Game } from "~/scripts/game";
 import { findValidWords } from "~/scripts/ValidWordList";
 
-const gameRef: Ref<Game> = inject("GAME") as Ref<Game>;
+const gameRef: Game = inject("GAME")!;
 const validWords = computed(() => {
-    return gameRef.value ? findValidWords(gameRef.value) : [];
+    return gameRef? findValidWords(gameRef) : [];
 });
 function setGuess(word: string) {
-    gameRef.value?.guess.clear();
+    gameRef.guess.clear();
 
     word = word.toUpperCase();
     for (let letter of word) {
-        gameRef.value?.guess.addLetter(letter);
+        gameRef.guess.addLetter(letter);
     }
 }
 
