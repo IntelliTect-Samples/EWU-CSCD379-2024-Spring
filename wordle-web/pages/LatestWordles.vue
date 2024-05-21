@@ -63,7 +63,6 @@ onMounted(() => {
       }))
     )
     .then((gameStatData: GameStats[]) => {
-      console.log(gameStatData);
       isDailyWordlesLoading.value = false;
       gameStats.value = gameStatData;
     });
