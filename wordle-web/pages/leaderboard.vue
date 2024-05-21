@@ -53,8 +53,8 @@ async function getScores(){
     });
 
 }
-watch(game.submitGuess, () => {
+/*watch(game.submitGuess, () => {
     getScores();
-});
+});*/
 
 </script>
