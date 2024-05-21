@@ -12,10 +12,10 @@ beforeEach(() => {
   mock = new AxiosMockAdapter(axios);
 });
 
-test("game", () => {
+test("game", async () => {
   // create game and check if it's created
   const game = new Game();
-  game.startNewGame();
+  await game.startNewGame();
   expect(game.secretWord.length).toBe(5);
 });
 
