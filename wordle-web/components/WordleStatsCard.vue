@@ -13,7 +13,8 @@
           >Total Losses: {{ gameStat.totalLosses }}</v-card-text
         >
         <v-card-text class="font-weight-bold text-h6"
-          >Average Seconds: {{ gameStat.averageSeconds }}</v-card-text
+          >Average Seconds:
+          {{ gameStat.averageSeconds.toFixed(2) }}</v-card-text
         >
         <v-chip
           v-if="hasPlayed"
@@ -70,7 +71,7 @@
 </template>
 
 <script setup lang="ts">
-import { format } from "date-fns";
+import { format, addDays } from "date-fns";
 import type { GameStats } from "~/Models/GameStas";
 import nuxtStorage from "nuxt-storage";
 
@@ -101,7 +102,7 @@ const averageAttempts = computed(() => {
 });
 
 const formattedDate = computed(() => {
-  return format(new Date(props.gameStat.date), "MMMM dd, yyyy");
+  return format(addDays(new Date(props.gameStat.date), 1), "MMMM dd, yyyy");
 });
 
 const hasPlayed = computed(() => {
