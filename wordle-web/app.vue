@@ -24,8 +24,8 @@
     >
       <v-list
         v-for="item in [
-          'wordle/daily',
-          'wordle/random',
+          'Wordle/Daily',
+          'Wordle/Random',
           'About',
           'Leaderboard',
           'Instructions',
@@ -94,6 +94,5 @@ onMounted(() => {
   height: 100%;
   background: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab);
   animation: gradient 15s ease infinite;
-
 }
 </style>
