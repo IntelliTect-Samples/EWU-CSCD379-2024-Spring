@@ -47,7 +47,7 @@
 
       <v-card-item>
         <v-label class="text-body-1"></v-label>
-        <v-container class="d-flex flex-row ga-5 justify-center">
+        <v-container class="d-flex flex-row ga-5 justify-center text-wrap">
           <LetterResult
             v-for="letter in key.letters"
             :key="letter.char"
