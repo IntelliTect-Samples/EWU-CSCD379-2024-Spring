@@ -330,7 +330,7 @@ const formattedDate = computed(() => {
 @import url("https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap");
 
 .font-text {
-  font-size: 1.4rem;
+  font-size: 1.0rem;
   font-family: "Press Start 2P", sans-serif;
 }
 </style>
