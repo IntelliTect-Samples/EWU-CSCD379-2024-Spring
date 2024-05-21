@@ -154,10 +154,10 @@ export class Game {
       }
     }
 
-    /*if (this.gameState === GameState.Won || this.gameState === GameState.Lost) {
+    if (this.gameState === GameState.Won || this.gameState === GameState.Lost && withApi) {
       this.isBusy = true;
       if (withApi) {
-        var result = await Axios.post("Score/UpdateScore", {
+        var result = await Axios.post("Game/Result", {
           attempts: this.guessIndex + 1,
           isWin: this.gameState === GameState.Won,
           word: this.secretWord,
@@ -167,7 +167,7 @@ export class Game {
         console.log(this.stats);
         this.isBusy = false;
       }
-    }*/
+    }
 
   }
 
