@@ -24,7 +24,7 @@
 
         <v-card-item>
           <v-col>
-            <v-btn color="primary" to="/leaderboard" small class="align-center justify-center"
+            <v-btn color="primary" to="/leaderboard" small class="align-center justify-center text-wrap"
               >check out leaderboard</v-btn
             >
           </v-col>
