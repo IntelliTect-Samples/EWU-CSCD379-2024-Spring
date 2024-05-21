@@ -29,28 +29,28 @@
         </v-chip>
       </v-col>
       <v-col>
-        <v-card-text class="font-weight-bold text-h6 text-center"
+        <v-card-text class="font-weight-bold text-h7 text-center"
           >Average Attempts</v-card-text
         >
         <v-progress-circular
           :rotate="360"
-          :width="10"
+          :width="7"
           color="win"
           class="mx-auto font-weight-bold d-flex justify-center align-center"
-          size="90"
+          size="80"
           :model-value="averageAttempts"
         >
           {{ averageAttempts }}%</v-progress-circular
         >
-        <v-card-text class="font-weight-bold text-h6 text-center"
+        <v-card-text class="font-weight-bold text-h7 text-center"
           >Win Percentage</v-card-text
         >
         <v-progress-circular
           :rotate="360"
-          :width="10"
+          :width="7"
           color="warning"
           class="mx-auto font-weight-bold d-flex justify-center align-center"
-          size="90"
+          size="80"
           :model-value="winPercentage"
         >
           {{ winPercentage }}%</v-progress-circular
