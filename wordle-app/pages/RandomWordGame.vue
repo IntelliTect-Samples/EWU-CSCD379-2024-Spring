@@ -114,10 +114,10 @@ onMounted(() => {
 
   // Assignment 3 Task 2
   // Check if user name is stored in local storage
-  if(!game.isBusy) {
-    checkUserNameLocalStorage();
-    checkUserName();
-  }
+  // if(!game.isBusy) {
+  //   checkUserNameLocalStorage();
+  //   checkUserName();
+  // }
  
 
   if(!showUserNameDialog.value){
@@ -176,6 +176,15 @@ async function checkUserName() {
     showUserNameDialog.value = true;
   }
 }
+
+// Fix: Check if game is not busy before checking username
+watch(() => game.isBusy, (value) => {
+  if(!value) {
+    checkUserNameLocalStorage();
+    checkUserName();
+  }
+});
+
 watch(() => game.gameState, (value) => {
   if(value == GameState.Won || value == GameState.Lost){
     if(nameUserNameDialog.value == "Guest"){
