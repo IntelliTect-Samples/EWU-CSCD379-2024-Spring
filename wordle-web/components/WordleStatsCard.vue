@@ -13,42 +13,36 @@
           >Total Losses: {{ gameStat.totalLosses }}</v-card-text
         >
         <v-card-text class="font-weight-bold text-h6"
-          >Average Seconds {{ gameStat.averageSeconds }}</v-card-text
+          >Average Seconds: {{ gameStat.averageSeconds }}</v-card-text
         >
       </v-col>
       <v-col>
-        <v-card-item
-          class="text-center font-weight-bold d-flex flex-column align-cetner"
+        <v-card-text class="font-weight-bold text-h6 text-center"
+          >Average Attempts</v-card-text
         >
-          <v-card-text class="font-weight-bold text-h6"
-            >Average Attempts</v-card-text
-          >
-          <v-progress-circular
-            :rotate="360"
-            :width="5"
-            color="win"
-            class="mx-auto font-weight-bold"
-            size="75"
-            :model-value="averageAttempts"
-          >
-            {{ averageAttempts }}%</v-progress-circular
-          >
-        </v-card-item>
-        <v-card-item class="text-center d-flex flex-column align-cetner">
-          <v-card-text class="font-weight-bold text-h6"
-            >Win Percentage</v-card-text
-          >
-          <v-progress-circular
-            :rotate="360"
-            :width="5"
-            color="warning"
-            class="mx-auto font-weight-bold"
-            size="75"
-            :model-value="winPercentage"
-          >
-            {{ winPercentage }}%</v-progress-circular
-          >
-        </v-card-item>
+        <v-progress-circular
+          :rotate="360"
+          :width="10"
+          color="win"
+          class="mx-auto font-weight-bold d-flex justify-center align-center"
+          size="90"
+          :model-value="averageAttempts"
+        >
+          {{ averageAttempts }}%</v-progress-circular
+        >
+        <v-card-text class="font-weight-bold text-h6 text-center"
+          >Win Percentage</v-card-text
+        >
+        <v-progress-circular
+          :rotate="360"
+          :width="10"
+          color="warning"
+          class="mx-auto font-weight-bold d-flex justify-center align-center"
+          size="90"
+          :model-value="winPercentage"
+        >
+          {{ winPercentage }}%</v-progress-circular
+        >
       </v-col>
     </v-row>
     <v-card-actions class="py-5"> </v-card-actions>

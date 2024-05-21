@@ -183,7 +183,6 @@ provide("GAME", game);
 const stopwatch = ref(new Stopwatch());
 
 const captureValidWords = (num: number) => {
-  console.log("Valid Words: " + num);
   validWordsNum.value = num;
 };
 

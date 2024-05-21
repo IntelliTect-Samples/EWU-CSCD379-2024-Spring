@@ -10,9 +10,10 @@
   />
   <v-container v-else>
     <div>
-      <div class="text-h3 ma-5 text-center font-weight-bold text-primary">
+      <div class="text-h3 ma-5 font-weight-bold text-primary">
         Last Ten Wordles
       </div>
+      <v-spacer />
       <v-row cols="12">
         <v-col
           v-for="(gameStat, i) in gameStats"
@@ -42,11 +43,6 @@ import type { GameStats } from "~/Models/GameStas";
 
 const isDailyWordlesLoading = ref(true);
 const date = ref("");
-interface Game {
-  word: string;
-  isWin: boolean;
-  attempts: number;
-}
 
 const gameStats = ref<GameStats[]>([]);
 

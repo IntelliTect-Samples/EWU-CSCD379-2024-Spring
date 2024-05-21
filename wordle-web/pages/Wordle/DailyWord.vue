@@ -185,9 +185,6 @@ const playerName = ref("");
 const showNameDialog = ref(false);
 const validWordsNum = ref(0);
 const itemSelect = ref("");
-const gameStats = ref<GameStats>();
-const statsLoaded = ref(true);
-const secretWord = ref("");
 
 watch(itemSelect, () => {
   if (itemSelect.value === "showNameDialog") {
@@ -206,26 +203,15 @@ provide("GAME", game);
 const stopwatch = ref(new Stopwatch());
 
 const captureValidWords = (num: number) => {
-  console.log("Valid Words: " + num);
   validWordsNum.value = num;
 };
 
-const queryDate = computed(() => {
-  const path = route.path;
-
-  // Splitting the path by '/' and getting the last part
-  const parts = path.split("/");
-  const datePart = parts[parts.length - 1];
-
-  return datePart;
-});
-
-game.startNewGame(secretWord.value);
+game.startNewGame("date");
 
 function closeGameDialog() {
   isGameOver.value = false;
   setTimeout(() => {
-    game.startNewGame(secretWord.value);
+    game.startNewGame("date");
   }, 300);
   stopwatch.value.reset();
   stopwatch.value.start();
@@ -304,9 +290,7 @@ onMounted(async () => {
   const defaultName = nuxtStorage.localStorage.getData("name");
   showNameDialog.value = defaultName === null || defaultName === "Guest";
   playerName.value = showNameDialog.value ? "Guest" : defaultName;
-  fetchDailyStats(new Date(queryDate.value));
   stopwatch.value.start();
-  secretWord.value = await getWOTD();
 });
 
 onUnmounted(() => {
@@ -333,34 +317,5 @@ function onKeyup(event: KeyboardEvent) {
     playClickSound();
     game.addLetter(event.key.toUpperCase());
   }
-}
-async function fetchDailyStats(date: Date) {
-  const formattedDate = format(date, "MM-dd-yyyy");
-  let url = "game/WordOfTheDayStats/" + formattedDate;
-
-  const game = await Axios.get(url)
-    .then((res: { data: any }) => res.data)
-    .then((data: any) => {
-      const gameStatsData: GameStats = {
-        totalGames: data.totalTimesPlayed,
-        totalWins: data.totalWins,
-        totalLosses: data.totalLosses,
-        averageSeconds: data.averageSeconds,
-        date: data.date,
-        word: data.word,
-        averageGuesses: data.averageGuesses,
-      };
-      console.log(gameStatsData); // Logging the assigned value
-      return gameStatsData; // Return the data for the next `then` block
-    })
-    .catch((err) => console.error(err));
-
-  gameStats.value = game!;
-  statsLoaded.value = false;
-}
-
-async function getWOTD(): Promise<string> {
-  const response = await Axios.get(queryDate.value);
-  return response.data.word;
 }
 </script>

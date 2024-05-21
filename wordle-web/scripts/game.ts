@@ -27,7 +27,7 @@ export class Game {
     this.gameState = GameState.Initializing;
   }
 
-  public async startNewGame(word?: string | undefined) {
+  public async startNewGame(date?: string | undefined) {
     // Load the game
     this.isBusy = true;
 
@@ -37,10 +37,10 @@ export class Game {
     this.stats = null;
 
     // Get a word
-    if (!word) {
+    if (date) {
       this.secretWord = await this.getWordOfTheDayFromApi();
     } else {
-      this.secretWord = word;
+      this.secretWord = await this.getRadnomWordFromApi();
     }
 
     // Populate guesses with the correct number of empty words
@@ -146,6 +146,20 @@ export class Game {
       return response.data;
     } catch (error) {
       console.error("Error fetching word of the day:", error);
+      return "ERROR"; // Probably best to print the error on screen, but this is kind of funny. :)
+    }
+  }
+
+  public async getRadnomWordFromApi(): Promise<string> {
+    try {
+      let wordUrl = "word/randomWord";
+
+      const response = await Axios.get(wordUrl);
+
+      console.log("Response from API: " + response.data);
+      return response.data;
+    } catch (error) {
+      console.error("Error fetching random word:", error);
       return "ERROR"; // Probably best to print the error on screen, but this is kind of funny. :)
     }
   }
