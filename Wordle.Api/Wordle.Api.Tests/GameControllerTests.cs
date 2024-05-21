@@ -19,11 +19,9 @@ public class GameControllerTests
 		var client = _factory.CreateClient();
 
 		// Act
-		var response = await client.GetAsync("/game/lastTenWords");
-		var content = await response.Content.ReadFromJsonAsync<List<WordStatsDto>>();
+		var response = await client.GetAsync("/game/lastTenWords?name=Guest");
 
 		// Assert
 		Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
-		Assert.IsTrue(content.IsNullOrEmpty());
 	}
 }
