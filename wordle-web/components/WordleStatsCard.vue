@@ -6,13 +6,13 @@
     </v-sheet>
     <v-row class="mt-1">
       <v-col class="ml-2">
-        <v-card-text class="font-weight-bold text-h6"
+        <v-card-text class="font-weight-bold text-h7"
           >Total Wins: {{ gameStat.totalWins }}</v-card-text
         >
-        <v-card-text class="font-weight-bold text-h6"
+        <v-card-text class="font-weight-bold text-h7"
           >Total Losses: {{ gameStat.totalLosses }}</v-card-text
         >
-        <v-card-text class="font-weight-bold text-h6"
+        <v-card-text class="font-weight-bold text-h7"
           >Average Seconds:
           {{ gameStat.averageSeconds.toFixed(2) }}</v-card-text
         >
