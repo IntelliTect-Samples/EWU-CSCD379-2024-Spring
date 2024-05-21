@@ -120,8 +120,8 @@ function calcAttempts() {
   return attempts;
 }
 function postScore(playerNameIn: string, attemptsIn: number, timeIn: number) {
-  console.log("score data " + playerNameIn + " " + attemptsIn + " " + 0);
-  let postScoreUrl = "Score/UpdateScore";
+  console.log("score data " + playerNameIn + " " + attemptsIn + " " + timeIn);
+  let postScoreUrl = "Player/UpdateScore";
   Axios.post(postScoreUrl, {
     playerName: playerNameIn,
     attempts: attemptsIn,
@@ -150,14 +150,13 @@ watch(
           () => showUserNameDialog.value,
           (value) => {
             if (value == false) {
-              console.log("username after propmt " + userName.value);
-              postScore(userName.value as string, calcAttempts(), calcSecond());
+              console.log("username after prompt " + userName.value);
+              postScore(userName.value, calcAttempts(), calcSecond());
             }
           }
         );
       } else {
-        console.log("username value given to api " + userName.value);
-        postScore(userName.value as string, calcAttempts(), calcSecond());
+        postScore(userName.value, calcAttempts(), calcSecond());
       }
 
       //I know userName is showing an error but the api only gets the data when its set up like that
