@@ -7,16 +7,10 @@
           <strong># of plays</strong>
         </th>
         <th class="text-center text-h6">
-          <strong
-            >Average <br />
-            score</strong
-          >
+          <strong>Average score</strong>
         </th>
         <th class="text-center text-h6">
-          <strong
-            >Average <br />
-            seconds</strong
-          >
+          <strong>Average seconds taken</strong>
         </th>
         <th class="text-center text-h6">
           <strong>Have played</strong>
