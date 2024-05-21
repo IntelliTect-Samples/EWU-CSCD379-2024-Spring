@@ -87,23 +87,3 @@ onMounted(() => {
   theme.global.name.value = defaultTheme ?? "light";
 });
 </script>
-
-<style scoped>
-</style>
-
-<style>
-html, body {
-  height: 100%;
-  margin: 0;
-}
-
-#app {
-  height: 100%;
-}
-
-.v-application--wrap {
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-}
-</style>
