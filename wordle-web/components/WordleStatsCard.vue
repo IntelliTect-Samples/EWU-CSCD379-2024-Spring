@@ -62,7 +62,7 @@
         v-if="isDaily"
         class="pa-2 px-5 mx-3 mb-4 bg-primary"
         color="white"
-        :to="`/Wordle/Daily?date=${formattedDate}`"
+        :to="`/wordle/daily?date=${formattedDate}`"
         >Play Word</v-btn
       ></v-card-actions
     >
