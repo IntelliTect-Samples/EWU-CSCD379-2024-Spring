@@ -24,7 +24,7 @@
     >
       <v-list
         v-for="item in [
-          'Wordle/Daily?date=' + format(new Date(), 'MM-dd-yyyy'),
+          'Wordle/Daily',
           'Wordle/Random',
           'About',
           'Leaderboard',
@@ -34,7 +34,13 @@
         :key="item"
       >
         <v-list-item
-          @click="$router.push('/' + item.toLowerCase().replaceAll(' ', ''))"
+          @click="
+            if (item === 'Wordle/Daily') {
+              $router.push(
+                '/Wordle/Daily?date=' + format(new Date(), 'MM-dd-yyyy')
+              );
+            } else $router.push('/' + item.toLowerCase().replaceAll(' ', ''));
+          "
         >
           <v-list-item-title> {{ item }} </v-list-item-title>
         </v-list-item>
