@@ -1,4 +1,4 @@
-<!-- gets the username-->
+
 <template>
   <v-dialog v-model="modelValue" max-width="500" persistent>
     <v-card>
@@ -13,6 +13,13 @@
         label="User Name"
         required
       ></v-text-field>
+      <v-text-field
+        @keyup.stop
+        v-model="Password"
+        label="Password"
+        :append-inner-icon="showPassword? 'mdi-eye-off' : 'mdi-eye'"
+        :type="showPassword? 'text' : 'password'"
+        required></v-text-field>
       <v-card-actions>
         <v-spacer></v-spacer>
         <v-btn color="primary" variant="flat" @click="modelValue = false"
@@ -26,13 +33,27 @@
 
 <script setup lang="ts">
 import nuxtStorage from "nuxt-storage";
+import Axios from "axios";
 const modelValue = defineModel<boolean>({ default: false });
 const userName: Ref<string> = inject("userName")! as Ref<string>;
+const Password = ref("");
+const showPassword = ref(false);
 
 const saveUserName = () => {
   modelValue.value = false;
   //console.log("userName in dialog " + userName.value);
   nuxtStorage.localStorage.setData("userName", userName.value);
 };
+
+function signIn(){
+  let url = "Player/SignIn";
+  Axios.post(url, {userName: userName.value, password: Password.value})
+  .then((response) => {
+    console.log(response.data);
+  })
+  .catch((error) => {
+    console.log(error);
+  });
+}
 //console.log("userName in dialog " + userName.value);
 </script>
