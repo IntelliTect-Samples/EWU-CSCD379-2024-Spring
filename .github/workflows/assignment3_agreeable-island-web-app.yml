@@ -7,6 +7,8 @@ on:
   push:
     branches:
       - Assignment4
+    paths: 
+      - Wordle.Api/**
   pull_request:
     branches:
       - Assignment4
@@ -29,7 +31,7 @@ jobs:
           include-prerelease: true
 
       - name: Build with dotnet
-        run: dotnet build --configuration Release
+        run: dotnet build --configuration Release 
 
       - name: dotnet publish
         run: dotnet publish -c Release -o ${{runner.temp}}/myapp
