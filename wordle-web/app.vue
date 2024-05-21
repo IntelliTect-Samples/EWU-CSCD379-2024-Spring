@@ -28,7 +28,10 @@
             <v-list-item-title>Home</v-list-item-title>
           </v-list-item>
           <v-list-item link @click="router.push('/wordOfTheDay')">
-            <v-list-item-title>WOTD</v-list-item-title>
+            <v-list-item-title>Daily Word</v-list-item-title>
+          </v-list-item>
+          <v-list-item link @click="router.push('/randomWord')">
+            <v-list-item-title>Random Word</v-list-item-title>
           </v-list-item>
           <v-list-item link @click="router.push('/instructions')">
             <v-list-item-title>Instructions</v-list-item-title>
