@@ -26,7 +26,7 @@ public class GameController : ControllerBase
         return stats;
     }
 
-    [HttpGet("GetGames")]
+    [HttpGet("GetGames/{date}")]
     public async Task<List<GameStatsDto>> GetGames(DateTime date)
     {
         var stats = await GameService.GetGames(date, 10);
