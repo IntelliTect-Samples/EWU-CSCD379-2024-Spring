@@ -68,11 +68,39 @@ public class GameService
 
         return result;
     }
-}
 
-public class AllWordStats()
-{
-    public required string Word { get; set; }
+    public async Task<List<GameStatsDto>> GetGames(DateTime date, int num)
+    {
+        List<GameStatsDto> gameStatsList = [];
 
-    public double AverageGuesses { get; set; }
+        for (int i = 0; i < num; i++)
+        {
+            DateOnly dateOnly = DateOnly.FromDateTime(date.AddDays(-i));
+
+            WordOfTheDay? word = await Db.WordsOfTheDays
+                .Include(wotd => wotd.Games)
+                .FirstOrDefaultAsync(wotd => wotd.Date == dateOnly);
+
+            GameStatsDto stats = new()
+            {
+                Date = dateOnly,
+                AverageGuesses = word?.Games.Average(g => g.Attempts) ?? 0,
+                AverageTime = word?.Games.Average(w => w.Time) ?? 0,
+                TotalTimesPlayed = word?.Games.Count ?? 0,
+                TotalWins = word?.Games.Count(g => g.IsWin) ?? 0
+            };
+
+            gameStatsList.Add(stats);
+        }
+
+        return gameStatsList;
+    }
+
+
+    public class AllWordStats()
+    {
+        public required string Word { get; set; }
+
+        public double AverageGuesses { get; set; }
+    }
 }

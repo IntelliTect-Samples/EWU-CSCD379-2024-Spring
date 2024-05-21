@@ -2,9 +2,13 @@
 {
     public class GameStatsDto
     {
-        public required string Word { get; set; }
+        public string? Word { get; set; }
+
+        public DateOnly Date { get; set; }
 
         public double AverageGuesses { get; set; }
+
+        public double AverageTime { get; set; }
 
         public int TotalTimesPlayed { get; set; }
 

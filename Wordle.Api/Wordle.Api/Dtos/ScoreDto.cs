@@ -4,6 +4,6 @@
     {
         public string PlayerName { get; set; } = "";
         public int Attempts { get; set; }
-        public int Time { get; set; }
+        public double Time { get; set; }
     }
 }
