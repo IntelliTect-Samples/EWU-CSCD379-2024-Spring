@@ -10,6 +10,5 @@
             <v-card-text>The gear lets you change themes. The book lets you navigate to different pages. The ? shows a popup of the how to play page  </v-card-text>
         </v-card>
         
-        <v-img src="public/assets/Pentagram.jpg" aspect-ratio="2.75"></v-img>
     </v-card>
 </template>

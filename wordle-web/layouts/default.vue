@@ -33,7 +33,7 @@
 </template>
 <style>
 .v-main{
-  background-image: url('/public/assets/minnie.jpg');
+  background-image: url('/public/assets/Pentagram.jpg');
   background-size: cover;
   
   }
