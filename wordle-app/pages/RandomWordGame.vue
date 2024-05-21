@@ -114,8 +114,11 @@ onMounted(() => {
 
   // Assignment 3 Task 2
   // Check if user name is stored in local storage
-  checkUserNameLocalStorage();
-  checkUserName();
+  if(!game.isBusy) {
+    checkUserNameLocalStorage();
+    checkUserName();
+  }
+ 
 
   if(!showUserNameDialog.value){
     startStopwatch();
