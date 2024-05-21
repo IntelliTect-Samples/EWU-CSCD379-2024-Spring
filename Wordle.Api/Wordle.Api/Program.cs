@@ -12,7 +12,7 @@ builder.Services.AddCors(options =>
 {
     options.AddPolicy(name: AllOrigins, policy =>
     {
-        policy.WithOrigins("*");
+        policy.WithOrigins("https://purple-plant-006657c1e.5.azurestaticapps.net/");
         policy.AllowAnyMethod();
         policy.AllowAnyHeader();
     });
