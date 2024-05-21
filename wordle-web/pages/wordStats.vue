@@ -36,6 +36,7 @@
 import { format } from "date-fns";
 import Axios from "axios"; //npm install axios
 import { Game } from "~/scripts/game";
+import { c } from "@nuxt/test-utils/dist/shared/test-utils.9059LSjm";
 const router = useRouter();
 const game: Game = inject("GAME")!;
 const date = ref("");
@@ -55,16 +56,17 @@ onMounted(() => {
 });
 
 async function getStats() {
-  let statUrl = "/Game/GetGames";
+  let statUrl = "Game/GetGames";
   const formatDate = format(new Date(), "MM-dd-yyyy");
   date.value = formatDate;
-  console.log("to api" + statUrl + "/" + date.value);
+  console.log("to api " + statUrl + "/" + date.value);
   await Axios.get(statUrl + "/" + date.value)
     .then((response) => {
       statsToDisplay.value = response.data;
     })
     .catch((error) => {
-      console.log("api error" + error);
+      console.log("api error " + error);
+      console.log("api error response " + error.response);
     });
 }
 

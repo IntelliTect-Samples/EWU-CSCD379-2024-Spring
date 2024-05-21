@@ -1,6 +1,6 @@
 <template>
   <UserNameDialog v-model="showUserNameDialog" />
-  
+
   <HelpDialog v-model="showHelpDialog" />
   <v-container>
     <v-btn icon="mdi-help-box" @click="showHelpDialog = true" />
@@ -46,7 +46,7 @@
             <i class="text-caption"> Average Guesses </i>
           </v-col>
         </v-row>
-        <v-btn variant="outlined" @click="game.startNewGameAPI()">
+        <v-btn variant="outlined" @click="game.startNewGameAPI(), startTime = new Date().getTime();">
           <v-icon size="large" class="mr-2"> mdi-restart </v-icon> Restart Game
         </v-btn>
       </v-alert>
@@ -87,7 +87,7 @@ import Axios from "axios"; //npm install axios
 
 const router = useRouter();
 const showHelpDialog = ref(false);
-const userName: Ref<string>= inject("userName")! as Ref<string>;
+const userName: Ref<string> = inject("userName")! as Ref<string>;
 const game = reactive(new Game());
 game.startNewGameAPI();
 provide("GAME", game);
@@ -120,8 +120,8 @@ function calcAttempts() {
   return attempts;
 }
 function postScore(playerNameIn: string, attemptsIn: number, timeIn: number) {
-  console.log("score data " + playerNameIn + " " + attemptsIn + " " + 0);
-  let postScoreUrl = "Score/UpdateScore";
+  console.log("score data " + playerNameIn + " " + attemptsIn + " " + timeIn);
+  let postScoreUrl = "Player/UpdateScore";
   Axios.post(postScoreUrl, {
     playerName: playerNameIn,
     attempts: attemptsIn,
@@ -129,6 +129,7 @@ function postScore(playerNameIn: string, attemptsIn: number, timeIn: number) {
   }).then((response) => {
     console.log("response from api " + response.data + " " + response.status);
   });
+  
 }
 function calcSecond() {
   var endTime = new Date().getTime();
@@ -150,14 +151,13 @@ watch(
           () => showUserNameDialog.value,
           (value) => {
             if (value == false) {
-              console.log("username after propmt " + userName.value);
-              postScore(userName.value as string, calcAttempts(), calcSecond());
+              console.log("username after prompt " + userName.value);
+              postScore(userName.value, calcAttempts(), calcSecond());
             }
           }
         );
       } else {
-        console.log("username value given to api " + userName.value);
-        postScore(userName.value as string, calcAttempts(), calcSecond());
+        postScore(userName.value, calcAttempts(), calcSecond());
       }
 
       //I know userName is showing an error but the api only gets the data when its set up like that
