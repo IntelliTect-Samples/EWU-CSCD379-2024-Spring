@@ -21,8 +21,10 @@
       <br>
       &ensp; Other features of the game include a cheat button that will show you all the possible words based on your
       previous guesses and the current letters that are typed in. There is a settings button that will allow you to
-      change the theme of the game which includes a light, dark, jungle and flamingo theme. The leaderboard will show
-      the top 10 players. There is a keyboard that will allow you to type in your guesses. 
+      change the theme of the game which includes a regular, jungle, flamingo and Whurdle theme all with a light and dark version. The leaderboard will show
+      the top 10 players. There is a keyboard that will allow you to type in your guesses. Fianlly there is a version of the game
+      that allows you to play a game from a specific day and another version that allows you to play a random game. 
+
     </v-card-text>
     <v-btn @click="router.go(-1)" class="ma-4" color="secondary">Back</v-btn>
   </v-card>

@@ -1,6 +1,6 @@
 <template>
   <v-dialog v-model="modelValue">
-    <v-card class="ma-auto" min-width="200">
+    <v-card class="ma-auto pa-4" min-width="300">
       <v-sheet color="secondary">
         <v-card-title>Settings</v-card-title>
       </v-sheet>
@@ -20,7 +20,7 @@
             color="secondary"
             v-model="selectedTheme"
             label="Select theme"
-            :items="['Regular', 'Jungle', 'Flamingo']"></v-select>
+            :items="['Regular', 'Jungle', 'Flamingo', 'Whurdle']"></v-select>
           <v-btn
             color="secondary"
             @click="changeColorScheme"
