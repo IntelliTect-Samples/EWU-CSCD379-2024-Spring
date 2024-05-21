@@ -28,14 +28,14 @@
             <v-btn
               class="button-text glow-btn pa-2 mx-3 mb-4"
               color="white"
-              to="/wordle/random"
+              to="/Wordle/Random"
             >
               Random Wordle
             </v-btn>
             <v-btn
               class="button-text glow-btn pa-2 mx-3 mb-4"
               color="white"
-              :to="`/wordle/daily?date=${formattedDate}`"
+              :to="`/Wordle/Daily?date=${formattedDate}`"
             >
               Daily Wordle
             </v-btn>

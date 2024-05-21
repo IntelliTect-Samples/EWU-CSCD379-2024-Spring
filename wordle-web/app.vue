@@ -37,7 +37,7 @@
           @click="
             if (item === 'Wordle/Daily') {
               $router.push(
-                '/wordle/daily?date=' + format(new Date(), 'MMMM dd, yyyy')
+                '/Wordle/Daily?date=' + format(new Date(), 'MMMM dd, yyyy')
               );
             } else $router.push('/' + item.toLowerCase().replaceAll(' ', ''));
           "
