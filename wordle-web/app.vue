@@ -91,7 +91,14 @@ onMounted(() => {
 </script>
 
 <style scoped>
-.full-page-gradient {
+@import url("https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap");
+
+.font-text {
+  font-size: 1.2;
+  font-family: "Press Start 2P", sans-serif;
+}
+.full-page-gradient
+{
   width: 100%;
   height: 100%;
   background: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab);

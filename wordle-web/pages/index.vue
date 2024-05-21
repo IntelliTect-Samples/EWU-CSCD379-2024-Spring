@@ -75,6 +75,8 @@ const formattedDate = computed(() => {
 </script>
 
 <style scoped>
+@import url("https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap");
+
 
 .glow-btn {
   position: relative;
