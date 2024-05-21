@@ -25,9 +25,7 @@
               {{ game.stats.winPercentage }} %
             </v-progress-circular>
             <br />
-            <i class="text-caption">
-              Success Rate
-            </i>
+            <i class="text-caption"> Success Rate </i>
           </v-col>
           <v-col cols="auto">
             <v-progress-circular
@@ -35,12 +33,13 @@
               width="10"
               :model-value="game.stats.averageGuessesPercent(game.maxAttempts)"
             >
-              {{ game.stats.averageGuessesPercent(game.maxAttempts).toFixed(0) }} %
+              {{
+                game.stats.averageGuessesPercent(game.maxAttempts).toFixed(0)
+              }}
+              %
             </v-progress-circular>
             <br />
-            <i class="text-caption">
-              Average Guesses
-            </i>
+            <i class="text-caption"> Average Guesses </i>
           </v-col>
         </v-row>
         <v-btn variant="outlined" @click="game.startNewGame()">
@@ -59,14 +58,20 @@
         <Keyboard />
       </div>
 
-      <v-btn @click="game.submitGuess()" class="mb-5" color="primary">
-        Guess!
-      </v-btn>
+      <div class="mb-5">
+        <v-btn @click="game.submitGuess()" class="mb-5" color="primary">
+          Guess!
+        </v-btn>
+        <br />
+        <v-btn @click="hint" color="primary"> Hint! 👀 </v-btn>
+      </div>
     </v-card>
   </v-container>
 </template>
 
 <script setup lang="ts">
+import axios from "axios";
+import TokenService from "~/scripts/TokenService";
 import { Game, GameState } from "../scripts/game";
 
 const game = reactive(new Game());
@@ -74,6 +79,7 @@ game.startNewGame();
 provide("GAME", game);
 
 const myGuess = ref("");
+const tokenService = new TokenService();
 
 onMounted(() => {
   window.addEventListener("keyup", onKeyup);
@@ -91,5 +97,13 @@ function onKeyup(event: KeyboardEvent) {
   } else if (event.key.match(/[A-z]/) && event.key.length === 1) {
     game.addLetter(event.key.toUpperCase());
   }
+}
+
+function hint() {
+  const headers = tokenService.generateTokenHeader();
+  console.log(headers);
+  axios.get("Word/WordOfTheDayHint", { headers }).then((response) => {
+    alert(`Hint: ${response.data}`);
+  });
 }
 </script>
