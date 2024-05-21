@@ -28,7 +28,7 @@
           <v-btn
             class="glow-btn pa-2 px-5 mx-3 mb-4"
             color="white"
-            :to="`/Wordle/Daily?date=${date}`"
+            :to="`/Wordle/Daily?date=${formattedDate}`"
           >
             Daily Wordle
           </v-btn>
