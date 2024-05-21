@@ -15,6 +15,13 @@
         <v-card-text class="font-weight-bold text-h6"
           >Average Seconds: {{ gameStat.averageSeconds }}</v-card-text
         >
+        <v-btn
+          v-if="isDaily"
+          class="pa-2 px-5 mx-3 mb-4"
+          color="primary"
+          :to="`/Wordle/Daily?date=${formattedDate}`"
+          >Play Word</v-btn
+        >
       </v-col>
       <v-col>
         <v-card-text class="font-weight-bold text-h6 text-center"
