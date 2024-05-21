@@ -19,7 +19,7 @@
 <script setup lang="ts">
 import nuxtStorage from "nuxt-storage";
 const modelValue = defineModel<boolean>({ default: false });
-const userName = inject("userName");
+    const userName: Ref<string>= inject("userName")! as Ref<string>;
 
 const saveUserName = () => {
     modelValue.value = false;
