@@ -10,7 +10,7 @@
 import { Game } from "~/scripts/game";
 import { Letter } from "~/scripts/letter";
 
-const game: Ref<Game> = inject("GAME") as Ref<Game>;
+const game: Game = inject("GAME")!;
 //reset keybord after game is over
 
 const keyboardLetterRows = computed(() => {
@@ -27,7 +27,7 @@ const keyboardLetterRows = computed(() => {
     let keyboardLetterRow: Letter[] = []
     // For each key in each row, convert to a letter object
     for (let key of keyboardRow) {
-      keyboardLetterRow.push(game.value?.guessedLetters.find((letter) => letter.char === key) ?? new Letter(key));
+      keyboardLetterRow.push(game.guessedLetters.find((letter) => letter.char === key) ?? new Letter(key));
     }
     keyboardLetterRows.push(keyboardLetterRow);
   }

@@ -1,4 +1,4 @@
-// @vitest-environment nuxt
+ //@vitest-environment nuxt
 import { beforeEach, expect, test } from "vitest";
 import { Game } from "~/scripts/game";
 import { LetterState } from "~/scripts/letter";
@@ -15,16 +15,16 @@ beforeEach(() => {
 test("game", () => {
   // create game and check if it's created
   const game = new Game();
-  /*game.startNewGame("autos");
-  expect(game.secretWord.length).toBe(5);*/
+  //game.startNewGameRandom("autos");
+  //expect(game.secretWord.length).toBe(5);
 });
 
 test("guess-word", () => {
   const game = new Game();
 
-  /*const word = "autos";
+  const word = "autos";
 
-  const mockGameStats = new GameStats();
+  /*const mockGameStats = new GameStats();
   mockGameStats.word = "autos";
   mockGameStats.averageGuesses = 0;
   mockGameStats.totalTimesPlayed = 0;
@@ -33,9 +33,9 @@ test("guess-word", () => {
 
   mock.onPost().reply(200, mockGameStats);
 
-  game.startNewGame(word);
+  game.startNewGameRandom(word);
   game.setGuessLetters("tangs");
-  game.submitGuess();
+  game.submitGuess(false);
   expect(game.guesses[0].letters[0].state).toBe(LetterState.Misplaced);
   expect(game.guesses[0].letters[1].state).toBe(LetterState.Misplaced);
   expect(game.guesses[0].letters[2].state).toBe(LetterState.Wrong);
@@ -43,11 +43,12 @@ test("guess-word", () => {
   expect(game.guesses[0].letters[4].state).toBe(LetterState.Correct);
 
   game.setGuessLetters(word);
-  game.submitGuess();
+  game.submitGuess(false);
   expect(game.guesses[1].letters[0].state).toBe(LetterState.Correct);
   expect(game.guesses[1].letters[1].state).toBe(LetterState.Correct);
   expect(game.guesses[1].letters[2].state).toBe(LetterState.Correct);
   expect(game.guesses[1].letters[3].state).toBe(LetterState.Correct);
-  expect(game.guesses[1].letters[4].state).toBe(LetterState.Correct);*/
+  expect(game.guesses[1].letters[4].state).toBe(LetterState.Correct);
+  */
 
 });
