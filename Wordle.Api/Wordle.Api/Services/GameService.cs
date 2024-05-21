@@ -47,7 +47,8 @@ public class GameService(WordleDbContext db)
             AverageGuesses = await gamesForWord.AverageAsync(g => g.Attempts),
             TotalTimesPlayed = await gamesForWord.CountAsync(),
             AverageSeconds = await gamesForWord.AverageAsync(g => g.Seconds),
-            TotalWins = await gamesForWord.CountAsync(g => g.IsWin)
+            TotalWins = await gamesForWord.CountAsync(g => g.IsWin),
+            Usernames = [.. gamesForWord.Select(g => g.Name).Where(name => !string.IsNullOrEmpty(name))]
         };
 
         return stats;
@@ -88,7 +89,9 @@ public class GameService(WordleDbContext db)
                 AverageGuesses = wordOfTheDayGames.Average(g => g.Attempts),
                 TotalTimesPlayed = wordOfTheDayGames.Count(),
                 TotalWins = wordOfTheDayGames.Count(g => g.IsWin),
-                AverageSeconds = wordOfTheDayGames.Average(w => w.Seconds)
+                AverageSeconds = wordOfTheDayGames.Average(w => w.Seconds),
+                Usernames = [.. wordOfTheDayGames.Select(g => g.Name).Where(name => !string.IsNullOrEmpty(name))]
+
             };
 
         }
@@ -100,7 +103,8 @@ public class GameService(WordleDbContext db)
                 AverageGuesses = 0,
                 TotalTimesPlayed = 0,
                 TotalWins = 0,
-                AverageSeconds = 0
+                AverageSeconds = 0,
+                Usernames = []
             };
         }
 

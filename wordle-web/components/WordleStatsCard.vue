@@ -15,6 +15,17 @@
         <v-card-text class="font-weight-bold text-h6"
           >Average Seconds: {{ gameStat.averageSeconds }}</v-card-text
         >
+        <v-chip
+          v-if="hasPlayed"
+          class="mx-3 mt-1"
+          varient="tonal"
+          color="success"
+        >
+          <v-icon>mdi-check</v-icon> You have played
+        </v-chip>
+        <v-chip v-else class="mx-3 mt-1" varient="tonal" color="error">
+          <v-icon>mdi-close</v-icon> You have not played
+        </v-chip>
       </v-col>
       <v-col>
         <v-card-text class="font-weight-bold text-h6 text-center"
@@ -61,12 +72,14 @@
 <script setup lang="ts">
 import { format } from "date-fns";
 import type { GameStats } from "~/Models/GameStas";
+import nuxtStorage from "nuxt-storage";
+
+const playerName = ref("");
 
 const props = withDefaults(
   defineProps<{
     gameStat: GameStats;
     isDaily: boolean;
-    hasPlayed: boolean;
     inCurrentGame: boolean;
   }>(),
   {
@@ -89,5 +102,14 @@ const averageAttempts = computed(() => {
 
 const formattedDate = computed(() => {
   return format(new Date(props.gameStat.date), "MMMM dd, yyyy");
+});
+
+const hasPlayed = computed(() => {
+  return props.gameStat.usernames.includes(playerName.value);
+});
+
+onMounted(async () => {
+  const defaultName = nuxtStorage.localStorage.getData("name");
+  playerName.value = defaultName ? defaultName : "Guest";
 });
 </script>

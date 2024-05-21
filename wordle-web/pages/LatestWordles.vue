@@ -27,7 +27,6 @@
             :gameStat="gameStat"
             :isDaily="true"
             :inCurrentGame="false"
-            :hasPlayed="false"
           />
         </v-col>
       </v-row>
@@ -60,6 +59,7 @@ onMounted(() => {
         date: data.date,
         word: data.word,
         averageGuesses: data.averageGuesses,
+        usernames: data.usernames,
       }))
     )
     .then((gameStatData: GameStats[]) => {

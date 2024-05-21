@@ -15,5 +15,7 @@
         public int TotalWins { get; set; }
 
         public int TotalLosses { get => TotalTimesPlayed - TotalWins; }
+
+        public List<string> Usernames { get; set; } = [];
     }
 }

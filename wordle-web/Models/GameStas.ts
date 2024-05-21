@@ -6,4 +6,5 @@ export interface GameStats {
   totalGames: number;
   totalWins: number;
   totalLosses: number;
+  usernames: string[];
 }
