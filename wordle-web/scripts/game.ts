@@ -12,6 +12,7 @@ export class Game {
   public guessedLetters: Letter[] = [];
   public isBusy: boolean = false;
   public stats: GameStats | null = null;
+  public playerNmae: string = "";
 
   private _secretWord: string = "";
   private set secretWord(value: string) {
@@ -102,7 +103,7 @@ export class Game {
     }
   }
 
-  public async submitGuess() {
+  public async submitGuess(name: string, currentTime: number = 0) {
     if (this.gameState !== GameState.Playing) return;
     if (!this.guess.isFilled) return;
     if (!this.guess.isValidWord()) {
@@ -129,10 +130,11 @@ export class Game {
         attempts: this.guessIndex + 1,
         isWin: this.gameState === GameState.Won,
         word: this.secretWord,
+        name: name,
+        seconds: currentTime,
       });
       this.stats = new GameStats();
       Object.assign(this.stats, result.data);
-      console.log(this.stats);
       this.isBusy = false;
     }
   }

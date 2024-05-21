@@ -10,6 +10,8 @@ public class Game
 
     public bool IsWin {  get; set; }
 
+    public string Name { get; set; } = null!;
+
     public DateTime DateAttempted { get; set; } = DateTime.UtcNow;
 
     public int? WordOfTheDayId { get; set; }

@@ -29,6 +29,7 @@ public class GameService(WordleDbContext db)
                 .FirstOrDefault(wotd => wotd.Date <= today),
             Word = word,
             Seconds = gameDto.Seconds,
+            Name = gameDto.Name,
         };
 
         Db.Games.Add(game);

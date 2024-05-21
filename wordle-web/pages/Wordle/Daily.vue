@@ -308,7 +308,7 @@ function onKeyup(event: KeyboardEvent) {
   }
   if (event.key === "Enter") {
     let currentGuessIndex = game.guessIndex;
-    game.submitGuess();
+    game.submitGuess(playerName.value, stopwatch.value.getCurrentTime());
     if (currentGuessIndex !== game.guessIndex) {
       playEnterSound();
     }
