@@ -15,12 +15,14 @@
         <v-card-text class="font-weight-bold text-h6"
           >Average Seconds: {{ gameStat.averageSeconds }}</v-card-text
         >
-        <v-btn
-          v-if="isDaily"
-          class="pa-2 px-5 mx-3 mb-4"
-          color="primary"
-          :to="`/Wordle/Daily?date=${formattedDate}`"
-          >Play Word</v-btn
+        <v-chip
+          color="success"
+          class="font-weight-bold text-h6 mx-3 mt-2"
+          v-if="hasPlayed"
+          >Completed</v-chip
+        >
+        <v-chip color="error" class="font-weight-bold text-h6 mx-3 mt-2" v-else
+          >Not Completed</v-chip
         >
       </v-col>
       <v-col>
@@ -52,7 +54,15 @@
         >
       </v-col>
     </v-row>
-    <v-card-actions class="py-5"> </v-card-actions>
+    <v-card-actions class="py-5">
+      <v-btn
+        v-if="isDaily"
+        class="pa-2 px-5 mx-3 mb-4 bg-primary"
+        color="white"
+        :to="`/Wordle/Daily?date=${formattedDate}`"
+        >Play Word</v-btn
+      ></v-card-actions
+    >
     <v-sheet color="primary" height="5px" />
   </v-card>
 </template>
