@@ -129,6 +129,7 @@ function postScore(playerNameIn: string, attemptsIn: number, timeIn: number) {
   }).then((response) => {
     console.log("response from api " + response.data + " " + response.status);
   });
+  startTime = new Date().getTime();
 }
 function calcSecond() {
   var endTime = new Date().getTime();

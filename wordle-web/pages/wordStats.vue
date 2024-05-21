@@ -55,7 +55,7 @@ onMounted(() => {
 });
 
 async function getStats() {
-  let statUrl = "/Game/GetGames";
+  let statUrl = "Game/GetGames";
   const formatDate = format(new Date(), "MM-dd-yyyy");
   date.value = formatDate;
   console.log("to api" + statUrl + "/" + date.value);
