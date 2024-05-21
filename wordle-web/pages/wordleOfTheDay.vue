@@ -46,7 +46,7 @@
             <i class="text-caption"> Average Guesses </i>
           </v-col>
         </v-row>
-        <v-btn variant="outlined" @click="game.startNewGameAPI()">
+        <v-btn variant="outlined" @click="game.startNewGameAPI(), startTime = new Date().getTime();">
           <v-icon size="large" class="mr-2"> mdi-restart </v-icon> Restart Game
         </v-btn>
       </v-alert>
@@ -129,7 +129,7 @@ function postScore(playerNameIn: string, attemptsIn: number, timeIn: number) {
   }).then((response) => {
     console.log("response from api " + response.data + " " + response.status);
   });
-  startTime = new Date().getTime();
+  
 }
 function calcSecond() {
   var endTime = new Date().getTime();
