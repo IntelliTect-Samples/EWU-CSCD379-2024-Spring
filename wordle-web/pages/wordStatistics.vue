@@ -4,13 +4,13 @@
       <tr>
         <th class="text-h6 text-center"><strong>Date</strong></th>
         <th class="text-h6 text-center">
-          <strong># of plays</strong>
+          <strong># of<br />plays</strong>
         </th>
         <th class="text-center text-h6">
-          <strong>Average score</strong>
+          <strong>Average<br />score</strong>
         </th>
         <th class="text-center text-h6">
-          <strong>Average seconds taken</strong>
+          <strong>Average<br />seconds</strong>
         </th>
         <th class="text-center text-h6">
           <strong>Have played</strong>
