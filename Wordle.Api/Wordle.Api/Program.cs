@@ -36,12 +36,12 @@ builder.Services.AddScoped<GameService>();
 
 var app = builder.Build();
 
-//using (var scope = app.Services.CreateScope())
-//{
-//    var db = scope.ServiceProvider.GetRequiredService<WordleDbContext>();
-//    db.Database.Migrate();
-//    await Seeder.Seed(db);
-//}
+using (var scope = app.Services.CreateScope())
+{
+    var db = scope.ServiceProvider.GetRequiredService<WordleDbContext>();
+    db.Database.Migrate();
+    await Seeder.Seed(db);
+}
 
 // Configure the HTTP request pipeline.
 
