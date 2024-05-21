@@ -23,24 +23,13 @@ public class PlayerService
 
     public async Task<List<PlayerDto>> GetTopScores(int num)
     {
-        /*for (int j = 0; j < players.Count; j++)
-        {
-            scores[j] = new string[3];
-        }
-
-        for (int i = 0; i < players.Count && i < 10; i++)
-        {
-            scores[i][0] = players[i].Name;
-            scores[i][1] = "" + players[i].AverageAttempts;
-            scores[i][2] = "" + players[i].GameCount;
-        }*/
-
         return await Db.Players.
             OrderBy(player => player.AverageAttempts).
             Take(num).
             Select(player => new PlayerDto
             {
-                Name = player.Name,
+                //player name cannot be null
+                Name = player.Name!,
                 AverageAttempts = player.AverageAttempts,
                 GameCount = player.GameCount
             }).ToListAsync();

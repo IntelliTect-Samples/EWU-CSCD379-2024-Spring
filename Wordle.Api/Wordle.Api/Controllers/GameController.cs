@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using System;
 using Wordle.Api.Dtos;
 using Wordle.Api.Models;
 using Wordle.Api.Services;
@@ -22,6 +23,13 @@ public class GameController : ControllerBase
         Game game = await GameService.PostGameResult(gameDto);
         var stats = await GameService.GetGameStats(game);
 
+        return stats;
+    }
+
+    [HttpGet("GetGames")]
+    public async Task<List<GameStatsDto>> GetGames(DateTime date)
+    {
+        var stats = await GameService.GetGames(date, 10);
         return stats;
     }
 }

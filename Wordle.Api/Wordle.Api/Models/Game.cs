@@ -7,6 +7,8 @@ public class Game
 
     public int Attempts { get; set; }
 
+    public double Time {  get; set; }
+
     public bool IsWin {  get; set; }
 
     public DateTime DateAttempted { get; set; } = DateTime.UtcNow;
