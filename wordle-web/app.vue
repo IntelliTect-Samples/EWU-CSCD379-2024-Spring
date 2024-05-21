@@ -1,5 +1,5 @@
 <template>
-  <v-app>
+  <v-app class="full-page-gradient">
     <v-app-bar color="primary" :elevation="2">
       <v-app-bar-title @click="$router.push('/')" style="cursor: pointer">
         <v-img :src="logoPath" alt="Logo" max-width="180" max-height="95" />
@@ -48,7 +48,7 @@
     </v-navigation-drawer>
     <v-main>
       <NuxtLayout>
-        <NuxtPage />
+        <NuxtPage  />
       </NuxtLayout>
     </v-main>
     <SettingsDialogue v-model="showSettingsDialog" />
@@ -87,3 +87,18 @@ onMounted(() => {
   theme.global.name.value = defaultTheme ?? "light";
 });
 </script>
+
+<style scoped>
+
+.full-page-gradient {
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab);
+  background-size: 400% 400%;
+  animation: gradient 15s ease infinite;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+</style>
