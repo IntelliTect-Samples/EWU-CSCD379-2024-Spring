@@ -92,11 +92,10 @@ const props = withDefaults(
 
 const winPercentage = computed(() => {
   if (props.gameStat.totalGames === 0) {
-    return 0; // or any other default value
+    return "0"; // or any other default value
   }
-  return (
-    Math.round((props.gameStat.totalWins / props.gameStat.totalGames) * 100) /
-    100
+  return ((props.gameStat.totalWins / props.gameStat.totalGames) * 100).toFixed(
+    2
   );
 });
 
