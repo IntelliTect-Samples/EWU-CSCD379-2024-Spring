@@ -1,5 +1,5 @@
 <template>
-  <v-card class="mx-auto w-75">
+  <v-card class="mx-auto w-75 opacity-50" >
     <v-sheet color="secondary">
       <v-card-title> Instructions</v-card-title>
     </v-sheet>

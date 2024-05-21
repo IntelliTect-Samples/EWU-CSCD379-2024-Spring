@@ -4,7 +4,7 @@
     <v-sheet color="secondary">
       <v-card-title>Leaderboard</v-card-title>
     </v-sheet>
-    <v-table class="table mt-7 mx-auto w-75">
+    <v-table class="table mt-7 mx-auto w-75 opacity-50">
       <thead>
         <tr>
           <th :height="cardHeight"
