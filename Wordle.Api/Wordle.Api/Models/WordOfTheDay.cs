@@ -2,7 +2,7 @@
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Wordle.Api.Models;
-    [Table("WordOfTheDay")]
+    [Table("WordsOfTheDays")]
     public class WordOfTheDay
     {
         public int WordOfTheDayId { get; set; }
