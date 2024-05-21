@@ -27,7 +27,10 @@
 
 <script setup lang="ts">
 import Axios from "axios" //npm install axios 
+import { Game } from "~/scripts/game";
 const router = useRouter();
+
+const game: Game = inject("GAME")!;
 
 interface Score {
     name: string;
@@ -50,5 +53,8 @@ async function getScores(){
     });
 
 }
+watch(game.submitGuess, () => {
+    getScores();
+});
 
 </script>

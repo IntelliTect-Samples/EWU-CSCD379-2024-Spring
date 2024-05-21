@@ -35,8 +35,10 @@
 <script setup lang="ts">
 import { format } from "date-fns";
 import Axios from "axios"; //npm install axios
+import { Game } from "~/scripts/game";
+import { w } from "@nuxt/test-utils/dist/shared/test-utils.9059LSjm";
 const router = useRouter();
-
+const game: Game = inject("GAME")!;
 const date = ref("");
 
 interface Stats {
@@ -66,4 +68,7 @@ async function getStats() {
       console.log("api error" + error);
     });
 }
+watch(game.submitGuess, () => {
+  getStats();
+});
 </script>
