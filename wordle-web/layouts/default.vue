@@ -1,6 +1,6 @@
 <template>
-  <v-app>
-    <v-app-bar color="primary">
+  <v-app class="landing" >
+    <v-app-bar color="primary landing">
       <template v-slot:prepend>
         <div class="text-h5 ml-5">
           <v-icon
@@ -65,3 +65,11 @@ const showHelpDialog = ref(false);
 const showSettingsDialog = ref(false);
 const showDrawer = ref(false);
 </script>
+
+<style>
+.v-main {
+  background-image: url('../public/edited-vaporwave-landingPage.jpg');
+  background-size: cover;
+
+}
+</style>

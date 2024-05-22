@@ -1,6 +1,6 @@
 <template>
   <v-dialog v-model="modelValue">
-    <v-card class="ma-auto pa-4" min-width="300">
+    <v-card class="ma-auto pa-4" color="black" min-width="300">
       <v-sheet color="secondary">
         <v-card-title>Settings</v-card-title>
       </v-sheet>
