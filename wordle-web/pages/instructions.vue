@@ -47,14 +47,21 @@
 
       <v-card-item>
         <v-label class="text-body-1"></v-label>
-        <v-container class="d-flex flex-row ga-5 justify-center text-wrap">
-          <LetterResult
-            v-for="letter in key.letters"
-            :key="letter.char"
-            :letter="letter"
-            :clickable="false"
-            width="100px"
-          />
+        <v-container class="justify-center align-center pa-3">
+          <v-row>
+            <v-col
+              v-for="letter in key.letters"
+              :key="letter.char"
+              class="pa-2 d-flex align-center justify-center"
+            >
+              <LetterResult
+                :letter="letter"
+                :clickable="false"
+                class="d-flex align-center justify-center pa-4"
+                style="width: 150px;"
+              />
+            </v-col>
+          </v-row>
         </v-container>
       </v-card-item>
 
