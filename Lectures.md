@@ -189,35 +189,38 @@
 - GroupBy: Returning stats for all words
 
 ### Lecture 14. 5/16:
-- Unique indexes
-- Reusing a view for multiple routes
-- Parsing query parameters to determine game type
-- Get method query parameters on API endpoints
-- Load Word of the day in App
-- Integration testing
-- Miscellaneous
-  - Custom favicon
-  - New starting page and default route
-- Vue services (Provide and Inject)
+- ASP.NET Identity Intro
+- JWT setup and generation
+- JWT GET endpoint with username and password
+- App Settings for JWT config
+- Managing keys in your repo (we did it how you shouldn't do it)
 
 ## Week 8
 ### Lecture 15. 5/21: 
-- EF multiple table queries (Getting Word of the Day stats)
-- Using GroupBy, Sort
-- Questions from the homework
-- Lots of other stuff pertaining to homework
-- Google Analytics
+- Reviewed the general architecture
+- Login Dialog with some validation and error messages
+- Password show/hide
+- Pass JWT in headers
+- Endpoint to get a hint for a word if we are logged in
+- Lots of homework questions
 
 ### Lecture 16, 5/23
-- Database rollback and Migration consolidate
-- Full page images with themes
-- CSS deep dive
+- Policy-based authentication
+- Setup policies
+- Using policies
+- Setting up Swagger for JWTs
+
 - Navigation when query changes
-- v-model
 - CSS animations using transition
 - Creating revealing letters
-- The problem of security and how to handle it
-- ASP.NET Identity Intro
+- Database rollback and Migration consolidate
+- Google Analytics
+- Full-page images with themes
+- Unique indexes
+- Parsing query parameters to determine game type
+- Integration testing
+- Custom favicon
+- New starting page and default route
 
 ## Week 9
 ### Lecture 17. 5/28: 
