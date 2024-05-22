@@ -1,44 +1,43 @@
 ﻿<template>
-    <v-container>
-          <v-card
-            class="border-thin bg-primary pa-9 text-center mx-auto"
-          >
-            <v-row class="align-center justify-center mb-4">
-              <v-col>
-                <v-card-text class="welcome-text">Welcome to</v-card-text>
-              </v-col>
-            </v-row>
-            <v-row class="align-center justify-center mb-4">
-              <v-img
-                class="mx-auto"
-                max-width="300"
-                max-height="300"
-                :src="logoPath"
-              />
-            </v-row>
-            <v-card-text class="welcome-text"
-              >Today is {{ formattedDate }}</v-card-text
-            >
-            <v-card-text class="welcome-text pa-6"
-              >Choose your game mode:</v-card-text
-            >
-            <v-btn
-              class="button-text glow-btn pa-2 mx-3 mb-4"
-              color="white"
-              to="/Wordle/Random"
-            >
-              Random Wordle
-            </v-btn>
-            <v-btn
-              class="button-text glow-btn pa-2 mx-3 mb-4"
-              color="white"
-              :to="`/Wordle/Daily?date=${formattedDate}`"
-            >
-              Daily Wordle
-            </v-btn>
-          </v-card>
-
-    </v-container>
+  <v-container>
+    <v-card
+      max-width="750px"
+      man-height="500px"
+      class="border-thin bg-primary pa-3 text-center mx-auto my-auto"
+    >
+      <v-row class="align-center justify-center">
+        <v-card-text class="welcome-text">Welcome to</v-card-text>
+      </v-row>
+      <v-row class="align-center justify-center mb-4">
+        <v-img
+          class="mx-auto"
+          max-width="300"
+          max-height="300"
+          :src="logoPath"
+        />
+      </v-row>
+      <v-card-text class="welcome-text"
+        >Today is {{ formattedDate }}</v-card-text
+      >
+      <v-card-text class="welcome-text pa-6"
+        >Choose your game mode:</v-card-text
+      >
+      <v-btn
+        class="button-text glow-btn pa-2 mx-3 mb-4"
+        color="white"
+        to="/Wordle/Random"
+      >
+        Random Wordle
+      </v-btn>
+      <v-btn
+        class="button-text glow-btn pa-2 mx-3 mb-4"
+        color="white"
+        :to="`/Wordle/Daily?date=${formattedDate}`"
+      >
+        Daily Wordle
+      </v-btn>
+    </v-card>
+  </v-container>
 </template>
 
 <script setup lang="ts">
@@ -76,7 +75,6 @@ const formattedDate = computed(() => {
 
 <style scoped>
 @import url("https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap");
-
 
 .glow-btn {
   position: relative;
