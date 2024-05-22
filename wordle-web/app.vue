@@ -37,7 +37,8 @@
           @click="
             if (item === 'Daily Wordle') {
               $router.push(
-                '/Wordle/Daily?date=' + format(new Date(), 'MMMM dd, yyyy')
+                '/Wordle/Daily?date=' +
+                  dateUtils.getFormattedDate(new Date(), 'MMMM dd, yyyy')
               );
             } else if (item === 'Random Wordle') {
               $router.push('/Wordle/Random');
@@ -60,7 +61,7 @@
 <script setup lang="ts">
 import { useTheme } from "vuetify";
 import nuxtStorage from "nuxt-storage";
-import { format } from "date-fns";
+import dateUtils from "./scripts/dateUtils";
 
 const logoPaths = {
   Standard: "/logo_Standard.svg",

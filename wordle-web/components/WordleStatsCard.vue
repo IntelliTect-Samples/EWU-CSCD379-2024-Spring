@@ -74,6 +74,7 @@
 import { format, addDays } from "date-fns";
 import type { GameStats } from "~/Models/GameStas";
 import nuxtStorage from "nuxt-storage";
+import dateUtils from "~/scripts/dateUtils";
 
 const playerName = ref("");
 
@@ -104,7 +105,9 @@ const averageAttempts = computed(() => {
 });
 
 const formattedDate = computed(() => {
-  return format(addDays(new Date(props.gameStat.date), 1), "MMMM dd, yyyy");
+  return dateUtils.getFormattedDateWithOrdianl(
+    addDays(new Date(props.gameStat.date), 1)
+  );
 });
 
 const hasPlayed = computed(() => {

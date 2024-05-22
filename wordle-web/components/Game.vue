@@ -166,7 +166,8 @@ import { Game, GameState } from "../scripts/game";
 import { Stopwatch } from "~/scripts/stopwatch";
 import nuxtStorage from "nuxt-storage";
 import Axios from "axios";
-import { format } from "date-fns";
+import { addDays, format } from "date-fns";
+import dateUtils from "~/scripts/dateUtils";
 import {
   playClickSound,
   playEnterSound,
@@ -344,7 +345,7 @@ function onKeyup(event: KeyboardEvent) {
 }
 
 const formattedDate = computed(() => {
-  return format(new Date(date || ""), "MMMM dd, yyyy");
+  return dateUtils.getFormattedDateWithOrdianl(addDays(new Date(date!), 1));
 });
 </script>
 
