@@ -205,9 +205,11 @@
 - Lots of homework questions
 
 ### Lecture 16, 5/23
-- Policy-based authentication
+- Role-base authentication `[Authorize(Roles.Name)]`
+- Claim types: https://learn.microsoft.com/en-us/dotnet/api/system.security.claims.claimtypes?view=net-8.0
+- Policy-based authentication 
 - Setup policies
-- Using policies
+- Using policies `[Authorize(Policy = Policies.Name)]`
 - Setting up Swagger for JWTs
 
 - Navigation when query changes
