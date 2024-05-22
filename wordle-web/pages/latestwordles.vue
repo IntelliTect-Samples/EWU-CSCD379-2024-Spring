@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <v-container>
     <v-progress-linear
       v-if="isDailyWordlesLoading"
       class="mx-auto"
@@ -9,31 +9,29 @@
       rounded
       width="75%"
     />
-    <v-container v-else>
-      <div>
-        <div class="text-h3 ma-5 font-weight-bold text-primary">
-          Last Ten Wordles
-        </div>
-        <v-spacer />
-        <v-row cols="12">
-          <v-col
-            v-for="(gameStat, i) in gameStats"
-            :key="i"
-            cols="12"
-            sm="12"
-            md="6"
-            lg="4"
-          >
-            <WordleStatsCard
-              :gameStat="gameStat"
-              :isDaily="true"
-              :inCurrentGame="false"
-            />
-          </v-col>
-        </v-row>
+    <div v-else>
+      <div class="text-h3 ma-5 font-weight-bold text-primary">
+        Last Ten Wordles
       </div>
-    </v-container>
-  </div>
+      <v-spacer />
+      <v-row cols="12">
+        <v-col
+          v-for="(gameStat, i) in gameStats"
+          :key="i"
+          cols="12"
+          sm="12"
+          md="6"
+          lg="4"
+        >
+          <WordleStatsCard
+            :gameStat="gameStat"
+            :isDaily="true"
+            :inCurrentGame="false"
+          />
+        </v-col>
+      </v-row>
+    </div>
+  </v-container>
 </template>
 
 <script setup lang="ts">
