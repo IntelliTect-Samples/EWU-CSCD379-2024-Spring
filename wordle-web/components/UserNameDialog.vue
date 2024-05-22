@@ -13,13 +13,13 @@
         label="User Name"
         required
       ></v-text-field>
-      <v-text-field
+     <!--<v-text-field
         @keyup.stop
         v-model="Password"
         label="Password"
         :append-inner-icon="showPassword? 'mdi-eye-off' : 'mdi-eye'"
         :type="showPassword? 'text' : 'password'"
-        required></v-text-field>
+        required></v-text-field>-->
       <v-card-actions>
         <v-spacer></v-spacer>
         <v-btn color="primary" variant="flat" @click="modelValue = false"
