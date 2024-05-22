@@ -24,8 +24,8 @@
     >
       <v-list
         v-for="item in [
-          'Wordle/Daily',
-          'Wordle/Random',
+          'Daily Wordle',
+          'Random Wordle',
           'About',
           'Leaderboard',
           'Instructions',
@@ -35,11 +35,11 @@
       >
         <v-list-item
           @click="
-            if (item === 'Wordle/Daily') {
+            if (item === 'Daily Wordle') {
               $router.push(
                 '/Wordle/Daily?date=' + format(new Date(), 'MMMM dd, yyyy')
               );
-            } else if (item === 'Wordle/Random') {
+            } else if (item === 'Random Wordle') {
               $router.push('/Wordle/Random');
             } else $router.push('/' + item.toLowerCase().replaceAll(' ', ''));
           "
@@ -97,8 +97,7 @@ onMounted(() => {
   font-size: 1.2;
   font-family: "Press Start 2P", sans-serif;
 }
-.full-page-gradient
-{
+.full-page-gradient {
   width: 100%;
   height: 100%;
   background: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab);
@@ -117,6 +116,4 @@ onMounted(() => {
     background-position: 0% 50%;
   }
 }
-
-
 </style>
