@@ -151,7 +151,6 @@ watch(
           () => showUserNameDialog.value,
           (value) => {
             if (value == false) {
-              //console.log("username after prompt " + userName.value);
               if(userName.value ===""){
                 userName.value = "guest";
               }

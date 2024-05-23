@@ -49,7 +49,7 @@ async function getScores(){
         scoresToDisplay.value = response.data;
     })
     .catch((error) => {
-        console.log(error);
+        console.log("error fetching leaderboard data " + error);
     });
 
 }
