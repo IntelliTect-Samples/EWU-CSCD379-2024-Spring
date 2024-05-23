@@ -166,7 +166,7 @@ import { Game, GameState } from "../scripts/game";
 import { Stopwatch } from "~/scripts/stopwatch";
 import nuxtStorage from "nuxt-storage";
 import Axios from "axios";
-import { addDays } from "date-fns";
+import { addDays, format } from "date-fns";
 import dateUtils from "~/scripts/dateUtils";
 import {
   playClickSound,
@@ -306,6 +306,9 @@ watch(
 
 onMounted(async () => {
   window.addEventListener("keyup", onKeyup);
+  const defaultName = nuxtStorage.localStorage.getData("name");
+  showNameDialog.value = defaultName === null || defaultName === "Guest";
+  playerName.value = showNameDialog.value ? "Guest" : defaultName;
   stopwatch.value.start();
 
   if (props.isDaily) {
