@@ -8,10 +8,10 @@ namespace Wordle.Api.Services;
 
 public class LeaderboardService
 {
-    private readonly AppDbContext _context;
+    private readonly WordleDbContext _context;
     private readonly ILogger<LeaderboardService> _logger;
 
-    public LeaderboardService(AppDbContext context, ILogger<LeaderboardService> logger)
+    public LeaderboardService(WordleDbContext context, ILogger<LeaderboardService> logger)
     {
         _context = context;
         _logger = logger;
