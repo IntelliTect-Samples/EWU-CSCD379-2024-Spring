@@ -1,14 +1,5 @@
 <template>
   <NuxtLayout>
-
-    <!-- Video background -->
-    <!-- <video autoplay muted loop id="myVideo" style="position: absolute; right: 0; bottom: 0; min-width: 100%; min-height: 100%;">
-      <source src="./public/istockphoto-532528714-640_adpp_is.mp4" type="video/mp4">
-      Your browser does not support HTML5 video.
-    </video> -->
-
-
-
     <v-app :style="gradientBaseStyle" class="full-page">
       <v-app-bar color="primary" :elevation="2">
         <v-app-bar-title @click="$router.push('/')" style="cursor: pointer">
@@ -21,7 +12,6 @@
       </v-app-bar-title>
         
         <v-btn icon="mdi-cog" @click="showSettingsDialog = true" />
-        <!-- <v-btn icon="mdi-cog" @click="toggleMenu" /> -->
         <v-btn icon="mdi-help-circle" @click="showHelpDialog = true" />
         <HelpDialog v-model="showHelpDialog" />
         <v-btn @click="toggleDrawer" icon = "mdi-menu"></v-btn>
@@ -32,6 +22,9 @@
         </v-list>
         <v-list>
           <v-list-item @click="router.push('/Leaderboard')" class="text-center">Leaderboard</v-list-item>
+        </v-list>
+        <v-list>
+          <v-list-item @click="router.push('/Instructions')" class="text-center">Instructions</v-list-item>
         </v-list>
         <v-list>
           <v-list-item @click="router.push('/Wordhistory')" class="text-center">Word History</v-list-item>

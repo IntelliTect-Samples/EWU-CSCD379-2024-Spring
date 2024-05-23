@@ -111,12 +111,6 @@ onMounted(() => {
 
   window.addEventListener("keyup", onKeyup);
 
-
-  // Assignment 3 Task 2
-  // Check if user name is stored in local storage
-  // checkUserNameLocalStorage();
-  // checkUserName();
-
   if(!showUserNameDialog.value){
     startStopwatch();
   }

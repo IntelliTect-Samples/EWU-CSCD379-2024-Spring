@@ -36,8 +36,13 @@
 					knowledgeable and helpful. They are always willing to help and answer any questions you may have.
 				</div>
 			</v-card-text>
+
+			<v-card-actions>
+				<v-spacer></v-spacer>
+				<v-btn color="primary" variant="flat" @click="router.push('/')">Home</v-btn>
+			</v-card-actions>
 		</v-card>
-		<v-btn color="primary" variant="elevated" elevation="8" @click="router.push('/')">Home</v-btn>
+		
 	</v-container>
 </template>
 
