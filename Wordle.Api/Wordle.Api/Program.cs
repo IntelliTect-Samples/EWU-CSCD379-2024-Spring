@@ -1,3 +1,8 @@
+using Microsoft.EntityFrameworkCore;
+using Wordle.Api.Data;
+using Wordle.Api.Models
+using Wordle.Api.Services;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
