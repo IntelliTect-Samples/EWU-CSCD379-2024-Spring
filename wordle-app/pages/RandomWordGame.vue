@@ -1,5 +1,5 @@
 <template>
-  <v-container>
+  <v-container style="max-width: 900px;">
     <v-progress-linear
       v-if="game.isBusy"
       color="primary"
@@ -50,12 +50,21 @@
       <v-card-title v-else>Random Word Game</v-card-title>
 
       <v-card-text class="d-flex  flex-row justify-end">
-        <v-chip color="secondary" class="mr-2" @click="showUserNameDialog=true">
+        <v-row>
+          <v-col cols="12" sm="8">
+            <v-card-title>
+              <v-icon> mdi-calendar-today </v-icon> {{ currentDateString }}
+            </v-card-title>
+          </v-col>
+          <v-col cols="12"  sm="4">
+            <v-chip color="secondary" class="mr-2" @click="showUserNameDialog=true">
           <v-icon class="mr-2" > mdi-account </v-icon> {{ nameUserNameDialog }}
         </v-chip>
         <v-chip color="secondary" class="mr-2">
           <v-icon class="mr-2"> mdi-timer </v-icon> {{ seconds }} s.
         </v-chip>
+          </v-col>
+        </v-row>
       </v-card-text>
 
       <GameBoardGuess v-for="(guess, i) of game.guesses" :key="i" :guess="guess" />
@@ -90,6 +99,9 @@ import nuxtStorage from "nuxt-storage";
 import Axios from 'axios'
 import type { Player } from "../scripts/player";
 import UserNameDialog from "~/components/UserNameDialog.vue";
+
+const currentDateString = ref(new Date().toDateString());
+console.log("Current Date: ", currentDateString.value);
 
 const router = useRouter();
 const game = reactive(new Game());
