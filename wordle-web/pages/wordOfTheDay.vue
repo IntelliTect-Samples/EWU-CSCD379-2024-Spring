@@ -103,12 +103,14 @@
 </template>
 
 <script setup lang="ts">
-import { Game, GameState } from "../scripts/game";
+import { Game, GameState } from "../scripts/gameapi";
 import { provide, ref } from "vue";
-const game: Game = reactive(new Game());
+const gameapi: Game = reactive(new Game());
 import nuxtStorage from "nuxt-storage";
+import axios from "axios";
 
-provide("GAME", game);
+gameapi.startNewGame();
+provide("GAME", gameapi);
 
 const myGuess = ref("");
 const engine = ref(false);
@@ -154,13 +156,13 @@ onUnmounted(() => {
 function onKeyup(event: KeyboardEvent) {
   if (event.key === "Enter") {
     enterSound();
-    game.submitGuess();
+    gameapi.submitGuess();
   } else if (event.key == "Backspace") {
     backspaceSound();
-    game.removeLastLetter();
+    gameapi.removeLastLetter();
   } else if (event.key.match(/[A-z]/) && event.key.length === 1) {
     clickSound();
-    game.addLetter(event.key.toUpperCase());
+    gameapi.addLetter(event.key.toUpperCase());
   }
 }
 
@@ -189,7 +191,7 @@ function startTimer() {
   timerInterval = setInterval(updateTimer, 1000);
 }
 function stopTimerOnGameEnd() {
-  if (game.gameState == GameState.Won || game.gameState == GameState.Lost) {
+  if (gameapi.gameState == GameState.Won || gameapi.gameState == GameState.Lost) {
     stopTimer();
   }
 }
@@ -235,7 +237,7 @@ const timerRunning = ref(false);
 
 // Determine when the timer should be running based on game state
 watchEffect(() => {
-  timerRunning.value = game.gameState === GameState.Playing;
+  timerRunning.value = gameapi.gameState === GameState.Playing;
 });
 </script>
 
