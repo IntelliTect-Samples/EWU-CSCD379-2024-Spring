@@ -79,9 +79,29 @@
     <UserNameDialog @okay="nameDialogClosed()" v-model:show="showUserNameDialog"
       v-model:userName="nameUserNameDialog" />
 
-    <v-dialog v-model="showDatePicker" >
-      <v-date-picker color="primary" v-model="currentDate" @input="showDatePicker = false" />
-      <v-btn @click="showDatePicker = false">Close</v-btn>
+    <v-dialog v-model="showDatePicker" style="max-width: 500px;" persistent>
+      <v-card>
+        <v-row>
+        <v-col cols="12" class="d-flex justify-center">
+          <v-card-title>
+            Select a date
+          </v-card-title>
+        </v-col>
+        <v-col cols="12" class="d-flex justify-center">
+          <v-date-picker
+          v-model="currentDate"
+          color="primary"
+          :max="year + '-' + month + '-' + day"
+          />
+        </v-col>
+        <v-col cols="12" class="d-flex justify-end">
+          <v-btn @click="showDatePicker = false" color="primary" variant="flat">Close</v-btn>
+        </v-col>
+      </v-row>
+      </v-card>
+      
+      <!-- <v-date-picker color="primary" v-model="currentDate" @input="showDatePicker = false" />
+      <v-btn @click="showDatePicker = false">Close</v-btn> -->
     </v-dialog>
 
   </v-container>
@@ -98,6 +118,10 @@ import UserNameDialog from "~/components/UserNameDialog.vue";
 const currentDate = ref(new Date());
 const showDatePicker = ref(false);
 
+let month = currentDate.value.getMonth() + 1;
+let day = currentDate.value.getDate();
+let year = currentDate.value.getFullYear();
+
 // Watch for showDatePicker, start new game if date picker is closed.
 watch(() => showDatePicker.value, (value) => {
   if (value == false) {
@@ -112,9 +136,9 @@ async function startNewGame() {
 }
 
 async function getWordOfTheDay(): Promise<string> {
-  const month = currentDate.value.getMonth() + 1;
-  const day = currentDate.value.getDate();
-  const year = currentDate.value.getFullYear();
+  month = currentDate.value.getMonth() + 1;
+  day = currentDate.value.getDate();
+  year = currentDate.value.getFullYear();
   let wordUrl = "word/wordOfTheDay/" + month + "-" + day + "-" + year;
   const response = await Axios.get(wordUrl);
   console.log("Response from Axios is: ", response.data);
