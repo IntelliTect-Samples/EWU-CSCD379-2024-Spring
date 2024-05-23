@@ -1,54 +1,61 @@
 <template>
-  <container class="game-container" fluid>
-    <div id="statsContainer"></div>
-  </container>
+    <v-container>
+        <v-progress-linear v-if="isDailyWordlesLoading"
+                           class="mx-auto"
+                           color="primary"
+                           height="10"
+                           indeterminate
+                           rounded
+                           width="75%" />
+        <div v-else>
+            <div class="text-h3 ma-5 font-weight-bold text-primary">
+                Last Ten Wordles
+            </div>
+            <v-spacer />
+            <v-row cols="12">
+                <v-col v-for="(gameStat, i) in gameStats"
+                       :key="i"
+                       cols="12"
+                       sm="12"
+                       md="6"
+                       lg="4">
+                    <WordleStatsCard :gameStat="gameStat"
+                                     :isDaily="true"
+                                     :inCurrentGame="false" />
+                </v-col>
+            </v-row>
+        </div>
+    </v-container>
 </template>
 
 <script setup lang="ts">
-import Axios from "axios"
-  // Function to generate HTML for each day
-  function generateStatsHTML(data) {
-    let html = '';
-    data.forEach(day => {
-      html += `
-        <div class="stats-card">
-          <h3>${day.date}</h3>
-          <p>Total Times Played: ${day.totalTimesPlayed}</p>
-          <p>Total Wins: ${day.totalWins}</p>
-          <p>Total Losses: ${day.totalLosses}</p>
-        </div>
-      `;
-    });
-    return html;
-  }
+    import { ref, onMounted } from 'vue';
+    import Axios from 'axios';
+    import { format } from 'date-fns';
+    import type { GameStatsDto } from 'Wordle.Api/Dtos/GameStatsDto';
+  
+    const isDailyWordlesLoading = ref(true);
+    const stats = ref<GameStatsDto[]>([]);
 
-  // Get container element
-  const statsContainer = document.getElementById('statsContainer');
-
-  // Make API call using Axios
-  const date = '5-20-2024'; // Or use any other date
-  Axios.get(`Game/LastTenWordStats/${date}`)
-    .then(response => {
-      const data = response.data;
-      // Generate and append HTML to container
-      statsContainer.innerHTML = generateStatsHTML(data);
-    })
-    .catch(error => {
-      console.error('Error fetching data:', error);
+    onMounted(() => {
+        const formatDate = format(new Date(), "MM-dd-yyyy");
+        Axios.get(`game/GetLastTenWordStats/${formatDate}`)
+            .then((res) => res.data)
+            .then((data) =>
+                data.map((item: any) => ({
+                    totalGames: item.totalTimesPlayed,
+                    totalWins: item.totalWins,
+                    totalLosses: item.totalLosses,
+                    averageSeconds: item.averageSeconds,
+                    date: item.date,
+                    word: item.word,
+                    averageGuesses: item.averageGuesses,
+                    usernames: item.usernames,
+                }))
+            )
+            .then((statData: GameStatsDto[]) => {
+                isDailyWordlesLoading.value = false;
+                stats.value = statData;
+            });
     });
 </script>
-
-<style>
-  .stats-card {
-    border: 1px solid #ccc;
-    padding: 10px;
-    margin-bottom: 10px;
-  }
-
-  .game-container {
-  background-image: url("../public/landingPageImage.jpg");
-  background-size: cover;
-  background-position: center;
-  min-height: 100vh;
-}
-</style>
