@@ -28,20 +28,20 @@ defineEmits(['entered']);
 
 <style scoped>
 .dialog-header {
-  background-image: url('path/to/your/fantasy-background.jpg'); /* Add a fantasy-themed background image */
+  background-image: url('/images/lexiquest_background.jpg');
   background-size: cover;
   text-align: center;
 }
 
 .dialog-title {
-  font-family: 'MedievalSharp', serif; /* Use a fantasy-themed font */
+  font-family: 'MedievalSharp', serif;
   color: #fff;
 }
 
 .name-input {
-  --v-text-field-label-color: #fff; /* Make label text white */
-  --v-input-background: rgba(0, 0, 0, 0.5); /* Add a semi-transparent background to the input */
-  --v-input-color: #fff; /* Make input text color white */
+  --v-text-field-label-color: #fff; 
+  --v-input-background: rgba(0, 0, 0, 0.5);
+  --v-input-color: #fff;
 }
 
 .name-input .v-input__icon--append {
