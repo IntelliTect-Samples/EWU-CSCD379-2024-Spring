@@ -70,7 +70,7 @@ export class Game {
     if (!word) {
       this.secretWord =
         WordList[Math.floor(Math.random() * WordList.length)].toUpperCase();
-      console.log(this.secretWord);
+      console.log("Word " + this.secretWord);
     } else {
       this.secretWord = word;
     }
@@ -164,7 +164,7 @@ export class Game {
         });
         this.stats = new GameStats();
         Object.assign(this.stats, result.data);
-        console.log(this.stats);
+        console.log("displayed stats " + this.stats);
         this.isBusy = false;
       }
     }

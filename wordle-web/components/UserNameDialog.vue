@@ -41,7 +41,6 @@ const showPassword = ref(false);
 
 const saveUserName = () => {
   modelValue.value = false;
-  //console.log("userName in dialog " + userName.value);
   nuxtStorage.localStorage.setData("userName", userName.value);
 };
 
@@ -49,11 +48,10 @@ function signIn(){
   let url = "Player/SignIn";
   Axios.post(url, {userName: userName.value, password: Password.value})
   .then((response) => {
-    console.log(response.data);
+    console.log("sign in data " + response.data);
   })
   .catch((error) => {
-    console.log(error);
+    console.log("sign in error" + error);
   });
 }
-//console.log("userName in dialog " + userName.value);
 </script>

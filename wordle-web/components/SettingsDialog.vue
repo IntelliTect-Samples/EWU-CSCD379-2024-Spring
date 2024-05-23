@@ -47,7 +47,6 @@ function changeTheme(themeName: string) {
             themeToSet = "light";
         } else {
             themeToSet = themeToSet.replace("Dark", "Light");
-            console.log(themeToSet);
         }
         dark.value = false;
         theme.global.name.value = themeToSet;

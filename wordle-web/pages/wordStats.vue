@@ -15,12 +15,12 @@
       </thead>
       <tbody>
         <tr v-for="stats in statsToDisplay" :key="stats.date">
-          <td v-if="stats.date">{{ stats.date }}</td>
-          <td v-if="stats.averageGuesses">{{ stats.averageGuesses }}</td>
-          <td v-if="stats.averageTime">{{ stats.averageTime }}</td>
-          <td v-if="stats.totalTimesPlayed">{{ stats.totalTimesPlayed }}</td>
-          <td v-if="stats.totalWins">{{ stats.totalWins }}</td>
-          <td v-if="stats.totalLosses">{{ stats.totalLosses }}</td>
+          <td v-if="stats.date">{{ stats.date }}</td> <td v-else>No Data</td>
+          <td v-if="stats.averageGuesses">{{ stats.averageGuesses }}</td> <td v-else>No Data</td>
+          <td v-if="stats.averageTime">{{ stats.averageTime }}</td> <td v-else>No Data</td>
+          <td v-if="stats.totalTimesPlayed">{{ stats.totalTimesPlayed }}</td> <td v-else>No Data</td>
+          <td v-if="stats.totalWins">{{ stats.totalWins }}</td> <td v-else>No Data</td>
+          <td v-if="stats.totalLosses">{{ stats.totalLosses }}</td> <td v-else>No Data</td>
         </tr>
       </tbody>
     </v-table>
@@ -58,13 +58,13 @@ async function getStats() {
   let statUrl = "Game/GetGames";
   const formatDate = format(new Date(), "MM-dd-yyyy");
   date.value = formatDate;
-  console.log("to api " + statUrl + "/" + date.value);
+  console.log("get games to api " + statUrl + "/" + date.value);
   await Axios.get(statUrl + "/" + date.value)
     .then((response) => {
       statsToDisplay.value = response.data;
     })
     .catch((error) => {
-      console.log("api error " + error);
+      console.log("api get games error " + error);
     });
 }
 
