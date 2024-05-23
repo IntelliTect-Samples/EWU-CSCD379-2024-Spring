@@ -4,7 +4,7 @@ import { Word } from "./word";
 import Axios from "axios";
 import { GameStats } from "./gameStats";
 
-export class Game {
+export class GameAPI {
   public maxAttempts: number;
   public guesses: Word[] = [];
   public guessIndex: number = 0;
@@ -136,9 +136,9 @@ export class Game {
     }
   }
 
-  public async getWordOfTheDayFromApi(): Promise<string> {
+  public async getWordOfTheDayFromA(): Promise<string> {
     try {
-      let wordUrl = "word/wordOfTheDay";
+      let wordUrl = "Word/WordOfTheDay";
 
       const response = await Axios.get(wordUrl);
 

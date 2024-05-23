@@ -27,27 +27,27 @@
 
     <v-card class="text-center" color="secondary">
       <v-alert
-        v-if="game.gameState != GameState.Playing"
-        :color="game.gameState == GameState.Won ? 'success' : 'error'"
+        v-if="gameapi.gameState != GameState.Playing"
+        :color="gameapi.gameState == GameState.Won ? 'success' : 'error'"
         class="mb-5"
         tile
       >
         <h3>
           You've
-          {{ game.gameState == GameState.Won ? "Won! 🥳" : "Lost... 😭" }}
+          {{ gameapi.gameState == GameState.Won ? "Won! 🥳" : "Lost... 😭" }}
           {{ stopTimerOnGameEnd() }}
         </h3>
         <v-card-text>
-          The word was: <strong>{{ game.secretWord }}</strong>
+          The word was: <strong>{{ gameapi.secretWord }}</strong>
         </v-card-text>
-        <v-btn variant="outlined" @click="game.startNewGame(), startTimer()">
+        <v-btn variant="outlined" @click="gameapi.startNewGame(), startTimer()">
           <v-icon size="large" class="mr-2"> mdi-restart </v-icon> Restart Game
         </v-btn>
       </v-alert>
       <v-card-title v-else style="font-size: xx-large">Wordle</v-card-title>
 
       <GameBoardGuess
-        v-for="(guess, i) of game.guesses"
+        v-for="(guess, i) of gameapi.guesses"
         :key="i"
         :guess="guess"
       />
@@ -57,7 +57,7 @@
       </div>
 
       <v-btn
-        @click="game.submitGuess()"
+        @click="gameapi.submitGuess()"
         class="mb-5"
         elevation="5"
         color="primary"
@@ -69,7 +69,7 @@
       <v-container>
         <ValidGuess
           v-model="engine"
-          :game="game"
+          :gameapi="gameapi"
           @chooseWord="(word) => selectWord(word)"
         />
       </v-container>
@@ -103,15 +103,14 @@
 </template>
 
 <script setup lang="ts">
-import { Game, GameState } from "../scripts/gameapi";
+import { GameAPI, GameState } from "../scripts/gameapi";
 import { provide, ref } from "vue";
-const gameapi: Game = reactive(new Game());
+const apigame: GameAPI = reactive(new GameAPI());
 import nuxtStorage from "nuxt-storage";
 import axios from "axios";
 
-gameapi.startNewGame();
-provide("GAME", gameapi);
-
+// apigame.startNewGame();
+provide("GAME", apigame);
 const myGuess = ref("");
 const engine = ref(false);
 const dialogBox = ref<boolean>(true);
@@ -156,13 +155,13 @@ onUnmounted(() => {
 function onKeyup(event: KeyboardEvent) {
   if (event.key === "Enter") {
     enterSound();
-    gameapi.submitGuess();
+    apigame.submitGuess();
   } else if (event.key == "Backspace") {
     backspaceSound();
-    gameapi.removeLastLetter();
+    apigame.removeLastLetter();
   } else if (event.key.match(/[A-z]/) && event.key.length === 1) {
     clickSound();
-    gameapi.addLetter(event.key.toUpperCase());
+    apigame.addLetter(event.key.toUpperCase());
   }
 }
 
@@ -191,7 +190,7 @@ function startTimer() {
   timerInterval = setInterval(updateTimer, 1000);
 }
 function stopTimerOnGameEnd() {
-  if (gameapi.gameState == GameState.Won || gameapi.gameState == GameState.Lost) {
+  if (apigame.gameState == GameState.Won || apigame.gameState == GameState.Lost) {
     stopTimer();
   }
 }
@@ -237,7 +236,7 @@ const timerRunning = ref(false);
 
 // Determine when the timer should be running based on game state
 watchEffect(() => {
-  timerRunning.value = gameapi.gameState === GameState.Playing;
+  timerRunning.value = apigame.gameState === GameState.Playing;
 });
 </script>
 
