@@ -12,9 +12,9 @@
             </thead>
             <tbody>
                 <tr v-for="score in scoresToDisplay" :key="score.name">
-                    <td v-if="score.name">{{ score.name }}</td>
-                    <td v-if="score.averageAttempts">{{ score.averageAttempts }}</td>
-                    <td v-if="score.gameCount">{{ score.gameCount }}</td>
+                    <td v-if="score.name">{{ score.name }}</td> <td v-else>No Data</td>
+                    <td v-if="score.averageAttempts">{{ score.averageAttempts }}</td> <td v-else>No Data</td> 
+                    <td v-if="score.gameCount">{{ score.gameCount }}</td> <td v-else>No Data</td>
                     
                 </tr>
             </tbody>
