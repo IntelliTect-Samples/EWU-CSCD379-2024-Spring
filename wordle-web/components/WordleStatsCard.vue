@@ -1,7 +1,7 @@
 <template>
   <v-card elevation="4">
     <v-sheet color="primary" class="py-2">
-      <V-card-title v-if="isDaily">{{ formattedDate }}</V-card-title>
+      <V-card-title v-if="isDaily">{{ ordinalDate }}</V-card-title>
       <v-card-title v-else>{{ gameStat.word }}</v-card-title>
     </v-sheet>
     <v-row class="mt-1">
@@ -104,8 +104,14 @@ const averageAttempts = computed(() => {
   return ((props.gameStat.averageGuesses / 6) * 100).toFixed(2);
 });
 
-const formattedDate = computed(() => {
+const ordinalDate = computed(() => {
   return dateUtils.getFormattedDateWithOrdianl(
+    addDays(new Date(props.gameStat.date), 1)
+  );
+});
+
+const formattedDate = computed(() => {
+  return dateUtils.getFormattedDate(
     addDays(new Date(props.gameStat.date), 1)
   );
 });
