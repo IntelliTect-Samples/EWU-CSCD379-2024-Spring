@@ -118,6 +118,11 @@ onMounted(() => {
   //   checkUserNameLocalStorage();
   //   checkUserName();
   // }
+ 
+
+  if(!showUserNameDialog.value){
+    startStopwatch();
+  }
 
 });
 
@@ -150,39 +155,32 @@ function onKeyup(event: KeyboardEvent) {
 
 }
 
-async function checkUserNameLocalStorage(): Promise<boolean> {
+async function checkUserNameLocalStorage() {
   
   if(nuxtStorage.localStorage.getData("userName") != null){
     nameUserNameDialog.value = nuxtStorage.localStorage.getData("userName");
     showUserNameDialog.value = false;
-    return true;
   }
   else {
-    return false;
+    nameUserNameDialog.value = "Guest";
+    showUserNameDialog.value = true;
   }
 
 }
 
-async function checkUserName(): Promise<boolean> {
+async function checkUserName() {
   const response = await Axios.get("/Player/Player?playerName=" + nameUserNameDialog.value);
   const player: Player = response.data;
 
-  if(player.name != null) {
-    return true;
-  } else {
-    const localStorage = await checkUserNameLocalStorage();
-    if(localStorage) {
-      return true;
-    } else {
-      showUserNameDialog.value = true;
-      return false;
-    }
+  if(player.name == "Guest"){
+    showUserNameDialog.value = true;
   }
 }
 
 // Fix: Check if game is not busy before checking username
 watch(() => game.isBusy, (value) => {
   if(!value) {
+    checkUserNameLocalStorage();
     checkUserName();
   }
 });
