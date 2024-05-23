@@ -1,10 +1,6 @@
 <template>
   <v-container style="max-width: 900px;">
-    <v-progress-linear
-      v-if="game.isBusy"
-      color="primary"
-      indeterminate
-    />
+    <v-progress-linear v-if="game.isBusy" color="primary" indeterminate />
     <v-card v-else class="text-center">
       <v-alert v-if="game.gameState != GameState.Playing" :color="game.gameState == GameState.Won ? 'success' : 'error'"
         class="mb-5" tile>
@@ -17,27 +13,19 @@
         </v-card-text>
         <v-row v-if="game.stats" class="mb-1" justify="center">
           <v-col cols="auto">
-            <v-progress-circular
-            size="75"
-            width="10"
-            v-model="game.stats.winPercentage"
-            >
-            {{ game.stats.winPercentage }}%
+            <v-progress-circular size="75" width="10" v-model="game.stats.winPercentage">
+              {{ game.stats.winPercentage }}%
             </v-progress-circular>
-            <br/>
+            <br />
             <i class="text-caption">
               Success Rate
             </i>
           </v-col>
           <v-col cols="auto">
-            <v-progress-circular
-            size="75"
-            width="10"
-            :model-value="game.stats.averageGuessesPercent(game.maxAttempts)"
-            >
-            {{  game.stats.averageGuessesPercent(game.maxAttempts).toFixed(0) }}%
+            <v-progress-circular size="75" width="10" :model-value="game.stats.averageGuessesPercent(game.maxAttempts)">
+              {{ game.stats.averageGuessesPercent(game.maxAttempts).toFixed(0) }}%
             </v-progress-circular>
-            <br/>
+            <br />
             <i class="text-caption">
               Average Guesses
             </i>
@@ -52,17 +40,17 @@
       <v-card-text class="d-flex  flex-row justify-end">
         <v-row>
           <v-col cols="12" sm="8">
-            <v-card-title>
-              <v-icon> mdi-calendar-today </v-icon> {{ currentDateString }}
-            </v-card-title>
+            <v-btn color="secondary" @click="showDatePicker = true">
+                <v-icon> mdi-calendar-today </v-icon> {{ currentDate.toDateString() }}
+            </v-btn>
           </v-col>
-          <v-col cols="12"  sm="4">
-            <v-chip color="secondary" class="mr-2" @click="showUserNameDialog=true">
-          <v-icon class="mr-2" > mdi-account </v-icon> {{ nameUserNameDialog }}
-        </v-chip>
-        <v-chip color="secondary" class="mr-2">
-          <v-icon class="mr-2"> mdi-timer </v-icon> {{ seconds }} s.
-        </v-chip>
+          <v-col cols="12" sm="4">
+            <v-chip color="secondary" class="mr-2" @click="showUserNameDialog = true">
+              <v-icon class="mr-2"> mdi-account </v-icon> {{ nameUserNameDialog }}
+            </v-chip>
+            <v-chip color="secondary" class="mr-2">
+              <v-icon class="mr-2"> mdi-timer </v-icon> {{ seconds }} s.
+            </v-chip>
           </v-col>
         </v-row>
       </v-card-text>
@@ -74,22 +62,27 @@
       </div>
 
       <v-row class="mb-5" justify="end">
-        <v-col  cols="12" sm="4">
+        <v-col cols="12" sm="4">
           <WordList v-if="game.gameState === GameState.Playing" v-model="showWordsList" />
         </v-col>
-        <v-col  cols="12" sm="4">
+        <v-col cols="12" sm="4">
           <v-btn @click="game.startNewGame()" color="primary">
             Guess!
           </v-btn>
         </v-col>
-        <v-col  cols="12" sm="4">
+        <v-col cols="12" sm="4">
           <v-btn color="primary" @click="router.push('/Leaderboard')">Leaderboard</v-btn>
         </v-col>
       </v-row>
     </v-card>
 
-    <UserNameDialog @okay="nameDialogClosed()"  v-model:show="showUserNameDialog" v-model:userName="nameUserNameDialog" />
-    
+    <UserNameDialog @okay="nameDialogClosed()" v-model:show="showUserNameDialog"
+      v-model:userName="nameUserNameDialog" />
+
+    <v-dialog v-model="showDatePicker" >
+      <v-date-picker color="primary" v-model="currentDate" @input="showDatePicker = false" />
+    </v-dialog>
+
   </v-container>
 </template>
 
@@ -100,8 +93,11 @@ import Axios from 'axios'
 import type { Player } from "../scripts/player";
 import UserNameDialog from "~/components/UserNameDialog.vue";
 
-const currentDateString = ref(new Date().toDateString());
-console.log("Current Date: ", currentDateString.value);
+// Date picker
+const currentDate = ref(new Date());
+const showDatePicker = ref(false);
+
+console.log("Date: ", currentDate.value.);
 
 const router = useRouter();
 const game = reactive(new Game());
@@ -123,16 +119,7 @@ onMounted(() => {
 
   window.addEventListener("keyup", onKeyup);
 
-
-  // Assignment 3 Task 2
-  // Check if user name is stored in local storage
-  // if(!game.isBusy) {
-  //   checkUserNameLocalStorage();
-  //   checkUserName();
-  // }
- 
-
-  if(!showUserNameDialog.value){
+  if (!showUserNameDialog.value) {
     startStopwatch();
   }
 
@@ -168,8 +155,8 @@ function onKeyup(event: KeyboardEvent) {
 }
 
 async function checkUserNameLocalStorage() {
-  
-  if(nuxtStorage.localStorage.getData("userName") != null){
+
+  if (nuxtStorage.localStorage.getData("userName") != null) {
     nameUserNameDialog.value = nuxtStorage.localStorage.getData("userName");
     showUserNameDialog.value = false;
   }
@@ -184,36 +171,36 @@ async function checkUserName() {
   const response = await Axios.get("/Player/Player?playerName=" + nameUserNameDialog.value);
   const player: Player = response.data;
 
-  if(player.name == "Guest"){
+  if (player.name == "Guest") {
     showUserNameDialog.value = true;
   }
 }
 
 // Fix: Check if game is not busy before checking username
 watch(() => game.isBusy, (value) => {
-  if(!value) {
+  if (!value) {
     checkUserNameLocalStorage();
     checkUserName();
   }
 });
 
 watch(() => game.gameState, (value) => {
-  if(value == GameState.Won || value == GameState.Lost){
-    if(nameUserNameDialog.value == "Guest"){
+  if (value == GameState.Won || value == GameState.Lost) {
+    if (nameUserNameDialog.value == "Guest") {
       showUserNameDialog.value = true;
     }
 
     stopStopwatch();
   }
 
-  if(value == GameState.Playing){
+  if (value == GameState.Playing) {
     resetStopwatch();
   }
 });
 
 // Watch for showUserNameDialog, pause stopwatch if dialog is shown.
 watch(() => showUserNameDialog.value, (value) => {
-  if(value == false) {
+  if (value == false) {
     startStopwatch();
   } else {
     stopStopwatch();
@@ -228,7 +215,7 @@ const seconds = ref(0);
 const interval = ref<number | undefined>();
 
 function startStopwatch() {
-  if(running) return;
+  if (running) return;
 
   interval.value = setInterval(() => {
     seconds.value++;
@@ -238,7 +225,7 @@ function startStopwatch() {
 }
 
 function stopStopwatch() {
-  if(interval.value) {
+  if (interval.value) {
     clearInterval(interval.value);
     interval.value = undefined;
   }
@@ -249,7 +236,7 @@ function stopStopwatch() {
 function resetStopwatch() {
   seconds.value = 0;
 
-  if(interval.value) {
+  if (interval.value) {
     clearInterval(interval.value);
     interval.value = undefined;
   }
