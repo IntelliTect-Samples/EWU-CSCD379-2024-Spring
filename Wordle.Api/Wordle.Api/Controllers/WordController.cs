@@ -25,5 +25,12 @@ namespace Wordle.Api.Controllers
             DateOnly today = DateOnly.FromDateTime(DateTime.UtcNow.AddHours(offsetInHours));
             return await wordOfTheDayService.GetWordOfTheDay(today);
         }
+        
+        [HttpGet("WordOfTheDay/{date}")]
+        public async Task<string> GetWordOfDay(string date)
+        {
+            DateOnly dateOnly = DateOnly.Parse(date);
+            return await wordOfTheDayService.GetWordOfTheDay(dateOnly);
+        }
     }
 }

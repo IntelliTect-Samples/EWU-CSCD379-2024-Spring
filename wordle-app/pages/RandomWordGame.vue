@@ -66,7 +66,7 @@
           <WordList v-if="game.gameState === GameState.Playing" v-model="showWordsList" />
         </v-col>
         <v-col cols="12" sm="4">
-          <v-btn @click="game.startNewGame()" color="primary">
+          <v-btn @click="game.submitGuess()" color="primary">
             Guess!
           </v-btn>
         </v-col>
@@ -81,6 +81,7 @@
 
     <v-dialog v-model="showDatePicker" >
       <v-date-picker color="primary" v-model="currentDate" @input="showDatePicker = false" />
+      <v-btn @click="showDatePicker = false">Close</v-btn>
     </v-dialog>
 
   </v-container>
@@ -97,11 +98,32 @@ import UserNameDialog from "~/components/UserNameDialog.vue";
 const currentDate = ref(new Date());
 const showDatePicker = ref(false);
 
-console.log("Date: ", currentDate.value.);
+// Watch for showDatePicker, start new game if date picker is closed.
+watch(() => showDatePicker.value, (value) => {
+  if (value == false) {
+    startNewGame();
+  }
+});
+
+async function startNewGame() {
+  const word = await getWordOfTheDay();
+  game.startNewGame(word);
+  console.log("Secret word is: ", game.secretWord);
+}
+
+async function getWordOfTheDay(): Promise<string> {
+  const month = currentDate.value.getMonth() + 1;
+  const day = currentDate.value.getDate();
+  const year = currentDate.value.getFullYear();
+  let wordUrl = "word/wordOfTheDay/" + month + "-" + day + "-" + year;
+  const response = await Axios.get(wordUrl);
+  console.log("Response from Axios is: ", response.data);
+  return response.data;
+}
 
 const router = useRouter();
 const game = reactive(new Game());
-game.startNewGame();
+// game.startNewGame();
 provide("GAME", game);
 
 // User name dialog
@@ -115,7 +137,9 @@ function nameDialogClosed() {
 
 var showWordsList = ref(false);
 
-onMounted(() => {
+onMounted(async () => {
+
+  await startNewGame();
 
   window.addEventListener("keyup", onKeyup);
 

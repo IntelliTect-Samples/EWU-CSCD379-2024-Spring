@@ -6,7 +6,6 @@ import { GameStats } from "./gameStats";
 export class Game {
   public maxAttempts: number;
   public guesses: Word[] = [];
-  //public secretWord: string = "";
   public guessIndex: number = 0;
   public gameState: GameState = GameState.Playing;
   public guessedLetters: Letter[] = [];
@@ -44,7 +43,6 @@ export class Game {
     else{
       this.secretWord = word;
     }
-    //await this.getWordOfTheDayFromApi();
 
     // Populate guesses with the correct number of empty words
     this.guesses = [];
