@@ -8,6 +8,6 @@ export default class dateUtils {
   }
 
   public static getFormattedDateWithOrdianl(date: Date): string {
-    return format(date, "MMMM do yyyy");
+    return format(date, "MMMM do, yyyy");
   }
 }

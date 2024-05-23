@@ -36,3 +36,66 @@
     </v-card>
   </v-bottom-sheet>
 </template>
+
+<script setup lang="ts">
+import { WordList } from "~/scripts/wordList";
+import { Game, GameState } from "~/scripts/game";
+import { filterValidWords } from "~/scripts/wordListUtils";
+
+const game: Game = inject("GAME")!;
+
+const selectedWord = ref("");
+const words = WordList;
+const totalPages = ref(Math.ceil(words.length / 10));
+const updatedWords = ref(words);
+const currentPage = ref(1);
+
+const modelValue = defineModel<boolean>({ default: false });
+const emits = defineEmits<{
+  (e: "validWordsUpdate", validWoerdsNum: number): number;
+}>();
+
+const pagedWords = computed(() => {
+  const start = (currentPage.value - 1) * 10;
+  const end = start + 10;
+  return (game?.guessedLetters.length === 0 ? words : validWords()).slice(
+    start,
+    end
+  );
+});
+
+function validWords(): string[] {
+  const wordsFilterd = filterValidWords(game!);
+  return wordsFilterd;
+}
+
+function addGuess(word: string) {
+  game?.guess.clear();
+  for (let i = 0; i < word.length; i++) {
+    game?.addLetter(word[i].toUpperCase());
+  }
+  modelValue.value = false;
+  currentPage.value = 1;
+}
+
+watch(pagedWords, () => {
+  updatedWords.value = validWords();
+  emits("validWordsUpdate", updatedWords.value.length);
+
+  totalPages.value = Math.ceil(updatedWords.value.length / 10);
+});
+
+const updatePage = () => {
+  const index = updatedWords.value.indexOf(selectedWord.value.toLowerCase());
+  if (index !== -1) {
+    const pageNumber = Math.ceil((index + 1) / 10);
+    currentPage.value = pageNumber;
+  }
+};
+
+onMounted(() => {
+  updatedWords.value = validWords();
+  totalPages.value = Math.ceil(updatedWords.value.length / 10);
+  emits("validWordsUpdate", updatedWords.value.length);
+});
+</script>
