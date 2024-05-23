@@ -45,10 +45,10 @@
             </v-btn>
           </v-col>
           <v-col cols="12" sm="4">
-            <v-chip color="secondary" class="mr-2" @click="showUserNameDialog = true">
-              <v-icon class="mr-2"> mdi-account </v-icon> {{ nameUserNameDialog }}
+            <v-chip color="secondary" class="mr-2" variant="elevated" @click="showUserNameDialog = true">
+              <v-icon class="mr-2" > mdi-account </v-icon> {{ nameUserNameDialog }}
             </v-chip>
-            <v-chip color="secondary" class="mr-2">
+            <v-chip color="secondary" class="mr-2" variant="elevated">
               <v-icon class="mr-2"> mdi-timer </v-icon> {{ seconds }} s.
             </v-chip>
           </v-col>
@@ -91,7 +91,7 @@
           <v-date-picker
           v-model="currentDate"
           color="primary"
-          :max="year + '-' + month + '-' + day"
+          :max="today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate()"
           />
         </v-col>
         <v-col cols="12" class="d-flex justify-end">
@@ -118,9 +118,7 @@ import UserNameDialog from "~/components/UserNameDialog.vue";
 const currentDate = ref(new Date());
 const showDatePicker = ref(false);
 
-let month = currentDate.value.getMonth() + 1;
-let day = currentDate.value.getDate();
-let year = currentDate.value.getFullYear();
+const today = new Date();
 
 // Watch for showDatePicker, start new game if date picker is closed.
 watch(() => showDatePicker.value, (value) => {
@@ -136,9 +134,9 @@ async function startNewGame() {
 }
 
 async function getWordOfTheDay(): Promise<string> {
-  month = currentDate.value.getMonth() + 1;
-  day = currentDate.value.getDate();
-  year = currentDate.value.getFullYear();
+  const month = currentDate.value.getMonth() + 1;
+  const day = currentDate.value.getDate();
+  const year = currentDate.value.getFullYear();
   let wordUrl = "word/wordOfTheDay/" + month + "-" + day + "-" + year;
   const response = await Axios.get(wordUrl);
   console.log("Response from Axios is: ", response.data);

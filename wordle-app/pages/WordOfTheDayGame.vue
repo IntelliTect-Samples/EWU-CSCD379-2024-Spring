@@ -50,10 +50,10 @@
       <v-card-title v-else>Word Of The Day Game</v-card-title>
 
       <v-card-text class="d-flex  flex-row justify-end">
-        <v-chip color="secondary" class="mr-2" @click="showUserNameDialog=true">
+        <v-chip color="secondary" class="mr-2" variant="elevated" @click="showUserNameDialog=true">
           <v-icon class="mr-2" > mdi-account </v-icon> {{ nameUserNameDialog }}
         </v-chip>
-        <v-chip color="secondary" class="mr-2">
+        <v-chip color="secondary" class="mr-2" variant="elevated">
           <v-icon class="mr-2"> mdi-timer </v-icon> {{ seconds }} s.
         </v-chip>
       </v-card-text>
