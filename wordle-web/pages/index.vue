@@ -1,4 +1,4 @@
-﻿<template>
+<template>
   <v-container>
     <v-card
       max-width="750px"
