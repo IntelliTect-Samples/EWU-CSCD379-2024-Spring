@@ -164,7 +164,7 @@ export class Game {
         });
         this.stats = new GameStats();
         Object.assign(this.stats, result.data);
-        console.log(this.stats);
+        console.log("displayed stats" + this.stats);
         this.isBusy = false;
       }
     }

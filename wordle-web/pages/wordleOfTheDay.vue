@@ -127,7 +127,7 @@ function postScore(playerNameIn: string, attemptsIn: number, timeIn: number) {
     attempts: attemptsIn,
     time: timeIn,
   }).then((response) => {
-    console.log("response from api " + response.data + " " + response.status);
+    console.log("response from api post score " + response.data + " " + response.status);
   });
   
 }
@@ -151,7 +151,10 @@ watch(
           () => showUserNameDialog.value,
           (value) => {
             if (value == false) {
-              console.log("username after prompt " + userName.value);
+              //console.log("username after prompt " + userName.value);
+              if(userName.value ===""){
+                userName.value = "guest";
+              }
               postScore(userName.value, calcAttempts(), calcSecond());
             }
           }
