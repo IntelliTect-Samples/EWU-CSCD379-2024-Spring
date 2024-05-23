@@ -15,14 +15,17 @@ public class WordOfTheDayService
         Db = db;
     }
 
-    public async Task<Word> GetRandomWord()
+    public async Task<Word> GetRandomWord(string containtsText = "")
     {
-        var numberOfWords = await Db.Words.CountAsync();
+        var numberOfWords = await Db.Words.CountAsync(f=>f.Text.Contains(containtsText));
 
         Random random = new();
         int randomIndex = random.Next(numberOfWords);
 
-        return await Db.Words.Skip(randomIndex).FirstAsync();
+        return await Db.Words
+            .Where(f=>f.Text.Contains(containtsText))
+            .Skip(randomIndex)
+            .FirstAsync();
     }
 
     public async Task<string> GetWordOfTheDay(DateOnly date)
