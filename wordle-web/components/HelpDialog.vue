@@ -46,7 +46,7 @@ const modelValue = defineModel<boolean>({ default: false });
 const exampleWord = new Word({ word: "BILBO" });
 exampleWord.letters = [
     new Letter("B", LetterState.Correct),
-    new Letter("I", LetterState.Correct),
+    new Letter("I", LetterState.Misplaced),
     new Letter("L", LetterState.Misplaced),
     new Letter("B", LetterState.Wrong),
     new Letter("O", LetterState.Wrong),
