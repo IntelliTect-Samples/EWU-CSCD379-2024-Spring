@@ -138,11 +138,11 @@ export class Game {
     ) {
       this.isBusy = true;
       var result = await Axios.post('game/result', {
-        attempts: this.guessIndex + 1,
         name: this.username,
+        attempts: this.guessIndex + 1,
+        seconds: this.seconds,
         isWin: this.gameState === GameState.Won,
         word: this.secretWord,
-        seconds: this.seconds,
       });
       this.stats = new GameStats();
       Object.assign(this.stats, result.data);
