@@ -1,0 +1,24 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="Wordle.Api.Models.WordOfTheDay">
+    <Position X="2.75" Y="3.75" Width="2" />
+    <TypeIdentifier>
+      <HashCode>QAEAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAAACAAA=</HashCode>
+      <FileName>Models\WordOfTheDay.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsCollectionAssociation>
+      <Property Name="WordOfTheDayGames" />
+    </ShowAsCollectionAssociation>
+  </Class>
+  <Class Name="Wordle.Api.Models.WordOfTheDayGame">
+    <Position X="7.5" Y="3.5" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAAAAQgAAAAAAAAAAAAAAAABAAAAAAAABAAAAAECAAA=</HashCode>
+      <FileName>Models\WordOfTheDayGame.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="WordOfTheDay" />
+    </ShowAsAssociation>
+  </Class>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>
