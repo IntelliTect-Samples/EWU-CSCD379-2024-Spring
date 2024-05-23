@@ -6,27 +6,37 @@
       indeterminate
     />
     <v-sheet v-else color="transparent">
-      <v-card-title
+      <div
         v-if="isDaily"
-        class="font-text -h6 text-center text-wrap text-white font-weight-bold mb-3"
+        class="font-text text-center text-wrap text-white font-weight-bold mb-3"
       >
-        Daily Wordle: {{ formattedDate }}</v-card-title
-      >
-      <v-card-title
+        Daily Wordle: {{ formattedDate }}
+      </div>
+      <div
         v-else
-        class="font-text -h6 text-center text-wrap text-white font-weight-bold mb-3"
-        >Random Wordle</v-card-title
+        class="font-text text-center text-wrap text-white font-weight-bold mb-3"
       >
+        Random Wordle
+      </div>
       <v-row>
-        <v-col lg="4" v-if="$vuetify.display.mdAndUp"> </v-col>
-        <v-col lg="4">
+        <v-col lg="4" cols="1">
+          <v-sheet
+            v-if="$vuetify.display.smAndDown"
+            class="position-fixed left-0 pa-1 rounded-e-lg bg-primary elevation-4"
+            width="60"
+          >
+            <v-icon size="small" icon="mdi-timer" />
+            {{ stopwatch.getCurrentTime() }}
+          </v-sheet>
+        </v-col>
+        <v-col lg="4" cols="10" class="mb-3">
           <GameBoardGuess
             v-for="(guess, i) of game.guesses"
             :key="i"
             :guess="guess"
           />
         </v-col>
-        <v-col lg="4" v-if="$vuetify.display.mdAndUp" class="my-3">
+        <v-col lg="4" cols="1" v-if="$vuetify.display.mdAndUp" class="my-3">
           <v-row class="mb-1 justify-center">
             <v-tooltip :text="playerName" location="bottom">
               <template v-slot:activator="{ props }">
@@ -94,19 +104,6 @@
               {{ game.gameState === GameState.Playing ? "Give Up" : "Results" }}
             </v-sheet>
           </v-row>
-        </v-col>
-        <v-col cols="12" v-else class="d-flex justify-center">
-          <v-sheet
-            class="pa-1 mb-3 d-flex justify-center align-center"
-            color="primary"
-            rounded
-            elevation="4"
-            width="200px"
-            height="40px"
-          >
-            <v-icon icon="mdi-timer" /> Time:
-            {{ stopwatch.getCurrentTime() }}
-          </v-sheet>
         </v-col>
       </v-row>
       <v-bottom-navigation
@@ -353,7 +350,6 @@ const formattedDate = computed(() => {
 @import url("https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap");
 
 .font-text {
-  font-size: 1rem;
   font-family: "Press Start 2P", sans-serif;
 }
 </style>
