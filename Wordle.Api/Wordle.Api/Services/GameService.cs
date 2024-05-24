@@ -112,14 +112,14 @@ public class GameService(WordleDbContext db)
     }
 
 
-    public async Task<List<GameStatsDto>> GetGames(GetStatsDto getStats)
+    public async Task<List<GameStatsDto>> GetGames(string player)
     {
-        DateTime date = getStats.Date;
+        DateTime date = DateTime.UtcNow;
         List<GameStatsDto> wordOfTheDayGames = []; ;
 
         for(int i = 0; i< 10; i++)
         {
-            wordOfTheDayGames.Add(await WordOfDayStats(date.AddDays(-i), getStats.PlayerName));
+            wordOfTheDayGames.Add(await WordOfDayStats(date.AddDays(-i), player));
         }
         return wordOfTheDayGames;
     }
