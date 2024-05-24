@@ -52,4 +52,22 @@ public class WordController(WordOfTheDayService wordOfTheDayService) : Controlle
         DateOnly date = new DateOnly(year, month, day);
         return await wordOfTheDayService.GetWordOfTheDay(date);
     }
+
+    [HttpPost("DeleteWord")]
+    [Authorize(Policy = Policies.OlderThanTwentyOne)]
+    [Authorize(Policy = Policies.MasterOfTheUniverse)]
+    public void DeleteWord(string word)
+    {
+        word = word.Trim().ToLower();
+        // delete word
+    }
+
+	[HttpPost("AddWord")]
+    [Authorize(Policy = Policies.OlderThanTwentyOne)]
+	public void AddWord(string word)
+	{
+		word = word.Trim().ToLower();
+
+		// add word
+	}
 }

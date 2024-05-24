@@ -39,7 +39,9 @@ public static class IdentitySeed
             AppUser user = new AppUser
             {
                 UserName = "Admin@intellitect.com",
-                Email = "Admin@intellitect.com"
+                Email = "Admin@intellitect.com",
+                IsMasterOfTheUniverse = true,
+                Birthdate = new DateOnly(2000, 1, 1)
             };
 
             IdentityResult result = userManager.CreateAsync(user, "P@ssw0rd123").Result;
@@ -55,7 +57,9 @@ public static class IdentitySeed
             AppUser user = new AppUser
             {
                 UserName = "Awesome@intellitect.com",
-                Email = "Awesome@intellitect.com"
+                Email = "Awesome@intellitect.com",
+                Birthdate = new DateOnly(1999, 1, 1),
+                IsMasterOfTheUniverse = false
             };
 
             IdentityResult result = userManager.CreateAsync(user, "P@ssw0rd123").Result;
