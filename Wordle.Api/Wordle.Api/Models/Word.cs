@@ -10,6 +10,8 @@ public class Word
 
     [Required]
     public required string Text { get; set; }
+    [Required]
+    public required bool IsCommonWord { get; set; }
 
     public ICollection<Game> Games { get; set; } = [];
     public ICollection<WordOfTheDay> WordsOfTheDays { get; set; } = [];

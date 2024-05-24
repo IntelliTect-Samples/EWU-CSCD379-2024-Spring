@@ -76,7 +76,7 @@ public class WordOfTheDayService
 				foundWord = Db.Words.FirstOrDefault(dbWord => dbWord.Text.Equals(word));
 				if (foundWord is null)
 				{
-					Word newWord = new Word { Text = word };
+					Word newWord = new Word { Text = word, IsCommonWord = false };
 					Db.Words.Add(newWord);
 					Db.SaveChanges();
 					return true;
@@ -103,6 +103,17 @@ public class WordOfTheDayService
 				}
 				return false;
 			}
+		}
+		return false;
+	}
+
+	public async Task<bool> ChangeCommonWordFlag(string word, bool flag)
+	{
+		var foundWord = await Db.Words.FirstOrDefaultAsync(dbWord => dbWord.Text.Equals(word));
+		if (foundWord is not null)
+		{
+			foundWord.IsCommonWord = flag;
+			await Db.SaveChangesAsync();
 		}
 		return false;
 	}

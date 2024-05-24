@@ -56,15 +56,26 @@ public class WordController(WordOfTheDayService wordOfTheDayService) : Controlle
     [HttpPost("DeleteWord")]
     [Authorize(Policy = Policies.OlderThanTwentyOne)]
     [Authorize(Policy = Policies.MasterOfTheUniverse)]
-    public async Task DeleteWord(string word)
+    public async Task<bool> DeleteWord(string word)
     {
 		bool isDeleted = await wordOfTheDayService.DeleteWord(word.Trim().ToLower());
+        return isDeleted;
 	}
 
 	[HttpPost("AddWord")]
     [Authorize(Policy = Policies.OlderThanTwentyOne)]
-	public async Task AddWord(string word)
+	[Authorize(Policy = Policies.MasterOfTheUniverse)]
+	public async Task<bool> AddWord(string word)
 	{
 		bool isAdded = await wordOfTheDayService.AddWord(word.Trim().ToLower());
+        return isAdded;
 	}
+
+    [HttpPost("ChangeCommonWordFlag")]
+    [Authorize]
+    public async Task<bool> ChangeCommonWordFlag(string word, bool flag)
+    {
+        bool isChanged = await wordOfTheDayService.ChangeCommonWordFlag(word.Trim().ToLower(), flag);
+        return isChanged;
+    }
 }
