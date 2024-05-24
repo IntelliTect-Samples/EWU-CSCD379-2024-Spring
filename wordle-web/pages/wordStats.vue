@@ -22,10 +22,12 @@
           <td v-if="stats.totalTimesPlayed">{{ stats.totalTimesPlayed }}</td> <td v-else>No Data</td>
           <td v-if="stats.totalWins">{{ stats.totalWins }}</td> <td v-else>No Data</td>
           <td v-if="stats.totalLosses">{{ stats.totalLosses }}</td> <td v-else>No Data</td>
-          <td v-if="stats.played">{{ stats.played }}</td> <td v-else>No Data</td>
+          <td v-if="stats.played == true"> Yes </td> <td v-else-if="stats.played == false">No </td> <td v-else>No Data</td>
         </tr>
       </tbody>
     </v-table>
+    <v-btn variant="flat" color="primary" @click="getStats()"
+      >Refresh</v-btn>
     <v-card-actions>
       <v-btn variant="flat" color="primary" @click="router.push('/')"
         >Back</v-btn
@@ -41,6 +43,7 @@ import { Game } from "~/scripts/game";
 const router = useRouter();
 const game: Game = inject("GAME")!;
 const date = ref("");
+const userName : Ref<string> = inject("userName")! as Ref<string>;
 
 interface Stats {
   date: string;
@@ -61,10 +64,11 @@ async function getStats() {
   let statUrl = "Game/GetGames";
   const formatDate = format(new Date(), "MM-dd-yyyy");
   date.value = formatDate;
-  console.log("get games to api " + statUrl + "/" + date.value);
-  await Axios.get(statUrl + "/" + date.value)
+  console.log("get games to api " + statUrl + "/" + userName.value);
+  await Axios.get(statUrl + "/" + userName.value)
     .then((response) => {
       statsToDisplay.value = response.data;
+      console.log("api get games response " + response.data);
     })
     .catch((error) => {
       console.log("api get games error " + error);
