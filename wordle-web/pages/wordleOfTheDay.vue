@@ -120,14 +120,14 @@ function calcAttempts() {
   return attempts;
 }
 function postScore(playerNameIn: string, attemptsIn: number, timeIn: number) {
-  console.log("score data " + playerNameIn + " " + attemptsIn + " " + timeIn);
+  console.log("score data: " + playerNameIn + " " + attemptsIn + " " + timeIn);
   let postScoreUrl = "Player/UpdateScore";
   Axios.post(postScoreUrl, {
     playerName: playerNameIn,
     attempts: attemptsIn,
     time: timeIn,
   }).then((response) => {
-    console.log("response from api post score " + response.data + " " + response.status);
+    console.log("response from API post score " + response.data + " " + response.status);
   });
   
 }
