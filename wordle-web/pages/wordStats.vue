@@ -22,7 +22,7 @@
           <td v-if="stats.totalTimesPlayed">{{ stats.totalTimesPlayed }}</td> <td v-else>No Data</td>
           <td v-if="stats.totalWins">{{ stats.totalWins }}</td> <td v-else>No Data</td>
           <td v-if="stats.totalLosses">{{ stats.totalLosses }}</td> <td v-else>No Data</td>
-          <td v-if="stats.played == true"> Yes </td> <td v-else-if="stats.played == false">No </td> <td v-else>No Data</td>
+          <td v-if="stats.played == true"> Yes </td> <td v-else-if="stats.played == false"> No </td> <td v-else>No Data</td>
         </tr>
       </tbody>
     </v-table>
