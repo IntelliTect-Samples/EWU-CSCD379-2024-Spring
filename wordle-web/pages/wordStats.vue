@@ -67,7 +67,7 @@ async function getStats() {
   await Axios.get(statUrl + "/" + userName.value)
     .then((response) => {
       statsToDisplay.value = response.data;
-      console.log("api get games response " + response.data);
+      console.log("api get games response " + response);
     })
     .catch((error) => {
       console.log("api get games error " + error);
