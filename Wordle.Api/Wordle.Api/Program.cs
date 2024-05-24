@@ -69,7 +69,7 @@ builder.Services.AddScoped<LeaderboardService>();
 // Identity Services
 builder.Services.AddIdentityCore<AppUser>(options => options.SignIn.RequireConfirmedAccount = false)
     .AddRoles<IdentityRole>()
-    .AddEntityFrameworkStores<WordleDbContext>(); // Tell identity where to sstore things
+    .AddEntityFrameworkStores<AppDbContext>(); // Tell identity where to sstore things
 
 // JWT Token Setup
 JwtConfiguration jwtConfig = builder.Configuration

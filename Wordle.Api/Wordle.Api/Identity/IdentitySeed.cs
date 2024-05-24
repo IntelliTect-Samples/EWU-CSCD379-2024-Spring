@@ -3,11 +3,12 @@ using System.Data;
 using System.Security.Claims;
 using System;
 using Wordle.Api.Models;
+using Wordle.Api.Data;
 
 namespace Wordle.Api.Identity;
 public static class IdentitySeed
 {
-    public static async Task SeedAsync(UserManager<AppUser> userManager, RoleManager<IdentityRole> roleManager, WordleDbContext db)
+    public static async Task SeedAsync(UserManager<AppUser> userManager, RoleManager<IdentityRole> roleManager, AppDbContext db)
     {
         // Seed Roles
         await SeedRolesAsync(roleManager);

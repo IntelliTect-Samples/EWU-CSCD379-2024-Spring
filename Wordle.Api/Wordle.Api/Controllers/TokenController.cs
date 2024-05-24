@@ -4,6 +4,7 @@ using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
+using Wordle.Api.Data;
 using Wordle.Api.Dtos;
 using Wordle.Api.Identity;
 using Wordle.Api.Models;
@@ -14,11 +15,11 @@ namespace Wordle.Api.Controllers
     [ApiController]
     public class TokenController : ControllerBase
     {
-        public WordleDbContext _context;
+        public AppDbContext _context;
         public UserManager<AppUser> _userManager;
         public JwtConfiguration _jwtConfiguration;
         public RoleManager<IdentityRole> _roleManager;
-        public TokenController(WordleDbContext context, UserManager<AppUser> userManager, JwtConfiguration jwtConfiguration, RoleManager<IdentityRole> roleManager)
+        public TokenController(AppDbContext context, UserManager<AppUser> userManager, JwtConfiguration jwtConfiguration, RoleManager<IdentityRole> roleManager)
         {
             _context = context;
             _userManager = userManager;
