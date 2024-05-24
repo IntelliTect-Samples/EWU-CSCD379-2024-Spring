@@ -207,7 +207,7 @@ function updateWordDate() {
       attempts = game.guesses.length + 5;
     }
     var nameList = new Array(nameUserNameDialog.value);
-    const today = new Date();
+    var today = new Date();
     var curDate = today.getMonth() + "/" + today.getDay() + "/" + today.getFullYear();
     Axios.post("WordDate/AddWordDate", {
       Date: curDate,
