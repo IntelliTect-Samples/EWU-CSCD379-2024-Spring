@@ -5,6 +5,7 @@ import { WordList } from "./wordList";
 import { findValidWords } from "./ValidWordList";
 import Axios from "axios";
 import { GameStats } from "./gameStats";
+import { c } from "@nuxt/test-utils/dist/shared/test-utils.9059LSjm";
 
 export class Game {
   public maxAttempts: number;
@@ -132,7 +133,7 @@ export class Game {
     }
   }
 
-  public async submitGuess(withApi: boolean) {
+  public async submitGuess(withApi: boolean, userName: string) {
     if (this.gameState !== GameState.Playing) return;
     if (!this.guess.isFilled) return;
     if (!this.guess.isValidWord()) {
@@ -161,10 +162,11 @@ export class Game {
           attempts: this.guessIndex + 1,
           isWin: this.gameState === GameState.Won,
           word: this.secretWord,
+          playerName: userName
+        
         });
         this.stats = new GameStats();
         Object.assign(this.stats, result.data);
-        console.log("displayed stats " + this.stats);
         this.isBusy = false;
       }
     }

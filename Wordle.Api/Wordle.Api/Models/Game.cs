@@ -16,6 +16,8 @@ public class Game
     public int? WordOfTheDayId { get; set; }
     public WordOfTheDay? WordOfTheDay { get; set; }
 
+    public string? PlayerName { get; set; }
+
     [Required]
     public int WordId { get; set; }
     public Word? Word { get; set; }

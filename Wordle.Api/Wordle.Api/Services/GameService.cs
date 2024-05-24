@@ -1,4 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
+using System.Collections.Generic;
 using Wordle.Api.Dtos;
 using Wordle.Api.Models;
 
@@ -28,6 +30,7 @@ public class GameService(WordleDbContext db)
             WordOfTheDay = word.WordsOfTheDays
                 .OrderByDescending(wotd => wotd.Date)
                 .FirstOrDefault(wotd => wotd.Date < today),
+            PlayerName = gameDto.PlayerName,
             Word = word
         };
 
@@ -65,7 +68,7 @@ public class GameService(WordleDbContext db)
         return result;
     }
 
-    public async Task<GameStatsDto> WordOfDayStats(DateTime date)
+    public async Task<GameStatsDto> WordOfDayStats(DateTime date, string? playerName)
     {
         DateOnly dateOnly = DateOnly.FromDateTime(date);
 
@@ -87,8 +90,7 @@ public class GameService(WordleDbContext db)
                 TotalTimesPlayed = wordOfTheDayGames.Count(),
                 TotalWins = wordOfTheDayGames.Count(g => g.IsWin),
                 AverageTime = wordOfTheDayGames.Average(w => w.Time),
-                //Usernames = [.. wordOfTheDayGames.Select(g => g.Name).Where(name => !string.IsNullOrEmpty(name))]
-
+                Played = wordOfTheDayGames.Any(game => playerName is not null && game.PlayerName == playerName)
             };
 
         }
@@ -101,7 +103,7 @@ public class GameService(WordleDbContext db)
                 TotalTimesPlayed = 0,
                 TotalWins = 0,
                 AverageTime = 0,
-                //Usernames = []
+                Played = false
             };
         }
 
@@ -110,14 +112,14 @@ public class GameService(WordleDbContext db)
     }
 
 
-    public async Task<List<GameStatsDto>> GetGames(DateTime date)
+    public async Task<List<GameStatsDto>> GetGames(string player)
     {
-
+        DateTime date = DateTime.UtcNow;
         List<GameStatsDto> wordOfTheDayGames = []; ;
 
         for(int i = 0; i< 10; i++)
         {
-            wordOfTheDayGames.Add(await WordOfDayStats(date.AddDays(-i)));
+            wordOfTheDayGames.Add(await WordOfDayStats(date.AddDays(-i), player));
         }
         return wordOfTheDayGames;
     }
