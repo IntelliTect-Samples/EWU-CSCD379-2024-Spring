@@ -44,7 +44,6 @@ import nuxtStorage from "nuxt-storage";
 import { defineProps } from "vue";
 const router = useRouter();
 const theme = useTheme();
-const showHelpDialog = ref(false);
 const showUserNameDialog = ref(false);
 const showSettingsDialog = ref(false);
 const userName = ref("guest");
@@ -69,13 +68,11 @@ onMounted(() => {
   if (defaultTheme) { changeTheme(defaultTheme); }
   setDark();
   var userNameStored = nuxtStorage.localStorage.getData('userName');
-  if (userNameStored) {
+  if (userNameStored && userNameStored !== "guest") {
     userName.value = userNameStored;
     showUserNameDialog.value = false;
   }
-  if (userName.value === "guest " || !userNameStored) {
-    showUserNameDialog.value = true;
-  }
+  
 
 });
 function changeTheme(themeName: string) {
