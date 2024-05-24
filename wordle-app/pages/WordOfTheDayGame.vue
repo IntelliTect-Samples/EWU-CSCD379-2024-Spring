@@ -214,7 +214,7 @@ function updateWordDate() {
       day -= 30;
       mon += 1;
     }
-    var curDate = today.getMonth() + "/" + today.getDay() + "/" + today.getFullYear();
+    var curDate = mon + "/" + day + "/" + today.getFullYear();
     Axios.post("WordDate/AddWordDate", {
       Date: curDate,
       GameCount: 1,
