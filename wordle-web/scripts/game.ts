@@ -180,7 +180,7 @@ export class Game {
 
       const response = await Axios.get(wordUrl);
 
-      console.log("Response from API: " + response.data);
+      console.log("Response from API get word of the day: " + response.data);
       return response.data;
     } catch (error) {
       console.error("Error fetching word of the day:", error);

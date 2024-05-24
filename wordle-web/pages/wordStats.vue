@@ -63,7 +63,7 @@ async function getStats() {
   let statUrl = "Game/GetGames";
   const formatDate = format(new Date(), "MM-dd-yyyy");
   date.value = formatDate;
-  console.log("get games to api " + statUrl + "/" + userName.value);
+ // console.log("get games to api " + statUrl + "/" + userName.value);
   await Axios.get(statUrl + "/" + userName.value)
     .then((response) => {
       statsToDisplay.value = response.data;
