@@ -31,6 +31,7 @@ public class GameService(WordleDbContext db)
                 .OrderByDescending(wotd => wotd.Date)
                 .FirstOrDefault(wotd => wotd.Date < today),
             PlayerName = gameDto.PlayerName,
+            Time = gameDto.Time,
             Word = word
         };
 
@@ -114,10 +115,10 @@ public class GameService(WordleDbContext db)
 
     public async Task<List<GameStatsDto>> GetGames(string player)
     {
-        DateTime date = DateTime.UtcNow;
+        DateTime date = DateTime.UtcNow.AddHours(-7);
         List<GameStatsDto> wordOfTheDayGames = []; ;
 
-        for(int i = 0; i< 10; i++)
+        for(int i = 1; i<= 10; i++)
         {
             wordOfTheDayGames.Add(await WordOfDayStats(date.AddDays(-i), player));
         }

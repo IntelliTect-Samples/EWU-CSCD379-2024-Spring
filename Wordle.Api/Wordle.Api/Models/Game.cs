@@ -11,7 +11,7 @@ public class Game
 
     public bool IsWin {  get; set; }
 
-    public DateTime DateAttempted { get; set; } = DateTime.UtcNow;
+    public DateTime DateAttempted { get; set; } = DateTime.UtcNow.AddHours(-7);
 
     public int? WordOfTheDayId { get; set; }
     public WordOfTheDay? WordOfTheDay { get; set; }

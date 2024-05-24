@@ -10,6 +10,8 @@ namespace Wordle.Api.Dtos
 
         public required string Word {  get; set; }
 
+        public double Time { get; set; }
+
         public string? PlayerName { get; set; }
     }
 }
