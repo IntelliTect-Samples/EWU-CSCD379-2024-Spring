@@ -41,6 +41,7 @@ import { Game } from "~/scripts/game";
 const router = useRouter();
 const game: Game = inject("GAME")!;
 const date = ref("");
+const userName : Ref<string> = inject("userName")! as Ref<string>;
 
 interface Stats {
   date: string;
@@ -61,10 +62,11 @@ async function getStats() {
   let statUrl = "Game/GetGames";
   const formatDate = format(new Date(), "MM-dd-yyyy");
   date.value = formatDate;
-  console.log("get games to api " + statUrl + "/" + date.value);
-  await Axios.get(statUrl + "/" + date.value)
+  console.log("get games to api " + statUrl + "/" + userName.value);
+  await Axios.get(statUrl + "/" + userName.value)
     .then((response) => {
       statsToDisplay.value = response.data;
+      console.log("api get games response " + response.data);
     })
     .catch((error) => {
       console.log("api get games error " + error);
