@@ -14,8 +14,7 @@
           :append-inner-icon="
             showPassword ? 'mdi-eye-off-outline' : 'mdi-eye-outline'
           "
-          @click:append-inner="showPassword = !showPassword"
-        />
+          @click:append-inner="showPassword = !showPassword" />
       </v-card-text>
       <v-card-actions>
         <v-spacer />
@@ -29,29 +28,29 @@
 </template>
 
 <script setup lang="ts">
-import axios from "axios";
-import TokenService from "@/scripts/TokenService";
+import axios from 'axios';
+import TokenService from '~/scripts/tokenService';
 
 const tokenService = new TokenService();
 
 const modelValue = defineModel<boolean>({ default: false });
 const showPassword = ref(false);
-const userName = ref("");
-const password = ref("");
-const errorMessage = ref("");
+const userName = ref('');
+const password = ref('');
+const errorMessage = ref('');
 
 function signIn() {
-  errorMessage.value = "";
+  errorMessage.value = '';
   axios
-    .post("/Token/GetToken", {
+    .post('/Token/GetToken', {
       username: userName.value,
       password: password.value,
     })
-    .then((response) => {
+    .then(response => {
       tokenService.setToken(response.data.token);
       modelValue.value = false;
     })
-    .catch((error) => {
+    .catch(error => {
       errorMessage.value = error.response.data;
     });
 }

@@ -1,5 +1,5 @@
 <template>
-  <v-app class="landing" >
+  <v-app class="landing">
     <v-app-bar color="primary landing">
       <template v-slot:prepend>
         <div class="text-h5 ml-5">
@@ -17,6 +17,28 @@
       <v-btn icon="mdi-help-circle" @click="showHelpDialog = true" />
       <HelpDialog v-model="showHelpDialog" />
       <v-app-bar-nav-icon @click.stop="showDrawer = !showDrawer" />
+      <v-menu>
+        <template v-slot:activator="{ props }">
+          <v-btn v-bind="props"> <v-icon>mdi-account</v-icon> </v-btn>
+        </template>
+        <v-card>
+          <v-card-text>
+            <v-btn
+              v-if="!tokenService.isLoggedIn()"
+              @click="showLoginDialog = true"
+              class="mb-5"
+              flat
+              color="primary">
+              <v-icon> mdi-lock </v-icon>
+              Login
+            </v-btn>
+            <div v-else>
+              {{ tokenService.getUserName() }}
+            </div>
+          </v-card-text>
+        </v-card>
+        <HelpDialog v-model="showHelpDialog" />
+      </v-menu>
     </v-app-bar>
     <v-navigation-drawer v-model="showDrawer" location="right">
       <v-list>
@@ -52,6 +74,7 @@
         </v-list-item>
       </v-list>
     </v-navigation-drawer>
+    <SigninDialog v-model="showLoginDialog" />
     <SettingsDialog v-model="showSettingsDialog" />
     <v-main>
       <slot />
@@ -60,16 +83,19 @@
 </template>
 
 <script setup lang="ts">
+import TokenService from '~/scripts/tokenService';
+
+const tokenService = new TokenService();
 const router = useRouter();
 const showHelpDialog = ref(false);
 const showSettingsDialog = ref(false);
 const showDrawer = ref(false);
+const showLoginDialog = ref(false);
 </script>
 
 <style>
 .v-main {
   background-image: url('../public/edited-vaporwave-landingPage.jpg');
   background-size: cover;
-
 }
 </style>
