@@ -7,9 +7,12 @@
   >
     <v-col
       cols="auto"
+      md="auto"
+      sm="auto"
+      xs="auto"
       v-for="letter in keyboardRow"
       :key="letter.char"
-      :class="'ml-1 px-0'"
+      :class="'ml-1 px-0'" 
     >
       <LetterResult :letter="letter" :clickable="true" />
     </v-col>
@@ -44,3 +47,8 @@ const keyboardLetterRows = computed(() => {
   return keyboardLetterRows;
 });
 </script>
+
+<style scoped>
+
+
+</style>

@@ -41,6 +41,7 @@ using (var scope = app.Services.CreateScope())
     var db = scope.ServiceProvider.GetRequiredService<WordleDbContext>();
     db.Database.Migrate();
     await Seeder.Seed(db);
+    //ENSURE CREATED
 }
 
 // Configure the HTTP request pipeline.

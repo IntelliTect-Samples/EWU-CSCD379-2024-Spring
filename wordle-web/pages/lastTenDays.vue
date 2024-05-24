@@ -32,29 +32,28 @@
     import { ref, onMounted } from 'vue';
     import Axios from 'axios';
     import { format } from 'date-fns';
-    import type { GameStatsDto } from 'Wordle.Api/Dtos/GameStatsDto';
+    import type { GameStatsDto } from '../Wordle.Api/Wordle.Api/Dtos/GameStatsDto';
   
-    const isDailyWordlesLoading = ref(true);
+    //const isDailyWordlesLoading = ref(true);
     const stats = ref<GameStatsDto[]>([]);
 
     onMounted(() => {
         const formatDate = format(new Date(), "MM-dd-yyyy");
-        Axios.get(`game/GetLastTenWordStats/${formatDate}`)
-            .then((res) => res.data)
-            .then((data) =>
+        Axios.get(`Game/GetLastTenWordStats/${formatDate}`)
+        .then((res: { item: any }) => res.item)
+            .then((item: any) =>
                 data.map((item: any) => ({
-                    totalGames: item.totalTimesPlayed,
+                    word: item.word,
+                    date: item.date,
+                    averageGuesses: item.averageGuesses,
+                    totalTimesPlayed: item.totalTimesPlayed,
+                    averageSeconds: item.averageSeconds,
                     totalWins: item.totalWins,
                     totalLosses: item.totalLosses,
-                    averageSeconds: item.averageSeconds,
-                    date: item.date,
-                    word: item.word,
-                    averageGuesses: item.averageGuesses,
-                    usernames: item.usernames,
                 }))
             )
             .then((statData: GameStatsDto[]) => {
-                isDailyWordlesLoading.value = false;
+                //isDailyWordlesLoading.value = false;
                 stats.value = statData;
             });
     });

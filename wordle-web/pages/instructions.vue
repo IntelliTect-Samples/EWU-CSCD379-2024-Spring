@@ -33,10 +33,8 @@
             </div>
             <v-card-text> 
             <strong>Additional Features:</strong>
-            <ul>
-                <li style="padding-left: 20px;"><strong>Cheat button:</strong> Shows all possible words based on your previous guesses and current letters.</li>
-                <li style="padding-left: 20px;"><strong>Settings button:</strong> Allows you to change the game's theme, with options including regular, jungle, flamingo, and Wordle themes in both light and dark versions.</li>
-                <li style="padding-left: 20px;"><strong>Leaderboard:</strong> Displays the top 10 players.</li>
+            <ul> 
+                <li style="padding-left: 20px;"><strong>Theme button:</strong> Allows you to change between light and dark mode.</li> 
                 <li style="padding-left: 20px;"><strong>Keyboard:</strong> Allows you to type in your guesses.</li>
                 <li style="padding-left: 20px;"><strong>Game modes:</strong> Play games from specific days or play a random game.</li>
             </ul>
