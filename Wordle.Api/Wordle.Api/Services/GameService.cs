@@ -114,7 +114,7 @@ public class GameService(WordleDbContext db)
 
     public async Task<List<GameStatsDto>> GetGames(string player)
     {
-        DateTime date = DateTime.UtcNow;
+        DateTime date = DateTime.UtcNow.AddMinutes(-420);
         List<GameStatsDto> wordOfTheDayGames = []; ;
 
         for(int i = 0; i< 10; i++)
