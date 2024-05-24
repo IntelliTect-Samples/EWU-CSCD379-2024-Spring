@@ -36,6 +36,12 @@
             Word History
           </v-list-item>
         </v-list>
+        <v-list>
+          <v-list-item @click="router.push('/Statistics')" class="text-center">
+            <v-icon class="mr-2">mdi-chart-bar</v-icon>
+            Statistics
+          </v-list-item>
+        </v-list>
       </v-navigation-drawer>
       <v-main>
         <NuxtPage />
