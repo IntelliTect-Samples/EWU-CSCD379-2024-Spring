@@ -22,10 +22,12 @@
           <td v-if="stats.totalTimesPlayed">{{ stats.totalTimesPlayed }}</td> <td v-else>No Data</td>
           <td v-if="stats.totalWins">{{ stats.totalWins }}</td> <td v-else>No Data</td>
           <td v-if="stats.totalLosses">{{ stats.totalLosses }}</td> <td v-else>No Data</td>
-          <td v-if="stats.played">{{ stats.played }}</td> <td v-else>No Data</td>
+          <td v-if="stats.played == true"> Yes </td> <td v-else-if="stats.played == false">No </td> <td v-else>No Data</td>
         </tr>
       </tbody>
     </v-table>
+    <v-btn variant="flat" color="primary" @click="getStats()"
+      >Refresh</v-btn>
     <v-card-actions>
       <v-btn variant="flat" color="primary" @click="router.push('/')"
         >Back</v-btn
