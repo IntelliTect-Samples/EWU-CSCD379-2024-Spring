@@ -1,4 +1,6 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Wordle.Api.Identity;
 using Wordle.Api.Services;
 
 namespace Wordle.Api.Controllers;
@@ -24,6 +26,25 @@ public class WordController(WordOfTheDayService wordOfTheDayService) : Controlle
         DateOnly today = DateOnly.FromDateTime(DateTime.UtcNow.AddHours(offsetInHours));
         return await wordOfTheDayService.GetWordOfTheDay(today);
     }
+
+    [Authorize(Roles = Roles.Admin)]
+    [HttpGet("WordOfTheDayHint")]
+    public async Task<string> GetWordOfDayHint(double offsetInHours = -7.0)
+    {
+        DateOnly today = DateOnly.FromDateTime(DateTime.UtcNow.AddHours(offsetInHours));
+        var wordOfTheDay = await wordOfTheDayService.GetWordOfTheDay(today);
+
+        return wordOfTheDay.Substring(0, 1) + "___" + wordOfTheDay.Substring(4, 1);
+    }
+
+    [HttpGet("SecuredRandomWord")]
+    [Authorize(Policy = Policies.RandomAdmin)]
+    public async Task<string> GetSecuredRandomWord()
+    {
+        var randomWord = await wordOfTheDayService.GetRandomWord("sec");
+        return randomWord.Text;
+    }
+
 
     [HttpGet("WordByDate/{month}/{day}/{year}")]
     public async Task<string?> GetWordByDate(int month, int day, int year)
