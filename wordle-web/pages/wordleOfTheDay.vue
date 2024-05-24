@@ -66,7 +66,7 @@
         <ValidWord />
       </div>
 
-      <v-btn @click="game.submitGuess(true, userName)" class="mb-5" color="primary"
+      <v-btn @click="game.submitGuess(true, userName, calcSecond())" class="mb-5" color="primary"
         >Guess!</v-btn
       >
 

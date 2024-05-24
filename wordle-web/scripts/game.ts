@@ -133,7 +133,7 @@ export class Game {
     }
   }
 
-  public async submitGuess(withApi: boolean, userName: string) {
+  public async submitGuess(withApi: boolean, userName: string, time: number = 0) {
     if (this.gameState !== GameState.Playing) return;
     if (!this.guess.isFilled) return;
     if (!this.guess.isValidWord()) {
@@ -161,6 +161,7 @@ export class Game {
         var result = await Axios.post("Game/Result", {
           attempts: this.guessIndex + 1,
           isWin: this.gameState === GameState.Won,
+          time: time,
           word: this.secretWord,
           playerName: userName
         

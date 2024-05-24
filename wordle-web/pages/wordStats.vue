@@ -21,7 +21,7 @@
           <td v-if="stats.averageTime">{{ stats.averageTime }}</td> <td v-else>No Data</td>
           <td v-if="stats.totalTimesPlayed">{{ stats.totalTimesPlayed }}</td> <td v-else>No Data</td>
           <td v-if="stats.totalWins">{{ stats.totalWins }}</td> <td v-else>No Data</td>
-          <td v-if="stats.totalLosses">{{ stats.totalLosses }}</td> <td v-else>No Data</td>
+          <td v-if="stats.totalWins && stats.totalTimesPlayed">{{ stats.totalTimesPlayed - stats.totalWins }}</td> <td v-else>No Data</td>
           <td v-if="stats.played == true"> Yes </td> <td v-else-if="stats.played == false"> No </td> <td v-else>No Data</td>
         </tr>
       </tbody>
@@ -51,7 +51,6 @@ interface Stats {
   averageTime: number;
   totalTimesPlayed: number;
   totalWins: number;
-  totalLosses: number;
   played: boolean;
 }
 const statsToDisplay = ref<Stats[]>();
