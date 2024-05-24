@@ -60,7 +60,7 @@ public class WordDateService(WordleDbContext Db)
 			    AverageSeconds = 0,
                 //PlayerList = wordDateDTO.PlayerList
 		        };
-		    await Db.WordDates.AddAsync(wordDate);
+		        Db.WordDates.AddAsync(wordDate);
             }
         }
         return await Db.WordDates.OrderByDescending(p => p.Date).Take(numberOfWordDates).ToArrayAsync();
