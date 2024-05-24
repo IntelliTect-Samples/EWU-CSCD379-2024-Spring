@@ -66,7 +66,7 @@
         <ValidWord />
       </div>
 
-      <v-btn @click="game.submitGuess(true)" class="mb-5" color="primary"
+      <v-btn @click="game.submitGuess(true, userName)" class="mb-5" color="primary"
         >Guess!</v-btn
       >
 
@@ -103,7 +103,7 @@ onMounted(() => {
 
 function onKeyup(event: KeyboardEvent) {
   if (event.key === "Enter") {
-    game.submitGuess(true);
+    game.submitGuess(true, userName.value);
   } else if (event.key == "Backspace") {
     game.removeLastLetter();
   } else if (event.key.match(/[A-z]/) && event.key.length === 1) {
