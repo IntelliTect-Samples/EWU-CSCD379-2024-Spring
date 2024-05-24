@@ -40,21 +40,21 @@
     onMounted(() => {
         const formatDate = format(new Date(), "MM-dd-yyyy");
         Axios.get(`Game/GetLastTenWordStats/${formatDate}`)
-        .then((res: { item: any }) => res.item)
-            .then((item: any) =>
-                data.map((item: any) => ({
-                    word: item.word,
-                    date: item.date,
-                    averageGuesses: item.averageGuesses,
-                    totalTimesPlayed: item.totalTimesPlayed,
-                    averageSeconds: item.averageSeconds,
-                    totalWins: item.totalWins,
-                    totalLosses: item.totalLosses,
+            .then((res: { data: any }) => res.data)
+            .then((data: any) =>
+                data.map((data: any) => ({
+                    totalGames: data.totalTimesPlayed,
+                    totalWins: data.totalWins,
+                    totalLosses: data.totalLosses,
+                    averageSeconds: data.averageSeconds,
+                    date: data.date,
+                    word: data.word,
+                    averageGuesses: data.averageGuesses,
+                    usernames: data.usernames,
                 }))
-            )
             .then((statData: GameStatsDto[]) => {
                 //isDailyWordlesLoading.value = false;
                 stats.value = statData;
-            });
+            }))
     });
 </script>
