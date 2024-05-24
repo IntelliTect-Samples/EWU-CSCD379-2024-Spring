@@ -27,10 +27,10 @@ public static class Policies
 	{
 		policy.RequireAssertion(context =>
 		{
-			var birthdateClaim = context.User.Claims.FirstOrDefault(c => c.Type == Claims.BirthDate);
-			if (DateOnly.TryParse(birthdateClaim?.Value, out DateOnly birthdate))
+			var motuClaim = context.User.Claims.FirstOrDefault(c => c.Type == Claims.MasterOfTheUniverse);
+			if (Boolean.TryParse(motuClaim?.Value, out bool motu))
 			{
-				return DateTime.UtcNow.Year - birthdate.Year >= 21;
+				return motu;
 			}
 			return false;
 		});
