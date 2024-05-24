@@ -4,13 +4,16 @@
       <tr>
         <th class="text-h6 text-center"><strong>Date</strong></th>
         <th class="text-h6 text-center">
-          <strong># of plays</strong>
+          <strong># of<br />plays</strong>
         </th>
         <th class="text-center text-h6">
-          <strong>Average score</strong>
+          <strong>Average<br />score</strong>
         </th>
         <th class="text-center text-h6">
-          <strong>Average seconds taken</strong>
+          <strong>Average<br />seconds</strong>
+        </th>
+        <th class="text-center text-h6">
+          <strong>Have played</strong>
         </th>
       </tr>
     </thead>
@@ -36,6 +39,9 @@
               : wordStatsDto.averageSeconds + 's'
           }}
         </td>
+        <td class="text-center">
+          {{ wordStatsDto.hasUserPlayed ? '✅' : '❌' }}
+        </td>
       </tr>
     </tbody>
   </v-table>
@@ -44,6 +50,7 @@
 <script setup lang="ts">
 import Axios from 'axios';
 import { useTheme } from 'vuetify';
+import nuxtStorage from 'nuxt-storage';
 
 const theme = useTheme();
 interface WordStatsDto {
@@ -51,10 +58,13 @@ interface WordStatsDto {
   numberOfPlays: number;
   averageScore: number;
   averageSeconds: number;
+  hasUserPlayed: boolean;
 }
+
+var defaultName = nuxtStorage.localStorage.getData('name');
 const lastTenWords = ref<WordStatsDto[]>();
 try {
-  const gameUrl = 'game/lastTenWords';
+  const gameUrl = 'game/lastTenWords?name=Guest';
   const response = await Axios.get(gameUrl);
   lastTenWords.value = response.data;
 } catch (error) {

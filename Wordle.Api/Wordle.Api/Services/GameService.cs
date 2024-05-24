@@ -14,8 +14,9 @@ public class GameService
 		Db = db;
 	}
 
-	public async Task<List<WordStatsDto>> GetLastTenWordStatsDtos()
+	public async Task<List<WordStatsDto>> GetLastTenWordStatsDtos(string name)
 	{
+		int? playerId = (await Db.Players.FirstOrDefaultAsync(player => player.Name.Equals(name)))?.PlayerId;
 		var wordOfTheDays = await Db.WordsOfTheDays.
 			OrderByDescending(wordOfTheDay => wordOfTheDay.Date).
 			Take(10).
@@ -28,6 +29,7 @@ public class GameService
 				NumberOfPlays = wordOfTheDay.Games.Count(),
 				AverageScore = wordOfTheDay.Games.Count() == 0 ? -1 : wordOfTheDay.Games.Average(game => game.Attempts),
 				AverageSeconds = wordOfTheDay.Games.Count() == 0 ? -1 : wordOfTheDay.Games.Average(game => game.SecondsToComplete),
+				HasUserPlayed = wordOfTheDay.Games.Any(game => game.PlayerId == playerId)
 			}).ToList();
 		return result;
 	}
@@ -47,10 +49,18 @@ public class GameService
 				.OrderByDescending(wotd => wotd.Date)
 				.FirstOrDefault(wotd => wotd.Date <= today);
 
+		int? playerId = (await Db.Players.FirstOrDefaultAsync(player => player.Name.Equals(gameDto.Name)))?.PlayerId;
+
+		if (playerId is null)
+		{
+			throw new InvalidOperationException($"Could not find player entity based on name: {gameDto.Name}");
+		}
+
 		// Create a new game object to save to the DB
 		Game game = new()
 		{
 			Attempts = gameDto.Attempts,
+			PlayerId = (int) playerId,
 			SecondsToComplete = gameDto.Seconds,
 			IsWin = gameDto.IsWin,
 			// Attempt to find the WOTD that best matches todays date

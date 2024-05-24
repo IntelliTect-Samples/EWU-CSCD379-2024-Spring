@@ -1,6 +1,6 @@
 <template>
-  <v-app>
-    <v-app-bar color="primary">
+  <v-app class="landing" >
+    <v-app-bar color="primary landing">
       <template v-slot:prepend>
         <div class="text-h5 ml-5">
           <v-icon
@@ -25,7 +25,7 @@
         </v-list-item>
         <v-divider />
         <v-list-item @click="router.push('/')">
-          <v-list-item-title> Whurd of The Day </v-list-item-title>
+          <v-list-item-title> Landing </v-list-item-title>
         </v-list-item>
         <v-divider />
         <v-list-item @click="router.push('/leaderboard')"
@@ -65,3 +65,11 @@ const showHelpDialog = ref(false);
 const showSettingsDialog = ref(false);
 const showDrawer = ref(false);
 </script>
+
+<style>
+.v-main {
+  background-image: url('../public/edited-vaporwave-landingPage.jpg');
+  background-size: cover;
+
+}
+</style>

@@ -4,6 +4,7 @@ namespace Wordle.Api.Models;
 public class Game
 {
     public int GameId { get; set; }
+    public int PlayerId { get; set; }
 
     public int Attempts { get; set; }
 

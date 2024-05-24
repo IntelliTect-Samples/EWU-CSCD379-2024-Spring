@@ -15,6 +15,7 @@ export class Game {
   public option: GameOption;
   public seconds: number = 0;
   public postScores: boolean = true;
+  public username: string = 'Guest';
 
   private _secretWord: string = '';
   private set secretWord(value: string) {
@@ -137,10 +138,11 @@ export class Game {
     ) {
       this.isBusy = true;
       var result = await Axios.post('game/result', {
+        name: this.username,
         attempts: this.guessIndex + 1,
+        seconds: this.seconds,
         isWin: this.gameState === GameState.Won,
         word: this.secretWord,
-        seconds: this.seconds,
       });
       this.stats = new GameStats();
       Object.assign(this.stats, result.data);

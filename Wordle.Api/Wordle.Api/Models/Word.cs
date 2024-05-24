@@ -1,6 +1,9 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using Microsoft.EntityFrameworkCore;
 
 namespace Wordle.Api.Models;
+
+[Index(nameof(Text), IsUnique = true)]
 public class Word
 {
     public int WordId { get; set; }
