@@ -11,14 +11,25 @@
       </thead>
       <tbody>
         <tr v-for="(word, index) in words">
-          <td>
-            {{ word.Word }}
+          <td class="text-center text-h8">
+            {{ word.word }}
           </td>
-          <td>
-            {{ word.IsCommonWord ? '✅' : '❌' }}
+          <td class="text-center text-h8">
+            {{ word.isCommonWord ? 'Yes' : 'No' }}
           </td>
-          <td>
-            <v-btn>edit</v-btn>
+          <td class="text-center text-h8">
+            <v-row class="mt-0">
+              <v-col cols="3" class="mt">
+                <v-switch v-model="word.isCommonWord"></v-switch>
+              </v-col>
+              <v-col class="mt-2">
+                <v-btn
+                  color="error"
+                  variant="outlined"
+                  icon="mdi-trash-can-outline"
+                  size="35"></v-btn>
+              </v-col>
+            </v-row>
           </td>
         </tr>
       </tbody>
@@ -30,17 +41,19 @@
 import Axios from 'axios';
 
 interface Word {
-  Word: string;
-  IsCommonWord: boolean;
+  word: string;
+  isCommonWord: boolean;
 }
 
 const isLoading = ref<boolean>(true);
 const words = ref<Array<Word>>();
+
 try {
   const gameUrl = 'word/getallwords';
   Axios.get(gameUrl).then(response => {
     words.value = response.data;
     isLoading.value = false;
+    console.log();
   });
 } catch (error) {
   console.error('Error fetching words for word editor:', error);

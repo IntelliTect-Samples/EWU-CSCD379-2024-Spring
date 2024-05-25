@@ -20,7 +20,7 @@ The purpose of this assignment is to solidify your learning of:
   - Support deleting a word ❌✅
   - Support adding a new word ❌✅
   - Editing words is not supported ❌✅
-  - Duplicate words should not be allowed ❌✅
+  - Duplicate words should not be allowed ✅
   - Add & support changing the common word boolean flag ❌✅
     - Filter the list of returned words by common words ❌✅
   - Words should be sorted alphabetically ❌✅
@@ -30,16 +30,8 @@ The purpose of this assignment is to solidify your learning of:
   - Word list is paginated (10-100 per page) ❌✅
 - Any logged in user can change the common word flag ❌✅
   - There is a login page/component/popup/etc for users to sign in ❌✅
-- Only users over 21 years of age (based on birthday) with a claim of MasterOfTheUniverse can add and remove words ❌✅
+- Only users over 21 years of age (based on birthday) with a claim of MasterOfTheUniverse can add and remove words ✅
 - Users can be set up at start up in the API project as a seed (apriori), there does not need to be a sign up mechanism ❌✅
-
-## Turn in Process
-
-- On your fork, create an Assignment5 branch
-- Update this branch (Fetch upstream) from the Assignment5 branch in the class repo. [Assignment5 in class repo](https://github.com/IntelliTect-Samples/EWU-CSCD379-2022-Spring/tree/Assignment5)
-- Do your homework in your Assignment5 branch
-- Submit your pull request against Assignment5 in the class repo
-- Ask in Teams chat if you have questions or issues
 
 ## Extra Credit
 

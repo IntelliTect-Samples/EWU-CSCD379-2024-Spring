@@ -121,7 +121,9 @@ public class WordOfTheDayService
 
 	public async Task<List<WordDto>> GetAllWords()
 	{
-		return await Db.Words.Select(word => new WordDto { Word = word.Text, IsCommonWord = word.IsCommonWord }).ToListAsync();
+		return await Db.Words.Select(word => new WordDto { Word = word.Text, IsCommonWord = word.IsCommonWord })
+			.Take(10)
+			.ToListAsync();
 	}
 
 	#region WordList
