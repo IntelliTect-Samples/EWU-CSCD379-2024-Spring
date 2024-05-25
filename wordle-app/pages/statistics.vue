@@ -18,8 +18,8 @@
 			</v-row>
 			<v-row>
 				<v-col v-for="(word, index) in wordStats" :key="index">
-					<v-card hover>
-						<v-card-title>{{ word.datePlayed }}</v-card-title>
+					<v-card hover >
+						<v-card-title>{{ word.datePlayed.substring(0, 10) }}</v-card-title>
 						<v-card-text>
 							<v-row>
 								<v-col>
@@ -53,7 +53,7 @@ import nuxtStorage from "nuxt-storage";
 import Axios from "axios";
 
 interface WordStats {
-	datePlayed: Date;
+	datePlayed: string;
 	numberOfPlays: number;
 	averageScore: number;
 	averageAttempts: number;
@@ -64,9 +64,11 @@ const playerName = nuxtStorage.localStorage.getData("userName");
 
 const wordStats = ref<WordStats[]>();
 
-onMounted(() => {
+
+
+onMounted(async () => {
 	// Fetch wordStats from the server
-	fetchWordStats();
+	await fetchWordStats();
 });
 
 async function fetchWordStats() {
