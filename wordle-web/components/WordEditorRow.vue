@@ -8,6 +8,7 @@
     </v-col>
     <v-col>
       <v-btn>Edit Common Flag</v-btn>
+      <v-btn>Delete Word</v-btn>
     </v-col>
   </v-container>
 </template>
