@@ -16,7 +16,6 @@
       </template>
       <v-btn icon="mdi-help-circle" @click="showHelpDialog = true" />
       <HelpDialog v-model="showHelpDialog" />
-      <v-app-bar-nav-icon @click.stop="showDrawer = !showDrawer" />
       <v-menu>
         <template v-slot:activator="{ props }">
           <v-btn v-bind="props"> <v-icon>mdi-account</v-icon> </v-btn>
@@ -39,6 +38,7 @@
         </v-card>
         <HelpDialog v-model="showHelpDialog" />
       </v-menu>
+      <v-app-bar-nav-icon @click.stop="showDrawer = !showDrawer" />
     </v-app-bar>
     <v-navigation-drawer v-model="showDrawer" location="right">
       <v-list>
@@ -53,7 +53,6 @@
         <v-list-item @click="router.push('/leaderboard')"
           >Leaderboard</v-list-item
         >
-        <v-divider />
         <v-divider />
         <v-list-item @click="router.push('/instructions')"
           >Instructions</v-list-item
@@ -71,6 +70,10 @@
         <v-divider />
         <v-list-item @click="router.push('/wordStatistics')">
           <v-list-item-title> Last Ten Words </v-list-item-title>
+        </v-list-item>
+        <v-divider />
+        <v-list-item @click="router.push('/wordEditor')">
+          <v-list-item-title> Word Editor </v-list-item-title>
         </v-list-item>
       </v-list>
     </v-navigation-drawer>

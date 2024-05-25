@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Wordle.Api.Dtos;
 using Wordle.Api.Identity;
 using Wordle.Api.Services;
 
@@ -77,5 +78,11 @@ public class WordController(WordOfTheDayService wordOfTheDayService) : Controlle
     {
         bool isChanged = await wordOfTheDayService.ChangeCommonWordFlag(word.Trim().ToLower(), flag);
         return isChanged;
+    }
+
+    [HttpGet("GetAllWords")]
+    public async Task<List<WordDto>> GetAllWords()
+    {
+        return await wordOfTheDayService.GetAllWords();
     }
 }
