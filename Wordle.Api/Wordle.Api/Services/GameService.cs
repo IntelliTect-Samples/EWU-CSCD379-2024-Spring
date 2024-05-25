@@ -20,6 +20,7 @@ public class GameService(WordleDbContext Db)
         // Create a new game object to save to the DB
         Game game = new()
         {
+            PlayerName = gameDto.PlayerName,
             Attempts = gameDto.Attempts,
             IsWin = gameDto.IsWin,
             // Attempt to find the WOTD that best matches todays date

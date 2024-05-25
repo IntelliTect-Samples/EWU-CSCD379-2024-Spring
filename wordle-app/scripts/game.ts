@@ -2,6 +2,7 @@ import { LetterState, type Letter } from "./letter";
 import { Word } from "./word";
 import Axios from "axios";
 import { GameStats } from "./gameStats";
+import nuxtStorage from "nuxt-storage";
 
 export class Game {
   public maxAttempts: number;
@@ -128,6 +129,7 @@ export class Game {
       // Post to API
       this.isBusy = true;
       Axios.post("game/result", {
+        playerName: nuxtStorage.localStorage.getData("userName"),
         attempts: this.guessIndex + 1,
         isWin: this.gameState === GameState.Won,
         word: this.secretWord,
