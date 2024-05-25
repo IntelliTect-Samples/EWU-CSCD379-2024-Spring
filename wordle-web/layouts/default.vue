@@ -31,7 +31,7 @@
               <v-icon> mdi-lock </v-icon>
               Login
             </v-btn>
-            <div v-else>
+            <div v-else @click="showLoginDialog = true">
               {{ tokenService.getUserName() }}
             </div>
           </v-card-text>
@@ -86,7 +86,7 @@
 </template>
 
 <script setup lang="ts">
-import TokenService from '~/scripts/tokenService';
+import { TokenService, key } from '~/scripts/tokenService';
 
 const tokenService = new TokenService();
 const router = useRouter();
@@ -95,7 +95,7 @@ const showSettingsDialog = ref(false);
 const showDrawer = ref(false);
 const showLoginDialog = ref(false);
 
-provide(TokenService.key, tokenService);
+provide(key, tokenService);
 </script>
 
 <style>

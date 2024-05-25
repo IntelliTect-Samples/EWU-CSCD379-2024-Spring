@@ -29,7 +29,7 @@
 
 <script setup lang="ts">
 import axios from 'axios';
-import TokenService from '~/scripts/tokenService';
+import { TokenService } from '~/scripts/tokenService';
 
 const tokenService = new TokenService();
 

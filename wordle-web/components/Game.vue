@@ -92,6 +92,8 @@
         color="primary">
         Leaderboard
       </v-btn>
+      <br />
+      <v-btn @click="hint" color="primary"> Hint! 👀 </v-btn>
       <v-chip class="mb-5" color="secondary">{{ seconds }}</v-chip>
       <ValidWords
         v-model:show="showValidWordsDialog"
@@ -113,7 +115,7 @@ import { Game, GameState, GameOption } from '../scripts/game';
 import { WordList } from '~/scripts/wordList';
 import nuxtStorage from 'nuxt-storage';
 import Axios from 'axios';
-import { useDisplay } from 'vuetify/lib/framework.mjs';
+import { TokenService, key } from '~/scripts/tokenService';
 
 const props = defineProps<{ option: GameOption; word?: string }>();
 const game = reactive(new Game(props.option));
@@ -126,6 +128,7 @@ const showNameDialog = ref(false);
 const showGuestSaveDialog = ref(false);
 const seconds = ref(0);
 const interval = ref();
+const tokenService = inject(key);
 
 function startSeconds() {
   interval.value = setInterval(() => {
@@ -142,6 +145,14 @@ function stopSeconds() {
 watch(username, () => {
   game.username = username.value;
 });
+
+function hint() {
+  const headers = tokenService?.generateTokenHeader();
+  console.log(headers);
+  Axios.get('Word/WordOfTheDayHint', { headers }).then(response => {
+    alert(`Hint: ${response.data}`);
+  });
+}
 
 const myGuess = ref('');
 function playAudio(): any {
@@ -236,6 +247,4 @@ function postScore() {
 .v-card {
   background-color: var(--v-card-base) !important;
 }
-
 </style>
-

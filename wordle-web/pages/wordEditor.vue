@@ -19,21 +19,22 @@
           </td>
           <td class="text-center text-h8">
             <v-row class="mt-0">
-              <v-col cols="3" class="mt">
+              <v-col cols="3">
                 <v-switch
                   v-model="word.isCommonWord"
-                  @click="
+                  @update:modelValue="
                     isCommonWordChanged[index] = !isCommonWordChanged[index]
                   "></v-switch>
               </v-col>
-              <v-col class="mt-2">
+              <v-col class="mt-2" cols="4">
                 <v-btn
                   color="error"
                   variant="outlined"
                   icon="mdi-trash-can-outline"
-                  size="35"></v-btn>
+                  size="35"
+                  @click="deleteWord(word)"></v-btn>
               </v-col>
-              <v-col>
+              <v-col class="mt-2" cols="4">
                 <v-btn
                   :variant="isCommonWordChanged[index] ? 'elevated' : 'plain'"
                   @click="
@@ -54,7 +55,7 @@
 
 <script setup lang="ts">
 import Axios from 'axios';
-import TokenService from '~/scripts/tokenService';
+import { TokenService, key } from '~/scripts/tokenService';
 
 interface Word {
   word: string;
@@ -64,8 +65,7 @@ interface Word {
 const isLoading = ref<boolean>(true);
 const words = ref<Array<Word>>();
 const isCommonWordChanged = ref<boolean[]>([]);
-const key = Symbol() as InjectionKey<TokenService>;
-const tokenService = inject('TOKEN_SERVICE');
+const tokenService: TokenService | undefined = inject(key);
 
 try {
   const gameUrl = 'word/getallwords';
@@ -84,8 +84,8 @@ try {
 async function saveCommonWordFlag(word: string, isCommonWord: boolean) {
   try {
     const gameUrl = 'word/changeCommonWordFlag';
-    const headers = tokenService.generateTokenHeader();
-    Axios.post(
+    const headers = tokenService?.generateTokenHeader();
+    await Axios.post(
       gameUrl,
       {
         word: word,
@@ -95,6 +95,19 @@ async function saveCommonWordFlag(word: string, isCommonWord: boolean) {
     );
   } catch (error) {
     console.error('Error posting isCommonWord change:', error);
+  }
+}
+
+async function deleteWord(word: Word) {
+  try {
+    const gameUrl = `word/deleteWord?word=${word.word}`;
+    const headers = tokenService?.generateTokenHeader();
+    console.log(headers);
+    await Axios.post(gameUrl, {}, { headers });
+    let index = words.value?.indexOf(word);
+    words.value?.splice(index!, 1);
+  } catch (error) {
+    console.error('Error on deleteWord post:', error);
   }
 }
 </script>
