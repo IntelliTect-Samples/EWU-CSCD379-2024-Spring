@@ -11,15 +11,15 @@ public class WordOfTheDayService(WordleDbContext Db)
 
     public WordleDbContext Db { get; set; } = Db;
 
-    public async Task<Word> GetRandomWord(string containtsText = "")
+    public async Task<Word> GetRandomWord(string containsText = "")
     {
-        var numberOfWords = await Db.Words.CountAsync(f=>f.Text.Contains(containtsText));
+        var numberOfWords = await Db.Words.CountAsync(f=>f.Text.Contains(containsText));
 
         Random random = new();
         int randomIndex = random.Next(numberOfWords);
 
         return await Db.Words
-            .Where(f=>f.Text.Contains(containtsText))
+            .Where(f=>f.Text.Contains(containsText))
             .Skip(randomIndex)
             .FirstAsync();
     }
