@@ -7,12 +7,12 @@
 
       <v-app-bar-nav-icon
         icon="mdi-help-circle"
-        @click="$router.push('/instructions')"
+        @click="$router.push('/Instructions')"
       />
       <v-app-bar-nav-icon icon="mdi-cog" @click="showSettingsDialog = true" />
       <v-app-bar-nav-icon
         icon="mdi-trophy-variant"
-        @click="$router.push('/leaderboard')"
+        @click="$router.push('/Leaderboard')"
       />
       <v-app-bar-nav-icon variant="text" @click="drawer = !drawer" />
     </v-app-bar>

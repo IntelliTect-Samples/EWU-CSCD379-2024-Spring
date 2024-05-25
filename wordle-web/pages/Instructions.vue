@@ -1,9 +1,6 @@
 <template>
   <v-container>
-    <v-card
-      color="secondary"
-      class="mx-auto pa-8 rounded text-center"
-    >
+    <v-card color="secondary" class="mx-auto pa-8 rounded text-center">
       <v-card-title class="text-wrap text-h5">
         How to play Aesthetic Wordle
       </v-card-title>
@@ -58,7 +55,7 @@
                 :letter="letter"
                 :clickable="false"
                 class="d-flex align-center justify-center pa-4"
-                style="width: 150px;"
+                style="width: 150px"
               />
             </v-col>
           </v-row>
@@ -100,4 +97,3 @@ const key = {
   ],
 };
 </script>
-

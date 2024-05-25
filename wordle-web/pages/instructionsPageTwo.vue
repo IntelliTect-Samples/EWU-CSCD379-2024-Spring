@@ -61,7 +61,7 @@
         <v-btn
           color="white"
           class="bg-primary pa-2 px-5"
-          to="/instructions"
+          to="/Insutrctions"
           text="Go Back"
           prepend-icon="mdi-arrow-left"
         />
