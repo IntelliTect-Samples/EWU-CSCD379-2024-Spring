@@ -1,5 +1,5 @@
 <template>
-  <v-card elevation="4">
+  <v-card elevation="5">
     <v-sheet color="primary" class="py-2">
       <V-card-title v-if="isDaily">{{ ordinalDate }}</V-card-title>
       <v-card-title v-else>{{ gameStat.word }}</v-card-title>
@@ -111,9 +111,7 @@ const ordinalDate = computed(() => {
 });
 
 const formattedDate = computed(() => {
-  return dateUtils.getFormattedDate(
-    addDays(new Date(props.gameStat.date), 1)
-  );
+  return dateUtils.getFormattedDate(addDays(new Date(props.gameStat.date), 1));
 });
 
 const hasPlayed = computed(() => {
