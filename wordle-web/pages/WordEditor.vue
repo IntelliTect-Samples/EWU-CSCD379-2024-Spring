@@ -15,27 +15,24 @@
         :items="wordsList.map((word) => word.word)"
       ></v-autocomplete>
 
-      <div class="text-h3 ma-5 font-weight-bold text-primary">Words List</div>
-      <v-row v-for="(word, i) in wordsList" :key="i">
-        <v-col>
-          {{ word.word }}
-        </v-col>
-        <v-col>
-          {{ word.isCommon }}
-        </v-col>
+      <div class="text-h3 ma-5 font-weight-bold text-primary">Words Editor</div>
+      <v-row
+        class="bg-primary ma-2"
+        compact
+        v-for="(word, i) in wordsList"
+        :key="i"
+      >
+        <WordEditorRow @checked="console.log('clicked')" :word="word" />
       </v-row>
     </div>
   </v-container>
 </template>
 <script setup lang="ts">
+import type { WordDto } from "~/Models/WordDto";
 import Axios from "axios";
 
 const wordsList: Ref<WordDto[]> = ref([]);
 const isWordsListLoading = ref(true);
-interface WordDto {
-  word: string;
-  isCommon: boolean;
-}
 
 onMounted(async () => {
   wordsList.value = await Axios.get("word/wordsList")
