@@ -30,6 +30,7 @@
           'Leaderboard',
           'Instructions',
           'Latest Wordles',
+          ' Word Editor',
         ]"
         :key="item"
       >
@@ -42,7 +43,7 @@
               );
             } else if (item === 'Random Wordle') {
               $router.push('/Wordle/Random');
-            } else $router.push('/' + item.toLowerCase().replaceAll(' ', ''));
+            } else $router.push('/' + item.replaceAll(' ', ''));
           "
         >
           <v-list-item-title> {{ item }} </v-list-item-title>
