@@ -4,8 +4,27 @@
     <v-table class="table my-2 mx-auto w-75 opacity-50">
       <thead>
         <tr>
-          <th class="text-center text-h8"><strong>Word</strong></th>
-          <th class="text-center text-h8"><strong>Common Word</strong></th>
+          <th
+            class="text-center text-h8"
+            @click="
+              isWordOrderAscending = !isWordOrderAscending;
+              sortWords();
+            ">
+            <strong>Word</strong
+            ><v-icon
+              :icon="
+                isWordOrderAscending ? 'mdi-chevron-up' : 'mdi-chevron-down'
+              "></v-icon>
+          </th>
+          <th
+            class="text-center text-h8"
+            @click="
+              commonWordOrder = (commonWordOrder + 1) % 3;
+              sortWords();
+            ">
+            <strong>Common Word</strong
+            ><v-icon :icon="getCommonWordIcon()"></v-icon>
+          </th>
           <th class="text-center text-h8"><strong>Edit</strong></th>
         </tr>
       </thead>
@@ -62,10 +81,18 @@ interface Word {
   isCommonWord: boolean;
 }
 
+enum CommonWordSortOrder {
+  Ascending = 0,
+  Descending = 1,
+  Unspecified = 2,
+}
+
 const isLoading = ref<boolean>(true);
 const words = ref<Array<Word>>();
 const isCommonWordChanged = ref<boolean[]>([]);
 const tokenService: TokenService | undefined = inject(key);
+const isWordOrderAscending = ref(true);
+const commonWordOrder = ref(CommonWordSortOrder.Unspecified);
 
 try {
   const gameUrl = 'word/getallwords';
@@ -110,4 +137,107 @@ async function deleteWord(word: Word) {
     console.error('Error on deleteWord post:', error);
   }
 }
+
+function getCommonWordIcon() {
+  switch (commonWordOrder.value) {
+    case CommonWordSortOrder.Ascending:
+      return 'mdi-chevron-up';
+    case CommonWordSortOrder.Descending:
+      return 'mdi-chevron-down';
+    case CommonWordSortOrder.Unspecified:
+      return 'mdi-unfold-more-horizontal';
+  }
+}
+
+function sortWords() {
+  switch (commonWordOrder.value) {
+    case CommonWordSortOrder.Ascending:
+      words.value = words.value?.sort((a, b) => {
+        console.log(compareBooleans(a.isCommonWord, b.isCommonWord));
+        return compareBooleans(a.isCommonWord, b.isCommonWord);
+      });
+      break;
+    case CommonWordSortOrder.Descending:
+      words.value = words.value?.sort((a, b) => {
+        return compareBooleans(b.isCommonWord, a.isCommonWord);
+      });
+      break;
+    case CommonWordSortOrder.Unspecified:
+      if (isWordOrderAscending.value) {
+        words.value = words.value?.sort((a, b) => {
+          return a.word.localeCompare(b.word);
+        });
+      } else {
+        words.value = words.value?.sort((a, b) => {
+          return b.word.localeCompare(a.word);
+        });
+      }
+      break;
+  }
+}
+
+function compareBooleans(a: boolean, b: boolean): number {
+  if (a === b) {
+    return 0;
+  } else if (a === false && b === true) {
+    return -1;
+  } else {
+    return 1;
+  }
+}
+
+// function sortWords() {
+//   switch (commonWordOrder.value) {
+//     case CommonWordSortOrder.Ascending:
+//       if (isWordOrderAscending.value) {
+//         words.value = words.value?.sort((a, b) => {
+//           let commonWordCompare =
+//             Number(a.isCommonWord) - Number(b.isCommonWord);
+//           if (commonWordCompare === 0) {
+//             return a.word.localeCompare(b.word);
+//           } else {
+//             return commonWordCompare;
+//           }
+//         });
+//       } else {
+//         words.value = words.value?.sort((a, b) => {
+//           let commonWordCompare =
+//             Number(a.isCommonWord) - Number(b.isCommonWord);
+//           if (commonWordCompare === 0) {
+//             return b.word.localeCompare(a.word);
+//           } else {
+//             return commonWordCompare;
+//           }
+//         });
+//       }
+//     case CommonWordSortOrder.Descending:
+//       if (isWordOrderAscending.value) {
+//         words.value = words.value?.sort((a, b) => {
+//           let commonWordCompare =
+//             Number(b.isCommonWord) - Number(a.isCommonWord);
+//           if (commonWordCompare === 0) {
+//             return a.word.localeCompare(b.word);
+//           } else {
+//             return commonWordCompare;
+//           }
+//         });
+//       } else {
+//         words.value = words.value?.sort((a, b) => {
+//           let commonWordCompare =
+//             Number(b.isCommonWord) - Number(a.isCommonWord);
+//           if (commonWordCompare === 0) {
+//             return b.word.localeCompare(a.word);
+//           } else {
+//             return commonWordCompare;
+//           }
+//         });
+//       }
+//     case CommonWordSortOrder.Unspecified:
+//       if (isWordOrderAscending.value) {
+//         words.value = words.value?.sort((a, b) => a.word.localeCompare(b.word));
+//       } else {
+//         words.value = words.value?.sort((a, b) => b.word.localeCompare(a.word));
+//       }
+//   }
+// }
 </script>

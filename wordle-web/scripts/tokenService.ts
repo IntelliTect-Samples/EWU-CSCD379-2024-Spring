@@ -18,7 +18,7 @@ export class TokenService {
 
   public getUserName() {
     const token = this.getToken();
-    if (token === '' || token.split('.').length != 3) {
+    if (token === '' || token.split('.').length !== 3) {
       return '';
     }
     console.log(JSON.parse(atob(token.split('.')[1])));
