@@ -1,9 +1,6 @@
-
-
-
 <template>
-    <v-container>
-        <v-card>
+    <v-container class="game-container" fluid>
+        <v-card class="center-card">
             <v-sheet color="primary">
                 <v-card-text>How to Play Wordle</v-card-text>
             </v-sheet>
@@ -71,3 +68,31 @@
         new Letter("T", LetterState.Correct),
     ]
 </script>
+
+<style scoped>
+
+.game-container {
+  background-image: url("../public/landingPageImage.jpg");
+  background-size: cover;
+  background-position: center;
+  min-height: 100vh;
+}
+
+.center-card {
+  justify-center: center;
+  align-items: center;
+}
+
+@media screen and (max-width: 600px){
+  .game-container {
+    background-size: contain;
+  }
+}
+
+@media screen and (max-width: 1440px){
+  .game-container {
+    background-size: cover;
+  }
+}
+
+</style>
