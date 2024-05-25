@@ -6,6 +6,30 @@ namespace Wordle.Api.Services;
 
 public class GameService(WordleDbContext Db)
 {
+
+    public async Task<IEnumerable<StatsDto>> GetLastTenDaysStats(string playerName)
+    {
+        // Get todays date
+        var today = DateOnly.FromDateTime(DateTime.UtcNow);
+
+        var games = await Db.Games
+            .Include(g => g.WordOfTheDay)
+            .OrderByDescending(g => g.DateAttempted)
+            .Take(10)
+            .Select(game => new StatsDto()
+            {
+                DatePlayed = game.DateAttempted,
+                NumberOfPlays = game.Attempts,
+                AverageScore = game.Attempts,
+                AverageAttempts = game.Attempts,
+                HasPlayedWordOfTheDay = game.PlayerName == playerName
+                
+            })
+            .ToListAsync();
+        
+        return games;
+        
+    }
     public async Task<Game> PostGameResult(GameDto gameDto)
     {
         // Get todays date

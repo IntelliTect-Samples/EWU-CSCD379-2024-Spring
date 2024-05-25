@@ -17,26 +17,26 @@
 				</v-col>
 			</v-row>
 			<v-row>
-				<v-col v-for="wordStat in wordStats" :key="wordStat.date">
+				<v-col v-for="(word, index) in wordStats" :key="index">
 					<v-card hover>
-						<v-card-title>{{ wordStat.date }}</v-card-title>
+						<v-card-title>{{ word.datePlayed }}</v-card-title>
 						<v-card-text>
 							<v-row>
 								<v-col>
 									<v-card-subtitle>Games Played</v-card-subtitle>
-									{{ wordStat.gameCount }}
+									{{ word.numberOfPlays }}
 								</v-col>
 								<v-col>
 									<v-card-subtitle>Average Attempts</v-card-subtitle>
-									{{ wordStat.averageAttempts }}
+									{{ word.averageAttempts }}
 								</v-col>
 								<v-col>
 									<v-card-subtitle>Average Time</v-card-subtitle>
-									{{ wordStat.averageSeconds }}
+									{{ word.averageScore }}
 								</v-col>
 								<v-col>
 									<v-card-subtitle>You played</v-card-subtitle>
-									{{ wordStat.playerId % 2 === 0 ? "✅" : "❌" }}
+									{{  word.hasPlayedWordOfTheDay ? "✅" : "🚫"}}
 
 								</v-col>
 							</v-row>
@@ -49,15 +49,18 @@
 </template>
 
 <script setup lang="ts">
+import nuxtStorage from "nuxt-storage";
 import Axios from "axios";
 
 interface WordStats {
-	date: string;
-	gameCount: number;
+	datePlayed: Date;
+	numberOfPlays: number;
+	averageScore: number;
 	averageAttempts: number;
-	averageSeconds: number;
-	playerId: string;
+	hasPlayedWordOfTheDay: boolean;
 }
+
+const playerName = nuxtStorage.localStorage.getData("userName");
 
 const wordStats = ref<WordStats[]>();
 
@@ -67,7 +70,7 @@ onMounted(() => {
 });
 
 async function fetchWordStats() {
-	await Axios.get("/Game/LastTenWordsStats")
+	await Axios.post("/Game/Stats?playerName=" + playerName)
 		.then(response => {
 			wordStats.value = response.data;
 		})
