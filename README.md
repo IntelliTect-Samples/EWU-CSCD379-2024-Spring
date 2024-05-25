@@ -1,6 +1,6 @@
 # EWU-CSCD379-2024-Spring
 
-Azure Web Site URL: https://aestheticwordle.com/
+Azure Site URL: https://aestheticwordle.com/
 
 Azure API Site URL: https://aestheticwordle.azurewebsites.net/
 
