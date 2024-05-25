@@ -1,4 +1,5 @@
 using Microsoft.EntityFrameworkCore;
+using Wordle.Api.Dtos;
 using Wordle.Api.Models;
 
 namespace Wordle.Api.Services;
@@ -58,12 +59,12 @@ public class WordOfTheDayService(WordleDbContext Db)
         return wordOfTheDay.Word!.Text;
     }
 
-    public async Task<List<string>> GetWordsListe()
+    public async Task<List<WordDto>> GetWordsList()
     {
 
-        return await Db.Words.Select(word => word.Text).ToListAsync();
-
-
+        return await Db.Words
+            .Select(word => new WordDto() { Word = word.Text, IsCommonWord = word.IsCommonWord})
+            .ToListAsync();
     }
 
     #region WordList

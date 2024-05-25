@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Wordle.Api.Dtos;
 using Wordle.Api.Identity;
 using Wordle.Api.Services;
 
@@ -35,8 +36,8 @@ public class WordController(WordOfTheDayService wordOfTheDayService) : Controlle
     }
 
     [HttpGet("WordsList")]
-    public async Task<List<string>> GetWordsList()
+    public async Task<List<WordDto>> GetWordsList()
     {
-        return await wordOfTheDayService.GetWordsListe();
+        return await wordOfTheDayService.GetWordsList();
     }
 }
