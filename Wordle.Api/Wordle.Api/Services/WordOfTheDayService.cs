@@ -58,6 +58,14 @@ public class WordOfTheDayService(WordleDbContext Db)
         return wordOfTheDay.Word!.Text;
     }
 
+    public async Task<List<string>> GetWordsListe()
+    {
+
+        return await Db.Words.Select(word => word.Text).ToListAsync();
+
+
+    }
+
     #region WordList
     public static List<string> WordList()
     {

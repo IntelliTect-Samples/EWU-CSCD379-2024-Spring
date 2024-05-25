@@ -33,4 +33,10 @@ public class WordController(WordOfTheDayService wordOfTheDayService) : Controlle
         DateOnly dateOnly = DateOnly.FromDateTime(date);
         return await wordOfTheDayService.GetWordOfTheDay(dateOnly);
     }
+
+    [HttpGet("WordsList")]
+    public async Task<List<string>> GetWordsList()
+    {
+        return await wordOfTheDayService.GetWordsListe();
+    }
 }
