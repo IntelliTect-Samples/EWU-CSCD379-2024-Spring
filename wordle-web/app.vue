@@ -30,7 +30,7 @@
           'Leaderboard',
           'Instructions',
           'Latest Wordles',
-          ' Word Editor',
+          'Word Editor',
         ]"
         :key="item"
       >
