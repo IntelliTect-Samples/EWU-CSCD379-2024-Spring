@@ -19,4 +19,10 @@ public class GameController(GameService gameService) : ControllerBase
         return stats;
 
     }
+    
+    [HttpPost("Stats")]
+    public async Task<IEnumerable<StatsDto>> GetStats(string playerName)
+    {
+        return await gameService.GetLastTenDaysStats(playerName);
+    }
 }

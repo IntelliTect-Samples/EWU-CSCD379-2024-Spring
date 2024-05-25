@@ -13,4 +13,6 @@ public class Game
     [Required]
     public int WordId { get; set; }
     public Word? Word { get; set; }
+    
+    public string PlayerName { get; set; } = null!;
 }
