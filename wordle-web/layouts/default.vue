@@ -94,6 +94,8 @@ const showHelpDialog = ref(false);
 const showSettingsDialog = ref(false);
 const showDrawer = ref(false);
 const showLoginDialog = ref(false);
+
+provide(TokenService.key, tokenService);
 </script>
 
 <style>

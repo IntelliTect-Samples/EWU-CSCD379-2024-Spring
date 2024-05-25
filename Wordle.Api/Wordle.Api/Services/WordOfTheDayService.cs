@@ -115,6 +115,7 @@ public class WordOfTheDayService
 		{
 			foundWord.IsCommonWord = flag;
 			await Db.SaveChangesAsync();
+			return true;
 		}
 		return false;
 	}

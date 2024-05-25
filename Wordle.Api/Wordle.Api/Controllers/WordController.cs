@@ -74,9 +74,9 @@ public class WordController(WordOfTheDayService wordOfTheDayService) : Controlle
 
     [HttpPost("ChangeCommonWordFlag")]
     [Authorize]
-    public async Task<bool> ChangeCommonWordFlag(string word, bool flag)
+    public async Task<bool> ChangeCommonWordFlag(WordDto dto)
     {
-        bool isChanged = await wordOfTheDayService.ChangeCommonWordFlag(word.Trim().ToLower(), flag);
+        bool isChanged = await wordOfTheDayService.ChangeCommonWordFlag(dto.Word.Trim().ToLower(), dto.IsCommonWord);
         return isChanged;
     }
 
