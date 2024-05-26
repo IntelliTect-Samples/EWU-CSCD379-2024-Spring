@@ -1,47 +1,71 @@
 <template>
   <v-container>
-    <v-card
-      max-width="750px"
-      man-height="500px"
-      class="border-thin bg-primary pa-3 text-center mx-auto my-auto"
-    >
-      <v-row class="align-center justify-center">
-        <v-card-text class="welcome-text">Welcome to</v-card-text>
-      </v-row>
-      <v-row class="align-center justify-center mb-4">
-        <v-img
-          class="mx-auto"
-          max-width="300"
-          max-height="300"
-          :src="logoPath"
-        />
-      </v-row>
-      <v-card-text class="welcome-text">Today is {{ specialDate }}</v-card-text>
-      <v-card-text class="welcome-text pa-6"
-        >Choose your game mode:</v-card-text
-      >
-      <v-btn
-        class="button-text glow-btn pa-2 mx-3 mb-4"
-        color="white"
-        to="/Wordle/Random"
-      >
-        Random Wordle
-      </v-btn>
-      <v-btn
-        class="button-text glow-btn pa-2 mx-3 mb-4"
-        color="white"
-        :to="`/Wordle/Daily?date=${formattedDate}`"
-      >
-        Daily Wordle
-      </v-btn>
-    </v-card>
+    <v-row cols="12">
+      <v-col lg="6" md="12">
+        <v-col>
+          <v-card class="border-thin bg-primary pa-3 text-center h-100">
+            <v-img
+              class="mx-auto"
+              min-width="200"
+              min-height="200"
+              max-width="300"
+              max-height="300"
+              :src="logoPath"
+            />
+
+            <v-card-text class="welcome-text">Today is</v-card-text>
+            <v-card-text class="welcome-text"> {{ specialDate }}</v-card-text>
+            <div class="ma-3">
+              <v-btn
+                class="button-text glow-btn pa-2 mx-3 mb-4"
+                color="white"
+                to="/Wordle/Random"
+              >
+                Random Wordle
+              </v-btn>
+              <v-btn
+                class="button-text glow-btn pa-2 mx-3 mb-4"
+                color="white"
+                :to="`/Wordle/Daily?date=${formattedDate}`"
+              >
+                Daily Wordle
+              </v-btn>
+            </div>
+          </v-card>
+        </v-col>
+      </v-col>
+      <v-col lg="6" md="12">
+        <v-col>
+          <NavCard title="Word Editor" icon="mdi-pencil" color="primary" />
+        </v-col>
+        <v-col>
+          <NavCard title="Leaderboard" icon="mdi-trophy" color="secondary" />
+        </v-col>
+        <v-col>
+          <NavCard
+            title="Insutrctions"
+            icon="mdi-help-circle"
+            color="primary"
+          />
+        </v-col>
+        <v-col>
+          <NavCard
+            title="Latest Wordles"
+            icon="mdi-newspaper"
+            color="secondary"
+          />
+        </v-col>
+        <v-col>
+          <NavCard title="About" icon="mdi-information" color="primary" />
+        </v-col>
+      </v-col>
+    </v-row>
   </v-container>
 </template>
 
 <script setup lang="ts">
 import { useTheme } from "vuetify";
 import nuxtStorage from "nuxt-storage";
-import { format } from "date-fns";
 import dateUtils from "../scripts/dateUtils";
 
 const logoPaths = {

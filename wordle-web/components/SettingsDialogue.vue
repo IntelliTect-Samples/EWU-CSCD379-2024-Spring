@@ -22,19 +22,13 @@
           "
           :item-title="(theme) => theme.name"
           placeholder="Select a theme"
+          @update:model-value="updateTheme"
         />
       </v-card-item>
       <v-divider />
 
       <v-card-actions>
         <v-spacer />
-        <v-btn
-          color="secondary"
-          variant="flat"
-          text="Apply"
-          @click="updateTheme"
-          :disabled="!selectedTheme"
-        />
         <v-btn
           color="secondary"
           variant="flat"
