@@ -1,6 +1,26 @@
 <template>
   <v-progress-linear v-if="isLoading" color="primary" indeterminate />
   <v-card class="ma-10">
+    <div class="text-center">
+      <v-row>
+        <v-col>
+          <v-btn class="ma-7" variant="outlined" @click="addWordDialog = true"
+            >Add word</v-btn
+          >
+        </v-col>
+        <v-col>
+          <v-radio-group v-model="commonRadio">
+            <v-radio
+              label="Both common/uncommon"
+              :value="CommonRadio.Both"></v-radio>
+            <v-radio label="Only common" :value="CommonRadio.Common"></v-radio>
+            <v-radio
+              label="Only uncommon"
+              :value="CommonRadio.Uncommon"></v-radio>
+          </v-radio-group>
+        </v-col>
+      </v-row>
+    </div>
     <v-table class="table my-2 mx-auto w-75 opacity-50">
       <thead>
         <tr>
@@ -8,7 +28,7 @@
             class="text-center text-h8"
             @click="
               isWordOrderAscending = !isWordOrderAscending;
-              sortWords();
+              sortWords(words!);
             ">
             <strong>Word</strong
             ><v-icon
@@ -20,7 +40,7 @@
             class="text-center text-h8"
             @click="
               commonWordOrder = (commonWordOrder + 1) % 3;
-              sortWords();
+              sortWords(words!);
             ">
             <strong>Common Word</strong
             ><v-icon :icon="getCommonWordIcon()"></v-icon>
@@ -70,6 +90,18 @@
       </tbody>
     </v-table>
   </v-card>
+  <v-dialog v-model="addWordDialog" width="400">
+    <v-card>
+      <v-text-field label="Word" v-model="wordToAdd" />
+      <v-btn
+        @click="
+          addWord();
+          addWordDialog = false;
+        "
+        >Submit</v-btn
+      >
+    </v-card>
+  </v-dialog>
 </template>
 
 <script setup lang="ts">
@@ -87,17 +119,44 @@ enum CommonWordSortOrder {
   Unspecified = 2,
 }
 
+enum CommonRadio {
+  Both = 0,
+  Common = 1,
+  Uncommon = 2,
+}
+
 const isLoading = ref<boolean>(true);
 const words = ref<Array<Word>>();
+const wordsCopy = ref<Array<Word>>();
 const isCommonWordChanged = ref<boolean[]>([]);
 const tokenService: TokenService | undefined = inject(key);
 const isWordOrderAscending = ref(true);
 const commonWordOrder = ref(CommonWordSortOrder.Unspecified);
+const addWordDialog = ref(false);
+const wordToAdd = ref('');
+const commonRadio = ref(CommonRadio.Both);
+
+watch([commonRadio], () => {
+  //   console.log(`${onlyCommonRadio.value} ${onlyUncommon}`)
+  sortWords(wordsCopy.value!);
+  switch (commonRadio.value) {
+    case CommonRadio.Both:
+      words.value = wordsCopy.value;
+      break;
+    case CommonRadio.Common:
+      words.value = wordsCopy.value?.filter(word => word.isCommonWord);
+      break;
+    case CommonRadio.Uncommon:
+      words.value = wordsCopy.value?.filter(word => !word.isCommonWord);
+      break;
+  }
+});
 
 try {
   const gameUrl = 'word/getallwords';
   Axios.get(gameUrl).then(response => {
     words.value = response.data;
+    wordsCopy.value = response.data;
     isLoading.value = false;
     isCommonWordChanged.value = Array.from(
       { length: response.data.length },
@@ -149,95 +208,72 @@ function getCommonWordIcon() {
   }
 }
 
-function sortWords() {
+function sortWords(words: Array<Word>) {
   switch (commonWordOrder.value) {
     case CommonWordSortOrder.Ascending:
-      words.value = words.value?.sort((a, b) => {
-        console.log(compareBooleans(a.isCommonWord, b.isCommonWord));
-        return compareBooleans(a.isCommonWord, b.isCommonWord);
-      });
+      if (isWordOrderAscending.value) {
+        words = words.sort((a, b) => {
+          let commonWordCompare =
+            Number(a.isCommonWord) - Number(b.isCommonWord);
+          if (commonWordCompare === 0) {
+            return a.word.localeCompare(b.word);
+          } else {
+            return commonWordCompare;
+          }
+        });
+      } else {
+        words = words.sort((a, b) => {
+          let commonWordCompare =
+            Number(a.isCommonWord) - Number(b.isCommonWord);
+          if (commonWordCompare === 0) {
+            return b.word.localeCompare(a.word);
+          } else {
+            return commonWordCompare;
+          }
+        });
+      }
       break;
     case CommonWordSortOrder.Descending:
-      words.value = words.value?.sort((a, b) => {
-        return compareBooleans(b.isCommonWord, a.isCommonWord);
-      });
+      if (isWordOrderAscending.value) {
+        words = words.sort((a, b) => {
+          let commonWordCompare =
+            Number(b.isCommonWord) - Number(a.isCommonWord);
+          if (commonWordCompare === 0) {
+            return a.word.localeCompare(b.word);
+          } else {
+            return commonWordCompare;
+          }
+        });
+      } else {
+        words = words.sort((a, b) => {
+          let commonWordCompare =
+            Number(b.isCommonWord) - Number(a.isCommonWord);
+          if (commonWordCompare === 0) {
+            return b.word.localeCompare(a.word);
+          } else {
+            return commonWordCompare;
+          }
+        });
+      }
       break;
     case CommonWordSortOrder.Unspecified:
       if (isWordOrderAscending.value) {
-        words.value = words.value?.sort((a, b) => {
-          return a.word.localeCompare(b.word);
-        });
+        words = words.sort((a, b) => a.word.localeCompare(b.word));
       } else {
-        words.value = words.value?.sort((a, b) => {
-          return b.word.localeCompare(a.word);
-        });
+        words = words.sort((a, b) => b.word.localeCompare(a.word));
       }
       break;
   }
 }
 
-function compareBooleans(a: boolean, b: boolean): number {
-  if (a === b) {
-    return 0;
-  } else if (a === false && b === true) {
-    return -1;
-  } else {
-    return 1;
+async function addWord() {
+  try {
+    const gameUrl = `word/addWord?word=${wordToAdd.value}`;
+    const headers = tokenService?.generateTokenHeader();
+    console.log(headers);
+    await Axios.post(gameUrl, {}, { headers });
+  } catch (error) {
+    console.error('Error on addWord post:', error);
   }
 }
-
-// function sortWords() {
-//   switch (commonWordOrder.value) {
-//     case CommonWordSortOrder.Ascending:
-//       if (isWordOrderAscending.value) {
-//         words.value = words.value?.sort((a, b) => {
-//           let commonWordCompare =
-//             Number(a.isCommonWord) - Number(b.isCommonWord);
-//           if (commonWordCompare === 0) {
-//             return a.word.localeCompare(b.word);
-//           } else {
-//             return commonWordCompare;
-//           }
-//         });
-//       } else {
-//         words.value = words.value?.sort((a, b) => {
-//           let commonWordCompare =
-//             Number(a.isCommonWord) - Number(b.isCommonWord);
-//           if (commonWordCompare === 0) {
-//             return b.word.localeCompare(a.word);
-//           } else {
-//             return commonWordCompare;
-//           }
-//         });
-//       }
-//     case CommonWordSortOrder.Descending:
-//       if (isWordOrderAscending.value) {
-//         words.value = words.value?.sort((a, b) => {
-//           let commonWordCompare =
-//             Number(b.isCommonWord) - Number(a.isCommonWord);
-//           if (commonWordCompare === 0) {
-//             return a.word.localeCompare(b.word);
-//           } else {
-//             return commonWordCompare;
-//           }
-//         });
-//       } else {
-//         words.value = words.value?.sort((a, b) => {
-//           let commonWordCompare =
-//             Number(b.isCommonWord) - Number(a.isCommonWord);
-//           if (commonWordCompare === 0) {
-//             return b.word.localeCompare(a.word);
-//           } else {
-//             return commonWordCompare;
-//           }
-//         });
-//       }
-//     case CommonWordSortOrder.Unspecified:
-//       if (isWordOrderAscending.value) {
-//         words.value = words.value?.sort((a, b) => a.word.localeCompare(b.word));
-//       } else {
-//         words.value = words.value?.sort((a, b) => b.word.localeCompare(a.word));
-//       }
-//   }
-// }
 </script>
