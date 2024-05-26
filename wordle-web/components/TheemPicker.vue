@@ -32,6 +32,7 @@
             :color="isSelected ? 'secondary' : undefined"
             class="ma-2"
             rounded
+            elevation="4"
             @click="toggle"
           >
             {{ theme.name }}

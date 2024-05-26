@@ -105,7 +105,7 @@ onMounted(async () => {
 });
 </script>
 
-<style scoped>
+<style scoped lang="scss">
 @import url("https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap");
 
 .font-text {
@@ -115,7 +115,13 @@ onMounted(async () => {
 .full-page-gradient {
   width: 100%;
   height: 100%;
-  background: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab);
+  background: linear-gradient(
+    -45deg,
+    rgba(var(--v-theme-primary), 1),
+    rgba(var(--v-theme-background), 1),
+    rgba(var(--v-theme-secondary), 1),
+    rgba(var(--v-theme-primary), 1)
+  ); /* Replace with your desired Vuetify theme colors */
   background-size: 400% 400%;
   animation: gradient 15s ease infinite;
 }
