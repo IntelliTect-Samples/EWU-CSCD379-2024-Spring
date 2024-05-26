@@ -47,6 +47,11 @@ import { useDisplay } from 'vuetify/lib/framework.mjs';
 <script setup lang="ts">
 import { useTheme } from "vuetify";
 
+useHead({
+  title: "About Us",
+  meta: [{ name: "description", content: "Cool site!" }],
+});
+
 const logoPaths = {
   Standard: "/logo_Standard.svg",
   SapphireDeepSeaDive: "/logo_SapphireDeepSeaDive.svg",

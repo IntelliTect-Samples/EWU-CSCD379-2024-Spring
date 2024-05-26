@@ -43,6 +43,11 @@ import type { GameStats } from "~/Models/GameStas";
 const isDailyWordlesLoading = ref(true);
 const date = ref("");
 
+useHead({
+  title: "Last Ten Wordles",
+  meta: [{ name: "description", content: "Cool site!" }],
+});
+
 const gameStats = ref<GameStats[]>([]);
 
 onMounted(() => {

@@ -140,6 +140,11 @@ interface Player {
   averageSeconds: 0;
 }
 
+useHead({
+  title: "Leaderboard",
+  meta: [{ name: "description", content: "Cool site!" }],
+});
+
 const isLeaderboardLoading = ref(true);
 
 const players = ref<Player[]>([]);

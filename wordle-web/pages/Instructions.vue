@@ -136,6 +136,11 @@
 import { Letter, LetterState } from "~/scripts/letter";
 import { Word } from "~/scripts/word";
 
+useHead({
+  title: "How to Play",
+  meta: [{ name: "description", content: "Cool site!" }],
+});
+
 const exampleWord = new Word({ word: "BASED" });
 exampleWord.letters = [
   new Letter("B", LetterState.Wrong),
