@@ -79,15 +79,20 @@ const drawer = ref(false);
 
 const logoPath = computed(() => {
   const themeName = theme.global.name.value.replace("Dark", "");
+  const logoPaths: { [key: string]: string } = {
+    Standard: "/logo_Standard.svg",
+    SapphireDeepSeaDive: "/logo_SapphireDeepSeaDive.svg",
+    EmeraldIsle: "/logo_EmeraldIsle.svg",
+    AmethystTwilightMist: "/logo_AmethystTwilightMist.svg",
+    RubyRoyale: "/logo_RubyRoyale.svg",
+    OpalOpulence: "/logo_OpalOpulence.svg",
+  };
+
   return logoPaths[themeName] || logoPaths["Standard"];
 });
 
-watch(theme.global.name, (newVal) => {
-  //watcher is just here to react to changes. logo update is handled by the computed property.
-});
-
-onMounted(() => {
-  var defaultTheme = nuxtStorage.localStorage.getData("theme");
+onMounted(async () => {
+  var defaultTheme = await nuxtStorage.localStorage.getData("theme");
   theme.global.name.value = defaultTheme ?? "light";
 });
 </script>

@@ -33,6 +33,9 @@
             </div>
           </v-card>
         </v-col>
+        <v-col>
+          <TheemPicker />
+        </v-col>
       </v-col>
       <v-col lg="6" md="12">
         <v-col>
@@ -43,7 +46,7 @@
         </v-col>
         <v-col>
           <NavCard
-            title="Insutrctions"
+            title="Instructions"
             icon="mdi-help-circle"
             color="primary"
           />
@@ -84,9 +87,10 @@ const logoPath = computed(() => {
   return logoPaths[themeName] || logoPaths["Standard"];
 });
 
-onMounted(() => {
-  var defaultTheme = nuxtStorage.localStorage.getData("theme");
+onMounted(async () => {
+  var defaultTheme = await nuxtStorage.localStorage.getData("theme");
   theme.global.name.value = defaultTheme ?? "light";
+  console.log(theme.global.name.value);
 });
 
 const formattedDate = computed(() => {
