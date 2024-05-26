@@ -93,7 +93,8 @@ const logoPath = computed(() => {
 const themeLoaded = ref(false);
 
 onMounted(async () => {
-  var defaultTheme = await nuxtStorage.localStorage.getData("theme");
+  var defaultTheme =
+    (await nuxtStorage.localStorage.getData("theme")) ?? "light";
   theme.global.name.value = defaultTheme;
   themeLoaded.value = true;
 });
