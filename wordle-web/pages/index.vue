@@ -1,4 +1,4 @@
-<template>
+﻿<template>
   <v-container>
     <v-row cols="12">
       <v-col lg="6" md="12">
@@ -66,6 +66,7 @@ Ascend the ranks of word mastery on our leaderboard page, where wordsmiths compe
             title="Latest Wordles"
             icon="mdi-newspaper"
             color="secondary"
+            class = "text-center pa-6"
             description="Embark on a journey through recent wordly wonders with our Replay and Stats section, where the last ten Wordles await your exploration. Delve into the trends and triumphs of the day's players, gaining insights into strategies and celebrating the diversity of linguistic prowess that colors each round."
           />
         </v-col>
