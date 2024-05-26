@@ -45,7 +45,7 @@ const themes = [
     dark: "dark",
   },
   {
-    name: "Sapphire Deep Sea Dive",
+    name: "Sapphire Sea",
     light: "SapphireDeepSeaDive",
     dark: "SapphireDeepSeaDiveDark",
   },
@@ -55,7 +55,7 @@ const themes = [
     dark: "EmeraldIsleDark",
   },
   {
-    name: "Amethyst Twilight Mist",
+    name: "Amethyst Mist",
     light: "AmethystTwilightMist",
     dark: "AmethystTwilightMistDark",
   },
