@@ -5,7 +5,7 @@
       show-arrows
       :mandatory="true"
       v-model="selectedTheme"
-      direction="horizontal"
+      :direction="$vuetify.display.mdAndUp ? 'horizontal' : 'vertical'"
       @update:model-value="updateTheme()"
       :center-active="true"
       :mobile="true"
