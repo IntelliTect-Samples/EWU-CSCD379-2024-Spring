@@ -1,6 +1,6 @@
 <template>
-  <v-app class="full-page-gradient">
-    <v-app-bar color="primary" :elevation="2">
+  <v-app v-if="themeLoaded" class="full-page-gradient">
+    <v-app-bar class="bg-primary" :elevation="2">
       <v-app-bar-title @click="$router.push('/')" style="cursor: pointer">
         <v-img :src="logoPath" alt="Logo" max-width="180" max-height="95" />
       </v-app-bar-title>
@@ -90,10 +90,12 @@ const logoPath = computed(() => {
 
   return logoPaths[themeName] || logoPaths["Standard"];
 });
+const themeLoaded = ref(false);
 
 onMounted(async () => {
   var defaultTheme = await nuxtStorage.localStorage.getData("theme");
-  theme.global.name.value = defaultTheme ?? "light";
+  theme.global.name.value = defaultTheme;
+  themeLoaded.value = true;
 });
 </script>
 

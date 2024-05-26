@@ -101,7 +101,7 @@ const RubyRoyale: ThemeDefinition = {
   dark: false,
   colors: {
     primary: "#D50000",
-    secondary: "#C62828",
+    secondary: colors.red.accent3,
     lose: colors.red.lighten1,
     win: colors.green.accent3,
     play: colors.blue.lighten1,
@@ -116,7 +116,7 @@ const RubyRoyaleDark: ThemeDefinition = {
   dark: true,
   colors: {
     primary: "#D50000",
-    secondary: "#C62828",
+    secondary: colors.red.accent3,
     lose: colors.red.lighten1,
     win: colors.green.accent3,
     play: colors.blue.lighten1,
