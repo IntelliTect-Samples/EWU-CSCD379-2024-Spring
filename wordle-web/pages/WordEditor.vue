@@ -1,32 +1,26 @@
 <template>
-  <v-container>
-    <v-progress-linear
-      v-if="isWordsListLoading"
-      class="mx-auto"
-      color="primary"
-      height="10"
-      indeterminate
-      rounded
-      width="75%"
-    />
-    <div v-else>
-      <v-autocomplete
-        placeholder="Search"
-        :items="wordsList.map((word) => word.word)"
-      ></v-autocomplete>
-
-      <div class="text-h3 ma-5 font-weight-bold text-primary">Words Editor</div>
-      <v-row
-        class="bg-primary ma-2"
-        compact
-        v-for="(word, i) in wordsList"
-        :key="i"
-      >
-        <WordEditorRow @checked="console.log('clicked')" :word="word" />
-      </v-row>
-    </div>
-  </v-container>
+  <v-data-table
+    :headers="[
+      { key: 'word', value: 'word' },
+      { key: 'isCommon', value: 'isCommon' },
+      { key: 'actions', value: 'actions' },
+    ]"
+    :items="wordsList"
+    :sort-by="[{ key: 'word', order: 'asc' }]"
+  >
+    <template v-slot:top>
+      <v-toolbar flat>
+        <v-toolbar-title>My CRUD</v-toolbar-title>
+        <v-divider class="mx-4" inset vertical></v-divider>
+        <v-spacer></v-spacer>
+      </v-toolbar>
+    </template>
+    <template v-slot:item.actions="{ item }"
+      ><v-btn>Common</v-btn><v-btn>Delete</v-btn>
+    </template>
+  </v-data-table>
 </template>
+
 <script setup lang="ts">
 import type { WordDto } from "~/Models/WordDto";
 import Axios from "axios";
