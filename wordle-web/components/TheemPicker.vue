@@ -1,42 +1,61 @@
 <template>
-  <v-card rounded class="pa-3 elevation-4" color="primary">
+  <v-card rounded class="pa-3 elevation-4" :color="color">
     <v-card-title class="font-weight-bold">Choose Your Theme!</v-card-title>
-    <v-slide-group
-      show-arrows
-      :mandatory="true"
-      v-model="selectedTheme"
-      :direction="$vuetify.display.mdAndUp ? 'horizontal' : 'vertical'"
-      @update:model-value="updateTheme()"
-      :center-active="true"
-      :mobile="true"
-      def
-    >
-      <v-slide-group-item
-        v-for="(theme, i) in themes"
-        :key="i"
-        v-slot="{ isSelected, toggle }"
+    <v-card-item>
+      <v-switch
+        v-model="isDarkMode"
+        :label="isDarkMode ? 'Dark Mode' : 'Light Mode'"
+        base-color="secondary"
+        color="secondary"
+        :true-icon="'mdi-weather-night'"
+        :false-icon="'mdi-weather-sunny'"
+        inset
+        @update:model-value="toggleDarkMode()"
+      />
+
+      <v-slide-group
+        show-arrows
+        :mandatory="true"
+        v-model="selectedTheme"
+        :direction="$vuetify.display.mdAndUp ? 'horizontal' : 'vertical'"
+        @update:model-value="updateTheme()"
+        :center-active="true"
+        :mobile="true"
+        def
       >
-        <v-btn
-          :color="isSelected ? 'secondary' : undefined"
-          class="ma-2"
-          rounded
-          @click="toggle"
+        <v-slide-group-item
+          v-for="(theme, i) in themes"
+          :key="i"
+          v-slot="{ isSelected, toggle }"
         >
-          {{ theme.name }}
-        </v-btn>
-      </v-slide-group-item>
-    </v-slide-group>
+          <v-btn
+            :color="isSelected ? 'secondary' : undefined"
+            class="ma-2"
+            rounded
+            @click="toggle"
+          >
+            {{ theme.name }}
+          </v-btn>
+        </v-slide-group-item>
+      </v-slide-group>
+    </v-card-item>
   </v-card>
 </template>
 
 <script setup lang="ts">
-import { useTheme, useDisplay } from "vuetify";
+import { useTheme } from "vuetify";
 const theme = useTheme();
-const display = useDisplay();
 import nuxtStorage from "nuxt-storage";
 
+defineProps({
+  color: {
+    type: String,
+    default: "primary",
+  },
+});
+
 const selectedTheme = ref(0);
-const isMobile = ref(false);
+const isDarkMode = ref(false);
 
 const themes = [
   {
@@ -80,11 +99,37 @@ async function updateTheme() {
   nuxtStorage.localStorage.setData("theme", theme.global.name.value);
 }
 
+function toggleDarkMode() {
+  if (
+    selectedTheme.value == 0 ||
+    new RegExp("^light$|^dark$").test(theme.global.name.value)
+  ) {
+    theme.global.name.value = isDarkMode.value ? "dark" : "light";
+  } else {
+    theme.global.name.value = isDarkMode.value
+      ? theme.global.name.value + "Dark"
+      : theme.global.name.value.replace("Dark", "");
+  }
+  nuxtStorage.localStorage.setData("theme", theme.global.name.value);
+}
+
 onMounted(() => {
   var defaultTheme = nuxtStorage.localStorage.getData("theme");
   theme.global.name.value = defaultTheme ?? "light";
-  selectedTheme.value = themes.findIndex(
-    (themeSel) => themeSel.light === theme.global.name.value
+
+  let themeNames: string[] = [];
+
+  const isDark =
+    theme.global.name.value === "dark" ||
+    theme.global.name.value.endsWith("Dark");
+
+  themeNames = isDark
+    ? themes.map((theme) => theme.dark)
+    : themes.map((theme) => theme.light);
+  isDarkMode.value = isDark ? true : false;
+
+  selectedTheme.value = themeNames.findIndex(
+    (themeSel) => themeSel === theme.global.name.value
   );
 });
 </script>
