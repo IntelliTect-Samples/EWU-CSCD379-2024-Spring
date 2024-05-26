@@ -72,7 +72,11 @@ const themes = [
 ];
 
 async function updateTheme() {
-  theme.global.name.value = themes[selectedTheme.value].light;
+  theme.global.name.value =
+    theme.global.name.value.endsWith("Dark") ||
+    theme.global.name.value === "dark"
+      ? themes[selectedTheme.value].dark
+      : themes[selectedTheme.value].light;
   nuxtStorage.localStorage.setData("theme", theme.global.name.value);
 }
 
