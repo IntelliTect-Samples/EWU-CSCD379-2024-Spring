@@ -113,17 +113,29 @@ function toggleDarkMode() {
   nuxtStorage.localStorage.setData("theme", theme.global.name.value);
 }
 
+watch(
+  () => theme.global.name.value,
+  (newVal) => {
+    const isDark = newVal === "dark" || newVal.endsWith("Dark");
+    const themeNames = isDark
+      ? themes.map((theme) => theme.dark)
+      : themes.map((theme) => theme.light);
+    isDarkMode.value = isDark ? true : false;
+    selectedTheme.value = themeNames.findIndex(
+      (themeSel) => themeSel === newVal
+    );
+  }
+);
+
 onMounted(() => {
   var defaultTheme = nuxtStorage.localStorage.getData("theme");
   theme.global.name.value = defaultTheme ?? "light";
-
-  let themeNames: string[] = [];
 
   const isDark =
     theme.global.name.value === "dark" ||
     theme.global.name.value.endsWith("Dark");
 
-  themeNames = isDark
+  const themeNames = isDark
     ? themes.map((theme) => theme.dark)
     : themes.map((theme) => theme.light);
   isDarkMode.value = isDark ? true : false;
