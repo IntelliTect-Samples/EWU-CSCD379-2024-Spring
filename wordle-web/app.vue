@@ -64,6 +64,11 @@ import { useTheme } from "vuetify";
 import nuxtStorage from "nuxt-storage";
 import dateUtils from "./scripts/dateUtils";
 
+useHead({
+  title: "Aesthetic Wordle",
+  meta: [{ name: "description", content: "Cool site!" }],
+});
+
 const logoPaths = {
   Standard: "/logo_Standard.svg",
   SapphireDeepSeaDive: "/logo_SapphireDeepSeaDive.svg",
