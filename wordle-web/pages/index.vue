@@ -18,14 +18,12 @@
             <div class="ma-3">
               <v-btn
                 class="button-text glow-btn pa-2 mx-3 mb-4"
-                color="white"
                 to="/Wordle/Random"
               >
                 Random Wordle
               </v-btn>
               <v-btn
                 class="button-text glow-btn pa-2 mx-3 mb-4"
-                color="white"
                 :to="`/Wordle/Daily?date=${formattedDate}`"
               >
                 Daily Wordle
@@ -125,11 +123,6 @@ const specialDate = computed(() => {
 @import url("https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap");
 
 .glow-btn {
-  position: relative;
-  background-color: #444;
-  color: white;
-  border: none;
-  cursor: pointer;
   box-shadow: 0 0 5px rgb(233, 238, 81);
   transition: all 0.3s ease-in-out;
 }
