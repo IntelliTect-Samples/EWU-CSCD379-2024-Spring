@@ -1,6 +1,9 @@
 <template>
-  <v-dialog v-model="modelValue" width="400">
+  <v-dialog v-model="modelValue" width="500">
     <v-card>
+      <v-sheet color="primary mb-3">
+        <v-card-title class="text-wrap">Sign in</v-card-title>
+      </v-sheet>
       <v-alert v-if="errorMessage" type="error" title-date-format="Function">
         {{ errorMessage }}
       </v-alert>
@@ -30,7 +33,7 @@
 
 <script setup lang="ts">
 import axios from "axios";
-import TokenService from "@/scripts/TokenService";
+import TokenService from "~/scripts/tokenService";
 
 const tokenService = new TokenService();
 
