@@ -6,6 +6,7 @@ namespace Wordle.Api.Identity;
 public static class Policies
 {
     public const string RandomAdmin = "RandomAdmin";
+    public const string EditWord = "EditWord";
 
     public static void RandomAdminPolicy(AuthorizationPolicyBuilder policy)
     {

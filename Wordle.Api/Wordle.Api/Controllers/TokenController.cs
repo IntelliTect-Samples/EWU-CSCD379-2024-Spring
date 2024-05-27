@@ -51,14 +51,20 @@ namespace Wordle.Api.Controllers
                 // If someone gets this token secret they can generate tokens for themselves
                 var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_jwtConfiguration.Secret));
                 var credentials = new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha256);
-
+                var random = new Random();
+                var birthDate = new DateTime(
+                    random.Next(1950, 2005), // Year
+                    random.Next(1, 13), // Month
+                    random.Next(1, 29) // Day (keeping it simple to avoid complex date logic)
+                );
                 var claims = new List<Claim>
                 {
                     new(JwtRegisteredClaimNames.Sub, user.UserName!),
                     new(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
                     new("userId", user.Id.ToString()),
                     new("userName", user.UserName!.ToString().Substring(0,user.UserName.ToString().IndexOf("@"))), // Use the email as the username, but get rid of the email domain
-                    new(Claims.Random, (new Random()).NextDouble().ToString())
+                    new(Claims.Random, (new Random()).NextDouble().ToString()),
+                    new(Claims.BirthDate, birthDate.ToString("yyyy-MM-dd"))
                 };
 
                 // Retrieve all roles associated with the user
