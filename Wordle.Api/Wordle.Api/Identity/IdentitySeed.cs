@@ -35,10 +35,12 @@ public static class IdentitySeed
         // Seed Admin User
         if (await userManager.FindByEmailAsync("Admin@intellitect.com") == null)
         {
+
             AppUser user = new AppUser
             {
                 UserName = "Admin@intellitect.com",
-                Email = "Admin@intellitect.com"
+                Email = "Admin@intellitect.com",
+                Birthday = new DateTime(1990, 5, 6)
             };
 
             IdentityResult result = userManager.CreateAsync(user, "P@ssw0rd123").Result;
@@ -54,7 +56,8 @@ public static class IdentitySeed
             AppUser user = new AppUser
             {
                 UserName = "Awesome@intellitect.com",
-                Email = "Awesome@intellitect.com"
+                Email = "Awesome@intellitect.com",
+                Birthday = new DateTime(2005,10,31)            
             };
 
             IdentityResult result = userManager.CreateAsync(user, "P@ssw0rd123").Result;
