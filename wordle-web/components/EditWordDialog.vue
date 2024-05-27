@@ -10,6 +10,7 @@
           label="Word"
           v-model="wordModel"
           :rules="[validLengthWod]"
+          :disabled="!isAdd"
         >
         </v-text-field>
         <v-label>Word Type</v-label>
@@ -30,24 +31,35 @@
           @click="modelValue = false"
           text="Cancel"
         />
-        <v-btn
-          color="primary"
-          variant="elevated"
-          :text="isAdd ? 'Add Word' : 'Save Word'"
-        />
+        <v-btn color="primary" variant="elevated" text="Delete" />
       </v-card-actions>
     </v-card>
   </v-dialog>
 </template>
 
 <script setup lang="ts">
+import type { WordDto } from "~/Models/WordDto";
+
 const modelValue = defineModel<boolean>({ default: false });
 
-const props = withDefaults(defineProps<{ isAdd: boolean }>(), {
-  isAdd: false,
-});
+const props = withDefaults(
+  defineProps<{ isAdd: boolean; word?: WordDto | undefined }>(),
+  {
+    isAdd: false,
+  }
+);
+
+watch(
+  () => props.word,
+  () => {
+    wordModel.value = props.isAdd === true ? "" : props.word?.word!;
+    isCommon.value = props.word?.isCommon ? "common" : "uncommon";
+  }
+);
 
 const wordModel = ref("");
+
+wordModel.value = props.word?.word ?? "";
 
 const validLengthWod = (value: string) => {
   if (value.length === 5) {

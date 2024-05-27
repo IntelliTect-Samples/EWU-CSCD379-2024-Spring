@@ -25,7 +25,6 @@
     >
       <v-list
         v-for="item in [
-          'Login',
           'Daily Wordle',
           'Random Wordle',
           'About',

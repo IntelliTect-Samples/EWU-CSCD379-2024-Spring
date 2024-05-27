@@ -9,8 +9,7 @@
               color="play"
               @click="
                 () => {
-                  showEditor = true;
-                  isAdd = true;
+                  showAddEditor = true;
                 }
               "
             >
@@ -48,8 +47,8 @@
         items-per-page="10"
         :header-props="{ class: 'text-uppercase' }"
         :cell-props="{ class: 'text-uppercase text-button pa-3' }"
-        show-select
         :search="selectedWord?.toString() ?? undefined"
+        :v-model="chosenWord"
       >
         <template v-slot:top>
           <v-text-field
@@ -76,15 +75,22 @@
               color="win"
               @click="
                 () => {
-                  isAdd = false;
+                  chosenWord = item;
                   showEditor = true;
                 }
               "
             >
-              <v-icon>mdi-pencil</v-icon>
-              Edit</v-btn
+              <v-icon>mdi-pencil</v-icon> Edit</v-btn
             >
-            <v-btn color="lose">
+            <v-btn
+              color="lose"
+              @click="
+                () => {
+                  chosenWord = item;
+                  showConfirm = true;
+                }
+              "
+            >
               <v-icon>mdi-delete</v-icon>
               Delete</v-btn
             >
@@ -93,7 +99,15 @@
       </v-data-table>
     </v-card>
   </v-container>
-  <EditWordDialog v-model="showEditor" :isAdd="isAdd" />
+  <EditWordDialog v-model="showEditor" :isAdd="false" :word="chosenWord" />
+  <EditWordDialog v-model="showAddEditor" :isAdd="true" />
+
+  <ConfirmDialog
+    v-model="showConfirm"
+    :confirmMessage="`Are you sure you want to delete the word '${chosenWord?.word}'?`"
+    confirmTitle="Delete Word From Words List"
+    confirmAction="Delete Word"
+  />
 </template>
 
 <script setup lang="ts">
@@ -104,7 +118,10 @@ const wordsList: Ref<WordDto[]> = ref([]);
 const isWordsListLoading = ref(true);
 const selectedWord = ref<string | null>(null);
 const showEditor = ref(false);
+const showAddEditor = ref(false);
 const isAdd = ref(false);
+const showConfirm = ref(false);
+const chosenWord = ref<WordDto>();
 
 useHead({
   title: "Word Editor",
