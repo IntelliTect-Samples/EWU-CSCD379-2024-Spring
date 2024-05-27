@@ -5,7 +5,7 @@ import { WordList } from "./wordList";
 import { findValidWords } from "./ValidWordList";
 import Axios from "axios";
 import { GameStats } from "./gameStats";
-import { c } from "@nuxt/test-utils/dist/shared/test-utils.9059LSjm";
+
 
 export class Game {
   public maxAttempts: number;
@@ -133,7 +133,7 @@ export class Game {
     }
   }
 
-  public async submitGuess(withApi: boolean, userName: string, time: number = 0) {
+  public async submitGuess(withApi: boolean, userName: string, time: number) {
     if (this.gameState !== GameState.Playing) return;
     if (!this.guess.isFilled) return;
     if (!this.guess.isValidWord()) {
@@ -157,15 +157,18 @@ export class Game {
 
     if (this.gameState === GameState.Won || this.gameState === GameState.Lost && withApi) {
       this.isBusy = true;
+      console.log("Data for Game/Result: attempts: " + (this.guessIndex+ 1) + " isWin: " + (this.gameState === GameState.Won) + " word: " +  this.secretWord + " time: " + time + " playerName: " + userName);
       if (withApi) {
         var result = await Axios.post("Game/Result", {
           attempts: this.guessIndex + 1,
           isWin: this.gameState === GameState.Won,
-          time: time,
           word: this.secretWord,
+          time: time,
           playerName: userName
         
         });
+       
+        console.log("Result from API Game/Result: " + result.data + " " + result.status);
         this.stats = new GameStats();
         Object.assign(this.stats, result.data);
         this.isBusy = false;

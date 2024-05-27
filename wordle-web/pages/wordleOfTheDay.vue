@@ -103,7 +103,7 @@ onMounted(() => {
 
 function onKeyup(event: KeyboardEvent) {
   if (event.key === "Enter") {
-    game.submitGuess(true, userName.value);
+    game.submitGuess(true, userName.value, calcSecond());
   } else if (event.key == "Backspace") {
     game.removeLastLetter();
   } else if (event.key.match(/[A-z]/) && event.key.length === 1) {
@@ -120,14 +120,14 @@ function calcAttempts() {
   return attempts;
 }
 function postScore(playerNameIn: string, attemptsIn: number, timeIn: number) {
-  console.log("score data: " + playerNameIn + " " + attemptsIn + " " + timeIn);
+  console.log("data for Player/UpdateScore: " + playerNameIn + " " + attemptsIn + " " + timeIn);
   let postScoreUrl = "Player/UpdateScore";
   Axios.post(postScoreUrl, {
     playerName: playerNameIn,
     attempts: attemptsIn,
     time: timeIn,
   }).then((response) => {
-    console.log("response from API post score " + response.data + " " + response.status);
+    console.log("response from API Player/UpdateScore " + response.data + " " + response.status);
   });
   
 }

@@ -29,7 +29,7 @@
       <ValidWord />
     </div>
 
-    <v-btn @click="game.submitGuess(false, '' )" class="mb-5" color="primary">Guess!</v-btn>
+    <v-btn @click="game.submitGuess(false, '' , 0)" class="mb-5" color="primary">Guess!</v-btn>
 
     <v-btn class="mb-5 ml-5" color="primary" variant="flat" @click="router.push('/leaderboard')">Leaderboard</v-btn>
   </v-card>
@@ -59,7 +59,7 @@ onUnmounted(() => {
 });
 function onKeyup(event: KeyboardEvent) {
   if (event.key === "Enter") {
-    game.submitGuess(false,"" );
+    game.submitGuess(false,"" , 0);
   } else if (event.key == "Backspace") {
     game.removeLastLetter();
   } else if (event.key.match(/[A-z]/) && event.key.length === 1) {
