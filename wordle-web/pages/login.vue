@@ -35,4 +35,6 @@ useHead({
   meta: [{ name: "description", content: "Cool site!" }],
 });
 const currentPage = ref(0);
+const modelValue = defineModel<boolean>({ default: false });
+
 </script>

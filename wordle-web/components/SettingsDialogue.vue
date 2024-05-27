@@ -5,7 +5,7 @@
         <v-card-title> Settings </v-card-title>
       </v-sheet>
       <v-card-item>
-        <TheemPicker color="transparent" />
+        <ThemePicker color="transparent" />
       </v-card-item>
       <v-card-actions>
         <v-spacer />

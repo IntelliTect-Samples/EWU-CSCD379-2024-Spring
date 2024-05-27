@@ -32,7 +32,7 @@
           </v-card>
         </v-col>
         <v-col>
-          <TheemPicker />
+          <ThemePicker />
         </v-col>
       </v-col>
       <v-col lg="6" md="12">

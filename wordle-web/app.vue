@@ -4,7 +4,7 @@
       <v-app-bar-title @click="$router.push('/')" style="cursor: pointer">
         <v-img :src="logoPath" alt="Logo" max-width="180" max-height="95" />
       </v-app-bar-title>
-      <v-app-bar-nav-icon icon="mdi-account" @click="$router.push('/Login')" />
+      <v-app-bar-nav-icon icon="mdi-account" @click="showSigninDialog = true"  />
 
       <v-app-bar-nav-icon
         icon="mdi-help-circle"
@@ -58,6 +58,8 @@
       </NuxtLayout>
     </v-main>
     <SettingsDialogue v-model="showSettingsDialog" />
+    <SigninDialog v-model="showSigninDialog" />
+
   </v-app>
 </template>
 
@@ -83,6 +85,7 @@ const logoPaths = {
 const theme = useTheme();
 const showSettingsDialog = ref(false);
 const drawer = ref(false);
+const showSigninDialog = ref(false);
 
 const logoPath = computed(() => {
   const themeName = theme.global.name.value.replace("Dark", "");
