@@ -38,7 +38,12 @@
         :headers="[
           { title: 'Word', key: 'word', value: 'word' },
           { title: 'Word Type', key: 'isCommon', value: 'isCommon' },
-          { title: 'Actions', key: 'actions', value: 'actions' },
+          {
+            title: 'Actions',
+            key: 'actions',
+            value: 'actions',
+            sortable: false,
+          },
         ]"
         :items="wordsList"
         :loading="isWordsListLoading"
@@ -93,7 +98,7 @@
               "
             >
               <v-icon icon="mdi-delete" />
-              {{ $vuetify.display.smAndDown ? "" : "Edit" }}</v-btn
+              {{ $vuetify.display.smAndDown ? "" : "Delete" }}</v-btn
             >
           </div>
         </template>
