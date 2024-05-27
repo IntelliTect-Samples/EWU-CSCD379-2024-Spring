@@ -4,6 +4,7 @@
       <v-app-bar-title @click="$router.push('/')" style="cursor: pointer">
         <v-img :src="logoPath" alt="Logo" max-width="180" max-height="95" />
       </v-app-bar-title>
+      <v-app-bar-nav-icon icon="mdi-account" @click="$router.push('/Login')" />
 
       <v-app-bar-nav-icon
         icon="mdi-help-circle"
@@ -24,6 +25,7 @@
     >
       <v-list
         v-for="item in [
+          'Login',
           'Daily Wordle',
           'Random Wordle',
           'About',
