@@ -5,7 +5,7 @@
       <v-card-item>
         <v-row>
           <v-col cols="auto">
-            <v-btn color="play">Add Word</v-btn>
+            <v-btn color="play" @click="showEditor = true">Add Word</v-btn>
           </v-col>
           <v-col cols="auto">
             <v-row>
@@ -68,6 +68,7 @@
       </v-data-table>
     </v-card>
   </v-container>
+  <EditWordDialog v-model="showEditor" />
 </template>
 
 <script setup lang="ts">
@@ -77,6 +78,7 @@ import Axios from "axios";
 const wordsList: Ref<WordDto[]> = ref([]);
 const isWordsListLoading = ref(true);
 const selectedWord = ref<string | null>(null);
+const showEditor = ref(true);
 
 useHead({
   title: "Word Editor",
