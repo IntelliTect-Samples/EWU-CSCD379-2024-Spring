@@ -96,7 +96,7 @@ builder.Services.AddAuthorization(options =>
 {
     options.AddPolicy(Policies.RandomAdmin, Policies.RandomAdminPolicy);
     //options.AddPolicy("IsGrantPolicy", policy => policy.RequireRole("Grant"));
-    //options.AddPolicy(Policies.EditWord, Policies.EditWordPolicy);
+    options.AddPolicy(Policies.EditWord, Policies.EditWordPolicy);
 });
 
 
