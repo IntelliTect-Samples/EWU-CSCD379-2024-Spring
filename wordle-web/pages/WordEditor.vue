@@ -67,7 +67,7 @@
         </template>
         <template v-slot:item.isCommon="{ item }">
           <div class="d-flex flex-row ga-3">
-            <v-icon :icon="item.isCommon ? 'mdi-check' : 'mdi-close'" />
+            {{ item.isCommon ? "Common" : "Uncommon" }}
           </div>
         </template>
         <template v-slot:item.actions="{ item }">
