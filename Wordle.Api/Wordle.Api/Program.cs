@@ -109,6 +109,11 @@ using (var scope = app.Services.CreateScope())
     var db = scope.ServiceProvider.GetRequiredService<WordleDbContext>();
     db.Database.Migrate();
     await Seeder.Seed(db);
+    await IdentitySeed.SeedAsync(
+        scope.ServiceProvider.GetRequiredService<UserManager<AppUser>>(),
+        scope.ServiceProvider.GetRequiredService<RoleManager<IdentityRole>>(),
+    db);
+
 }
 
 // Configure the HTTP request pipeline.
