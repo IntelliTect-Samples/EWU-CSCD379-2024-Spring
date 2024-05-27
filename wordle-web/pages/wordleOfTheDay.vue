@@ -161,8 +161,6 @@ watch(
       } else {
         postScore(userName.value, calcAttempts(), calcSecond());
       }
-
-      //I know userName is showing an error but the api only gets the data when its set up like that
     }
   }
 );
