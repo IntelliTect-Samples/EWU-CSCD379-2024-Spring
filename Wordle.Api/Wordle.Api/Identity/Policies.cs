@@ -20,5 +20,22 @@ public static class Policies
             return false;
         });
     }
+    public static void EditWordPolicy(AuthorizationPolicyBuilder policy)
+    {
+        policy.RequireClaim(Claims.MasterOfTheUniverse);
+        policy.RequireAssertion(context =>
+        {
+            var ageString = context.User.Claims.FirstOrDefault(f => f.Type == Claims.BirthDate);
+            if (ageString != null)
+            {
+                int age;
+                if (int.TryParse(ageString.Value, out age))
+                {
+                    return age >= 21;
+                }
+            }
+            return false;
+        });
+        }
+ }
 
-}
