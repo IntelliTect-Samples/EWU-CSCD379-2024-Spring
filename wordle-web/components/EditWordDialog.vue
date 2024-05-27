@@ -31,7 +31,12 @@
           @click="modelValue = false"
           text="Cancel"
         />
-        <v-btn color="primary" variant="elevated" text="Delete" />
+        <v-btn
+          color="primary"
+          variant="elevated"
+          :text="isAdd ? 'Add Word' : 'Edit Word'"
+          @click="updateWord"
+        />
       </v-card-actions>
     </v-card>
   </v-dialog>
@@ -40,8 +45,6 @@
 <script setup lang="ts">
 import type { WordDto } from "~/Models/WordDto";
 
-const modelValue = defineModel<boolean>({ default: false });
-
 const props = withDefaults(
   defineProps<{ isAdd: boolean; word?: WordDto | undefined }>(),
   {
@@ -49,17 +52,19 @@ const props = withDefaults(
   }
 );
 
+const emits = defineEmits(["updated"]);
+
+const modelValue = defineModel<boolean>({ default: false });
+const wordModel = ref("");
+const isCommon = ref("common");
+
 watch(
   () => props.word,
   () => {
-    wordModel.value = props.isAdd === true ? "" : props.word?.word!;
+    wordModel.value = props.isAdd ? "" : props.word?.word!;
     isCommon.value = props.word?.isCommon ? "common" : "uncommon";
   }
 );
-
-const wordModel = ref("");
-
-wordModel.value = props.word?.word ?? "";
 
 const validLengthWod = (value: string) => {
   if (value.length === 5) {
@@ -72,5 +77,21 @@ const items = [
   { label: "Uncommon", value: "uncommon" },
 ];
 
-const isCommon = ref("common");
+function updateWord() {
+  if (props.isAdd) {
+    addWord();
+  } else {
+    editWord();
+  }
+}
+
+function addWord() {
+  emits("updated");
+  modelValue.value = false;
+}
+
+function editWord() {
+  emits("updated");
+  modelValue.value = false;
+}
 </script>

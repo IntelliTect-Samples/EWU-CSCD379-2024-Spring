@@ -80,7 +80,8 @@
                 }
               "
             >
-              <v-icon>mdi-pencil</v-icon> Edit</v-btn
+              <v-icon icon="mdi-pencil" />
+              {{ $vuetify.display.smAndDown ? "" : "Edit" }}</v-btn
             >
             <v-btn
               color="lose"
@@ -91,22 +92,32 @@
                 }
               "
             >
-              <v-icon>mdi-delete</v-icon>
-              Delete</v-btn
+              <v-icon icon="mdi-delete" />
+              {{ $vuetify.display.smAndDown ? "" : "Edit" }}</v-btn
             >
           </div>
         </template>
       </v-data-table>
     </v-card>
   </v-container>
-  <EditWordDialog v-model="showEditor" :isAdd="false" :word="chosenWord" />
-  <EditWordDialog v-model="showAddEditor" :isAdd="true" />
+  <EditWordDialog
+    v-model="showEditor"
+    :isAdd="false"
+    :word="chosenWord"
+    @updated="console.log('updated')"
+  />
+  <EditWordDialog
+    v-model="showAddEditor"
+    :isAdd="true"
+    @updated="console.log('updated')"
+  />
 
   <ConfirmDialog
     v-model="showConfirm"
     :confirmMessage="`Are you sure you want to delete the word '${chosenWord?.word}'?`"
     confirmTitle="Delete Word From Words List"
     confirmAction="Delete Word"
+    @updated="console.log('updated')"
   />
 </template>
 

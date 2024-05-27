@@ -15,7 +15,12 @@
           @click="modelValue = false"
           text="Cancel"
         />
-        <v-btn color="primary" variant="elevated" :text="confirmAction" />
+        <v-btn
+          color="primary"
+          variant="elevated"
+          :text="confirmAction"
+          @click="close()"
+        />
       </v-card-actions>
     </v-card>
   </v-dialog>
@@ -35,5 +40,12 @@ const props = withDefaults(
   }
 );
 
+const emits = defineEmits(["updated"]);
+
 const modelValue = defineModel<boolean>({ default: false });
+
+function close() {
+  modelValue.value = false;
+  emits("updated");
+}
 </script>
