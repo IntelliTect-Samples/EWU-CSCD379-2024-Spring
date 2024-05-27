@@ -5,7 +5,18 @@
       <v-card-item>
         <v-row>
           <v-col cols="auto">
-            <v-btn color="play" @click="showEditor = true">Add Word</v-btn>
+            <v-btn
+              color="play"
+              @click="
+                () => {
+                  showEditor = true;
+                  isAdd = true;
+                }
+              "
+            >
+              <v-icon>mdi-plus</v-icon>
+              Add Word</v-btn
+            >
           </v-col>
           <v-col cols="auto">
             <v-row>
@@ -27,7 +38,7 @@
       <v-data-table
         :headers="[
           { title: 'Word', key: 'word', value: 'word' },
-          { title: 'Common Word', key: 'isCommon', value: 'isCommon' },
+          { title: 'Word Type', key: 'isCommon', value: 'isCommon' },
           { title: 'Actions', key: 'actions', value: 'actions' },
         ]"
         :items="wordsList"
@@ -61,14 +72,28 @@
         </template>
         <template v-slot:item.actions="{ item }">
           <div class="d-flex flex-row ga-3">
-            <v-btn color="win">Common</v-btn>
-            <v-btn color="lose">Delete</v-btn>
+            <v-btn
+              color="win"
+              @click="
+                () => {
+                  isAdd = false;
+                  showEditor = true;
+                }
+              "
+            >
+              <v-icon>mdi-pencil</v-icon>
+              Edit</v-btn
+            >
+            <v-btn color="lose">
+              <v-icon>mdi-delete</v-icon>
+              Delete</v-btn
+            >
           </div>
         </template>
       </v-data-table>
     </v-card>
   </v-container>
-  <EditWordDialog v-model="showEditor" />
+  <EditWordDialog v-model="showEditor" :isAdd="isAdd" />
 </template>
 
 <script setup lang="ts">
@@ -78,7 +103,8 @@ import Axios from "axios";
 const wordsList: Ref<WordDto[]> = ref([]);
 const isWordsListLoading = ref(true);
 const selectedWord = ref<string | null>(null);
-const showEditor = ref(true);
+const showEditor = ref(false);
+const isAdd = ref(false);
 
 useHead({
   title: "Word Editor",
