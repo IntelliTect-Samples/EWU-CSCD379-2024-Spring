@@ -66,7 +66,7 @@ Ascend the ranks of word mastery on our leaderboard page, where wordsmiths compe
             title="Latest Wordles"
             icon="mdi-newspaper"
             color="secondary"
-            class = "text-center pa-6"
+            class="text-center pa-6"
             description="Embark on a journey through recent wordly wonders with our Replay and Stats section, where the last ten Wordles await your exploration. Delve into the trends and triumphs of the day's players, gaining insights into strategies and celebrating the diversity of linguistic prowess that colors each round."
           />
         </v-col>
@@ -108,7 +108,6 @@ const logoPath = computed(() => {
 onMounted(async () => {
   var defaultTheme = await nuxtStorage.localStorage.getData("theme");
   theme.global.name.value = defaultTheme ?? "light";
-  console.log(theme.global.name.value);
 });
 
 const formattedDate = computed(() => {

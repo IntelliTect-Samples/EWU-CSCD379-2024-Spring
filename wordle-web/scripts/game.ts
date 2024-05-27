@@ -39,7 +39,6 @@ export class Game {
 
     // Get a word
     if (date) {
-      console.log(date);
       this.secretWord = await this.getWordOfTheDayFromApi(date);
     } else {
       this.secretWord = await this.getRadnomWordFromApi();

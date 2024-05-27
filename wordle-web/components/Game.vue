@@ -264,9 +264,7 @@ async function saveScore() {
   };
   await Axios.post(scoreUrl, data, {
     headers: { "Content-Type": "application/json" }, // config
-  })
-    .then((res) => console.log(res))
-    .catch((err) => console.log(err));
+  }).catch((err) => console.log(err));
 }
 
 watch(showNameDialog, () => {
