@@ -54,23 +54,11 @@ useHead({
 
 const theme = useTheme();
 
-const logoPath = ref<string>("logo_standard.svg");
-
-watch(
-  () => theme.global.name.value,
-  async () => {
-    logoPath.value =
-      theme.global.name.value === "light" || theme.global.name.value === "dark"
-        ? "logo_standard.svg"
-        : "logo_" + theme.global.name.value.replace("Dark", "") + ".svg";
-  }
-);
-
-onMounted(() => {
-  logoPath.value =
-    theme.global.name.value === "light" || theme.global.name.value === "dark"
-      ? "logo_standard.svg"
-      : "logo_" + theme.global.name.value.replace("Dark", "") + ".svg";
+const logoPath = computed(() => {
+  return theme.global.name.value === "light" ||
+    theme.global.name.value === "dark"
+    ? "logo_standard.svg"
+    : "logo_" + theme.global.name.value.replace("Dark", "") + ".svg";
 });
 
 watch(theme.global.name, (newVal) => {});

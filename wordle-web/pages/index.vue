@@ -86,28 +86,15 @@ Discover the essence of beauty through our curated collection of Wordles, where 
 
 <script setup lang="ts">
 import { useTheme } from "vuetify";
-import nuxtStorage from "nuxt-storage";
 import dateUtils from "../scripts/dateUtils";
 
 const theme = useTheme();
 
-const logoPath = ref("logo_standard.svg");
-
-watch(
-  () => theme.global.name.value,
-  async () => {
-    logoPath.value =
-      theme.global.name.value === "light" || theme.global.name.value === "dark"
-        ? "logo_standard.svg"
-        : "logo_" + theme.global.name.value.replace("Dark", "") + ".svg";
-  }
-);
-
-onMounted(() => {
-  logoPath.value =
-    theme.global.name.value === "light" || theme.global.name.value === "dark"
-      ? "logo_standard.svg"
-      : "logo_" + theme.global.name.value.replace("Dark", "") + ".svg";
+const logoPath = computed(() => {
+  return theme.global.name.value === "light" ||
+    theme.global.name.value === "dark"
+    ? "logo_standard.svg"
+    : "logo_" + theme.global.name.value.replace("Dark", "") + ".svg";
 });
 
 const formattedDate = computed(() => {

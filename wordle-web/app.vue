@@ -73,17 +73,13 @@ const theme = useTheme();
 const showSettingsDialog = ref(false);
 const drawer = ref(false);
 const showSignInDialog = ref(false);
-const logoPath = ref("/logo_Standard.svg");
 
-watch(
-  () => theme.global.name.value,
-  async () => {
-    logoPath.value =
-      theme.global.name.value === "light" || theme.global.name.value === "dark"
-        ? "logo_standard.svg"
-        : "logo_" + theme.global.name.value.replace("Dark", "") + ".svg";
-  }
-);
+const logoPath = computed(() => {
+  return theme.global.name.value === "light" ||
+    theme.global.name.value === "dark"
+    ? "logo_standard.svg"
+    : "logo_" + theme.global.name.value.replace("Dark", "") + ".svg";
+});
 
 const themeLoaded = ref(false);
 
