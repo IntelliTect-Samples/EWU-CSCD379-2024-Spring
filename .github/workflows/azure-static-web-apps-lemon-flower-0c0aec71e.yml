@@ -3,7 +3,10 @@ name: Azure Static Web Apps CI/CD
 on:
   push:
     branches:
-      - Assignment4
+      - Assignment5
+    paths:
+      - wordle-app/**
+      - .github/**
   workflow_dispatch:
 
 jobs:
