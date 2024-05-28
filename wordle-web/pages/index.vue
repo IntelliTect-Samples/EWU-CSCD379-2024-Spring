@@ -89,25 +89,25 @@ import { useTheme } from "vuetify";
 import nuxtStorage from "nuxt-storage";
 import dateUtils from "../scripts/dateUtils";
 
-const logoPaths = {
-  Standard: "/logo_Standard.svg",
-  SapphireDeepSeaDive: "/logo_SapphireDeepSeaDive.svg",
-  EmeraldIsle: "/logo_EmeraldIsle.svg",
-  AmethystTwilightMist: "/logo_AmethystTwilightMist.svg",
-  RubyRoyale: "/logo_RubyRoyale.svg",
-  OpalOpulence: "/logo_OpalOpulence.svg",
-};
-
 const theme = useTheme();
 
-const logoPath = computed(() => {
-  const themeName = theme.global.name.value.replace("Dark", "");
-  return logoPaths[themeName] || logoPaths["Standard"];
-});
+const logoPath = ref("logo_standard.svg");
 
-onMounted(async () => {
-  var defaultTheme = await nuxtStorage.localStorage.getData("theme");
-  theme.global.name.value = defaultTheme ?? "light";
+watch(
+  () => theme.global.name.value,
+  async () => {
+    logoPath.value =
+      theme.global.name.value === "light" || theme.global.name.value === "dark"
+        ? "logo_standard.svg"
+        : "logo_" + theme.global.name.value.replace("Dark", "") + ".svg";
+  }
+);
+
+onMounted(() => {
+  logoPath.value =
+    theme.global.name.value === "light" || theme.global.name.value === "dark"
+      ? "logo_standard.svg"
+      : "logo_" + theme.global.name.value.replace("Dark", "") + ".svg";
 });
 
 const formattedDate = computed(() => {

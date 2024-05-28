@@ -52,9 +52,7 @@
       </v-list>
     </v-navigation-drawer>
     <v-main>
-      <NuxtLayout>
-        <NuxtPage />
-      </NuxtLayout>
+      <RouterView />
     </v-main>
     <SettingsDialogue v-model="showSettingsDialog" />
     <SignInDialog v-model="showSignInDialog" />
@@ -71,33 +69,22 @@ useHead({
   meta: [{ name: "description", content: "Cool site!" }],
 });
 
-const logoPaths = {
-  Standard: "/logo_Standard.svg",
-  SapphireDeepSeaDive: "/logo_SapphireDeepSeaDive.svg",
-  EmeraldIsle: "/logo_EmeraldIsle.svg",
-  AmethystTwilightMist: "/logo_AmethystTwilightMist.svg",
-  RubyRoyale: "/logo_RubyRoyale.svg",
-  OpalOpulence: "/logo_OpalOpulence.svg",
-};
-
 const theme = useTheme();
 const showSettingsDialog = ref(false);
 const drawer = ref(false);
 const showSignInDialog = ref(false);
+const logoPath = ref("/logo_Standard.svg");
 
-const logoPath = computed(() => {
-  const themeName = theme.global.name.value.replace("Dark", "");
-  const logoPaths: { [key: string]: string } = {
-    Standard: "/logo_Standard.svg",
-    SapphireDeepSeaDive: "/logo_SapphireDeepSeaDive.svg",
-    EmeraldIsle: "/logo_EmeraldIsle.svg",
-    AmethystTwilightMist: "/logo_AmethystTwilightMist.svg",
-    RubyRoyale: "/logo_RubyRoyale.svg",
-    OpalOpulence: "/logo_OpalOpulence.svg",
-  };
+watch(
+  () => theme.global.name.value,
+  async () => {
+    logoPath.value =
+      theme.global.name.value === "light" || theme.global.name.value === "dark"
+        ? "logo_standard.svg"
+        : "logo_" + theme.global.name.value.replace("Dark", "") + ".svg";
+  }
+);
 
-  return logoPaths[themeName] || logoPaths["Standard"];
-});
 const themeLoaded = ref(false);
 
 onMounted(async () => {
