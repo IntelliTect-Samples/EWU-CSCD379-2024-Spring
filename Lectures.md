@@ -124,7 +124,7 @@
   - Services (DI)
 - CORS
 
-### Lecture 8. 4/25: 🟣
+### Lecture 8. 4/25: Benjamin
 - DevOps
 - More ASP.NET and EF and homework 3 material
 - Unit Testing the API
@@ -132,6 +132,7 @@
   - Unit testing with services
   - Unit testing with WebApplicationFactory
 - Unit vs Integration Testing
+- Integration Testing
 
 
 ## Week 5
@@ -145,7 +146,7 @@
 - Word migration
 - EF Migration Deltas to a table
 
-### Lecture 10. 5/2: 🟢
+### Lecture 10. 5/2: 🟢🟣
 - Word Service
 - Word Controller that returns a word
 - Handling multi-threading issues with creating the word of the day.
@@ -155,7 +156,7 @@
 - Troubleshooting Azure
 
 ## Week 6
-### Lecture 11. 5/7: 
+### Lecture 11. 5/7: 🟢🟣
 - Meg's Awesome Changes
   - Global Base URL for Axios
   - Restructure App Async in Constructor
@@ -169,10 +170,7 @@
   - API Post
   - DTOs
 
---- After this point is subject to significant change ---
-
-
-### Lecture 12. 5/09: 
+### Lecture 12. 5/09: 🟢🟣
 - EF Querying
   - Querying with Includes
 - EF unit testing
@@ -180,7 +178,7 @@
 - Model builder cascade deletes
 
 ## Week 7
-### Lecture 13. 5/14: 
+### Lecture 13. 5/14: 🟢🟣
 - Posting the results of a game
 - Returning a DTO with statistics for a word/WOTD
 - Axios using Post
@@ -188,85 +186,79 @@
 - Word of the day controller and tests
 - GroupBy: Returning stats for all words
 
-### Lecture 14. 5/16:
+### Lecture 14. 5/16: 🟣
 - ASP.NET Identity Intro
+- JWTs, validation, claims (UserId, Name)
 - JWT setup and generation
 - JWT GET endpoint with username and password
 - App Settings for JWT config
 - Managing keys in your repo (we did it how you shouldn't do it)
-- Front end bearer tokens
+- Front-end bearer tokens
 - Auth Service
 
 ## Week 8
-### Lecture 15. 5/21: 
+### Lecture 15. 5/21: 🟢🟣
 - Reviewed the general architecture
+- Cookies
 - Login Dialog with some validation and error messages
 - Password show/hide
 - Pass JWT in headers
 - Endpoint to get a hint for a word if we are logged in
 - Lots of homework questions
+- Database rollback and Migration consolidate
 
-### Lecture 16, 5/23
+### Lecture 16, 5/23: 🟢
+
 - Role-base authentication `[Authorize(Roles.Name)]`
 - Claim types: https://learn.microsoft.com/en-us/dotnet/api/system.security.claims.claimtypes?view=net-8.0
 - Policy-based authentication 
 - Setup policies
 - Using policies `[Authorize(Policy = Policies.Name)]`
 - Setting up Swagger for JWTs
+- Unique indexes
+- Authorizing specific API calls
+
 
 
 ## Week 9
-### Lecture 17. 5/28: 
+### Lecture 17. 5/28: 🟢🟣
 - Ask about additional topics
-- - Navigation when query changes
-- CSS animations using transition
-- Creating revealing letters
-- Database rollback and Migration consolidate
+- Client-side permissions
+  - Decoding JWT
+- Navigation when query changes
+  - Parsing query parameters to determine game type
 - Google Analytics
 - Full-page images with themes
-- Unique indexes
-- Parsing query parameters to determine game type
-- Integration testing
 - Custom favicon
 - New starting page and default route
 - Route Guarding
-
-### Lecture 18. 5/30: 
-
-
-### Next Topics
-- Identity in a web project (not just API)
-- Scaffolding EF
-- Adding Identity to the API
-- Scaffolding EF
-- Cookies
-- JWTs, validation, claims (UserId, Name)
-- Create login component
-- Managing state around logins, existing GUID, etc.
-- Managing auth flow and various login cases
-- Remembering login
 - Refreshing the token
-- Authorizing specific API calls
+- Remembering login
+
+- Creating revealing letters
+- Integration testing
 - API testing with service mocks and interfaces
 - Graceful error handling when API is missing
 
+### Lecture 18. 5/30: 
+- TBD
 
 ## Week 10 
 ### Lecture 19. 6/4: 
-
+- TBD
 
 ### Lecture 20. 6/6: 
 - Pizza
 - Work on Final project
+  - Instructors in class to help with any issues
 - Work on Assignment 4
 
-Other Topics
+### Other Topics
   - Vuetify
     - Flex
     - Float
     - Dialogs
     - Menus
-    - Tooltips
-    - 
+    - Tooltips 
 
 ## Finals Week
