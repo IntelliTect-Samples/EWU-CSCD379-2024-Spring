@@ -5,7 +5,6 @@
         <v-img :src="logoPath" alt="Logo" max-width="180" max-height="95" />
       </v-app-bar-title>
       <v-app-bar-nav-icon icon="mdi-account" @click="showLoginLogOut" />
-      {{ username }}
       <v-app-bar-nav-icon
         icon="mdi-help-circle"
         @click="$router.push('/Instructions')"
@@ -48,7 +47,7 @@
       </v-list>
     </v-navigation-drawer>
     <v-main>
-      <RouterView />
+      <NuxtPage />
     </v-main>
     <SettingsDialogue v-model="showSettingsDialog" />
     <SignInDialog v-model="showSignInDialog" />
@@ -66,8 +65,6 @@
 import { useTheme } from "vuetify";
 import nuxtStorage from "nuxt-storage";
 import dateUtils from "./scripts/dateUtils";
-
-const username = ref(await nuxtStorage.localStorage.getData("user"));
 
 useHead({
   title: "Aesthetic Wordle",
