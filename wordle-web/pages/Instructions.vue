@@ -54,11 +54,11 @@
             <v-container class="justify-center align-center pa-3">
               <v-row>
                 <v-col
-                  v-for="letter in key.letters"
-                  :key="letter.char"
-                  class="pa-2 d-flex align-center justify-center"
+                  class="pa-2 d-flex ga-4 align-center justify-center flex-wrap"
                 >
                   <LetterResult
+                    v-for="letter in key.letters"
+                    :key="letter.char"
                     :letter="letter"
                     :clickable="false"
                     class="d-flex align-center justify-center pa-4"
