@@ -4,17 +4,13 @@
       <v-app-bar-title @click="$router.push('/')" style="cursor: pointer">
         <v-img :src="logoPath" alt="Logo" max-width="180" max-height="95" />
       </v-app-bar-title>
-      <v-app-bar-nav-icon icon="mdi-account" @click="showSignInDialog = true" />
-
+      <v-app-bar-nav-icon icon="mdi-account" @click="showLoginLogOut" />
+      {{ username }}
       <v-app-bar-nav-icon
         icon="mdi-help-circle"
         @click="$router.push('/Instructions')"
       />
       <v-app-bar-nav-icon icon="mdi-cog" @click="showSettingsDialog = true" />
-      <v-app-bar-nav-icon
-        icon="mdi-trophy-variant"
-        @click="$router.push('/Leaderboard')"
-      />
       <v-app-bar-nav-icon variant="text" @click="drawer = !drawer" />
     </v-app-bar>
     <v-navigation-drawer
@@ -56,6 +52,13 @@
     </v-main>
     <SettingsDialogue v-model="showSettingsDialog" />
     <SignInDialog v-model="showSignInDialog" />
+    <ConfirmDialog
+      v-model="showConfirmDialog"
+      confirm-message="Are you sre you want ot logout?"
+      confirmTitle="Log Out"
+      confirmAction="Log Out"
+      @updated="logout"
+    />
   </v-app>
 </template>
 
@@ -63,6 +66,8 @@
 import { useTheme } from "vuetify";
 import nuxtStorage from "nuxt-storage";
 import dateUtils from "./scripts/dateUtils";
+
+const username = ref(await nuxtStorage.localStorage.getData("user"));
 
 useHead({
   title: "Aesthetic Wordle",
@@ -73,6 +78,7 @@ const theme = useTheme();
 const showSettingsDialog = ref(false);
 const drawer = ref(false);
 const showSignInDialog = ref(false);
+const showConfirmDialog = ref(false);
 
 const logoPath = computed(() => {
   return theme.global.name.value === "light" ||
@@ -83,6 +89,19 @@ const logoPath = computed(() => {
 });
 
 const themeLoaded = ref(false);
+
+function showLoginLogOut() {
+  if (localStorage.getItem("token")) {
+    showConfirmDialog.value = true;
+  } else {
+    showSignInDialog.value = true;
+  }
+}
+
+function logout() {
+  localStorage.removeItem("token");
+  localStorage.removeItem("user");
+}
 
 onMounted(async () => {
   var defaultTheme =

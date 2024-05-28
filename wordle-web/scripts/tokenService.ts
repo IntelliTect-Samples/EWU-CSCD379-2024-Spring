@@ -23,7 +23,7 @@ export default class TokenService {
     return JSON.parse(atob(token.split(".")[1])).userName;
   }
 
-  public generateTokenHeader(){
-    return { 'Authorization': `Bearer ${this.getToken()}`}
+  public generateTokenHeader() {
+    return { Authorization: `Bearer ${this.getToken()}` };
   }
 }

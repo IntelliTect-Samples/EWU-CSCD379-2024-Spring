@@ -1,13 +1,33 @@
 <template>
-  <v-dialog v-model="modelValue" width="500">
+  <v-dialog
+    v-model="modelValue"
+    width="500"
+    @update:model-value="errorMessage = null"
+  >
     <v-card>
       <v-sheet color="primary mb-3">
         <v-card-title class="text-wrap">Sign in</v-card-title>
       </v-sheet>
-      <v-alert v-if="errorMessage" type="error" title-date-format="Function">
+      <v-alert
+        v-if="errorMessage"
+        type="error"
+        title-date-format="Function"
+        rounded
+        class="w-75 mx-auto"
+      >
         {{ errorMessage }}
       </v-alert>
+      <v-tabs v-model="currentPage" align-tabs="center">
+        <v-tab>Sign In</v-tab>
+        <v-tab>Register</v-tab>
+      </v-tabs>
       <v-card-text>
+        <v-text-field
+          v-model="email"
+          @keyup.stop
+          label="Email"
+          v-if="currentPage == 1"
+        />
         <v-text-field v-model="userName" @keyup.stop label="Username" />
         <v-text-field
           v-model="password"
@@ -34,14 +54,17 @@
 <script setup lang="ts">
 import axios from "axios";
 import TokenService from "~/scripts/tokenService";
+import nuxtStorage from "nuxt-storage";
 
 const tokenService = new TokenService();
 
-const modelValue = defineModel<boolean>({ default: false });
+const modelValue = defineModel<boolean>();
 const showPassword = ref(false);
 const userName = ref("");
 const password = ref("");
+const email = ref("");
 const errorMessage = ref("");
+const currentPage = ref(0);
 
 function signIn() {
   errorMessage.value = "";

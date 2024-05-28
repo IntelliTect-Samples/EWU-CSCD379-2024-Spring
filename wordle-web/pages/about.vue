@@ -60,6 +60,4 @@ const logoPath = computed(() => {
     ? "logo_Standard.svg"
     : "logo_" + theme.global.name.value.replace("Dark", "") + ".svg";
 });
-
-watch(theme.global.name, (newVal) => {});
 </script>

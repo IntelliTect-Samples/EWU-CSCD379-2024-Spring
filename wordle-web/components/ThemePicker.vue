@@ -121,7 +121,7 @@ watch(
     const themeNames = isDark
       ? themes.map((theme) => theme.dark)
       : themes.map((theme) => theme.light);
-    isDarkMode.value = isDark ? true : false;
+    isDarkMode.value = isDark;
     selectedTheme.value = themeNames.findIndex(
       (themeSel) => themeSel === newVal
     );
