@@ -7,9 +7,9 @@
     ripple
     rounded
   >
-    <v-row>
+    <v-row :no-gutters="true">
       <v-col
-        lg="3"
+        cols="3"
         md="3"
         sm="12"
         class="d-flex align-center justify-center flex-column"
@@ -18,7 +18,7 @@
         <v-card-title class="font-weight-bold">{{ title }}</v-card-title>
       </v-col>
       <v-col cols="9" v-if="$vuetify.display.mdAndUp">
-        <v-card-text>
+        <v-card-text class="text-left">
           {{ description }}
         </v-card-text>
       </v-col>

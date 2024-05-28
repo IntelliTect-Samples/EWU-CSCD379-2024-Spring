@@ -1,9 +1,9 @@
 ﻿<template>
   <v-container>
-    <v-row cols="12">
-      <v-col lg="6" md="12">
+    <v-row>
+      <v-col lg="6" cols="12">
         <v-col>
-          <v-card class="border-thin bg-primary pa-3 text-center h-100">
+          <v-card class="bg-primary pa-3 text-center">
             <v-img
               class="mx-auto"
               min-width="200"
