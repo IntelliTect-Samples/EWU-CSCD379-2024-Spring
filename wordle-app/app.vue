@@ -3,15 +3,32 @@
     <v-app :style="gradientBaseStyle" class="full-page">
       <v-app-bar color="primary" :elevation="2">
         <v-app-bar-title @click="$router.push('/')" style="cursor: pointer">
-          <v-img src="./public/image-Background-Removed.png" alt="Logo" max-width="180" max-height="95"></v-img>
+          <v-img
+            src="./public/image-Background-Removed.png"
+            alt="Logo"
+            max-width="180"
+            max-height="95"
+          ></v-img>
         </v-app-bar-title>
+
+        <v-btn
+          @click="showLoginDialog = true"
+          flat
+        >
+        <v-icon>mdi-login</v-icon>
+          Login  
+        </v-btn>
 
         <v-btn icon="mdi-cog" @click="showSettingsDialog = true" />
         <v-btn icon="mdi-help-circle" @click="showHelpDialog = true" />
         <HelpDialog v-model="showHelpDialog" />
         <v-btn @click="toggleDrawer" icon="mdi-menu"></v-btn>
       </v-app-bar>
-      <v-navigation-drawer v-model="drawer" location="right" disable-resize-watcher>
+      <v-navigation-drawer
+        v-model="drawer"
+        location="right"
+        disable-resize-watcher
+      >
         <v-list>
           <v-list-item @click="router.push('/About')" class="text-center">
             <v-icon class="mr-2">mdi-information</v-icon>
@@ -25,7 +42,10 @@
           </v-list-item>
         </v-list>
         <v-list>
-          <v-list-item @click="router.push('/Instructions')" class="text-center">
+          <v-list-item
+            @click="router.push('/Instructions')"
+            class="text-center"
+          >
             <v-icon class="mr-2">mdi-book-open</v-icon>
             Instructions
           </v-list-item>
@@ -47,14 +67,16 @@
         <NuxtPage />
       </v-main>
     </v-app>
-
   </NuxtLayout>
+  <SigninDialog v-model="showLoginDialog" />
   <SettingsDialog v-model="showSettingsDialog" />
 </template>
 
 <script setup lang="ts">
 import { useTheme } from "vuetify";
 import nuxtStorage from "nuxt-storage";
+
+const showLoginDialog = ref(false);
 
 const router = useRouter();
 const theme = useTheme();
@@ -64,7 +86,6 @@ var drawer = ref(false);
 function toggleDrawer() {
   drawer.value = !drawer.value;
 }
-
 
 onMounted(() => {
   var defaultTheme = nuxtStorage.localStorage.getData("theme");
@@ -83,31 +104,23 @@ const gradientBaseStyle = computed(() => {
 watchEffect(() => {
   nuxtStorage.localStorage.setData("theme", theme.global.name.value);
 });
-
-
-
 </script>
 
 <style scoped>
-.full-page
-{
+.full-page {
   height: 100%;
   width: 100%;
   background-size: 200% 200%;
   animation: gradientShift 15s ease infinite;
 }
 
-@keyframes gradientShift
-{
-
+@keyframes gradientShift {
   0%,
-  100%
-  {
+  100% {
     background-position: 0% 50%;
   }
 
-  50%
-  {
+  50% {
     background-position: 100% 50%;
   }
 }
