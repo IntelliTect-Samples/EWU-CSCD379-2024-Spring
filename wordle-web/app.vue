@@ -53,7 +53,7 @@
     <SignInDialog v-model="showSignInDialog" />
     <ConfirmDialog
       v-model="showConfirmDialog"
-      confirm-message="Are you sre you want ot logout?"
+      confirm-message="Are you sure you want to logout?"
       confirmTitle="Log Out"
       confirmAction="Log Out"
       @updated="logout"
