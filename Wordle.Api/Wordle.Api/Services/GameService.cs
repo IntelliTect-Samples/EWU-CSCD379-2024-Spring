@@ -10,7 +10,7 @@ public class GameService(WordleDbContext db)
     public WordleDbContext Db { get; set; } = db;
 
 
-    public async Task<Game> PostGameResult(GameDto gameDto)
+    public async Task<bool> PostGameResult(GameDto gameDto)
     {
         // Get todays date
         var today = DateOnly.FromDateTime(DateTime.UtcNow);
@@ -29,15 +29,17 @@ public class GameService(WordleDbContext db)
             // Attempt to find the WOTD that best matches todays date
             WordOfTheDay = word.WordsOfTheDays
                 .OrderByDescending(wotd => wotd.Date)
-                .FirstOrDefault(wotd => wotd.Date < today),
+                .FirstOrDefault(wotd => wotd.Date <= today),
             PlayerName = gameDto.PlayerName,
             Time = gameDto.Time,
             Word = word
+            
         };
 
         Db.Games.Add(game);
         await Db.SaveChangesAsync();
-        return game;
+        //return game;
+        return true;
     }
 
     public async Task<GameStatsDto> GetGameStats(Game game)

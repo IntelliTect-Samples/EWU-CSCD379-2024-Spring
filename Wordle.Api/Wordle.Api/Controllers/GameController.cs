@@ -18,12 +18,9 @@ public class GameController : ControllerBase
     }
 
     [HttpPost("Result")]
-    public async Task<GameStatsDto> PostGame(GameDto gameDto)
+    public async Task<bool> PostGame(GameDto gameDto)
     {
-        Game game = await GameService.PostGameResult(gameDto);
-        var stats = await GameService.GetGameStats(game);
-
-        return stats;
+        return await GameService.PostGameResult(gameDto);
     }
 
     [HttpGet("GetGames/{playerName}")]
