@@ -15,7 +15,9 @@
         class="d-flex align-center justify-center flex-column"
       >
         <v-icon size="x-large" :icon="icon" />
-        <v-card-title class="font-weight-bold">{{ title }}</v-card-title>
+        <v-card-title class="font-weight-bold text-wrap text-center">{{
+          title
+        }}</v-card-title>
       </v-col>
       <v-col cols="9" v-if="$vuetify.display.mdAndUp">
         <v-card-text class="text-left">
