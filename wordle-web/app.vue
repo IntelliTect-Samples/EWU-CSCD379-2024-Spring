@@ -76,8 +76,9 @@ const showSignInDialog = ref(false);
 
 const logoPath = computed(() => {
   return theme.global.name.value === "light" ||
-    theme.global.name.value === "dark"
-    ? "logo_standard.svg"
+    theme.global.name.value === "dark" ||
+    theme.global.name.value === undefined
+    ? "logo_Standard.svg"
     : "logo_" + theme.global.name.value.replace("Dark", "") + ".svg";
 });
 

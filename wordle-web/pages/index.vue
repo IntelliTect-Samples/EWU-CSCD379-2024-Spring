@@ -93,7 +93,7 @@ const theme = useTheme();
 const logoPath = computed(() => {
   return theme.global.name.value === "light" ||
     theme.global.name.value === "dark"
-    ? "logo_standard.svg"
+    ? "logo_Standard.svg"
     : "logo_" + theme.global.name.value.replace("Dark", "") + ".svg";
 });
 

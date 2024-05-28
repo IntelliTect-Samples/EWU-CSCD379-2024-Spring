@@ -135,7 +135,6 @@ const isWordsListLoading = ref(true);
 const selectedWord = ref<string | null>(null);
 const showEditor = ref(false);
 const showAddEditor = ref(false);
-const isAdd = ref(false);
 const showConfirm = ref(false);
 const chosenWord = ref<WordDto>();
 
