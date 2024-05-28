@@ -21,4 +21,8 @@ export default class TokenService {
         console.log(JSON.parse(atob(token.split('.')[1])));
         return JSON.parse(atob(token.split('.')[1])).sub;
     }
+
+    public generateTokenHeader() {
+        return { 'Authorization': 'Bearer ' + this.getToken()}
+    }
 }

@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Wordle.Api.Services;
 
 namespace Wordle.Api.Controllers
@@ -31,6 +32,16 @@ namespace Wordle.Api.Controllers
         {
             DateOnly dateOnly = DateOnly.Parse(date);
             return await wordOfTheDayService.GetWordOfTheDay(dateOnly);
+        }
+
+        [Authorize]
+        [HttpGet("WordOfTheDayHint")]
+        public async Task<string> GetWordOfTheDayHint(double offsetInHours = -7.0)
+        {
+            DateOnly today = DateOnly.FromDateTime(DateTime.UtcNow.AddHours(offsetInHours));
+            var wordOfTheDay = await wordOfTheDayService.GetWordOfTheDay(today);
+
+            return wordOfTheDay.Substring(0,1) + "___" + wordOfTheDay.Substring(4,1);
         }
     }
 }

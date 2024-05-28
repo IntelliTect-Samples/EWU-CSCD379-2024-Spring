@@ -65,15 +65,20 @@
       </div>
 
       <v-row class="mb-5" justify="end">
-        <v-col  cols="12" sm="4">
+        <v-col  cols="12" sm="3">
           <WordList v-if="game.gameState === GameState.Playing" v-model="showWordsList" />
         </v-col>
-        <v-col  cols="12" sm="4">
+        <v-col  cols="12" sm="3">
           <v-btn @click="game.submitGuess()" color="primary">
             Guess!
           </v-btn>
         </v-col>
-        <v-col  cols="12" sm="4">
+        <v-col  cols="12" sm="3">
+          <v-btn @click="hint" color="primary">
+            Hint! 👀
+          </v-btn>
+        </v-col>
+        <v-col  cols="12" sm="3">
           <v-btn color="primary" @click="router.push('/Leaderboard')">Leaderboard</v-btn>
         </v-col>
       </v-row>
@@ -90,6 +95,18 @@ import nuxtStorage from "nuxt-storage";
 import Axios from 'axios'
 import type { Player } from "../scripts/player";
 import UserNameDialog from "~/components/UserNameDialog.vue";
+import TokenService from "~/scripts/tokenService";
+
+const tokenService = new TokenService();
+
+function hint() {
+  const headers = tokenService.generateTokenHeader();
+  console.log(headers);
+  Axios.get("Word/WordOfTheDayHint", { headers})
+  .then((response) => {
+    alert('Hint: ' + response.data);
+  });
+}
 
 const router = useRouter();
 const game = reactive(new Game());
