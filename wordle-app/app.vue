@@ -12,12 +12,16 @@
         </v-app-bar-title>
 
         <v-btn
+          v-if="!tokenService.isLoggedIn()"
           @click="showLoginDialog = true"
           flat
         >
         <v-icon>mdi-login</v-icon>
           Login  
         </v-btn>
+        <div v-else>
+          {{ tokenService.getUserName() }}
+        </div>
 
         <v-btn icon="mdi-cog" @click="showSettingsDialog = true" />
         <v-btn icon="mdi-help-circle" @click="showHelpDialog = true" />
@@ -75,6 +79,9 @@
 <script setup lang="ts">
 import { useTheme } from "vuetify";
 import nuxtStorage from "nuxt-storage";
+import TokenService from "./scripts/tokenService";
+
+const tokenService = new TokenService();
 
 const showLoginDialog = ref(false);
 

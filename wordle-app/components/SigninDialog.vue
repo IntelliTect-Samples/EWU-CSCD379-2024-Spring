@@ -27,6 +27,9 @@
 
 <script lang="ts" setup>
 import axios from "axios";
+import TokenService from "../scripts/tokenService";
+
+const tokenService = new TokenService();
 
 const modelValue = defineModel<boolean>({ default: false });
 const showPassword = ref(false);
@@ -42,6 +45,7 @@ function signIn() {
       password: password.value,
     })
     .then((response) => {
+      tokenService.setToken(response.data.token);
       modelValue.value = false;
     })
     .catch((error) => {
