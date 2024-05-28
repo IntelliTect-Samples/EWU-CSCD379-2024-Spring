@@ -194,6 +194,8 @@
 - JWT GET endpoint with username and password
 - App Settings for JWT config
 - Managing keys in your repo (we did it how you shouldn't do it)
+- Front end bearer tokens
+- Auth Service
 
 ## Week 8
 ### Lecture 15. 5/21: 
@@ -212,7 +214,11 @@
 - Using policies `[Authorize(Policy = Policies.Name)]`
 - Setting up Swagger for JWTs
 
-- Navigation when query changes
+
+## Week 9
+### Lecture 17. 5/28: 
+- Ask about additional topics
+- - Navigation when query changes
 - CSS animations using transition
 - Creating revealing letters
 - Database rollback and Migration consolidate
@@ -223,19 +229,9 @@
 - Integration testing
 - Custom favicon
 - New starting page and default route
-
-## Week 9
-### Lecture 17. 5/28: 
-- ASP.NET Identity
-- Setup up EF Identity in an existing project
-- JWT creation and verification
-- Authorization attributes for roles and policies
-- Setup of Swaqgger to take a bearer token
+- Route Guarding
 
 ### Lecture 18. 5/30: 
-- Front end bearer tokens
-- Auth Service
-- Route Guarding
 
 
 ### Next Topics
@@ -260,6 +256,7 @@
 
 
 ### Lecture 20. 6/6: 
+- Pizza
 - Work on Final project
 - Work on Assignment 4
 
