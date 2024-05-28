@@ -1,8 +1,9 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 
 namespace Wordle.Api.Models
 {
-    public class WordleDbContext : DbContext
+    public class WordleDbContext : IdentityDbContext<AppUser>
     {
         public DbSet<WordOfTheDay> WordsOfTheDays { get; set; }
         public DbSet<WordDate> WordDates { get; set; }
@@ -11,6 +12,12 @@ namespace Wordle.Api.Models
         public DbSet<Player> Players { get; set; }
         public WordleDbContext(DbContextOptions<WordleDbContext> options) : base(options)
         {
+        }
+
+        // Make sure the identity db context on model creating is called
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            base.OnModelCreating(modelBuilder);
         }
     }
 }

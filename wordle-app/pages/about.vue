@@ -32,7 +32,7 @@
 				</div>
 				<v-card-title class="text-h5" >About Our Teachers</v-card-title>
 				<div class="text-body-1 mb-3">
-					<strong>Grant</strong> and <strong>Mag</strong> are the instructors for this course. They are both very
+					<strong>Grant</strong> and <strong>Meg</strong> are the instructors for this course. They are both very
 					knowledgeable and helpful. They are always willing to help and answer any questions you may have.
 				</div>
 			</v-card-text>
