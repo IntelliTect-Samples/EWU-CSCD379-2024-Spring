@@ -1,9 +1,5 @@
 <template>
-  <v-dialog
-    v-model="modelValue"
-    width="500"
-    @update:model-value="errorMessage = null"
-  >
+  <v-dialog v-model="modelValue" width="500">
     <v-card>
       <v-sheet color="primary mb-3">
         <v-card-title class="text-wrap">Sign in</v-card-title>
@@ -54,11 +50,10 @@
 <script setup lang="ts">
 import axios from "axios";
 import TokenService from "~/scripts/tokenService";
-import nuxtStorage from "nuxt-storage";
 
 const tokenService = new TokenService();
 
-const modelValue = defineModel<boolean>();
+const modelValue = defineModel<boolean>({ default: false });
 const showPassword = ref(false);
 const userName = ref("");
 const password = ref("");
