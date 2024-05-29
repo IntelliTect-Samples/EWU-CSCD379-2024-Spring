@@ -23,7 +23,7 @@ builder.Services.AddCors(options =>
 {
     options.AddPolicy(name: AllOrigins, policy =>
     {
-        policy.WithOrigins("http://localhost:3000");
+        policy.WithOrigins("http://localhost:3000", "https://orange-forest-0eb1d671e.5.azurestaticapps.net");
         policy.AllowAnyMethod();
         policy.AllowAnyHeader();
         policy.AllowCredentials();
