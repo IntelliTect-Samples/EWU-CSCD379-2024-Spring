@@ -12,6 +12,7 @@
   },
   "dependencies": {
     "@mdi/font": "^7.4.47",
+    "@microsoft/signalr": "^8.0.0",
     "axios": "^1.6.8",
     "nuxt": "^3.11.1",
     "nuxt-storage": "^1.2.2",

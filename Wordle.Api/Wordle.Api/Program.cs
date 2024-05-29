@@ -3,7 +3,6 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
-using System;
 using System.Text;
 using Wordle.Api;
 using Wordle.Api.Identity;
@@ -24,17 +23,20 @@ builder.Services.AddCors(options =>
 {
     options.AddPolicy(name: AllOrigins, policy =>
     {
-        policy.WithOrigins("*");
+        policy.WithOrigins("http://localhost:3000");
         policy.AllowAnyMethod();
         policy.AllowAnyHeader();
+        policy.AllowCredentials();
     });
 });
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddSignalR();
 builder.Services.AddSwaggerGen(config =>
     {
+        config.AddSignalRSwaggerGen();
         config.SwaggerDoc("v1", new OpenApiInfo { Title = "Wordle API", Version = "v1" });
         config.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
         {
@@ -63,6 +65,7 @@ builder.Services.AddSwaggerGen(config =>
 
 builder.Services.AddScoped<WordOfTheDayService>();
 builder.Services.AddScoped<GameService>();
+builder.Services.AddScoped<WordleHub>();
 
 // Identity Services
 builder.Services.AddIdentityCore<AppUser>(options => options.SignIn.RequireConfirmedAccount = false)
@@ -127,6 +130,10 @@ app.UseCors(AllOrigins);
 app.UseAuthorization();
 
 app.MapControllers();
+
+app.UseRouting();
+
+app.MapHub<WordleHub>("hub");
 
 app.Run();
 
