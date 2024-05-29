@@ -241,11 +241,32 @@
 - Graceful error handling when API is missing
 
 ### Lecture 18. 5/30: 
-- TBD
+- AI with Dr. Gravatt
 
 ## Week 10 
 ### Lecture 19. 6/4: 
-- TBD
+- Unreal Engine 5.4
+- Download Fantastic Village Pack
+- 3rd Person Starter
+- Control game state (editing vs playing)
+- Navigating the interface
+  - Navigating 3d Environment
+  - Content Browser/Drawer and Files
+  - BluePrints
+  - Lights
+  - Camera
+  - Player
+  - Levels
+  - Add stuff to Level
+  - Materials
+- Epic asset store
+  - Adding Content (Which Content?)
+- Building and environment
+  - Adding assets to the environment
+  - Lighting
+- Pick up an object
+- Collider to light up an object when close
+- Open a door?
 
 ### Lecture 20. 6/6: 
 - Pizza
