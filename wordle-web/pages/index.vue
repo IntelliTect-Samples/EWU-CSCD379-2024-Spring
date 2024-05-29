@@ -83,7 +83,7 @@
 
 <script setup lang="ts">
 import axios from "axios";
-import TokenService from "~/scripts/TokenService";
+import TokenService from "~/scripts/tokenService";
 import { Game, GameState } from "../scripts/game";
 
 const game = reactive(new Game());

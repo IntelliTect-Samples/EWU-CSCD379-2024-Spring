@@ -55,7 +55,7 @@
 <script setup lang="ts">
 import { useTheme } from "vuetify";
 import nuxtStorage from "nuxt-storage";
-import TokenService from "@/scripts/TokenService";
+import TokenService from "@/scripts/tokenService";
 
 const router = useRouter();
 const theme = useTheme();

@@ -1,4 +1,4 @@
-import TokenService from "~/scripts/TokenService";
+import TokenService from "~/scripts/tokenService";
 
 export default defineNuxtRouteMiddleware((to, from) => {
   const tokenService = new TokenService();
