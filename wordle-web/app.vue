@@ -78,7 +78,11 @@
             title="About"
             @click="router.push('/aboutPage')"
           />
-          
+          <v-list-item
+            prepend-icon="mdi-circle"
+            title="WordEditor"
+            @click="router.push('/WordEditor')"
+          />
         </v-list>
       </v-navigation-drawer>
       
