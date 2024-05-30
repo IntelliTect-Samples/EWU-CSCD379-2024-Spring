@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
+using Microsoft.VisualBasic;
 using System.Collections.Generic;
 using Wordle.Api.Dtos;
 using Wordle.Api.Models;
@@ -10,7 +11,7 @@ public class GameService(WordleDbContext db)
     public WordleDbContext Db { get; set; } = db;
 
 
-    public async Task<bool> PostGameResult(GameDto gameDto)
+    public async Task<Game> PostGameResult(GameDto gameDto)
     {
         // Get todays date
         var today = DateOnly.FromDateTime(DateTime.UtcNow);
@@ -38,8 +39,7 @@ public class GameService(WordleDbContext db)
 
         Db.Games.Add(game);
         await Db.SaveChangesAsync();
-        //return game;
-        return true;
+        return game;
     }
 
     public async Task<GameStatsDto> GetGameStats(Game game)
@@ -51,8 +51,9 @@ public class GameService(WordleDbContext db)
             Word = game.Word!.Text,
             AverageGuesses = await gamesForWord.AverageAsync(g => g.Attempts),
             TotalTimesPlayed = await gamesForWord.CountAsync(),
-            TotalWins = await gamesForWord.CountAsync(g => g.IsWin)
-        };
+            TotalWins = await gamesForWord.CountAsync(g => g.IsWin),
+            Date = DateOnly.FromDateTime(DateTime.UtcNow)
+    };
 
         return stats;
     }
