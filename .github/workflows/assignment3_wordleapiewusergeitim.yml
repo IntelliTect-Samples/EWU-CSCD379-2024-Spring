@@ -59,7 +59,7 @@ jobs:
         id: deploy-to-webapp
         uses: azure/webapps-deploy@v2
         with:
-          app-name: 'wordle-web-2024'
+          app-name: 'TimNWordle'
           slot-name: 'Production'
-          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_ACF47D9BD37F4EC3BA371623A93B0AAA }}
+          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_9A345BE935774BD58EE76DE8651CEEED }}
           package: .
