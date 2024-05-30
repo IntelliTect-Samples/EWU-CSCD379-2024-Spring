@@ -3,21 +3,12 @@
     <v-app :style="gradientBaseStyle" class="full-page">
       <v-app-bar color="primary" :elevation="2">
         <v-app-bar-title @click="$router.push('/')" style="cursor: pointer">
-          <v-img
-            src="./public/image-Background-Removed.png"
-            alt="Logo"
-            max-width="180"
-            max-height="95"
-          ></v-img>
+          <v-img src="./public/image-Background-Removed.png" alt="Logo" max-width="180" max-height="95"></v-img>
         </v-app-bar-title>
 
-        <v-btn
-          v-if="!tokenService.isLoggedIn()"
-          @click="showLoginDialog = true"
-          flat
-        >
-        <v-icon>mdi-login</v-icon>
-          Login  
+        <v-btn v-if="!tokenService.isLoggedIn()" @click="showLoginDialog = true" flat>
+          <v-icon class="mr-2">mdi-login</v-icon>
+          Login
         </v-btn>
         <div v-else>
           {{ tokenService.getUserName() }}
@@ -28,11 +19,7 @@
         <HelpDialog v-model="showHelpDialog" />
         <v-btn @click="toggleDrawer" icon="mdi-menu"></v-btn>
       </v-app-bar>
-      <v-navigation-drawer
-        v-model="drawer"
-        location="right"
-        disable-resize-watcher
-      >
+      <v-navigation-drawer v-model="drawer" location="right" disable-resize-watcher>
         <v-list>
           <v-list-item @click="router.push('/About')" class="text-center">
             <v-icon class="mr-2">mdi-information</v-icon>
@@ -46,10 +33,7 @@
           </v-list-item>
         </v-list>
         <v-list>
-          <v-list-item
-            @click="router.push('/Instructions')"
-            class="text-center"
-          >
+          <v-list-item @click="router.push('/Instructions')" class="text-center">
             <v-icon class="mr-2">mdi-book-open</v-icon>
             Instructions
           </v-list-item>
@@ -64,6 +48,12 @@
           <v-list-item @click="router.push('/Statistics')" class="text-center">
             <v-icon class="mr-2">mdi-chart-bar</v-icon>
             Statistics
+          </v-list-item>
+        </v-list>
+        <v-list>
+          <v-list-item @click="router.push('/WordEditor')" class="text-center">
+            <v-icon class="mr-2">mdi-text-box-edit-outline</v-icon>
+            Word Editor
           </v-list-item>
         </v-list>
       </v-navigation-drawer>
@@ -114,20 +104,25 @@ watchEffect(() => {
 </script>
 
 <style scoped>
-.full-page {
+.full-page
+{
   height: 100%;
   width: 100%;
   background-size: 200% 200%;
   animation: gradientShift 15s ease infinite;
 }
 
-@keyframes gradientShift {
+@keyframes gradientShift
+{
+
   0%,
-  100% {
+  100%
+  {
     background-position: 0% 50%;
   }
 
-  50% {
+  50%
+  {
     background-position: 100% 50%;
   }
 }
