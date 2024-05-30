@@ -11,11 +11,16 @@ namespace Wordle.Api.Controllers
         public async Task<IActionResult> DeleteWord(string word)
         {
             var result = await wordEditorService.DeleteWordAsync(word);
-            if (result)
-            {
-                return Ok();
-            }
-            return NotFound();
+
+            return result ? Ok() : BadRequest();
+        }
+        
+        [HttpPost("AddWord")]
+        public async Task<IActionResult> AddWord(string word)
+        {
+            var result = await wordEditorService.AddWordAsync(word);
+            
+            return result ? Ok() : BadRequest();
         }
     }
 }
