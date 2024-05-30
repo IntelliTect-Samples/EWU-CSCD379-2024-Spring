@@ -170,6 +170,7 @@ export class Game {
        
         console.log("Result from API Game/Result: " + result.data + " " + result.status);
         this.stats = new GameStats();
+        console.log("Result from API Game/Result: " + result.data);
         Object.assign(this.stats, result.data);
         this.isBusy = false;
       }
