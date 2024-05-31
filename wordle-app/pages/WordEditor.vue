@@ -1,6 +1,6 @@
 <template>
 	<v-container>
-
+		<search-bar />
 	</v-container>
 
 </template>
