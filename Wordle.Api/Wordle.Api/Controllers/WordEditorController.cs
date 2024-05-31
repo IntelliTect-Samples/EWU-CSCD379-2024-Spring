@@ -22,5 +22,11 @@ namespace Wordle.Api.Controllers
             
             return result ? Ok() : BadRequest();
         }
+        
+        [HttpGet("GetWords")]
+        public async Task<IEnumerable<string>> GetWords()
+        {
+            return await wordEditorService.GetWordsAsync();
+        }
     }
 }

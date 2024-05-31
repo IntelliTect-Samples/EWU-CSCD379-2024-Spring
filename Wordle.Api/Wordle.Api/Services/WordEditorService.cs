@@ -30,4 +30,9 @@ public class WordEditorService(WordleDbContext Db)
         await Db.SaveChangesAsync();
         return true;
     }
+    
+    public async Task<IEnumerable<string>> GetWordsAsync()
+    {
+        return await Db.Words.Select(w => w.Text).ToListAsync();
+    }
 }
