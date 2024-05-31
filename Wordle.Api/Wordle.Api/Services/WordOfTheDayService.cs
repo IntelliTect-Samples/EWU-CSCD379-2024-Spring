@@ -15,14 +15,17 @@ namespace Wordle.Api.Services
             Db = db;
         }
 
-        public async Task<Word> GetRandomWord()
+        public async Task<Word> GetRandomWord(string containsText = "")
         {
-            var numberOfWords = await Db.Words.CountAsync();
+            var numberOfWords = await Db.Words.CountAsync(f => f.Text.Contains(containsText));
 
             Random random = new();
             int randomIndex = random.Next(numberOfWords);
 
-            return await Db.Words.Skip(randomIndex).FirstAsync();
+            return await Db.Words
+                .Where(f=>f.Text.Contains(containsText))
+                .Skip(randomIndex)
+                .FirstAsync();
         }
 
         public async Task<string> GetWordOfTheDay(DateOnly date)

@@ -94,6 +94,12 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
         };
     });
 
+//Add Policies
+builder.Services.AddAuthorization(options =>
+{
+    options.AddPolicy(Policies.RandomAdmin, Policies.RandomAdminPolicy);
+});
+
 var app = builder.Build();
 
 using (var scope = app.Services.CreateScope())
