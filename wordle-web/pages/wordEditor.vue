@@ -1,26 +1,35 @@
 <template>
   <v-progress-linear v-if="isLoading" color="primary" indeterminate />
   <v-card class="ma-10">
-    <div class="text-center">
-      <v-row>
-        <v-col>
-          <v-btn class="ma-7" variant="outlined" @click="addWordDialog = true"
-            >Add word</v-btn
-          >
-        </v-col>
-        <v-col>
-          <v-radio-group v-model="commonRadio">
-            <v-radio
-              label="Both common/uncommon"
-              :value="CommonRadio.Both"></v-radio>
-            <v-radio label="Only common" :value="CommonRadio.Common"></v-radio>
-            <v-radio
-              label="Only uncommon"
-              :value="CommonRadio.Uncommon"></v-radio>
-          </v-radio-group>
-        </v-col>
-      </v-row>
-    </div>
+    <v-row align="center">
+      <v-col cols="6" align="center">
+        <v-tooltip
+          text="You must be Master of the Universe and 21 or older to add words"
+          :disabled="isOlderThanTwentyOne && isMotU">
+          <template v-slot:activator="{ props }">
+            <v-btn
+              v-bind="props"
+              :variant="isOlderThanTwentyOne && isMotU ? 'elevated' : 'plain'"
+              :color="isOlderThanTwentyOne && isMotU ? 'primary' : ''"
+              class="ma-0"
+              @click="if (isOlderThanTwentyOne && isMotU) addWordDialog = true;"
+              >Add word</v-btn
+            >
+          </template>
+        </v-tooltip>
+      </v-col>
+      <v-col>
+        <v-radio-group v-model="commonRadio">
+          <v-radio
+            label="Both common/uncommon"
+            :value="CommonRadio.Both"></v-radio>
+          <v-radio label="Only common" :value="CommonRadio.Common"></v-radio>
+          <v-radio
+            label="Only uncommon"
+            :value="CommonRadio.Uncommon"></v-radio>
+        </v-radio-group>
+      </v-col>
+    </v-row>
     <v-table class="table my-2 mx-auto w-75 opacity-50">
       <thead>
         <tr>
@@ -59,19 +68,46 @@
           <td class="text-center text-h8">
             <v-row class="mt-0">
               <v-col cols="3">
-                <v-switch
-                  v-model="word.isCommonWord"
-                  @update:modelValue="
-                    isCommonWordChanged[index] = !isCommonWordChanged[index]
-                  "></v-switch>
+                <v-tooltip
+                  text="Tooltip"
+                  :disabled="tokenService?.isLoggedIn()">
+                  <template v-slot:activator="{ props }">
+                    <div class="text-center mx-0" v-bind="props">
+                      <v-switch
+                        :color="tokenService?.isLoggedIn() ? 'primary' : ''"
+                        :disabled="!tokenService?.isLoggedIn()"
+                        v-model="word.isCommonWord"
+                        @update:modelValue="
+                          isCommonWordChanged[index] =
+                            !isCommonWordChanged[index]
+                        "></v-switch>
+                    </div>
+                  </template>
+                  <span>You must be logged in to change common word flag</span>
+                </v-tooltip>
               </v-col>
               <v-col class="mt-2" cols="4">
-                <v-btn
-                  color="error"
-                  variant="outlined"
-                  icon="mdi-trash-can-outline"
-                  size="35"
-                  @click="deleteWord(word)"></v-btn>
+                <v-tooltip
+                  text="Tooltip"
+                  :disabled="isOlderThanTwentyOne && isMotU">
+                  <template v-slot:activator="{ props }">
+                    <div class="text-center mx-0" v-bind="props">
+                      <v-btn
+                        :color="isOlderThanTwentyOne && isMotU ? 'error' : ''"
+                        :disabled="!(isOlderThanTwentyOne && isMotU)"
+                        :variant="
+                          isOlderThanTwentyOne && isMotU ? 'outlined' : 'plain'
+                        "
+                        icon="mdi-trash-can-outline"
+                        size="35"
+                        @click="deleteWord(word)"></v-btn>
+                    </div>
+                  </template>
+                  <span
+                    >You must be Master of the Universe and 21 or older to add
+                    words</span
+                  >
+                </v-tooltip>
               </v-col>
               <v-col class="mt-2" cols="4">
                 <v-btn
@@ -136,8 +172,12 @@ const addWordDialog = ref(false);
 const wordToAdd = ref('');
 const commonRadio = ref(CommonRadio.Both);
 
+const isMotU = computed(() => tokenService?.getMotU());
+const isOlderThanTwentyOne = computed(() =>
+  tokenService?.isOlderThanTwentyOne()
+);
+
 watch([commonRadio], () => {
-  //   console.log(`${onlyCommonRadio.value} ${onlyUncommon}`)
   sortWords(wordsCopy.value!);
   switch (commonRadio.value) {
     case CommonRadio.Both:
