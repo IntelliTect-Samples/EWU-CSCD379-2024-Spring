@@ -1,4 +1,5 @@
 using Microsoft.EntityFrameworkCore;
+using Wordle.Api.Dtos;
 using Wordle.Api.Models;
 
 namespace Wordle.Api.Services;
@@ -31,8 +32,33 @@ public class WordEditorService(WordleDbContext Db)
         return true;
     }
     
-    public async Task<IEnumerable<string>> GetWordsAsync()
+    public async Task<IEnumerable<WordDto>> GetWordsAsync(bool isCommon = false)
     {
-        return await Db.Words.Select(w => w.Text).ToListAsync();
+        //return await Db.Words.Select(w => new WordDto { Text = w.Text, IsCommon = w.IsCommon }).ToListAsync();
+
+        List<WordDto> words = new();
+        if (isCommon)
+        {
+            words = await Db.Words.Where(w => w.IsCommon).Select(w => new WordDto { Text = w.Text, IsCommon = w.IsCommon }).ToListAsync();
+        }
+        else
+        {
+            words = await Db.Words.Select(w => new WordDto { Text = w.Text, IsCommon = w.IsCommon }).ToListAsync();
+        }
+        
+        return words;
+    }
+    
+    public async Task<bool> SetIsCommonAsync(string word, bool isCommon)
+    {
+        var wordToEdit = await Db.Words.FirstOrDefaultAsync(w => string.Equals(w.Text, word.ToLower()));
+        if (wordToEdit == null)
+        {
+            return false;
+        }
+
+        wordToEdit.IsCommon = isCommon;
+        await Db.SaveChangesAsync();
+        return true;
     }
 }

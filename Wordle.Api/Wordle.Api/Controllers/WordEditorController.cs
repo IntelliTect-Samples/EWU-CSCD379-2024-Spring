@@ -1,4 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
+using Wordle.Api.Dtos;
+using Wordle.Api.Models;
 using Wordle.Api.Services;
 
 namespace Wordle.Api.Controllers
@@ -24,9 +26,17 @@ namespace Wordle.Api.Controllers
         }
         
         [HttpGet("GetWords")]
-        public async Task<IEnumerable<string>> GetWords()
+        public async Task<IEnumerable<WordDto>> GetWords(bool isCommon = false)
         {
-            return await wordEditorService.GetWordsAsync();
+            return await wordEditorService.GetWordsAsync(isCommon);
+        }
+        
+        [HttpPost("SetIsCommon")]
+        public async Task<IActionResult> SetIsCommon(string word, bool isCommon)
+        {
+            var result = await wordEditorService.SetIsCommonAsync(word, isCommon);
+            
+            return result ? Ok() : BadRequest();
         }
     }
 }
