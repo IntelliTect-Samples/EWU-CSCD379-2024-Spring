@@ -178,6 +178,18 @@ const addWordDialog = ref(false);
 const wordToAdd = ref('');
 const commonRadio = ref(CommonRadio.Both);
 
+const itemsPerPage =ref(10);
+const curretnPage = ref(1);
+
+function paginatedWords() {
+  const start = (curretnPage.value - 1) * itemsPerPage.value;
+  const end = start + itemsPerPage.value;
+  return words.value?.slice(start, end);
+}
+function pageCount() {
+  return Math.ceil(words.value!.length / itemsPerPage.value);
+}
+
 const isMotU = computed(() => tokenService?.getMotU());
 const isOlderThanTwentyOne = computed(() =>
   tokenService?.isOlderThanTwentyOne()
