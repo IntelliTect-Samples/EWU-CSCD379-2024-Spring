@@ -89,10 +89,16 @@
         </tr>
       </tbody>
     </v-table>
+    <v-pagination v-model="curretnPage":length="pageCount" :totalVisible="7"></v-pagination>
   </v-card>
   <v-dialog v-model="addWordDialog" width="400">
-    <v-card>
-      <v-text-field label="Word" v-model="wordToAdd" />
+    <v-card height="200">
+      <!--<v-text-field label="Word" v-model="wordToAdd" />-->
+      <v-autocomplete
+        v-model="wordToAdd"
+        :items="words!.map(w => w.word)"
+        label="Add Word"
+      ></v-autocomplete>
       <v-btn
         @click="
           addWord();
@@ -135,6 +141,19 @@ const commonWordOrder = ref(CommonWordSortOrder.Unspecified);
 const addWordDialog = ref(false);
 const wordToAdd = ref('');
 const commonRadio = ref(CommonRadio.Both);
+
+const itemsPerPage =ref(10);
+const curretnPage = ref(1);
+
+function paginatedWords() {
+  const start = (curretnPage.value - 1) * itemsPerPage.value;
+  const end = start + itemsPerPage.value;
+  return words.value?.slice(start, end);
+}
+function pageCount() {
+  return Math.ceil(words.value!.length / itemsPerPage.value);
+}
+
 
 watch([commonRadio], () => {
   //   console.log(`${onlyCommonRadio.value} ${onlyUncommon}`)
