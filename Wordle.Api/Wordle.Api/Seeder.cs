@@ -11,7 +11,7 @@ public class Seeder
         {
             foreach (var word in WordOfTheDayService.WordList())
             {
-                db.Words.Add(new Word() { Text = word });
+                db.Words.Add(new Word() { Text = word, IsCommon = false});
             }
 
             await db.SaveChangesAsync();

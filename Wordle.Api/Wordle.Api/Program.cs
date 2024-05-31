@@ -66,6 +66,7 @@ builder.Services.AddScoped<WordOfTheDayService>();
 builder.Services.AddScoped<GameService>();
 builder.Services.AddScoped<PlayerService>();
 builder.Services.AddScoped<WordDateService>();
+builder.Services.AddScoped<WordEditorService>();
 
 
 // Identity Services
