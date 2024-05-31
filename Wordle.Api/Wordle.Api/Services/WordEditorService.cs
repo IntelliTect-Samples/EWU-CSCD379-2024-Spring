@@ -32,7 +32,7 @@ public class WordEditorService(WordleDbContext Db)
         return true;
     }
     
-    public async Task<IEnumerable<WordDto>> GetWordsAsync(bool isCommon = false)
+    public async Task<IEnumerable<WordDto>> GetWordsAsync(bool isCommon = false, int position = 0)
     {
 
         List<WordDto> words = new();
@@ -41,6 +41,8 @@ public class WordEditorService(WordleDbContext Db)
             // Get only common words
             words = await Db.Words
                 .Where(w => w.IsCommon)
+                .Skip(position)
+                .Take(10)
                 .Select(w => new WordDto { Text = w.Text, IsCommon = w.IsCommon })
                 .OrderBy(w => w.Text)
                 .ToListAsync();
@@ -49,6 +51,8 @@ public class WordEditorService(WordleDbContext Db)
         {
             // Get all words
             words = await Db.Words
+                .Skip(position)
+                .Take(10)
                 .Select(w => new WordDto { Text = w.Text, IsCommon = w.IsCommon })
                 .OrderBy(w => w.Text)
                 .ToListAsync();
