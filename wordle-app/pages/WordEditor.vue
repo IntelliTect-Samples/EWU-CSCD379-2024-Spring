@@ -1,19 +1,37 @@
 <template>
-  <v-container>
-    <!-- <search-bar /> -->
+  <v-container style="max-width: 800px">
+    <v-toolbar flat class="mb-3">
+      <v-toolbar-title>Word Editor</v-toolbar-title>
+      <v-spacer></v-spacer>
+      <v-switch
+        label="Display common words only"
+        color="secondary"
+        @change="fetchWords"
+        class="d-flex justify-center"
+      />
+      <v-btn
+        color="primary"
+        prepend-icon="mdi-plus-box"
+        variant="flat"
+        class="ml-5"
+		@click="showDialog = true"
+        >Add Word
+      </v-btn>
+    </v-toolbar>
 
     <v-data-table-server
-			v-model:items-per-page="options.itemsPerPage"
+      v-model:items-per-page="options.itemsPerPage"
       :headers="headers"
       :items="words"
-			:items-length="totalWords"
+      :items-length="totalWords"
       :options.sync="options"
       @update:options="fetchWords"
-			@update:page="pageNumber"
-			@update:items-per-page="itemsPerPage"
+      @update:page="pageNumber"
+      @update:items-per-page="itemsPerPage"
       :loading="isLoading"
-			hover
-			
+      :items-per-page-options="[10, 25, 50, 100]"
+      hover
+      density="compact"
     >
       <template #top>
         <v-text-field
@@ -25,25 +43,72 @@
         />
       </template>
 
-      <template #item.actions="{ item }">
-				<v-btn @click="deleteItem(item)" color="red">Delete</v-btn>
+      <!-- Template for Word text -->
+      <template #item.text="{ item }">
+        <p class="font-weight-bold">
+          {{ item.text.charAt(0).toUpperCase() + item.text.slice(1) }}
+        </p>
       </template>
 
-			<!-- Template for switch to change isCommon -->
-			<template #item.isCommon="{ item }">
-				<v-switch class="d-inline-block" v-model="item.isCommon" color="green" label="Common" inset @change="updateItem(item)" />
-			</template>
+      <template #item.actions="{ item }">
+        <v-btn @click="deleteItem(item)" color="red">Delete</v-btn>
+      </template>
+
+      <!-- Template for switch to change isCommon -->
+      <template #item.isCommon="{ item }">
+        <v-switch
+          class="d-flex justify-center"
+          v-model="item.isCommon"
+          color="green"
+          inset
+          @change="updateItem(item)"
+        />
+      </template>
     </v-data-table-server>
+
+    <AddWordDialog
+      @save="saveWord"
+      v-model:show="showDialog"
+    />
   </v-container>
 </template>
 
 <script setup lang="ts">
 import Axios from "axios";
 
+// Add Word Dialog setup and functions
+const showDialog = ref<boolean>(false);
+
+function saveWord(word: string) {
+	console.log(word);
+	showDialog.value = false;
+}
+
+// Data table setup and functions
+
+// Headers for the data table
 const headers = [
-	{ key: "text", text: "Word", title: "Word", sortable: false},
-	{ key: "isCommon", text: "Common", title: "Common", sortable: false},
-	{ key: "actions", text: "Actions", title: "Actions", sortable: false}
+  {
+    key: "text",
+    text: "Word",
+    title: "Word",
+    sortable: false,
+    align: "center",
+  },
+  {
+    key: "isCommon",
+    text: "Common",
+    title: "Common",
+    sortable: false,
+    align: "center",
+  },
+  {
+    key: "actions",
+    text: "Actions",
+    title: "Actions",
+    sortable: false,
+    align: "center",
+  },
 ];
 
 interface Word {
@@ -58,73 +123,72 @@ const totalWords = ref<number>(0);
 const search = ref("");
 const options = ref({
   page: 1,
-  itemsPerPage: 10
+  itemsPerPage: 10,
 });
 
 const pageNumber = (page: number) => {
-	options.value.page = page;
-}
+  options.value.page = page;
+};
 
 const itemsPerPage = (itemsPerPage: number) => {
-	options.value.itemsPerPage = itemsPerPage;
-}
+  options.value.itemsPerPage = itemsPerPage;
+};
 
+// Fetch words from the server based on the search query and pagination options
 async function fetchWords() {
-  const { page, itemsPerPage} = options.value;
+  const { page, itemsPerPage } = options.value;
   const params = {
-		search: search.value,
+    search: search.value,
     page,
     itemsPerPage,
   };
 
   try {
-		isLoading.value = true;
-    const response = (await Axios.get("/WordEditor/GetWords", { params }));
+    isLoading.value = true;
+    const response = await Axios.get("/WordEditor/GetWords", { params });
 
-		words.value = response.data.words;
-		totalWords.value = response.data.totalCount;
-		console.log(response.data.totalCount);
-
+    words.value = response.data.words;
+    totalWords.value = response.data.totalCount;
+    console.log(response.data.totalCount);
   } catch (error) {
     console.error(error);
   } finally {
     isLoading.value = false;
   }
-
 }
 
 async function updateItem(item: Word) {
-	try {
-		isLoading.value = true;
-		const response = await Axios.post("WordEditor/SetIsCommon?word=" + item.text + "&isCommon=" + item.isCommon);
+  try {
+    isLoading.value = true;
+    const response = await Axios.post(
+      "WordEditor/SetIsCommon?word=" + item.text + "&isCommon=" + item.isCommon
+    );
 
-		if(response.status === 200) {
-			await fetchWords();
-		}
-
-	} catch (error) {
-		console.error(error);
-	} finally {
-		isLoading.value = false;
-	}
-
+    if (response.status === 200) {
+      await fetchWords();
+    }
+  } catch (error) {
+    console.error(error);
+  } finally {
+    isLoading.value = false;
+  }
 }
 
 async function deleteItem(item: Word) {
-	try {
-		isLoading.value = true;
-		const response = await Axios.post("/WordEditor/DeleteWord?word=" + item.text);
+  try {
+    isLoading.value = true;
+    const response = await Axios.post(
+      "/WordEditor/DeleteWord?word=" + item.text
+    );
 
-		if(response.status === 200) {
-			await fetchWords();
-		}
-
-	} catch (error) {
-		console.error(error);
-	} finally {
-		isLoading.value = false;
-	}
-
+    if (response.status === 200) {
+      await fetchWords();
+    }
+  } catch (error) {
+    console.error(error);
+  } finally {
+    isLoading.value = false;
+  }
 }
 
 watch([options, search], fetchWords, { immediate: true });
