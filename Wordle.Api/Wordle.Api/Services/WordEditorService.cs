@@ -32,7 +32,7 @@ public class WordEditorService(WordleDbContext Db)
         return true;
     }
     
-    public async Task<(List<WordDto>, int TotalCount)> GetWordsAsync(string search, int page, int itemsPerPage, string sortBy, bool sortDesc)
+    public async Task<(List<WordDto>, int TotalCount)> GetWordsAsync(string search, int page, int itemsPerPage)
     {
 
         var query = Db.Words.AsQueryable();
@@ -40,13 +40,6 @@ public class WordEditorService(WordleDbContext Db)
         if (!string.IsNullOrEmpty(search))
         {
             query = query.Where(w => w.Text.Contains(search.ToLower()));
-        }
-
-        if (!string.IsNullOrEmpty(sortBy))
-        {
-            query = sortDesc
-                ? query.OrderByDescending(w => w.Text)
-                : query.OrderBy(w => w.Text);
         }
 
         var totalCount = await query.CountAsync();

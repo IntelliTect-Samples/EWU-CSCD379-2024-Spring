@@ -27,39 +27,34 @@
 import Axios from "axios";
 
 const headers = [
-  { text: "Word", value: "text" },
-  { text: "Common", value: "isCommon" },
-  { text: "Position", value: "position" },
+  { title: "Word", key: "text",  sortable: false},
+  { title: "Common", key: "isCommon", value: (word: Word) => (word.isCommon ? "✅" : "❌"), sortable: false},
+  
 ];
 
 interface Word {
-  text: string;
   isCommon: boolean;
+  text: string;
 }
 
-const words = ref([]);
+const words = ref<Word[]>([]);
 const isLoading = ref<boolean>(false);
 
-const totalWords = ref(0);
+const totalWords = ref<number>(0);
 const search = ref("");
 const options = ref({
   page: 1,
-  itemsPerPage: 10,
-  sortBy: ["text"],
-  sortDesc: [false],
+  itemsPerPage: 10
 });
 
 async function fetchWords() {
-  const { page, itemsPerPage, sortBy, sortDesc } = options.value;
+  const { page, itemsPerPage} = options.value;
   const params = {
+	search: search.value,
     page,
     itemsPerPage,
-    search: search.value,
-    sortBy: sortBy[0] || "",
-    sortDesc: sortDesc[0] || false,
+    
   };
-
-  // const response = await Axios.get('/WordEditor/GetWords', { params });
 
   let response: any;
 
@@ -67,9 +62,6 @@ async function fetchWords() {
   try {
 	isLoading.value = true;
     response = await Axios.get("/WordEditor/GetWords", { params });
-    words.value = response.data.words;
-	totalWords.value = response.data.total;
-    console.log(words.value)
   } catch (error) {
     console.error(error);
   } finally {
@@ -77,25 +69,13 @@ async function fetchWords() {
   }
 
   words.value = response.data.words;
-  totalWords.value = response.data.total;
+  totalWords.value = response.data.totalCount;
 
-  console.log("Words: " + words.value[0]);
-  console.log(totalWords.value);
+  console.log('Response: ', response.data.words);
+  console.log('Words: ', words.value[0]);
 
 }
 
 watch([options, search], fetchWords, { immediate: true });
 
-// async function tryFetch() {
-//   isLoading.value = true;
-//   try {
-//     const response = await Axios.get("/WordEditor/GetWords");
-//     words.value = response.data;
-//     console.log(words.value[0].text);
-//   } catch (error) {
-//     console.error(error);
-//   } finally {
-//     isLoading.value = false;
-//   }
-// }
 </script>

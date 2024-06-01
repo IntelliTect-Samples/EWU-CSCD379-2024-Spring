@@ -26,9 +26,9 @@ namespace Wordle.Api.Controllers
         }
         
         [HttpGet("GetWords")]
-        public async Task<IActionResult> GetWords(string search = "", int page = 1, int itemsPerPage = 10, string sortBy = "", bool sortDesc = false)
+        public async Task<IActionResult> GetWords(string search = "", int page = 1, int itemsPerPage = 10)
         {
-            var result = await wordEditorService.GetWordsAsync(search, page, itemsPerPage, sortBy, sortDesc);
+            var result = await wordEditorService.GetWordsAsync(search, page, itemsPerPage);
             return Ok(new
             {
                 words = result.Item1,
