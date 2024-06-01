@@ -26,9 +26,14 @@ namespace Wordle.Api.Controllers
         }
         
         [HttpGet("GetWords")]
-        public async Task<IEnumerable<WordDto>> GetWords(bool isCommon = false, int position = 0)
+        public async Task<IActionResult> GetWords(string search = "", int page = 1, int itemsPerPage = 10, string sortBy = "", bool sortDesc = false)
         {
-            return await wordEditorService.GetWordsAsync(isCommon, position);
+            var result = await wordEditorService.GetWordsAsync(search, page, itemsPerPage, sortBy, sortDesc);
+            return Ok(new
+            {
+                words = result.Item1,
+                totalCount = result.Item2
+            });
         }
         
         [HttpPost("SetIsCommon")]

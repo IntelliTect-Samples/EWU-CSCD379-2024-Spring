@@ -32,34 +32,57 @@ public class WordEditorService(WordleDbContext Db)
         return true;
     }
     
-    public async Task<IEnumerable<WordDto>> GetWordsAsync(bool isCommon = false, int position = 0)
+    public async Task<(List<WordDto>, int TotalCount)> GetWordsAsync(string search, int page, int itemsPerPage, string sortBy, bool sortDesc)
     {
 
-        List<WordDto> words = new();
-        if (isCommon)
+        var query = Db.Words.AsQueryable();
+
+        if (!string.IsNullOrEmpty(search))
         {
-            // Get only common words
-            words = await Db.Words
-                .Where(w => w.IsCommon)
-                .Skip(position)
-                .Take(10)
-                .Select(w => new WordDto { Text = w.Text, IsCommon = w.IsCommon })
-                .OrderBy(w => w.Text)
-                .ToListAsync();
-        }
-        else
-        {
-            // Get all words
-            words = await Db.Words
-                .Skip(position)
-                .Take(10)
-                .Select(w => new WordDto { Text = w.Text, IsCommon = w.IsCommon })
-                .OrderBy(w => w.Text)
-                .ToListAsync();
+            query = query.Where(w => w.Text.Contains(search.ToLower()));
         }
 
+        if (!string.IsNullOrEmpty(sortBy))
+        {
+            query = sortDesc
+                ? query.OrderByDescending(w => w.Text)
+                : query.OrderBy(w => w.Text);
+        }
 
-        return words;
+        var totalCount = await query.CountAsync();
+        var words = await query
+            .Skip((page - 1) * itemsPerPage)
+            .Take(itemsPerPage)
+            .Select(w => new WordDto { Text = w.Text, IsCommon = w.IsCommon })
+            .ToListAsync();
+
+        return (words, totalCount);
+
+        //List<WordDto> words = new();
+        //if (isCommon)
+        //{
+        //    // Get only common words
+        //    words = await Db.Words
+        //        .Where(w => w.IsCommon)
+        //        .Skip(position)
+        //        .Take(10)
+        //        .Select(w => new WordDto { Text = w.Text, IsCommon = w.IsCommon })
+        //        .OrderBy(w => w.Text)
+        //        .ToListAsync();
+        //}
+        //else
+        //{
+        //    // Get all words
+        //    words = await Db.Words
+        //        .Skip(position)
+        //        .Take(10)
+        //        .Select(w => new WordDto { Text = w.Text, IsCommon = w.IsCommon })
+        //        .OrderBy(w => w.Text)
+        //        .ToListAsync();
+        //}
+
+
+        //return words;
     }
     
     public async Task<bool> SetIsCommonAsync(string word, bool isCommon)
