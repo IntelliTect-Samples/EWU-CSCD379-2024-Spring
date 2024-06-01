@@ -2,13 +2,16 @@
   <v-container>
     <!-- <search-bar /> -->
 
-    <v-data-table
+    <v-data-table-server
+			v-model:items-per-page="options.itemsPerPage"
       :headers="headers"
       :items="words"
-      :server-items-length="totalWords"
+			:items-length="totalWords"
       :options.sync="options"
       @update:options="fetchWords"
       :loading="isLoading"
+			hover
+			
     >
       <template #top>
         <v-text-field
@@ -21,10 +24,14 @@
       </template>
 
       <template #item.actions="{ item }">
-        <v-icon @click="editItem(item)">mdi-pencil</v-icon>
-        <v-icon @click="deleteItem(item)">mdi-delete</v-icon>
+				<v-btn @click="deleteItem(item)" color="red">Delete</v-btn>
       </template>
-    </v-data-table>
+
+			<!-- Template for switch to change isCommon -->
+			<template #item.isCommon="{ item }">
+				<v-switch class="d-inline-block" v-model="item.isCommon" color="green" label="Common" inset @change="updateItem(item)" />
+			</template>
+    </v-data-table-server>
   </v-container>
 </template>
 
@@ -32,10 +39,9 @@
 import Axios from "axios";
 
 const headers = [
-  { title: "Word", key: "text",  sortable: false},
-  { title: "Common", key: "isCommon", value: (word: Word) => (word.isCommon ? "✅" : "❌"), sortable: false},
-  { title: "Actions", key: "actions", sortable: false}
-
+	{ key: "text", text: "Word", title: "Word", sortable: false},
+	{ key: "isCommon", text: "Common", title: "Common", sortable: false},
+	{ key: "actions", text: "Actions", title: "Actions", sortable: false}
 ];
 
 interface Word {
@@ -56,29 +62,44 @@ const options = ref({
 async function fetchWords() {
   const { page, itemsPerPage} = options.value;
   const params = {
-	search: search.value,
+		search: search.value,
     page,
     itemsPerPage,
-
   };
 
-  let response: any;
+
 
 
   try {
-	isLoading.value = true;
-    response = await Axios.get("/WordEditor/GetWords", { params });
+		isLoading.value = true;
+    const response = (await Axios.get("/WordEditor/GetWords", { params }));
+
+		words.value = response.data.words;
+		totalWords.value = response.data.totalCount;
+		console.log(response.data.totalCount);
+
   } catch (error) {
     console.error(error);
   } finally {
     isLoading.value = false;
   }
 
-  words.value = response.data.words;
-  totalWords.value = response.data.totalCount;
+}
 
-  console.log('Response: ', response.data.words);
-  console.log('Words: ', words.value[0]);
+async function updateItem(item: Word) {
+	try {
+		isLoading.value = true;
+		const response = await Axios.post("WordEditor/SetIsCommon?word=" + item.text + "&isCommon=" + item.isCommon);
+
+		if(response.status === 200) {
+			await fetchWords();
+		}
+
+	} catch (error) {
+		console.error(error);
+	} finally {
+		isLoading.value = false;
+	}
 
 }
 
@@ -98,7 +119,6 @@ async function deleteItem(item: Word) {
 	}
 
 }
-
 
 watch([options, search], fetchWords, { immediate: true });
 </script>
