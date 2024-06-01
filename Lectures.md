@@ -244,29 +244,50 @@
 - AI with Dr. Gravatt
 
 ## Week 10 
-### Lecture 19. 6/4: 
-- Unreal Engine 5.4
-- Download Fantastic Village Pack
-- 3rd Person Starter
+### Lecture 19. 6/4: Unreal Engine 5.4
+
+- PREP: We are going to be rocking Unreal Engine on Tuesday. If you want to follow along in class, here is what you are going to need to get set up on your computer. You won't have time to do this and follow along in clss. 
+  - You will need a computer with a decent graphics card. I don't think integrated graphics will probably work very well. Give it a shot, but it is unlikely.
+  1. Install Unreal Engine by following the instruction here: https://www.unrealengine.com/en-US/download
+  1. Install the latest which is 5.4.1
+  1. The Unreal Engine Marketplace has quite a number of free assets you can 'purchase' and use.
+  1. This is the free pack we will be using in class: https://www.unrealengine.com/marketplace/en-US/product/fantastic-village-pack
+  1. Open Unreal Engine, click Games, and click Third Person. Give it a location and name and click Create
+  1. Once the game opens, go ahead and press the play button and move your character around. 
+  1. Stop the game (esc) and close Unreal Engine
+  1. In the Epic games launcher in the Unreal section click the Marketplace tab. Search for 'fantastic village' and click on the card. When the page for the Fantastic Village Pack page appears, click Add to Project. In the dropdown select the game you created above.
+  1. This will add all the village content to the game.
+  1. Start Unreal and open your game. 
+  1. Once in the editor open the content drawer (ctrl-space) and Browse on the left to Content/Fantastic_Village_Pack/maps/map_village_day. Double click this to open it.
+  1. Click the play button and wander through the village. 
+  1. If you are getting warnings that pop up, you may need to let it sit for a bit so it can compile shaders, etc. 
+You should now be ready to follow along in class on Tuesday.
+
 - Control game state (editing vs playing)
 - Navigating the interface
   - Navigating 3d Environment
   - Content Browser/Drawer and Files
-  - BluePrints
+  - Primitives
   - Lights
   - Camera
   - Player
   - Levels
   - Add stuff to Level
   - Materials
+  - BluePrints
 - Epic asset store
   - Adding Content (Which Content?)
 - Building and environment
   - Adding assets to the environment
   - Lighting
-- Pick up an object: https://www.youtube.com/watch?v=Ak-A4E1pTHo
-- Collider to light up an object when close
 - Open a door?
+- - Add a door with door and frame.
+  - Add a door collider
+  - Add IA_Action
+  - Add a timeline and lerp
+  - Make it open both ways. 
+  - Collider to light up an object when close
+- Pick up an object: https://www.youtube.com/watch?v=Ak-A4E1pTHo
 
 ### Lecture 20. 6/6: 
 - Pizza
