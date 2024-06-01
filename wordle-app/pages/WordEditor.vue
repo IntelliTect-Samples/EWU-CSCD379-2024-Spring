@@ -9,6 +9,8 @@
 			:items-length="totalWords"
       :options.sync="options"
       @update:options="fetchWords"
+			@update:page="pageNumber"
+			@update:items-per-page="itemsPerPage"
       :loading="isLoading"
 			hover
 			
@@ -59,6 +61,14 @@ const options = ref({
   itemsPerPage: 10
 });
 
+const pageNumber = (page: number) => {
+	options.value.page = page;
+}
+
+const itemsPerPage = (itemsPerPage: number) => {
+	options.value.itemsPerPage = itemsPerPage;
+}
+
 async function fetchWords() {
   const { page, itemsPerPage} = options.value;
   const params = {
@@ -66,9 +76,6 @@ async function fetchWords() {
     page,
     itemsPerPage,
   };
-
-
-
 
   try {
 		isLoading.value = true;
