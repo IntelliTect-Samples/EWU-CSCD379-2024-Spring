@@ -19,6 +19,11 @@
           clear-icon="mdi-close-circle"
         />
       </template>
+
+      <template #item.actions="{ item }">
+        <v-icon @click="editItem(item)">mdi-pencil</v-icon>
+        <v-icon @click="deleteItem(item)">mdi-delete</v-icon>
+      </template>
     </v-data-table>
   </v-container>
 </template>
@@ -29,7 +34,8 @@ import Axios from "axios";
 const headers = [
   { title: "Word", key: "text",  sortable: false},
   { title: "Common", key: "isCommon", value: (word: Word) => (word.isCommon ? "✅" : "❌"), sortable: false},
-  
+  { title: "Actions", key: "actions", sortable: false}
+
 ];
 
 interface Word {
@@ -53,12 +59,12 @@ async function fetchWords() {
 	search: search.value,
     page,
     itemsPerPage,
-    
+
   };
 
   let response: any;
 
-  
+
   try {
 	isLoading.value = true;
     response = await Axios.get("/WordEditor/GetWords", { params });
@@ -76,6 +82,23 @@ async function fetchWords() {
 
 }
 
-watch([options, search], fetchWords, { immediate: true });
+async function deleteItem(item: Word) {
+	try {
+		isLoading.value = true;
+		const response = await Axios.post("/WordEditor/DeleteWord?word=" + item.text);
 
+		if(response.status === 200) {
+			await fetchWords();
+		}
+
+	} catch (error) {
+		console.error(error);
+	} finally {
+		isLoading.value = false;
+	}
+
+}
+
+
+watch([options, search], fetchWords, { immediate: true });
 </script>
