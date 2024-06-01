@@ -280,14 +280,14 @@ You should now be ready to follow along in class on Tuesday.
 - Building and environment
   - Adding assets to the environment
   - Lighting
-- Open a door?
+- Open a door: https://www.youtube.com/watch?v=O7vmp73ue4Y
 - - Add a door with door and frame.
   - Add a door collider
   - Add IA_Action
   - Add a timeline and lerp
   - Make it open both ways. 
   - Collider to light up an object when close
-- Pick up an object: https://www.youtube.com/watch?v=Ak-A4E1pTHo
+- Pick up an object: https://www.youtube.com/watch?v=Ak-A4E1pTHo 
 
 ### Lecture 20. 6/6: 
 - Pizza
