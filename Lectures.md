@@ -264,7 +264,7 @@
 - Building and environment
   - Adding assets to the environment
   - Lighting
-- Pick up an object
+- Pick up an object: https://www.youtube.com/watch?v=Ak-A4E1pTHo
 - Collider to light up an object when close
 - Open a door?
 
