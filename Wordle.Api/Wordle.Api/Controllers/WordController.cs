@@ -7,7 +7,7 @@ using Wordle.Api.Services;
 namespace Wordle.Api.Controllers;
 [ApiController]
 [Route("[controller]")]
-public class WordController(WordOfTheDayService wordOfTheDayService) : ControllerBase
+public class WordController(WordOfTheDayService wordOfTheDayService, WordEditorService wordEditorService) : ControllerBase
 {
     [HttpGet("RandomWord")]
     public async Task<string> GetRandomWord()
@@ -39,5 +39,23 @@ public class WordController(WordOfTheDayService wordOfTheDayService) : Controlle
     public async Task<List<WordDto>> GetWordsList()
     {
         return await wordOfTheDayService.GetWordsList();
+    }
+
+    [HttpPost("AddWord")]
+    public async Task AddWord(WordDto word)
+    {
+        await wordEditorService.AddWord(word);
+    }
+
+    [HttpDelete("DeleteWord")]
+    public async Task DeleteWord(string word)
+    {
+        await wordEditorService.DeleteWord(word);
+    }
+
+    [HttpPost("EditWord")]
+    public async Task EditWord(WordDto word)
+    {
+        await wordEditorService.UpdateWord(word);
     }
 }
