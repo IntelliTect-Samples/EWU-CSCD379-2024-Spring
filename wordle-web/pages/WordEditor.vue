@@ -1,76 +1,20 @@
 <template>
   <v-container>
-    <v-card class="pa-3">
-      <v-row>
-        <v-col cols="12">
-          <v-card-title class="font-weight-bold mb-3">
-            {{ isEditMode ? "Word Editor" : "Word List" }}
-            <v-btn-toggle
-              v-if="isEditUser || isLoggedIn"
-              variant="outlined"
-              v-model="userMode"
-              density="compact"
-              class="ml-3"
-              mandatory
-            >
-              <v-btn>View</v-btn>
-              <v-btn>Edit</v-btn>
-            </v-btn-toggle>
-          </v-card-title>
-        </v-col>
-      </v-row>
-      <v-card-item>
-        <v-row>
-          <v-col cols="auto" v-if="isEditMode && isEditUser">
-            <v-btn
-              variant="outlined"
-              @click="
-                () => {
-                  showAddEditor = true;
-                }
-              "
-            >
-              <v-icon>mdi-plus</v-icon>
-              Add Word</v-btn
-            >
-          </v-col>
-        </v-row>
-        <v-row>
-          <v-col cols="12" lg="2" md="6" sm="12">
-            <v-text-field
-              v-model="query"
-              item-text="word"
-              item-value="word"
-              label="Search for a word"
-              hide-details
-              clearable
-              single-line
-              variant="outlined"
-              density="compact"
-            />
-          </v-col>
-          <v-col cols="12" lg="3" md="6" sm="6">
-            <v-slider v-model="pageSize" min="10" max="100" step="1">
-              <template v-slot:append>
-                <v-select
-                  v-model="pageSize"
-                  :items="[10, 20, 25, 50, 100]"
-                  hide-details
-                  density="compact"
-                  variant="outlined"
-                />
-              </template>
-            </v-slider>
-          </v-col>
-          <v-col cols="auto">
-            <v-btn
-              variant="outlined"
-              @click="resetFilters"
-              text="Clear Filters"
-            />
-          </v-col>
-        </v-row>
-      </v-card-item>
+    <v-card>
+      <v-card-title class="font-weight-bold my-3">
+        {{ isEditMode ? "Word Editor" : "Word List" }}
+        <v-btn-toggle
+          v-if="isEditUser || isLoggedIn"
+          variant="outlined"
+          v-model="userMode"
+          density="compact"
+          class="ml-3"
+          mandatory
+        >
+          <v-btn>View</v-btn>
+          <v-btn>Edit</v-btn>
+        </v-btn-toggle>
+      </v-card-title>
       <v-card-item>
         <v-data-table
           :headers="[
@@ -88,6 +32,52 @@
           :cell-props="{ class: 'text-uppercase text-button py-3' }"
           :v-model="chosenWord"
         >
+          <template v-slot:top>
+            <v-row class="mb-1">
+              <v-col cols="12" lg="5" md="6" sm="12">
+                <v-text-field
+                  v-model="query"
+                  item-text="word"
+                  item-value="word"
+                  label="Search for a word"
+                  hide-details
+                  clearable
+                  single-line
+                  variant="outlined"
+                  density="compact"
+                />
+              </v-col>
+              <v-col cols="12" lg="3" md="6" sm="6">
+                <v-slider v-model="pageSize" min="10" max="100" step="1">
+                  <template v-slot:append>
+                    <v-select
+                      v-model="pageSize"
+                      :items="[10, 20, 25, 50, 100]"
+                      hide-details
+                      density="compact"
+                      variant="outlined"
+                    />
+                  </template>
+                </v-slider>
+              </v-col>
+              <v-col cols="auto">
+                <v-btn variant="outlined" @click="resetFilters" text="Clear" />
+              </v-col>
+              <v-col cols="auto" v-if="isEditMode && isEditUser">
+                <v-btn
+                  variant="outlined"
+                  @click="
+                    () => {
+                      showAddEditor = true;
+                    }
+                  "
+                >
+                  <v-icon>mdi-plus</v-icon>
+                  Add Word</v-btn
+                >
+              </v-col>
+            </v-row>
+          </template>
           <template v-slot:item.isCommon="{ item }">
             <v-icon :icon="item.isCommon ? 'mdi-check' : 'mdi-close'" />
           </template>
