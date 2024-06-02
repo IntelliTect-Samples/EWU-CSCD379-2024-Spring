@@ -38,9 +38,7 @@
       </v-card-text>
       <v-card-actions>
         <v-spacer />
-        <v-btn color="primary" variant="tonal" @click="modelValue = false">
-          Cancel
-        </v-btn>
+        <v-btn color="primary" variant="tonal" @click="close"> Cancel </v-btn>
         <v-btn color="primary" variant="flat" @click="signIn"> Sign In </v-btn>
       </v-card-actions>
     </v-card>
@@ -78,5 +76,11 @@ function signIn() {
     .catch((error) => {
       errorMessage.value = error.response.data;
     });
+}
+
+function close() {
+  userName.value = "";
+  password.value = "";
+  modelValue.value = false;
 }
 </script>

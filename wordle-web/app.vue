@@ -5,17 +5,14 @@
         <v-img :src="logoPath" alt="Logo" max-width="150" max-height="70" />
       </v-app-bar-title>
 
-      <v-app-bar-nav-icon @click="showLoginLogOut" class="mr-3">
-        <template v-slot:default>
-          <div v-if="tokenService.isLoggedIn()">
-            <span v-if="$vuetify.display.smAndUp">
-              {{ tokenService.getUserName() }}</span
-            >
-            <v-icon v-else="tokenService.isLoggedIn()" icon="mdi-account" />
-          </div>
-          <v-icon v-else="isLoggedIn" icon="mdi-login" />
-        </template>
-      </v-app-bar-nav-icon>
+      <v-btn v-if="$vuetify.display.smAndUp" @click="showLoginLogOut">
+        {{ tokenService.isLoggedIn() ? tokenService.getUserName() : "Log In" }}
+      </v-btn>
+      <v-btn
+        v-else
+        @click="showLoginLogOut"
+        :icon="tokenService.isLoggedIn() ? 'mdi-account' : 'mdi-login'"
+      />
 
       <v-app-bar-nav-icon
         icon="mdi-help-circle"
