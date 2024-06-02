@@ -49,16 +49,16 @@ public static class IdentitySeed
 
     private static async Task SeedOtherUsersAsync(UserManager<AppUser> userManager)
     {
-            // Seed other users with claims and birthdates
-        var existingUsers = await userManager.Users.ToListAsync();
-        if (!existingUsers.Any(u => u.Email == "user1@example.com"))
+           
+        if (await userManager.FindByEmailAsync("user1@example.com") == null)
         {
             var user1 = new AppUser
             {
                 UserName = "user1@example.com",
                 Email = "user1@example.com",
                 Birthdate = new DateTime(2000, 1, 1),
-                Claims = new List<string> { Claims.MasterOfTheUniverse }
+                //Claims = new List<string> { Claims.MasterOfTheUniverse }
+                //Need to find a way to add claims
             };
               await userManager.CreateAsync(user1, "password1");
         }
