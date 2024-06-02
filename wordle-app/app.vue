@@ -73,7 +73,7 @@ import nuxtStorage from "nuxt-storage";
 import TokenService from "./scripts/tokenService";
 
 const tokenService = new TokenService();
-const isLogged = ref(false);
+const isLogged = ref(tokenService.isLoggedIn());
 
 const showLoginDialog = ref(false);
 

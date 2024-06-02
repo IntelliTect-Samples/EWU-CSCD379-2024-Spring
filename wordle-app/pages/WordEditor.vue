@@ -85,7 +85,7 @@ import TokenService from "~/scripts/tokenService";
 
 // Log in stuff here
 const tokenService = new TokenService();
-const isLogged = ref(false);
+const isLogged = ref(tokenService.isLoggedIn());
 
 // Add Word Dialog setup and functions
 const showDialog = ref<boolean>(false);
