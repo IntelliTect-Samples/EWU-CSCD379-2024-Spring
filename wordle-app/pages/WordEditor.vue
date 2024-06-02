@@ -11,6 +11,7 @@
         v-model="isCommonFilter"
       />
       <v-btn
+        v-if="isLogged"
         color="primary"
         prepend-icon="mdi-plus-box"
         variant="flat"
@@ -123,14 +124,17 @@ const headers = [
     sortable: false,
     align: "center",
   },
-  {
+];
+
+if (isLogged.value) {
+  headers.push({
     key: "actions",
     text: "Actions",
     title: "Actions",
     sortable: false,
     align: "center",
-  },
-];
+  });
+}
 
 interface Word {
   isCommon: boolean;

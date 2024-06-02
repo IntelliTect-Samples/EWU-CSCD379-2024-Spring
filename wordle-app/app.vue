@@ -8,7 +8,7 @@
 
         <v-btn v-if="!isLogged" @click="showLoginDialog = true" variant="tonal">
           <v-icon class="mr-2">mdi-login</v-icon>
-          Login
+          Log in
         </v-btn>
         <v-btn v-else @click="showLoginDialog = true" variant="tonal">
           <v-icon class="mr-2">mdi-account</v-icon>
