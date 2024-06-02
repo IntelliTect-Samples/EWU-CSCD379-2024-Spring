@@ -175,7 +175,7 @@
     :confirmMessage="`Are you sure you want to delete the word '${chosenWord?.word}'?`"
     confirmTitle="Delete Word From Words List?"
     confirmAction="Delete Word"
-    @updated="delteWord"
+    @updated="deleteWord"
   />
 </template>
 
@@ -253,7 +253,7 @@ async function refreshWords() {
   );
 }
 
-async function delteWord() {
+async function deleteWord() {
   const config = {
     headers: { Authorization: `Bearer ${tokenService.getToken()}` },
   };
