@@ -103,7 +103,7 @@ const deleteWord = (wordText) => {
   words.value = words.value.filter(word => word.text !== wordText);
   paginateWords();
 };
-
+//workflow test
 // Lifecycle hooks
 onMounted(() => {
   paginateWords();
