@@ -60,13 +60,12 @@
           <v-col cols="12" lg="3" md="6" sm="6">
             <v-slider v-model="pageSize" min="10" max="100" step="1">
               <template v-slot:append>
-                <v-text-field
+                <v-select
                   v-model="pageSize"
-                  density="compact"
-                  style="width: 80px"
-                  type="number"
-                  variant="outlined"
+                  :items="[10, 20, 25, 50, 100]"
                   hide-details
+                  density="compact"
+                  variant="outlined"
                 />
               </template>
             </v-slider>
@@ -85,6 +84,7 @@
                   type="number"
                   variant="outlined"
                   hide-details
+                  :min="1"
                 />
               </v-col>
               <v-col cols="auto">
