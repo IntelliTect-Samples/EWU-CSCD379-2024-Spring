@@ -37,23 +37,23 @@ The purpose of this assignment is to solidify your learning of:
 
 ## Features
 
-### Create an editor for the available words ❌✅
+### Create an editor for the available words ✅
 
-- Create a page named "WordEditor" that allows words to be edited ❌✅
-  - Support deleting a word ❌✅
-  - Support adding a new word ❌✅
-  - Editing words is not supported ❌✅
-  - Duplicate words should not be allowed ❌✅
-  - Support changing the common word boolean flag ❌✅
-  - Words should be sorted alphabetically ❌✅
-- Provide a text box for searching words AS YOU TYPE which supports searching for words starting with letters specified ❌✅
-- Provide a menu item for navigating to the WordEditor page ❌✅
-  - Anyone can look at the word list ❌✅
-  - Word list is paginated (10-100 per page) ❌✅
-- Any logged in user can change the common word flag ❌✅
-  - There is a login page/component/popup/etc for users to sign in ❌✅
-- Only users over 21 years of age (based on birthday) with a claim of MasterOfTheUniverse can add and remove words ❌✅
-- Users can be set up at start up in the API project as a seed (apriori), there does not need to be a sign up mechanism ❌✅
+- Create a page named "WordEditor" that allows words to be edited ✅
+  - Support deleting a word ✅
+  - Support adding a new word ✅
+  - Editing words is not supported ✅
+  - Duplicate words should not be allowed ✅
+  - Support changing the common word boolean flag ✅
+  - Words should be sorted alphabetically ✅
+- Provide a text box for searching words AS YOU TYPE which supports searching for words starting with letters specified ✅
+- Provide a menu item for navigating to the WordEditor page ✅
+  - Anyone can look at the word list ✅
+  - Word list is paginated (10-100 per page) ✅
+- Any logged in user can change the common word flag ✅
+  - There is a login page/component/popup/etc for users to sign in ✅
+- Only users over 21 years of age (based on birthday) with a claim of MasterOfTheUniverse can add and remove words ✅
+- Users can be set up at start up in the API project as a seed (apriori), there does not need to be a sign up mechanism ✅
 
 ## Turn in Process
 
@@ -65,7 +65,7 @@ The purpose of this assignment is to solidify your learning of:
 
 ## Extra Credit
 
-- Find a bug in the application, create an issue, submit a pull request against the issue
-- Add the ability to sign up for an account by inputting an email and password
-- Allow the user to elevate their level of privelage by inputting a secret phrase
-- Select pagination record count
+- Find a bug in the application, create an issue, submit a pull request against the issue ❌
+- Add the ability to sign up for an account by inputting an email and password ❌
+- Allow the user to elevate their level of privelage by inputting a secret phrase ❌
+- Select pagination record count ❌
