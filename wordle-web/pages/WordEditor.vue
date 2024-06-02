@@ -17,20 +17,6 @@
               Add Word</v-btn
             >
           </v-col>
-          <v-col cols="auto">
-            <v-row>
-              <v-checkbox
-                v-for="(item, index) in items"
-                :key="index"
-                :label="item.label"
-                :value="item.value"
-                v-model="isCommon"
-                direction="horizontal"
-                compact
-                color="play"
-              />
-            </v-row>
-          </v-col>
         </v-row>
       </v-card-item>
 
@@ -46,28 +32,55 @@
           },
         ]"
         :items="wordsList"
+        v-model:items-per-page="pageSize"
         :loading="isWordsListLoading"
-        :itemsLength="wordsList.length"
         :sort-by="[{ key: 'word', order: 'asc' }]"
-        items-per-page="10"
         :header-props="{ class: 'text-uppercase' }"
         :cell-props="{ class: 'text-uppercase text-button pa-3' }"
-        :search="selectedWord?.toString() ?? undefined"
         :v-model="chosenWord"
+        @update:options="getWords(query, pageNumber, pageSize)"
       >
         <template v-slot:top>
-          <v-text-field
-            v-model="selectedWord"
-            :items="wordsList.map((word) => word.word)"
-            item-text="word"
-            item-value="word"
-            label="Search for a word"
-            hide-no-data
-            hide-details
-            dense
-            clearable
-            single-line
-          />
+          <v-row height="100">
+            <v-col cols="2">
+              <v-text-field
+                v-model="query"
+                item-text="word"
+                item-value="word"
+                label="Search for a word"
+                hide-details
+                clearable
+                single-line
+                variant="outlined"
+                density="compact"
+              />
+            </v-col>
+            <v-col cols="5">
+              <v-slider v-model="pageSize" min="10" max="100" step="1">
+                <template v-slot:append>
+                  <v-text-field
+                    v-model="pageSize"
+                    density="compact"
+                    style="width: 80px"
+                    type="number"
+                    variant="outlined"
+                    hide-details
+                /></template>
+              </v-slider>
+            </v-col>
+            <v-col cols="5" class="">
+              <v-btn
+                width="170"
+                height=""
+                variant="outlined"
+                @click="pageNumber--"
+                ><v-icon icon="mdi-chevron-left" />Previous Page</v-btn
+              >
+              <v-btn width="170" variant="outlined" @click="pageNumber++"
+                >Next Page <v-icon icon="mdi-chevron-right"
+              /></v-btn>
+            </v-col>
+          </v-row>
         </template>
         <template v-slot:item.isCommon="{ item }">
           <div class="d-flex flex-row ga-3">
@@ -102,6 +115,9 @@
             >
           </div>
         </template>
+        <template v-slot:bottom>
+          <v-divider />
+        </template>
       </v-data-table>
     </v-card>
   </v-container>
@@ -120,7 +136,7 @@
   <ConfirmDialog
     v-model="showConfirm"
     :confirmMessage="`Are you sure you want to delete the word '${chosenWord?.word}'?`"
-    confirmTitle="Delete Word From Words List"
+    confirmTitle="Delete Word From Words List?"
     confirmAction="Delete Word"
     @updated="console.log('updated')"
   />
@@ -137,7 +153,11 @@ const showEditor = ref(false);
 const showAddEditor = ref(false);
 const showConfirm = ref(false);
 const chosenWord = ref<WordDto>();
+const isCommon = ref<string | null>(null);
 
+const pageNumber = ref(1);
+const pageSize = ref(10);
+const query = ref("");
 useHead({
   title: "Word Editor",
   meta: [{ name: "description", content: "Cool site!" }],
@@ -148,9 +168,31 @@ const items = [
   { label: "Uncommon", value: "uncommon" },
 ];
 
-const isCommon = ref<string | null>(null);
-onMounted(async () => {
-  wordsList.value = await Axios.get("word/wordsList")
+watch([query, pageSize], async () => {
+  pageNumber.value = 1;
+  wordsList.value = await getWords(
+    query.value,
+    pageNumber.value,
+    pageSize.value
+  );
+});
+
+watch([pageNumber], async () => {
+  wordsList.value = await getWords(
+    query.value,
+    pageNumber.value,
+    pageSize.value
+  );
+});
+
+async function getWords(
+  query: string,
+  pageNumber: number,
+  pageSize: number
+): Promise<WordDto[]> {
+  return Axios.get(
+    `word/WordsList?query=${query}&page=${pageNumber}&pageSize=${pageSize}`
+  )
     .then((res: { data: any }) => res.data)
     .then((data: any) =>
       data.map((data: any) => ({
@@ -162,5 +204,9 @@ onMounted(async () => {
       isWordsListLoading.value = false;
       return words;
     });
+}
+
+onMounted(async () => {
+  wordsList.value = await getWords("", 1, 10);
 });
 </script>
