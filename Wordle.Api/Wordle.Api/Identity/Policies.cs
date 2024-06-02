@@ -26,13 +26,14 @@ public static class Policies
         policy.RequireClaim(Claims.MasterOfTheUniverse);
         policy.RequireAssertion(context =>
         {
-            var ageString = context.User.Claims.FirstOrDefault(f => f.Type == Claims.BirthDate);
-            if (ageString != null)
+            var birthdayString = context.User.Claims.FirstOrDefault(f => f.Type == Claims.BirthDate);
+            if (birthdayString != null)
             {
-                int age;
-                if (int.TryParse(ageString.Value, out age))
+                DateTime birthday;
+                if (DateTime.TryParse(birthdayString.Value, out birthday))
                 {
-                    return age >= 21;
+                    int birthYear = birthday.Year;
+                    return DateTime.UtcNow.Year - birthYear >= 21;
                 }
             }
             return false;
