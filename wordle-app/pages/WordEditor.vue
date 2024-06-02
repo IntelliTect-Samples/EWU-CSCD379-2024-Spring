@@ -14,7 +14,7 @@
         prepend-icon="mdi-plus-box"
         variant="flat"
         class="ml-5"
-		@click="showDialog = true"
+        @click="showDialog = true"
         >Add Word
       </v-btn>
     </v-toolbar>
@@ -66,10 +66,7 @@
       </template>
     </v-data-table-server>
 
-    <AddWordDialog
-      @save="saveWord"
-      v-model:show="showDialog"
-    />
+    <AddWordDialog @save="saveWord" v-model:show="showDialog" />
   </v-container>
 </template>
 
@@ -79,9 +76,20 @@ import Axios from "axios";
 // Add Word Dialog setup and functions
 const showDialog = ref<boolean>(false);
 
-function saveWord(word: string) {
-	console.log(word);
-	showDialog.value = false;
+async function saveWord(word: string) {
+  console.log(word);
+  showDialog.value = false;
+
+  try {
+    const response = await Axios.post("/WordEditor/AddWord?word=" + word);
+
+    if (response.status === 200) {
+      await fetchWords();
+    }
+
+  } catch (error) {
+    console.error(error);
+  }
 }
 
 // Data table setup and functions
