@@ -21,7 +21,7 @@
           <td v-if="stats.averageTime">{{ stats.averageTime }}</td> <td v-else>N/A</td>
           <td v-if="stats.totalTimesPlayed">{{ stats.totalTimesPlayed }}</td> <td v-else>0</td>
           <td v-if="stats.totalWins">{{ stats.totalWins }}</td> <td v-else>0</td>
-          <td v-if="stats.totalWins && stats.totalTimesPlayed">{{ stats.totalTimesPlayed - stats.totalWins }}</td> <td v-else>0</td>
+          <td v-if="stats.totalWins && stats.totalTimesPlayed">{{ stats.totalTimesPlayed - stats.totalWins }}</td> <td v-else>{{stats.totalTimesPlayed}}</td>
           <td v-if="stats.played "> {{ stats.played ? "Yes" : "No" }}</td> <td v-else>No</td>
         </tr>
       </tbody>
