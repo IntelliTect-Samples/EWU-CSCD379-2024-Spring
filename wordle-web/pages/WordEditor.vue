@@ -70,13 +70,6 @@
               </template>
             </v-slider>
           </v-col>
-          <v-col cols="12" lg="7" justify="start">
-            <v-pagination
-              v-model="pageNumber"
-              :length="Math.ceil(totalCount / pageSize)"
-              @input="refreshWords"
-            />
-          </v-col>
         </v-row>
       </v-card-item>
       <v-data-table
@@ -131,10 +124,19 @@
         </template>
         <template v-slot:bottom>
           <v-divider />
-          <v-row class="pa-3">
+          <v-row class="pa-4">
+            <v-col cols="12" lg="12">
+              <v-pagination
+                v-model="pageNumber"
+                :length="Math.ceil(totalCount / pageSize)"
+                @input="refreshWords"
+                variant="outlined"
+                density="comfortable"
+              />
+            </v-col>
             <v-col cols="2">
               <v-btn variant="outlined" @click="returnToTop">
-                Back to Top
+                {{ $vuetify.display.mobileBreakpoint ? "TOP" : "Back to Top" }}
               </v-btn>
             </v-col>
           </v-row>
