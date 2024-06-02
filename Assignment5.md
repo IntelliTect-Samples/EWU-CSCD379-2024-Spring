@@ -20,7 +20,7 @@ The purpose of this assignment is to solidify your learning of:
     - Support changing the common word boolean flag ❌✅ - only for added words so far
     - Words should be sorted alphabetically ✅
   - Provide a text box for searching words AS YOU TYPE which supports searching for words starting with letters specified ✅
-  - Provide a menu item for navigating to the WordEditor page ❌✅
+  - Provide a menu item for navigating to the WordEditor page ✅
     - Anyone can look at the word list ✅
     - Word list is paginated (10-100 per page) ✅
   - Any logged in user can change the common word flag ❌✅
