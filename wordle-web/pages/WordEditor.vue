@@ -1,12 +1,12 @@
 <template>
   <v-container>
     <v-card class="pa-3">
-      <v-card-title class="font-weight-bold">Word Editor</v-card-title>
+      <v-card-title class="font-weight-bold mb-3">Word Editor</v-card-title>
       <v-card-item>
         <v-row>
           <v-col cols="auto">
             <v-btn
-              color="play"
+              variant="outlined"
               @click="
                 () => {
                   showAddEditor = true;
@@ -17,13 +17,77 @@
               Add Word</v-btn
             >
           </v-col>
+          <v-col cols="auto">
+            <v-btn
+              variant="outlined"
+              @click="
+                () => {
+                  pageNumber = 1;
+                  pageSize = 10;
+                  query = '';
+                }
+              "
+              >RESSET</v-btn
+            >
+          </v-col>
+        </v-row>
+        <v-row>
+          <v-col cols="12" lg="3" md="6" sm="12">
+            <v-text-field
+              v-model="query"
+              item-text="word"
+              item-value="word"
+              label="Search for a word"
+              hide-details
+              clearable
+              single-line
+              variant="outlined"
+              density="compact"
+            />
+          </v-col>
+          <v-col cols="12" lg="3" md="6" sm="6">
+            <v-slider v-model="pageSize" min="10" max="100" step="1">
+              <template v-slot:append>
+                <v-text-field
+                  v-model="pageSize"
+                  density="compact"
+                  style="width: 80px"
+                  type="number"
+                  variant="outlined"
+                  hide-details
+                />
+              </template>
+            </v-slider>
+          </v-col>
+          <v-col cols="12" lg="3" md="6" sm="6">
+            <v-row no-gutters class="ga-4">
+              <v-col cols="auto">
+                <v-btn variant="outlined" @click="decrasePageNumber">
+                  <v-icon icon="mdi-chevron-left" />
+                </v-btn>
+              </v-col>
+              <v-col cols="2">
+                <v-text-field
+                  v-model="pageNumber"
+                  density="compact"
+                  type="number"
+                  variant="outlined"
+                  hide-details
+                />
+              </v-col>
+              <v-col cols="auto">
+                <v-btn variant="outlined" @click="increasePageNumber">
+                  <v-icon icon="mdi-chevron-right" />
+                </v-btn>
+              </v-col>
+            </v-row>
+          </v-col>
         </v-row>
       </v-card-item>
-
       <v-data-table
         :headers="[
           { title: 'Word', key: 'word', value: 'word' },
-          { title: 'Word Type', key: 'isCommon', value: 'isCommon' },
+          { title: 'Is Common', key: 'isCommon', value: 'isCommon' },
           {
             title: 'Actions',
             key: 'actions',
@@ -40,51 +104,9 @@
         :v-model="chosenWord"
         @update:options="getWords(query, pageNumber, pageSize)"
       >
-        <template v-slot:top>
-          <v-row height="100">
-            <v-col cols="2">
-              <v-text-field
-                v-model="query"
-                item-text="word"
-                item-value="word"
-                label="Search for a word"
-                hide-details
-                clearable
-                single-line
-                variant="outlined"
-                density="compact"
-              />
-            </v-col>
-            <v-col cols="5">
-              <v-slider v-model="pageSize" min="10" max="100" step="1">
-                <template v-slot:append>
-                  <v-text-field
-                    v-model="pageSize"
-                    density="compact"
-                    style="width: 80px"
-                    type="number"
-                    variant="outlined"
-                    hide-details
-                /></template>
-              </v-slider>
-            </v-col>
-            <v-col cols="5" class="">
-              <v-btn
-                width="170"
-                height=""
-                variant="outlined"
-                @click="pageNumber--"
-                ><v-icon icon="mdi-chevron-left" />Previous Page</v-btn
-              >
-              <v-btn width="170" variant="outlined" @click="pageNumber++"
-                >Next Page <v-icon icon="mdi-chevron-right"
-              /></v-btn>
-            </v-col>
-          </v-row>
-        </template>
         <template v-slot:item.isCommon="{ item }">
           <div class="d-flex flex-row ga-3">
-            {{ item.isCommon ? "Common" : "Uncommon" }}
+            {{ item.isCommon ? "Yes" : "No" }}
           </div>
         </template>
         <template v-slot:item.actions="{ item }">
@@ -184,6 +206,18 @@ watch([pageNumber], async () => {
     pageSize.value
   );
 });
+
+function decrasePageNumber() {
+  if (pageNumber.value > 1) {
+    pageNumber.value--;
+  }
+}
+
+function increasePageNumber() {
+  if (wordsList.value.length > 0) {
+    pageNumber.value++;
+  }
+}
 
 async function getWords(
   query: string,
