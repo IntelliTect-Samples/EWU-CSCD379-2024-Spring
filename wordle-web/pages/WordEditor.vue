@@ -1,10 +1,12 @@
 <template>
   <v-container>
     <v-card class="pa-3">
-      <v-card-title class="font-weight-bold mb-3">Word Editor</v-card-title>
+      <v-card-title class="font-weight-bold mb-3">
+        {{ isEditMode ? "Word Editor" : "Word List" }}</v-card-title
+      >
       <v-card-item>
         <v-row>
-          <v-col cols="auto">
+          <v-col cols="auto" v-if="isEditMode">
             <v-btn
               variant="outlined"
               @click="
@@ -27,8 +29,14 @@
                   query = '';
                 }
               "
-              >RESSET</v-btn
-            >
+              text="Reset"
+            />
+          </v-col>
+          <v-col>
+            <v-btn-toggle variant="outlined" v-model="userMode">
+              <v-btn>View Mode</v-btn>
+              <v-btn>Edit Mode</v-btn>
+            </v-btn-toggle>
           </v-col>
         </v-row>
         <v-row>
@@ -88,12 +96,9 @@
         :headers="[
           { title: 'Word', key: 'word', value: 'word' },
           { title: 'Is Common', key: 'isCommon', value: 'isCommon' },
-          {
-            title: 'Actions',
-            key: 'actions',
-            value: 'actions',
-            sortable: false,
-          },
+          isEditMode
+            ? { title: 'Actions', key: 'actions', value: 'actions' }
+            : {},
         ]"
         :items="wordsList"
         v-model:items-per-page="pageSize"
@@ -102,14 +107,13 @@
         :header-props="{ class: 'text-uppercase' }"
         :cell-props="{ class: 'text-uppercase text-button pa-3' }"
         :v-model="chosenWord"
-        @update:options="getWords(query, pageNumber, pageSize)"
       >
         <template v-slot:item.isCommon="{ item }">
           <div class="d-flex flex-row ga-3">
             {{ item.isCommon ? "Yes" : "No" }}
           </div>
         </template>
-        <template v-slot:item.actions="{ item }">
+        <template v-slot:item.actions="{ item }" v-if="isEditMode">
           <div class="d-flex flex-row ga-3">
             <v-btn
               color="win"
@@ -139,6 +143,13 @@
         </template>
         <template v-slot:bottom>
           <v-divider />
+          <v-row class="pa-3">
+            <v-col>
+              <v-btn variant="outlined" @click="returnToTop">
+                Back to Top
+              </v-btn>
+            </v-col>
+          </v-row>
         </template>
       </v-data-table>
     </v-card>
@@ -154,7 +165,6 @@
     :isAdd="true"
     @updated="console.log('updated')"
   />
-
   <ConfirmDialog
     v-model="showConfirm"
     :confirmMessage="`Are you sure you want to delete the word '${chosenWord?.word}'?`"
@@ -170,25 +180,23 @@ import Axios from "axios";
 
 const wordsList: Ref<WordDto[]> = ref([]);
 const isWordsListLoading = ref(true);
-const selectedWord = ref<string | null>(null);
 const showEditor = ref(false);
 const showAddEditor = ref(false);
 const showConfirm = ref(false);
 const chosenWord = ref<WordDto>();
-const isCommon = ref<string | null>(null);
 
 const pageNumber = ref(1);
 const pageSize = ref(10);
 const query = ref("");
+
+const userMode = ref(0);
+
+const isEditMode = computed(() => userMode.value === 1);
+
 useHead({
   title: "Word Editor",
   meta: [{ name: "description", content: "Cool site!" }],
 });
-
-const items = [
-  { label: "Common", value: "common" },
-  { label: "Uncommon", value: "uncommon" },
-];
 
 watch([query, pageSize], async () => {
   pageNumber.value = 1;
@@ -219,10 +227,14 @@ function increasePageNumber() {
   }
 }
 
+function returnToTop() {
+  window.scrollTo(0, 0);
+}
+
 async function getWords(
-  query: string,
-  pageNumber: number,
-  pageSize: number
+  query: string = "",
+  pageNumber: number = 1,
+  pageSize: number = 10
 ): Promise<WordDto[]> {
   return Axios.get(
     `word/WordsList?query=${query}&page=${pageNumber}&pageSize=${pageSize}`
@@ -241,6 +253,6 @@ async function getWords(
 }
 
 onMounted(async () => {
-  wordsList.value = await getWords("", 1, 10);
+  wordsList.value = await getWords();
 });
 </script>
