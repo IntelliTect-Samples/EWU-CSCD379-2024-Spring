@@ -24,6 +24,17 @@
         </v-radio-group>
       </v-card-item>
       <v-card-actions>
+        <v-btn
+          v-if="tokenService.canDeleteAndAdd()"
+          color="primary"
+          variant="tonal"
+          @click="
+            () => {
+              (showConfirm = true), (modelValue = false);
+            }
+          "
+          text="Delete"
+        />
         <v-spacer />
         <v-btn
           color="primary"
@@ -40,6 +51,18 @@
       </v-card-actions>
     </v-card>
   </v-dialog>
+  <ConfirmDialog
+    v-model="showConfirm"
+    :confirmMessage="`Are you sure you want to delete the word '${wordModel}'?`"
+    confirmTitle="Delete Word From Words List?"
+    confirmAction="Delete Word"
+    @updated="deleteWord"
+    @cancel="
+      () => {
+        (showConfirm = false), (modelValue = true);
+      }
+    "
+  />
 </template>
 
 <script setup lang="ts">
@@ -59,6 +82,7 @@ const tokenService = new TokenService();
 const modelValue = defineModel<boolean>({ default: false });
 const wordModel = ref("");
 const isCommon = ref("common");
+const showConfirm = ref(false);
 
 watch(
   () => props.word,
@@ -124,6 +148,23 @@ function editWord() {
     .then((response) => {
       if (response.status === 200) {
         modelValue.value = false;
+        emits("updated");
+      }
+    })
+    .catch((error) => {
+      console.log(error);
+    });
+}
+
+async function deleteWord() {
+  const config = {
+    headers: { Authorization: `Bearer ${tokenService.getToken()}` },
+  };
+
+  Axios.delete(`word/DeleteWord?word=${wordModel.value!}`, config)
+    .then((response) => {
+      if (response.status === 200) {
+        showConfirm.value = false;
         emits("updated");
       }
     })

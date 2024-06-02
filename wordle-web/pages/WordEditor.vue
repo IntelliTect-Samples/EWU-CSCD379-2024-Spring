@@ -1,9 +1,24 @@
 <template>
   <v-container>
     <v-card class="pa-3">
-      <v-card-title class="font-weight-bold mb-3">
-        {{ isEditMode ? "Word Editor" : "Word List" }}</v-card-title
-      >
+      <v-row>
+        <v-col cols="12">
+          <v-card-title class="font-weight-bold mb-3">
+            {{ isEditMode ? "Word Editor" : "Word List" }}
+            <v-btn-toggle
+              v-if="isEditUser || isLoggedIn"
+              variant="outlined"
+              v-model="userMode"
+              density="compact"
+              class="ml-3"
+              mandatory
+            >
+              <v-btn>View</v-btn>
+              <v-btn>Edit</v-btn>
+            </v-btn-toggle>
+          </v-card-title>
+        </v-col>
+      </v-row>
       <v-card-item>
         <v-row>
           <v-col cols="auto" v-if="isEditMode && isEditUser">
@@ -18,29 +33,6 @@
               <v-icon>mdi-plus</v-icon>
               Add Word</v-btn
             >
-          </v-col>
-          <v-col cols="auto">
-            <v-btn
-              variant="outlined"
-              @click="
-                () => {
-                  pageNumber = 1;
-                  pageSize = 10;
-                  query = '';
-                }
-              "
-              text="Reset"
-            />
-          </v-col>
-          <v-col>
-            <v-btn-toggle
-              v-if="isEditUser || isLoggedIn"
-              variant="outlined"
-              v-model="userMode"
-            >
-              <v-btn>View Mode</v-btn>
-              <v-btn>Edit Mode</v-btn>
-            </v-btn-toggle>
           </v-col>
         </v-row>
         <v-row>
@@ -70,78 +62,74 @@
               </template>
             </v-slider>
           </v-col>
+          <v-col cols="auto">
+            <v-btn
+              variant="outlined"
+              @click="resetFilters"
+              text="Clear Filters"
+            />
+          </v-col>
         </v-row>
       </v-card-item>
-      <v-data-table
-        :headers="[
-          { title: 'Word', key: 'word', value: 'word' },
-          { title: 'Is Common', key: 'isCommon', value: 'isCommon' },
-          isEditMode
-            ? { title: 'Actions', key: 'actions', value: 'actions' }
-            : {},
-        ]"
-        :items="wordsList"
-        v-model:items-per-page="pageSize"
-        :loading="isWordsListLoading"
-        :sort-by="[{ key: 'word', order: 'asc' }]"
-        :header-props="{ class: 'text-uppercase' }"
-        :cell-props="{ class: 'text-uppercase text-button pa-3' }"
-        :v-model="chosenWord"
-      >
-        <template v-slot:item.isCommon="{ item }">
-          <div class="d-flex flex-row ga-3">
-            {{ item.isCommon ? "Yes" : "No" }}
-          </div>
-        </template>
-        <template v-slot:item.actions="{ item }" v-if="isEditMode">
-          <div class="d-flex flex-row ga-3">
-            <v-btn
-              color="win"
-              @click="
-                () => {
-                  chosenWord = item;
-                  showEditor = true;
-                }
-              "
-            >
-              <v-icon icon="mdi-pencil" />
-              {{ $vuetify.display.smAndDown ? "" : "Edit" }}</v-btn
-            >
-            <v-btn
-              v-if="isEditUser"
-              color="lose"
-              @click="
-                () => {
-                  chosenWord = item;
-                  showConfirm = true;
-                }
-              "
-            >
-              <v-icon icon="mdi-delete" />
-              {{ $vuetify.display.smAndDown ? "" : "Delete" }}</v-btn
-            >
-          </div>
-        </template>
-        <template v-slot:bottom>
-          <v-divider />
-          <v-row class="pa-4">
-            <v-col cols="12" lg="12">
-              <v-pagination
-                v-model="pageNumber"
-                :length="Math.ceil(totalCount / pageSize)"
-                @input="refreshWords"
-                variant="outlined"
-                density="comfortable"
-              />
-            </v-col>
-            <v-col cols="2">
-              <v-btn variant="outlined" @click="returnToTop">
-                {{ $vuetify.display.mobileBreakpoint ? "TOP" : "Back to Top" }}
-              </v-btn>
-            </v-col>
-          </v-row>
-        </template>
-      </v-data-table>
+      <v-card-item>
+        <v-data-table
+          :headers="[
+            { title: 'Word', key: 'word', value: 'word' },
+            { title: 'Is Commmon', key: 'isCommon', value: 'isCommon' },
+            isEditMode
+              ? { title: 'Actions', key: 'actions', value: 'actions' }
+              : {},
+          ]"
+          :items="wordsList"
+          :items-per-page="pageSize"
+          :loading="isWordsListLoading"
+          :sort-by="[{ key: 'word', order: 'asc' }]"
+          :header-props="{ class: 'text-uppercase' }"
+          :cell-props="{ class: 'text-uppercase text-button py-3' }"
+          :v-model="chosenWord"
+        >
+          <template v-slot:item.isCommon="{ item }">
+            <v-icon :icon="item.isCommon ? 'mdi-check' : 'mdi-close'" />
+          </template>
+          <template v-slot:item.actions="{ item }" v-if="isEditMode">
+            <div class="d-flex ga-3">
+              <v-btn
+                color="win"
+                @click="
+                  () => {
+                    chosenWord = item;
+                    showEditor = true;
+                  }
+                "
+              >
+                <v-icon icon="mdi-pencil" />
+                {{ $vuetify.display.smAndDown ? "" : "Edit" }}</v-btn
+              >
+            </div>
+          </template>
+          <template v-slot:bottom>
+            <v-divider />
+            <v-row class="pa-4">
+              <v-col cols="12" lg="12">
+                <v-pagination
+                  v-model="pageNumber"
+                  :length="Math.ceil(totalCount / pageSize)"
+                  @input="refreshWords"
+                  variant="outlined"
+                  density="comfortable"
+                />
+              </v-col>
+              <v-col cosl="auto">
+                <v-btn
+                  variant="outlined"
+                  @click="returnToTop"
+                  text="BACK TO TOP"
+                />
+              </v-col>
+            </v-row>
+          </template>
+        </v-data-table>
+      </v-card-item>
     </v-card>
   </v-container>
   <EditWordDialog
@@ -155,13 +143,6 @@
     :isAdd="true"
     @updated="refreshWords"
   />
-  <ConfirmDialog
-    v-model="showConfirm"
-    :confirmMessage="`Are you sure you want to delete the word '${chosenWord?.word}'?`"
-    confirmTitle="Delete Word From Words List?"
-    confirmAction="Delete Word"
-    @updated="deleteWord"
-  />
 </template>
 
 <script setup lang="ts">
@@ -173,7 +154,6 @@ const wordsList: Ref<WordDto[]> = ref([]);
 const isWordsListLoading = ref(true);
 const showEditor = ref(false);
 const showAddEditor = ref(false);
-const showConfirm = ref(false);
 const chosenWord = ref<WordDto>();
 
 const pageNumber = ref(1);
@@ -208,30 +188,12 @@ watch([query, pageSize], async () => {
 });
 
 watch([pageNumber], async () => {
-  if (pageNumber.value <= 0 || isNaN(pageNumber.value)) {
-    pageNumber.value = 1;
-  }
-});
-
-watch([pageNumber], async () => {
   wordsList.value = await getWords(
     query.value,
     pageNumber.value,
     pageSize.value
   );
 });
-
-function decrasePageNumber() {
-  if (pageNumber.value > 1) {
-    pageNumber.value--;
-  }
-}
-
-function increasePageNumber() {
-  if (wordsList.value.length > 0) {
-    pageNumber.value++;
-  }
-}
 
 function returnToTop() {
   window.scrollTo(0, 0);
@@ -245,21 +207,10 @@ async function refreshWords() {
   );
 }
 
-async function deleteWord() {
-  const config = {
-    headers: { Authorization: `Bearer ${tokenService.getToken()}` },
-  };
-
-  Axios.delete(`word/DeleteWord?word=${chosenWord.value!.word}`, config)
-    .then((response) => {
-      if (response.status === 200) {
-        showConfirm.value = false;
-        refreshWords();
-      }
-    })
-    .catch((error) => {
-      console.log(error);
-    });
+function resetFilters() {
+  query.value = "";
+  pageSize.value = 10;
+  pageNumber.value = 1;
 }
 
 async function getWords(
@@ -268,7 +219,7 @@ async function getWords(
   pageSize: number = 10
 ): Promise<WordDto[]> {
   let items: WordDto[] = [];
-
+  isWordsListLoading.value = true;
   return Axios.get(
     `word/WordsList?query=${query}&page=${pageNumber}&pageSize=${pageSize}`
   )

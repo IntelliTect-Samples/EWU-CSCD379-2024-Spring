@@ -2,14 +2,18 @@
   <v-app v-if="themeLoaded" class="full-page-gradient">
     <v-app-bar class="bg-primary" :elevation="2">
       <v-app-bar-title @click="$router.push('/')" style="cursor: pointer">
-        <v-img :src="logoPath" alt="Logo" max-width="180" max-height="95" />
+        <v-img :src="logoPath" alt="Logo" max-width="150" max-height="70" />
       </v-app-bar-title>
+
       <v-app-bar-nav-icon @click="showLoginLogOut" class="mr-3">
         <template v-slot:default>
-          <span v-if="tokenService.isLoggedIn()">
-            {{ tokenService.getUserName() }}</span
-          >
-          <v-icon v-else="isLoggedIn" icon="mdi-account" />
+          <div v-if="tokenService.isLoggedIn()">
+            <span v-if="$vuetify.display.smAndUp">
+              {{ tokenService.getUserName() }}</span
+            >
+            <v-icon v-else="tokenService.isLoggedIn()" icon="mdi-account" />
+          </div>
+          <v-icon v-else="isLoggedIn" icon="mdi-login" />
         </template>
       </v-app-bar-nav-icon>
 

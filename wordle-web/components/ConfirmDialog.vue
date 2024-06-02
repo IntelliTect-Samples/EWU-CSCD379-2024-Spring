@@ -12,7 +12,7 @@
         <v-btn
           color="primary"
           variant="tonal"
-          @click="modelValue = false"
+          @click="cancel()"
           text="Cancel"
         />
         <v-btn
@@ -40,12 +40,17 @@ const props = withDefaults(
   }
 );
 
-const emits = defineEmits(["updated"]);
+const emits = defineEmits(["updated", "cancel"]);
 
 const modelValue = defineModel<boolean>({ default: false });
 
 function close() {
   modelValue.value = false;
   emits("updated");
+}
+
+function cancel() {
+  modelValue.value = false;
+  emits("cancel");
 }
 </script>
