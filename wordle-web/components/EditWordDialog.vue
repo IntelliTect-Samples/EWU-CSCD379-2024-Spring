@@ -82,32 +82,49 @@ const items = [
 function updateWord() {
   if (props.isAdd) {
     addWord();
+    console.log("addWord");
   } else {
     editWord();
   }
 }
 
 function addWord() {
-  emits("updated");
-  modelValue.value = false;
-}
-
-function editWord() {
-  emits("updated");
   const config = {
     headers: { Authorization: `Bearer ${tokenService.getToken()}` },
   };
 
   const bodyParameters = {
     word: wordModel.value,
-    isCommon: isCommon.value === "common" ? true : false,
+    isCommonWord: isCommon.value === "common" ? true : false,
+  };
+
+  Axios.post("word/AddWord", bodyParameters, config)
+    .then((response) => {
+      if (response.status === 200) {
+        modelValue.value = false;
+        emits("updated");
+      }
+    })
+    .catch((error) => {
+      console.log(error);
+    });
+}
+
+function editWord() {
+  const config = {
+    headers: { Authorization: `Bearer ${tokenService.getToken()}` },
+  };
+
+  const bodyParameters = {
+    word: wordModel.value,
+    isCommonWord: isCommon.value === "common" ? true : false,
   };
 
   Axios.post("word/EditWord", bodyParameters, config)
     .then((response) => {
       if (response.status === 200) {
-        console.log(bodyParameters);
         modelValue.value = false;
+        emits("updated");
       }
     })
     .catch((error) => {

@@ -175,7 +175,7 @@
     :confirmMessage="`Are you sure you want to delete the word '${chosenWord?.word}'?`"
     confirmTitle="Delete Word From Words List?"
     confirmAction="Delete Word"
-    @updated="refreshWords"
+    @updated="delteWord"
   />
 </template>
 
@@ -246,13 +246,28 @@ function returnToTop() {
 }
 
 async function refreshWords() {
-  isWordsListLoading.value = true;
-  getWords(query.value, pageNumber.value, pageSize.value).then(
-    (words: WordDto[]) => {
-      wordsList.value = words;
-      isWordsListLoading.value = false;
-    }
+  wordsList.value = await getWords(
+    query.value,
+    pageNumber.value,
+    pageSize.value
   );
+}
+
+async function delteWord() {
+  const config = {
+    headers: { Authorization: `Bearer ${tokenService.getToken()}` },
+  };
+
+  Axios.delete(`word/DeleteWord?word=${chosenWord.value!.word}`, config)
+    .then((response) => {
+      if (response.status === 200) {
+        showConfirm.value = false;
+        refreshWords();
+      }
+    })
+    .catch((error) => {
+      console.log(error);
+    });
 }
 
 async function getWords(
