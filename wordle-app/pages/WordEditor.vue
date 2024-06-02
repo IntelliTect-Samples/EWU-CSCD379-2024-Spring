@@ -8,7 +8,7 @@
         color="secondary"
         @change="fetchWords"
         class="d-flex justify-center"
-		v-model="isCommonFilter"
+        v-model="isCommonFilter"
       />
       <v-btn
         color="primary"
@@ -41,9 +41,9 @@
           @input="fetchWords"
           clearable
           clear-icon="mdi-close-circle"
-		  variant="solo-filled"
-		  bg-color="white"
-		  prepend-inner-icon="mdi-magnify"
+          variant="solo-filled"
+          bg-color="white"
+          prepend-inner-icon="mdi-magnify"
         />
       </template>
 
@@ -66,7 +66,12 @@
           color="green"
           inset
           @change="updateItem(item)"
+          v-if="isLogged"
         />
+
+        <v-icon v-else :color="item.isCommon ? 'green' : 'red'" class="my-4">
+          {{ item.isCommon ? "mdi-check" : "mdi-close" }}
+        </v-icon>
       </template>
     </v-data-table-server>
 
@@ -76,6 +81,11 @@
 
 <script setup lang="ts">
 import Axios from "axios";
+import TokenService from "~/scripts/tokenService";
+
+// Log in stuff here
+const tokenService = new TokenService();
+const isLogged = ref(false);
 
 // Add Word Dialog setup and functions
 const showDialog = ref<boolean>(false);
@@ -90,7 +100,6 @@ async function saveWord(word: string) {
     if (response.status === 200) {
       await fetchWords();
     }
-
   } catch (error) {
     console.error(error);
   }
@@ -154,7 +163,7 @@ async function fetchWords() {
     search: search.value,
     page,
     itemsPerPage,
-	isCommonFilter: isCommonFilter.value,
+    isCommonFilter: isCommonFilter.value,
   };
 
   try {
@@ -163,7 +172,6 @@ async function fetchWords() {
 
     words.value = response.data.words;
     totalWords.value = response.data.totalCount;
-
   } catch (error) {
     console.error(error);
   } finally {
@@ -210,9 +218,8 @@ watch([options, search, isCommonFilter], fetchWords, { immediate: true });
 </script>
 
 <style scoped>
-
 /* Get rid of sharp corner above the search bar */
 .v-table {
-	border-radius: 10px 10px 0 0 !important;
+  border-radius: 10px 10px 0 0 !important;
 }
 </style>

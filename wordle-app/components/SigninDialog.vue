@@ -88,9 +88,7 @@ const emits = defineEmits<{
   (e: "signInClicked"): void;
 }>();
 
-function signInClicked() {
-  emits("signInClicked");
-}
+
 </script>
 
 <style></style>
