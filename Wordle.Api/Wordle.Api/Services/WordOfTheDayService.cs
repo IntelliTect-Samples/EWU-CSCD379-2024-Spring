@@ -65,6 +65,7 @@ public class WordOfTheDayService(WordleDbContext Db)
         return await Db.Words
             .Select(word => new WordDto() { Word = word.Text, IsCommonWord = word.IsCommonWord})
             .Where(wordDto => wordDto.Word.StartsWith(query))
+            .OrderBy(wordDto => wordDto.Word)
             .Skip((page - 1) * pageSize)
             .Take(pageSize)
             .ToListAsync();
