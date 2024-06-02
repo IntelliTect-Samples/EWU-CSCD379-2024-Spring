@@ -35,10 +35,10 @@ public class WordController(WordOfTheDayService wordOfTheDayService, WordEditorS
         return await wordOfTheDayService.GetWordOfTheDay(dateOnly);
     }
 
-    [HttpGet("WordsList")]
-    public async Task<List<WordDto>> GetWordsList()
+    [HttpGet("WordsList/")]
+    public async Task<List<WordDto>> GetWordsList([FromQuery]string query, int page, int pageSize)
     {
-        return await wordOfTheDayService.GetWordsList();
+        return await wordOfTheDayService.GetWordsList(query, page, pageSize);
     }
 
     [HttpPost("AddWord")]

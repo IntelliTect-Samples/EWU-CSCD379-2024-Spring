@@ -59,11 +59,14 @@ public class WordOfTheDayService(WordleDbContext Db)
         return wordOfTheDay.Word!.Text;
     }
 
-    public async Task<List<WordDto>> GetWordsList()
+    public async Task<List<WordDto>> GetWordsList(string query, int page, int pageSize)
     {
 
         return await Db.Words
             .Select(word => new WordDto() { Word = word.Text, IsCommonWord = word.IsCommonWord})
+            .Where(wordDto => wordDto.Word.StartsWith(query))
+            .Skip((page - 1) * pageSize)
+            .Take(pageSize)
             .ToListAsync();
     }
 
