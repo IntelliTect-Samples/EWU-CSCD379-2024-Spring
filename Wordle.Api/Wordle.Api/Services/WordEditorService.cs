@@ -35,6 +35,11 @@ public class WordEditorService(WordleDbContext Db)
 
     public async Task AddWord(WordDto wordToAdd)
     {
+        if(wordToAdd.Word.Length != 5)
+        {
+            return;
+        }
+
         Word word = new Word()
         {
             Text = wordToAdd.Word,
