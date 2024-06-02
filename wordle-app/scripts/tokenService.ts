@@ -25,4 +25,8 @@ export default class TokenService {
     public generateTokenHeader() {
         return { 'Authorization': 'Bearer ' + this.getToken()}
     }
+
+    public removeToken() {
+        localStorage.removeItem(this.tokenKey);
+    }
 }

@@ -6,13 +6,14 @@
           <v-img src="./public/image-Background-Removed.png" alt="Logo" max-width="180" max-height="95"></v-img>
         </v-app-bar-title>
 
-        <v-btn v-if="!tokenService.isLoggedIn()" @click="showLoginDialog = true" flat>
+        <v-btn v-if="!isLogged" @click="showLoginDialog = true" variant="tonal">
           <v-icon class="mr-2">mdi-login</v-icon>
           Login
         </v-btn>
-        <div v-else>
+        <v-btn v-else @click="showLoginDialog = true" variant="tonal">
+          <v-icon class="mr-2">mdi-account</v-icon>
           {{ tokenService.getUserName() }}
-        </div>
+        </v-btn>
 
         <v-btn icon="mdi-cog" @click="showSettingsDialog = true" />
         <v-btn icon="mdi-help-circle" @click="showHelpDialog = true" />
@@ -62,7 +63,7 @@
       </v-main>
     </v-app>
   </NuxtLayout>
-  <SigninDialog v-model="showLoginDialog" />
+  <SigninDialog v-model="showLoginDialog" @signInClicked="signInClosed" />
   <SettingsDialog v-model="showSettingsDialog" />
 </template>
 
@@ -72,8 +73,15 @@ import nuxtStorage from "nuxt-storage";
 import TokenService from "./scripts/tokenService";
 
 const tokenService = new TokenService();
+const isLogged = ref(false);
 
 const showLoginDialog = ref(false);
+
+function signInClosed() {
+  isLogged.value = tokenService.isLoggedIn();
+}
+
+
 
 const router = useRouter();
 const theme = useTheme();
