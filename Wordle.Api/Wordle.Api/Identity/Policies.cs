@@ -7,7 +7,7 @@ namespace Wordle.Api.Identity
   {
     public const string MasterOfTheUniverseOnly = "MasterOfTheUniverseOnly";
 
-    public static void AddRemoveWordPolicie(AuthorizationPolicy policy)
+    public static void AddRemoveWordPolicie(AuthorizationPolicyBuilder policy)
     {
       policy.RequireClaim(Claims.MasterOfTheUniverse, "true");
       policy.RequireAssertion(date =>{
