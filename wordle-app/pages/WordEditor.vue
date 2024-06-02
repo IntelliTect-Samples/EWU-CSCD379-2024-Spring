@@ -41,6 +41,9 @@
           @input="fetchWords"
           clearable
           clear-icon="mdi-close-circle"
+		  variant="solo-filled"
+		  bg-color="white"
+		  prepend-inner-icon="mdi-magnify"
         />
       </template>
 
@@ -205,3 +208,11 @@ async function deleteItem(item: Word) {
 // watch([options, search], fetchWords, { immediate: true });
 watch([options, search, isCommonFilter], fetchWords, { immediate: true });
 </script>
+
+<style scoped>
+
+/* Get rid of sharp corner above the search bar */
+.v-table {
+	border-radius: 10px 10px 0 0 !important;
+}
+</style>
