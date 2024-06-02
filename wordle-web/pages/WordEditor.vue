@@ -163,19 +163,19 @@
     v-model="showEditor"
     :isAdd="false"
     :word="chosenWord"
-    @updated="console.log('updated')"
+    @updated="refreshWords"
   />
   <EditWordDialog
     v-model="showAddEditor"
     :isAdd="true"
-    @updated="console.log('updated')"
+    @updated="refreshWords"
   />
   <ConfirmDialog
     v-model="showConfirm"
     :confirmMessage="`Are you sure you want to delete the word '${chosenWord?.word}'?`"
     confirmTitle="Delete Word From Words List?"
     confirmAction="Delete Word"
-    @updated="console.log('updated')"
+    @updated="refreshWords"
   />
 </template>
 
@@ -243,6 +243,16 @@ function increasePageNumber() {
 
 function returnToTop() {
   window.scrollTo(0, 0);
+}
+
+async function refreshWords() {
+  isWordsListLoading.value = true;
+  getWords(query.value, pageNumber.value, pageSize.value).then(
+    (words: WordDto[]) => {
+      wordsList.value = words;
+      isWordsListLoading.value = false;
+    }
+  );
 }
 
 async function getWords(

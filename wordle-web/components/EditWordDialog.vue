@@ -44,6 +44,8 @@
 
 <script setup lang="ts">
 import type { WordDto } from "~/Models/WordDto";
+import Axios from "axios";
+import TokenService from "~/scripts/tokenService";
 
 const props = withDefaults(
   defineProps<{ isAdd: boolean; word?: WordDto | undefined }>(),
@@ -53,7 +55,7 @@ const props = withDefaults(
 );
 
 const emits = defineEmits(["updated"]);
-
+const tokenService = new TokenService();
 const modelValue = defineModel<boolean>({ default: false });
 const wordModel = ref("");
 const isCommon = ref("common");
@@ -92,6 +94,24 @@ function addWord() {
 
 function editWord() {
   emits("updated");
-  modelValue.value = false;
+  const config = {
+    headers: { Authorization: `Bearer ${tokenService.getToken()}` },
+  };
+
+  const bodyParameters = {
+    word: wordModel.value,
+    isCommon: isCommon.value === "common" ? true : false,
+  };
+
+  Axios.post("word/EditWord", bodyParameters, config)
+    .then((response) => {
+      if (response.status === 200) {
+        console.log(bodyParameters);
+        modelValue.value = false;
+      }
+    })
+    .catch((error) => {
+      console.log(error);
+    });
 }
 </script>
