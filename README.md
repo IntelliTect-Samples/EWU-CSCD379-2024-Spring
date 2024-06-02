@@ -6,10 +6,14 @@ Azure API Site URL: https://aestheticwordle.azurewebsites.net/
 
 ## Account Info
 
-| Acount Type | Email                   | Password    | Claims |
-| ----------- | ----------------------- | ----------- | ------ |
+| Acount Type | Email                   | Password    | Claims              |
+| ----------- | ----------------------- | ----------- | ------------------- |
 | Admin       | Admin@Intellitect.com   | P@ssw0rd123 |
-| Awesome     | Awesome@Intellitect.com | P@ssw0rd123 |
+| Awesome     | Awesome@Intellitect.com | P@ssw0rd123 | MasterOfTheUniverse |
+
+Awesome Account should be able to update common flag, delete, and add words.
+
+Admin Account should only be allowed to adjust common flag
 
 ## Assignment 5
 

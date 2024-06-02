@@ -4,7 +4,15 @@
       <v-app-bar-title @click="$router.push('/')" style="cursor: pointer">
         <v-img :src="logoPath" alt="Logo" max-width="180" max-height="95" />
       </v-app-bar-title>
-      <v-app-bar-nav-icon icon="mdi-account" @click="showLoginLogOut" />
+      <v-app-bar-nav-icon @click="showLoginLogOut" class="mr-3">
+        <template v-slot:default>
+          <span v-if="tokenService.isLoggedIn()">
+            {{ tokenService.getUserName() }}</span
+          >
+          <v-icon v-else="isLoggedIn" icon="mdi-account" />
+        </template>
+      </v-app-bar-nav-icon>
+
       <v-app-bar-nav-icon
         icon="mdi-help-circle"
         @click="$router.push('/Instructions')"
@@ -65,6 +73,11 @@ import { useTheme } from "vuetify";
 import nuxtStorage from "nuxt-storage";
 import dateUtils from "./scripts/dateUtils";
 import TokenService from "./scripts/tokenService";
+import { useRoute } from "vue-router";
+
+const router = useRouter();
+
+const tokenService = new TokenService();
 
 useHead({
   title: "Aesthetic Wordle",
@@ -98,6 +111,8 @@ function showLoginLogOut() {
 function logout() {
   localStorage.removeItem("token");
   localStorage.removeItem("user");
+
+  router.push("/");
 }
 
 onMounted(async () => {

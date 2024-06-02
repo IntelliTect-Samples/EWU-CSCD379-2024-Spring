@@ -23,6 +23,21 @@ export default class TokenService {
     return JSON.parse(atob(token.split(".")[1])).userName;
   }
 
+  public canDeleteAndAdd() {
+    const token = this.getToken();
+    if (token === "") {
+      return false;
+    }
+    const birthday = JSON.parse(atob(token.split(".")[1])).BirthDate;
+    const masterOfTheUniverse = JSON.parse(
+      atob(token.split(".")[1])
+    ).MasterOfTheUniverse;
+    const year = new Date().getFullYear();
+    const birthYear = new Date(birthday).getFullYear();
+
+    return year - birthYear >= 21 && masterOfTheUniverse;
+  }
+
   public generateTokenHeader() {
     return { Authorization: `Bearer ${this.getToken()}` };
   }

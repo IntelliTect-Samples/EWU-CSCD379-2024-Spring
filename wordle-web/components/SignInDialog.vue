@@ -50,7 +50,9 @@
 <script setup lang="ts">
 import axios from "axios";
 import TokenService from "~/scripts/tokenService";
+import { useRouter } from "vue-router";
 
+const router = useRouter();
 const tokenService = new TokenService();
 
 const modelValue = defineModel<boolean>({ default: false });
@@ -71,6 +73,7 @@ function signIn() {
     .then((response) => {
       tokenService.setToken(response.data.token);
       modelValue.value = false;
+      router.push("/");
     })
     .catch((error) => {
       errorMessage.value = error.response.data;

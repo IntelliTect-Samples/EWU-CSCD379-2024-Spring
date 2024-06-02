@@ -6,7 +6,7 @@
       >
       <v-card-item>
         <v-row>
-          <v-col cols="auto" v-if="isEditMode">
+          <v-col cols="auto" v-if="isEditMode && isEditUser">
             <v-btn
               variant="outlined"
               @click="
@@ -33,7 +33,11 @@
             />
           </v-col>
           <v-col>
-            <v-btn-toggle variant="outlined" v-model="userMode">
+            <v-btn-toggle
+              v-if="isEditUser || isLoggedIn"
+              variant="outlined"
+              v-model="userMode"
+            >
               <v-btn>View Mode</v-btn>
               <v-btn>Edit Mode</v-btn>
             </v-btn-toggle>
@@ -128,6 +132,7 @@
               {{ $vuetify.display.smAndDown ? "" : "Edit" }}</v-btn
             >
             <v-btn
+              v-if="isEditUser"
               color="lose"
               @click="
                 () => {
@@ -177,6 +182,7 @@
 <script setup lang="ts">
 import type { WordDto } from "~/Models/WordDto";
 import Axios from "axios";
+import TokenService from "~/scripts/tokenService";
 
 const wordsList: Ref<WordDto[]> = ref([]);
 const isWordsListLoading = ref(true);
@@ -191,7 +197,15 @@ const query = ref("");
 
 const userMode = ref(0);
 
+const tokenService = new TokenService();
+
 const isEditMode = computed(() => userMode.value === 1);
+
+const isEditUser = computed(
+  () => tokenService.isLoggedIn() && tokenService.canDeleteAndAdd()
+);
+
+const isLoggedIn = computed(() => tokenService.isLoggedIn());
 
 useHead({
   title: "Word Editor",
