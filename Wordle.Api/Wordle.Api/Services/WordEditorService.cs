@@ -32,7 +32,7 @@ public class WordEditorService(WordleDbContext Db)
         return true;
     }
     
-    public async Task<(List<WordDto>, int TotalCount)> GetWordsAsync(string search, int page, int itemsPerPage)
+    public async Task<(List<WordDto>, int TotalCount)> GetWordsAsync(string search, int page, int itemsPerPage, bool isCommonFilter)
     {
 
         var query = Db.Words.AsQueryable();
@@ -40,6 +40,11 @@ public class WordEditorService(WordleDbContext Db)
         if (!string.IsNullOrEmpty(search))
         {
             query = query.Where(w => w.Text.Contains(search.ToLower()));
+        }
+
+        if (isCommonFilter)
+        {
+            query = query.Where(w => w.IsCommon);
         }
 
         var totalCount = await query.CountAsync();

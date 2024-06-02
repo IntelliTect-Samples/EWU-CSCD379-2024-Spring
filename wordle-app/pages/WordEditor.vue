@@ -8,6 +8,7 @@
         color="secondary"
         @change="fetchWords"
         class="d-flex justify-center"
+		v-model="isCommonFilter"
       />
       <v-btn
         color="primary"
@@ -126,6 +127,7 @@ interface Word {
 
 const words = ref<Word[]>([]);
 const isLoading = ref<boolean>(false);
+const isCommonFilter = ref<boolean>(false);
 
 const totalWords = ref<number>(0);
 const search = ref("");
@@ -149,6 +151,7 @@ async function fetchWords() {
     search: search.value,
     page,
     itemsPerPage,
+	isCommonFilter: isCommonFilter.value,
   };
 
   try {
@@ -157,7 +160,7 @@ async function fetchWords() {
 
     words.value = response.data.words;
     totalWords.value = response.data.totalCount;
-    console.log(response.data.totalCount);
+
   } catch (error) {
     console.error(error);
   } finally {
@@ -199,5 +202,6 @@ async function deleteItem(item: Word) {
   }
 }
 
-watch([options, search], fetchWords, { immediate: true });
+// watch([options, search], fetchWords, { immediate: true });
+watch([options, search, isCommonFilter], fetchWords, { immediate: true });
 </script>
