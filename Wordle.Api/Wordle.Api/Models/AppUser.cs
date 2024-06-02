@@ -9,5 +9,7 @@ namespace Wordle.Api.Models
         public double AverageAttempts { get; set; }
 
         public int AverageSecondsPerGame { get; set; }
+
+        public DateOnly Birthday { get; set; }
     }
 }
