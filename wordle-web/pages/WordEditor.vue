@@ -44,7 +44,7 @@
           </v-col>
         </v-row>
         <v-row>
-          <v-col cols="12" lg="3" md="6" sm="12">
+          <v-col cols="12" lg="2" md="6" sm="12">
             <v-text-field
               v-model="query"
               item-text="word"
@@ -70,29 +70,12 @@
               </template>
             </v-slider>
           </v-col>
-          <v-col cols="12" lg="3" md="6" sm="6">
-            <v-row no-gutters class="ga-4">
-              <v-col cols="auto">
-                <v-btn variant="outlined" @click="decrasePageNumber">
-                  <v-icon icon="mdi-chevron-left" />
-                </v-btn>
-              </v-col>
-              <v-col cols="2">
-                <v-text-field
-                  v-model="pageNumber"
-                  density="compact"
-                  type="number"
-                  variant="outlined"
-                  hide-details
-                  :min="1"
-                />
-              </v-col>
-              <v-col cols="auto">
-                <v-btn variant="outlined" @click="increasePageNumber">
-                  <v-icon icon="mdi-chevron-right" />
-                </v-btn>
-              </v-col>
-            </v-row>
+          <v-col cols="12" lg="7" justify="start">
+            <v-pagination
+              v-model="pageNumber"
+              :length="Math.ceil(totalCount / pageSize)"
+              @input="refreshWords"
+            />
           </v-col>
         </v-row>
       </v-card-item>
@@ -149,7 +132,7 @@
         <template v-slot:bottom>
           <v-divider />
           <v-row class="pa-3">
-            <v-col>
+            <v-col cols="2">
               <v-btn variant="outlined" @click="returnToTop">
                 Back to Top
               </v-btn>
@@ -200,6 +183,7 @@ const userMode = ref(0);
 const tokenService = new TokenService();
 
 const isEditMode = computed(() => userMode.value === 1);
+const totalCount = ref(0);
 
 const isEditUser = computed(
   () => tokenService.isLoggedIn() && tokenService.canDeleteAndAdd()
@@ -219,6 +203,12 @@ watch([query, pageSize], async () => {
     pageNumber.value,
     pageSize.value
   );
+});
+
+watch([pageNumber], async () => {
+  if (pageNumber.value <= 0 || isNaN(pageNumber.value)) {
+    pageNumber.value = 1;
+  }
 });
 
 watch([pageNumber], async () => {
@@ -275,19 +265,22 @@ async function getWords(
   pageNumber: number = 1,
   pageSize: number = 10
 ): Promise<WordDto[]> {
+  let items: WordDto[] = [];
+
   return Axios.get(
     `word/WordsList?query=${query}&page=${pageNumber}&pageSize=${pageSize}`
   )
-    .then((res: { data: any }) => res.data)
-    .then((data: any) =>
-      data.map((data: any) => ({
+    .then((res) => res.data)
+    .then((data: any) => {
+      items = data["items"].map((data: any) => ({
         word: data.word,
         isCommon: data.isCommonWord,
-      }))
-    )
-    .then((words: WordDto[]) => {
+      }));
+      totalCount.value = data["count"];
+    })
+    .then(() => {
       isWordsListLoading.value = false;
-      return words;
+      return items;
     });
 }
 

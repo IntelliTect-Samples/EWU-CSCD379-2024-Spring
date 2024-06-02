@@ -13,13 +13,13 @@ public class WordOfTheDayService(WordleDbContext Db)
 
     public async Task<Word> GetRandomWord(string containsText = "")
     {
-        var numberOfWords = await Db.Words.CountAsync(f=>f.Text.Contains(containsText));
+        var numberOfWords = await Db.Words.CountAsync(f => f.Text.Contains(containsText));
 
         Random random = new();
         int randomIndex = random.Next(numberOfWords);
 
         return await Db.Words
-            .Where(f=>f.Text.Contains(containsText))
+            .Where(f => f.Text.Contains(containsText))
             .Skip(randomIndex)
             .FirstAsync();
     }
@@ -59,16 +59,23 @@ public class WordOfTheDayService(WordleDbContext Db)
         return wordOfTheDay.Word!.Text;
     }
 
-    public async Task<List<WordDto>> GetWordsList(string query, int page, int pageSize)
+    public async Task<WordResultDto> GetWordsList(string query, int page, int pageSize)
     {
 
-        return await Db.Words
-            .Select(word => new WordDto() { Word = word.Text, IsCommonWord = word.IsCommonWord})
+        var queryResult = 
+            Db.Words.
+            Select(word => new WordDto() { Word = word.Text, IsCommonWord = word.IsCommonWord })
             .Where(wordDto => wordDto.Word.StartsWith(query))
-            .OrderBy(wordDto => wordDto.Word)
-            .Skip((page - 1) * pageSize)
-            .Take(pageSize)
-            .ToListAsync();
+            .OrderBy(wordDto => wordDto.Word);
+
+        var count = await queryResult.CountAsync();
+        var results = await
+            queryResult.Skip((page - 1) * pageSize)
+            .Take(pageSize).ToListAsync();
+
+
+
+        return new WordResultDto() { Count= count, Items = results };
     }
 
     #region WordList

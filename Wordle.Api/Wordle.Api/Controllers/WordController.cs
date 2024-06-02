@@ -36,7 +36,7 @@ public class WordController(WordOfTheDayService wordOfTheDayService, WordEditorS
     }
 
     [HttpGet("WordsList/")]
-    public async Task<List<WordDto>> GetWordsList(string query = "", int page = 1, int pageSize = 10)
+    public async Task<WordResultDto> GetWordsList(string query = "", int page = 1, int pageSize = 10)
     {
         return await wordOfTheDayService.GetWordsList(query, page, pageSize);
     }
