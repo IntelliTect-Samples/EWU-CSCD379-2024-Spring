@@ -125,7 +125,8 @@
         </tr>
       </tbody>
     </v-table>
-    <v-pagination v-model="curretnPage":length="pageCount" :totalVisible="7"></v-pagination>
+    <v-pagination @prev="pageDisplay(wordPerPage, wordText, pageNum - 1)" @next="pageDisplay(wordPerPage, wordText, pageNum + 1)"></v-pagination>
+    <!--<v-pagination v-model="curretnPage":length="pageCount()" :totalVisible="7"></v-pagination>-->
   </v-card>
   <v-dialog v-model="addWordDialog" width="400">
     <v-card height="200">
@@ -189,6 +190,31 @@ function paginatedWords() {
 function pageCount() {
   return Math.ceil(words.value!.length / itemsPerPage.value);
 }
+
+const wordPerPage = ref(10);
+const wordText = ref('');
+const pageNum = ref(1);
+const countPages = ref(0);
+
+type MoreWordsDto = {
+  words: Word[]
+  countPages: number
+};
+
+//GetMoreWords(int wordCount, string? word, int pages)
+const pageDisplay = (pageWord: number, text: string, page: number) =>{
+  wordPerPage.value = pageWord;
+  wordText.value = text;
+  pageNum.value = page;
+  Axios.get(`word/GetMoreWords?wordCount=${wordPerPage.value}&word=${wordText.value}&pages=${pageNum.value}`).then((result) => {
+    const data = result.data as MoreWordsDto;
+    words.value = result.data;
+    countPages.value = data.countPages;
+    console.log(result);
+  });
+
+}
+
 
 const isMotU = computed(() => tokenService?.getMotU());
 const isOlderThanTwentyOne = computed(() =>

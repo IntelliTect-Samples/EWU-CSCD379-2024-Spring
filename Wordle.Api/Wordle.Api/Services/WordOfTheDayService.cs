@@ -127,6 +127,26 @@ public class WordOfTheDayService
 			.Take(10)
 			.ToListAsync();
 	}
+	public async Task<MoreWordsDto> GetMoreWords(int wordCount, string? word, int pages)
+	{
+		if (wordCount == 0)
+		{
+			wordCount = 10;
+		}
+		var max = wordCount * pages;
+		word ??= "";
+		var allWords = await Db.Words.Where(w => w.Text.StartsWith(word))
+			.OrderBy(w => w.Text)
+			.Skip(max - wordCount)
+			.Take(wordCount)
+			.ToListAsync();
+
+		var numberOfPages = (Db.Words.Where(w => w.Text.StartsWith("")).Count() + wordCount - 1) / wordCount;
+		var output = new MoreWordsDto();
+		output.Words = allWords;
+		output.Pages = numberOfPages;
+		return output;
+	}
 
 	#region WordList
 	public static List<string> WordList()
