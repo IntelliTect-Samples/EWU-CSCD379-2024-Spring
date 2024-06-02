@@ -102,7 +102,7 @@ const tokenService = new TokenService();
 function hint() {
   const headers = tokenService.generateTokenHeader();
   console.log(headers);
-  Axios.get("Word/WordOfTheDayHint", { headers})
+  Axios.get("Word/WordOfTheDayHint", { headers })
   .then((response) => {
     alert('Hint: ' + response.data);
   });

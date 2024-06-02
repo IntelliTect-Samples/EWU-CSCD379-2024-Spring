@@ -186,8 +186,13 @@ async function fetchWords() {
 async function updateItem(item: Word) {
   try {
     isLoading.value = true;
+
+    const headers = tokenService.generateTokenHeader();
+
     const response = await Axios.post(
-      "WordEditor/SetIsCommon?word=" + item.text + "&isCommon=" + item.isCommon
+      "WordEditor/SetIsCommon?word=" + item.text + "&isCommon=" + item.isCommon,
+      {},
+      { headers }
     );
 
     if (response.status === 200) {
