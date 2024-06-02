@@ -96,59 +96,17 @@ const addWord = () => {
     newWord.value = '';
     isCommon.value = false;
     paginateWords();
-
-    // Placeholder for API call to add a new word
-    /*
-    try {
-      await axios.post('/api/words', {
-        text: newWord.value,
-        isCommon: isCommon.value,
-      });
-      fetchWords(); // Re-fetch words after adding
-    } catch (error) {
-      console.error('Error adding word:', error);
-    }
-    */
   }
 };
 
 const deleteWord = (wordText) => {
   words.value = words.value.filter(word => word.text !== wordText);
   paginateWords();
-
-  // Placeholder for API call to delete a word
-  /*
-  try {
-    await axios.delete(`/api/words/${wordText}`);
-    fetchWords(); // Re-fetch words after deleting
-  } catch (error) {
-    console.error('Error deleting word:', error);
-  }
-  */
 };
 
 // Lifecycle hooks
 onMounted(() => {
   paginateWords();
-
-  // Placeholder for API call to fetch paginated words
-  /*
-  const fetchWords = async () => {
-    try {
-      const response = await axios.get('/api/words', {
-        params: {
-          page: currentPage.value,
-          limit: itemsPerPage.value,
-        },
-      });
-      words.value = response.data.words;
-      totalPages.value = response.data.totalPages;
-    } catch (error) {
-      console.error('Error fetching words:', error);
-    }
-  };
-  fetchWords();
-  */
 });
 </script>
 
