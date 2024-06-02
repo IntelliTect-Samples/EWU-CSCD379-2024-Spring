@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Wordle.Api.Models;
 
-[Index(nameof(Text))]
+[Index(nameof(Text), IsUnique = true)]
 public class Word
 {
     public int WordId { get; set; }
