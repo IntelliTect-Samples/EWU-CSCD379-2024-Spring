@@ -63,7 +63,10 @@ namespace Wordle.Api.Controllers
 
                 // Retrieve all roles associated with the user
                 var roles = await _userManager.GetRolesAsync(user);
+                var userClaims = await _userManager.GetClaimsAsync(user);
 
+                claims.AddRange(userClaims.Where( claim => claim.Type != null && claim.Value != null)
+                    .Select(claim => new Claim(claim.Type, claim.Value)));
                 // Iterate over each role
                 foreach (var role in roles)
                 {

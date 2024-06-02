@@ -23,7 +23,7 @@ public static class Policies
     }
     public static void EditWordPolicy(AuthorizationPolicyBuilder policy)
     {
-        policy.RequireClaim(Claims.MasterOfTheUniverse);
+        policy.RequireClaim(Claims.MasterOfTheUniverse, "true");
         policy.RequireAssertion(context =>
         {
             var birthdayString = context.User.Claims.FirstOrDefault(f => f.Type == Claims.BirthDate);

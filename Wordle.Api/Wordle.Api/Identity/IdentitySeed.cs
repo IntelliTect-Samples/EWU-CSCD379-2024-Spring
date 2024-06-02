@@ -40,7 +40,7 @@ public static class IdentitySeed
             {
                 UserName = "Admin@intellitect.com",
                 Email = "Admin@intellitect.com",
-                Birthday = new DateTime(1990, 5, 6)
+                Birthday = new DateTime(2007, 5, 6)
             };
 
             IdentityResult result = userManager.CreateAsync(user, "P@ssw0rd123").Result;
@@ -57,13 +57,15 @@ public static class IdentitySeed
             {
                 UserName = "Awesome@intellitect.com",
                 Email = "Awesome@intellitect.com",
-                Birthday = new DateTime(2005,10,31)            
+                Birthday = new DateTime(2000, 10, 31)
             };
 
             IdentityResult result = userManager.CreateAsync(user, "P@ssw0rd123").Result;
+            var masterOfTheUniverseClaim = new Claim(Claims.MasterOfTheUniverse, "true");
 
             if (result.Succeeded)
             {
+                await userManager.AddClaimAsync(user, masterOfTheUniverseClaim);
                 await userManager.AddToRoleAsync(user, Roles.Awesome);
             }
         }
