@@ -65,6 +65,7 @@ builder.Services.AddScoped<WordOfTheDayService>();
 builder.Services.AddScoped<PlayerServices>();
 builder.Services.AddScoped<GameService>();
 builder.Services.AddScoped<StatisticsService>();
+builder.Services.AddScoped<WordEditorService>();
 
 // Identity Services
 builder.Services.AddIdentityCore<AppUser>(options => options.SignIn.RequireConfirmedAccount = false)
