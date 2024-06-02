@@ -55,32 +55,6 @@ public class WordEditorService(WordleDbContext Db)
             .ToListAsync();
 
         return (words, totalCount);
-
-        //List<WordDto> words = new();
-        //if (isCommon)
-        //{
-        //    // Get only common words
-        //    words = await Db.Words
-        //        .Where(w => w.IsCommon)
-        //        .Skip(position)
-        //        .Take(10)
-        //        .Select(w => new WordDto { Text = w.Text, IsCommon = w.IsCommon })
-        //        .OrderBy(w => w.Text)
-        //        .ToListAsync();
-        //}
-        //else
-        //{
-        //    // Get all words
-        //    words = await Db.Words
-        //        .Skip(position)
-        //        .Take(10)
-        //        .Select(w => new WordDto { Text = w.Text, IsCommon = w.IsCommon })
-        //        .OrderBy(w => w.Text)
-        //        .ToListAsync();
-        //}
-
-
-        //return words;
     }
     
     public async Task<bool> SetIsCommonAsync(string word, bool isCommon)

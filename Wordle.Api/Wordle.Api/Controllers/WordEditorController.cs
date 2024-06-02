@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Wordle.Api.Dtos;
 using Wordle.Api.Models;
@@ -35,7 +36,8 @@ namespace Wordle.Api.Controllers
                 totalCount = result.Item2
             });
         }
-        
+
+        [Authorize]
         [HttpPost("SetIsCommon")]
         public async Task<IActionResult> SetIsCommon(string word, bool isCommon)
         {
