@@ -65,7 +65,7 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
 //Add Policies
 builder.Services.AddAuthorization(options =>
 {
-    options.AddPolicy(Policies.RandomAdmin, Policies.RandomAdminPolicy);
+    options.AddPolicy(Policies.AddOrRemoveWords, Policies.AddOrRemoveWordsPolicy);
     //options.AddPolicy("IsGrantPolicy", policy => policy.RequireRole("Grant"));
     //options.AddPolicy(Policies.EditWord, Policies.EditWordPolicy);
 });
@@ -77,6 +77,10 @@ using (var scope = app.Services.CreateScope())
     var db = scope.ServiceProvider.GetRequiredService<WordleDbContext>();
     db.Database.Migrate();
     await Seeder.Seed(db);
+    await IdentitySeed.SeedAsync(
+        scope.ServiceProvider.GetRequiredService<UserManager<AppUser>>(),
+        scope.ServiceProvider.GetRequiredService<RoleManager<IdentityRole>>(),
+        db);
 }
 
 // Configure the HTTP request pipeline.

@@ -16,13 +16,13 @@
       </thead>
       <tbody>
         <tr v-for="stats in statsToDisplay" :key="stats.date">
-          <td v-if="stats.date">{{ stats.date }}</td> <td v-else>No Data</td>
-          <td v-if="stats.averageGuesses">{{ stats.averageGuesses }}</td> <td v-else>No Data</td>
-          <td v-if="stats.averageTime">{{ stats.averageTime }}</td> <td v-else>No Data</td>
-          <td v-if="stats.totalTimesPlayed">{{ stats.totalTimesPlayed }}</td> <td v-else>No Data</td>
-          <td v-if="stats.totalWins">{{ stats.totalWins }}</td> <td v-else>No Data</td>
-          <td v-if="stats.totalWins && stats.totalTimesPlayed">{{ stats.totalTimesPlayed - stats.totalWins }}</td> <td v-else>No Data</td>
-          <td v-if="stats.played "> {{ stats.played ? "Yes" : "No" }}</td> <td v-else>No Data</td>
+          <td v-if="stats.date">{{ stats.date }}</td> <td v-else>N/A</td>
+          <td v-if="stats.averageGuesses">{{ stats.averageGuesses }}</td> <td v-else>N/A</td>
+          <td v-if="stats.averageTime">{{ stats.averageTime }}</td> <td v-else>N/A</td>
+          <td v-if="stats.totalTimesPlayed">{{ stats.totalTimesPlayed }}</td> <td v-else>0</td>
+          <td v-if="stats.totalWins">{{ stats.totalWins }}</td> <td v-else>0</td>
+          <td v-if="stats.totalWins && stats.totalTimesPlayed">{{ stats.totalTimesPlayed - stats.totalWins }}</td> <td v-else>{{stats.totalTimesPlayed}}</td>
+          <td v-if="stats.played "> {{ stats.played ? "Yes" : "No" }}</td> <td v-else>No</td>
         </tr>
       </tbody>
     </v-table>

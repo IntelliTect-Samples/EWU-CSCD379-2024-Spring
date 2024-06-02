@@ -6,16 +6,16 @@
 
         public DateOnly Date { get; set; }
 
-        public double AverageGuesses { get; set; }
+        public double AverageGuesses { get; set; } = 0;
 
-        public double AverageTime { get; set; }
+        public double AverageTime { get; set; } = 0;
 
-        public int TotalTimesPlayed { get; set; }
+        public int TotalTimesPlayed { get; set; } = 0;
 
-        public int TotalWins { get; set; }
+        public int TotalWins { get; set; } = 0;
 
         public int TotalLosses { get => TotalTimesPlayed - TotalWins; }
 
-        public bool Played { get; set; }
+        public bool Played { get; set; } = false;
     }
 }
