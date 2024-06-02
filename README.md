@@ -4,6 +4,13 @@ Azure Site URL: https://aestheticwordle.com/
 
 Azure API Site URL: https://aestheticwordle.azurewebsites.net/
 
+## Account Info
+
+| Acount Type | Email                   | Password    | Claims |
+| ----------- | ----------------------- | ----------- | ------ |
+| Admin       | Admin@Intellitect.com   | P@ssw0rd123 |
+| Awesome     | Awesome@Intellitect.com | P@ssw0rd123 |
+
 ## Assignment 5
 
 The purpose of this assignment is to solidify your learning of:
