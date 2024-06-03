@@ -66,6 +66,12 @@
             Statistics
           </v-list-item>
         </v-list>
+        <v-list>
+          <v-list-item @click="router.push('/Editor')" class="text-center">
+            <v-icon class="mr-2">mdi-pencil-box</v-icon>
+            Editor
+          </v-list-item>
+        </v-list>
       </v-navigation-drawer>
       <v-main>
         <NuxtPage />

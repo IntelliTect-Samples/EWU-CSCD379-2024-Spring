@@ -74,11 +74,6 @@
           </v-btn>
         </v-col>
         <v-col  cols="12" sm="3">
-          <v-btn @click="hint" color="primary">
-            Hint! 👀
-          </v-btn>
-        </v-col>
-        <v-col  cols="12" sm="3">
           <v-btn color="primary" @click="router.push('/Leaderboard')">Leaderboard</v-btn>
         </v-col>
       </v-row>
