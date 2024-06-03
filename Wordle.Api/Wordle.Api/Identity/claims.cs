@@ -1,3 +1,4 @@
+/*
 namespace Wordle.Api.Identity
 {
   public static class Claims
@@ -6,3 +7,4 @@ namespace Wordle.Api.Identity
     public const string MasterOfTheUniverse = "MasterOfTheUniverse";
   }
 }
+*/

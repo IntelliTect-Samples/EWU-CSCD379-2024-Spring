@@ -15,7 +15,7 @@ public static class IdentitySeed
         // Seed Admin User
         await SeedAdminUserAsync(userManager);
 
-        await SeedOtherUsersAsync(userManager);
+        //await SeedOtherUsersAsync(userManager);
     }
 
     private static async Task SeedRolesAsync(RoleManager<IdentityRole> roleManager)
@@ -47,6 +47,7 @@ public static class IdentitySeed
         }
     }
 
+    /*
     private static async Task SeedOtherUsersAsync(UserManager<AppUser> userManager)
     {
            
@@ -64,4 +65,5 @@ public static class IdentitySeed
         }
             // Add more users as needed
     }
+    */
 }
