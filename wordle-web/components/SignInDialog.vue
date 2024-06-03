@@ -54,5 +54,6 @@
       .catch((error) => {
         errorMessage.value = error.response.data;
       });
+      modelValue.value = false;
   }
   </script>
