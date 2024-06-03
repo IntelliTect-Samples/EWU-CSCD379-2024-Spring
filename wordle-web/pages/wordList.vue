@@ -11,6 +11,30 @@
       </template>
     </v-tooltip>
     <!---->
+    <v-row>
+      <v-col>
+        <v-text-field
+          clearable
+          label="Search"
+          v-model="wordToSearch"
+        ></v-text-field>
+      </v-col>
+      <v-col>
+        <v-slider v-model="pageSize" min="10" max="100" step="1" />
+      </v-col>
+      <v-col>
+        <v-select
+          v-model="pageSize"
+          :items="[10, 20, 30, 40, 50, 60, 70, 80, 90, 100]"
+        />
+      </v-col>
+      <v-col>
+        <v-btn color="primary" @click="resetFilters()">Reset</v-btn>
+      </v-col>
+    </v-row>
+
+    <!---->
+
     <v-table>
       <thead>
         <tr>
@@ -19,20 +43,21 @@
         </tr>
       </thead>
       <tbody>
-        <tr v-for="words in wordList" :key = words.word>
+        <tr v-for="words in wordList" :key="words.word">
           <td v-if="words.word">{{ words.word }}</td>
           <td v-else>No Data</td>
-          <td v-if="words.isCommon">{{ words.isCommon? "Yes" : "no"}}</td>
+          <td v-if="words.isCommon">{{ words.isCommon ? "Yes" : "no" }}</td>
           <td v-else>No Data</td>
         </tr>
       </tbody>
     </v-table>
+    <v-pagination
+      v-model="pageNumber"
+      :length="Math.ceil(totalCount / pageSize)"
+      @input="refreshWords"
+      variant="outlined"
+    />
     <!---->
-    <v-text-field
-      clearable
-      label="Search"
-      v-model="wordToSearch"
-    ></v-text-field>
     <v-tooltip text="mark the word as a common word">
       <template v-slot:activator="{ props }">
         <v-btn :disabled="!signedIn" color="primary" v-bind="props"
@@ -46,7 +71,6 @@
         clearable
         label="Add A Word"
         v-model="wordToAdd"
-        @click="addWord()"
       ></v-text-field>
       <v-tooltip text="Add a word to the word list">
         <template v-slot:activator="{ props }">
@@ -65,7 +89,6 @@
 <script setup lang="ts">
 import TokenService from "~/scripts/tokenService";
 import Axios from "axios";
-import { Word } from "~/scripts/word";
 const showSignInDialog = ref(false);
 const tokenService = new TokenService();
 const wordToAdd = ref("");
@@ -98,6 +121,9 @@ onMounted(async () => {
   }
   wordList.value = await getWordList();
 });
+watch([wordToSearch, pageNumber, pageSize], () => {
+  refreshWords();
+});
 function addWord() {
   console.log("word to add " + wordToAdd.value);
   Axios.post("/Word/AddWord", {
@@ -105,12 +131,17 @@ function addWord() {
     isCommon: false,
   });
 }
-async function getWordList() {
+async function getWordList(
+  wordToSearch: string = "",
+  pageNumber: number = 1,
+  pageSize: number = 10
+): Promise<WordListItems[]> {
+  //console.log("get word list");
   let items: WordListItems[] = [];
   await Axios.get(
-    `word/WordsList?query=${wordToSearch.value}&page=${pageNumber.value}&pageSize=${pageSize.value}`
+    `word/WordsList?query=${wordToSearch}&page=${pageNumber}&pageSize=${pageSize}`
   )
-  .then((res) => res.data)
+    .then((res) => res.data)
     .then((data: any) => {
       items = data["items"].map((data: any) => ({
         word: data.word,
@@ -121,6 +152,19 @@ async function getWordList() {
     .catch((error) => {
       console.log("api get Words error " + error);
     });
-    return items;
+  return items;
+}
+async function refreshWords() {
+  //console.log("refresh words");
+  wordList.value = await getWordList(
+    wordToSearch.value,
+    pageNumber.value,
+    pageSize.value
+  );
+}
+function resetFilters() {
+  wordToSearch.value = "";
+  pageNumber.value = 1;
+  pageSize.value = 10;
 }
 </script>
