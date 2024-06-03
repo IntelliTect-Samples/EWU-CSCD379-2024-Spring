@@ -11,10 +11,44 @@ on:
 
 jobs:
   build_and_deploy_job:
-    if: github.event_name == 'push' || (github.event_name == 'pull_request' && github.event.action != 'closed')
     runs-on: ubuntu-latest
     name: Build and Deploy Job
     steps:
+      - name: Get Code
+        uses: actions/checkout@v3
+        with:
+          submodules: true
+          lfs: false
+
+      - name: Setup Node.js environment
+        uses: actions/setup-node@v4.0.2
+        with: 
+          node-version: 18
+
+      - name: Install packages
+        run: npm ci
+        working-directory: ./wordle-web
+
+      - name: Build App
+        run: npm run generate
+        working-directory: ./wordle-web
+
+      - name: Vitest
+        run: npm run test
+        working-directory: ./wordle-web
+
+        
+      - name: Upload artifact
+        uses: actions/upload-artifact@v2
+        with:
+          name: build-output
+          path: ./wordle-web/.output/public
+          
+      - name: Download artifact
+        uses: actions/download-artifact@v2
+        with:
+          name: build-output
+          path: ./wordle-web/.output/public
       - uses: actions/checkout@v3
         with:
           submodules: true
