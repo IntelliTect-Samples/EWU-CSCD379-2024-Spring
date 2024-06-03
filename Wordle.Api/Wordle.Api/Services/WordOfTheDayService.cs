@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Wordle.Api.Dtos;
 using Wordle.Api.Models;
 
 namespace Wordle.Api.Services
@@ -58,6 +59,23 @@ namespace Wordle.Api.Services
             return wordOfTheDay.Word!.Text;
         }
 
+        public async Task<WordListDto> GetWordList(string query, int page, int pageSize)
+        {
+
+            var queryResult =
+                Db.Words.
+                Select(word => new WordDto() { Word = word.Text, IsCommon = word.IsCommon })
+                .Where(wordDto => wordDto.Word.StartsWith(query))
+                .OrderBy(wordDto => wordDto.Word);
+
+            var count = await queryResult.CountAsync();
+            var results = await
+                queryResult.Skip((page - 1) * pageSize)
+                .Take(pageSize).ToListAsync();
+
+
+            return new WordListDto() { Count = count, Items = results };
+        }
 
         #region WordList
 

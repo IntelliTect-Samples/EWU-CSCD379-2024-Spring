@@ -28,6 +28,12 @@ public class WordController(WordOfTheDayService wordOfTheDayService, WordEditSer
         return await wordOfTheDayService.GetWordOfTheDay(today);
     }
 
+    [HttpGet("WordsList/")]
+    public async Task<WordListDto> GetWordList(string query = "", int page = 1, int pageSize = 10)
+    {
+        return await wordOfTheDayService.GetWordList(query, page, pageSize);
+    }
+
     [HttpPost("AddWord")]
     [Authorize(Policy = Policies.AddOrRemoveWords)]
     public async Task AddWord(WordDto word)
