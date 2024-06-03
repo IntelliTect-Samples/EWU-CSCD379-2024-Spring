@@ -1,5 +1,51 @@
 <template>
   <div>
+  <v-container>
+    <v-card class="pa-3" color="secondary">
+      <v-card-title class="font-weight-bold text-center" >Word Editor</v-card-title>
+    </v-card>
+    <v-text-field class="pa-3" v-model="searchTerm" label="Search words" style="color: saddlebrown; background-color: lavenderblush;"></v-text-field>
+    <v-data-table :headers="headers" :items="filteredWords" style="color: rebeccapurple; background-color: pink;"></v-data-table>
+    <v-btn @click="addWord" color="primary">Add Word</v-btn>
+  </v-container>
+  </div>
+
+  
+</template>
+
+<script lang="ts">
+import { defineComponent, ref, computed } from 'vue'
+import { WordList } from "~/scripts/wordList";
+export default defineComponent({
+  setup() {
+    const formattedWordList = WordList.map(word => ({ word, isCommon: false }))
+    const searchTerm = ref('')
+    const words = ref(formattedWordList)
+    
+    const headers = [
+      { text: 'Word', value: 'word' },
+      { text: 'Common', value: 'isCommon' },
+      { text: 'Actions', value: 'actions' }
+    ]
+
+    const filteredWords = computed(() => {
+      return words.value.filter(word => word.startsWith(searchTerm.value))
+    })
+
+    const addWord = () => {
+      // Logic for adding a word
+    }
+
+    return { searchTerm, headers, filteredWords, addWord }
+  }
+})
+</script>
+
+<style>
+
+</style>
+
+
 <!-- Support deleting a word ❌✅
 Support adding a new word ❌✅
 Editing words is not supported ❌✅
@@ -30,47 +76,3 @@ Words should be sorted alphabetically ❌✅ -->
         </v-row>
     </v-card-item>
   </v-container> -->
-
-  <v-container>
-    <v-card class="pa-3" color="secondary">
-      <v-card-title class="font-weight-bold text-center" >Word Editor</v-card-title>
-    </v-card>
-    <v-text-field class="pa-3" v-model="searchTerm" label="Search words" style="color: saddlebrown; background-color: lavenderblush;"></v-text-field>
-    <v-data-table :headers="headers" :items="filteredWords" style="color: rebeccapurple; background-color: pink;"></v-data-table>
-    <v-btn @click="addWord" color="primary">Add Word</v-btn>
-  </v-container>
-  </div>
-
-  
-</template>
-
-<script lang="ts">
-import { defineComponent, ref, computed } from 'vue'
-
-export default defineComponent({
-  setup() {
-    const searchTerm = ref('')
-    const words = ref([])
-
-    const headers = [
-      { text: 'Word', value: 'word' },
-      { text: 'Common', value: 'isCommon' },
-      { text: 'Actions', value: 'actions' }
-    ]
-
-    const filteredWords = computed(() => {
-      return words.value.filter(word => word.startsWith(searchTerm.value))
-    })
-
-    const addWord = () => {
-      // Logic for adding a word
-    }
-
-    return { searchTerm, headers, filteredWords, addWord }
-  }
-})
-</script>
-
-<style>
-
-</style>
