@@ -59,12 +59,15 @@ namespace Wordle.Api.Controllers
                     new(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
                     new("userId", user.Id.ToString()),
                     new("userName", user.UserName!.ToString().Substring(0,user.UserName.ToString().IndexOf("@"))), // Use the email as the username, but get rid of the email domain
-                    new(Claims.MasterOfTheUniverse, (user.UserName!.ToString().Contains("ewu.edu")).ToString().ToLower()), // User is a MasterOfTheUniverse is they have an Eastern email
+                    //new(Claims.MasterOfTheUniverse, (user.UserName!.ToString().Contains("ewu.edu")).ToString().ToLower()), // User is a MasterOfTheUniverse is they have an Eastern email
                     new(Claims.Age, ((DateOnly.FromDateTime(DateTime.UtcNow).DayNumber - user.Birthday.DayNumber) / 365).ToString())
                 };
 
                 // Retrieve all roles associated with the user
                 var roles = await _userManager.GetRolesAsync(user);
+
+                var userClaims = await _userManager.GetClaimsAsync(user);
+                claims.AddRange(userClaims.Where(claim => claim.Type != null && claim.Value != null).Select(claim => new Claim(claim.Type, claim.Value)));
 
                 // Iterate over each role
                 foreach (var role in roles)
