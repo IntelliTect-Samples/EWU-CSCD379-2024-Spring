@@ -20,6 +20,7 @@ namespace Wordle.Api.Controllers
             return result ? Ok() : BadRequest();
         }
         
+        [Authorize(Policy = Policies.CanAddDeleteWords)]
         [HttpPost("AddWord")]
         public async Task<IActionResult> AddWord(string word)
         {
