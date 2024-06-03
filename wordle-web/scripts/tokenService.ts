@@ -1,4 +1,3 @@
-import { parse } from "date-fns";
 
 export default class TokenService {
     private tokenKey: string = "token";
@@ -35,6 +34,7 @@ export default class TokenService {
 
 }
 enum TokenVals{
+    //this isn't used but its a reminder of what the token values are
     sub,
     jti,
     userId,
