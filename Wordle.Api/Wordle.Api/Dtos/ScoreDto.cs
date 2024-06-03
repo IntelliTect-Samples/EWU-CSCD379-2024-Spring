@@ -1,4 +1,4 @@
-﻿namespace Wordle.Api.Models
+﻿namespace Wordle.Api.Dtos
 {
     public record ScoreDto
     {

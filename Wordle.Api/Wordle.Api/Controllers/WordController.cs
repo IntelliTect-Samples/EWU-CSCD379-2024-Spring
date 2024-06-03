@@ -1,10 +1,13 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+using Wordle.Api.Dtos;
+using Wordle.Api.Identity;
 using Wordle.Api.Services;
 
 namespace Wordle.Api.Controllers;
 [ApiController]
 [Route("[controller]")]
-public class WordController(WordOfTheDayService wordOfTheDayService) : ControllerBase
+public class WordController(WordOfTheDayService wordOfTheDayService, WordEditService wordEditorService) : ControllerBase
 {
     [HttpGet("RandomWord")]
     public async Task<string> GetRandomWord()
@@ -24,4 +27,19 @@ public class WordController(WordOfTheDayService wordOfTheDayService) : Controlle
         DateOnly today = DateOnly.FromDateTime(DateTime.UtcNow.AddHours(offsetInHours));
         return await wordOfTheDayService.GetWordOfTheDay(today);
     }
+
+    [HttpPost("AddWord")]
+    [Authorize(Policy = Policies.AddOrRemoveWords)]
+    public async Task AddWord(WordDto word)
+    {
+        await wordEditorService.AddWord(word);
+    }
+
+    [HttpDelete("DeleteWord")]
+    [Authorize(Policy = Policies.AddOrRemoveWords)]
+    public async Task DeleteWord(string word)
+    {
+        await wordEditorService.RemoveWord(word);
+    }
+
 }
