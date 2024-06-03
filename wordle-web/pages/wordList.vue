@@ -5,8 +5,11 @@
 
     <v-tooltip text="Sign in to access more features">
       <template v-slot:activator="{ props }">
-        <v-btn v-bind="props" color="primary" @click="showSignInDialog = true"
-          >Sign In</v-btn
+        <v-btn
+          v-bind="props"
+          color="primary"
+          @click="showSignInDialog = true"
+          >{{ signedIn ? userNameGlobal : "Sign In" }}</v-btn
         >
       </template>
     </v-tooltip>
@@ -29,7 +32,13 @@
         />
       </v-col>
       <v-col>
-        <v-btn color="primary" @click="resetFilters()">Reset</v-btn>
+        <v-tooltip text="Reset the filters">
+          <template v-slot:activator="{ props }">
+            <v-btn v-bind="props" color="primary" @click="resetFilters()"
+              >Reset</v-btn
+            >
+          </template>
+        </v-tooltip>
       </v-col>
     </v-row>
 
@@ -40,6 +49,7 @@
         <tr>
           <th>Word</th>
           <th>Is It A Common Word</th>
+          <th>Actions</th>
         </tr>
       </thead>
       <tbody>
@@ -48,23 +58,30 @@
           <td v-else>No Data</td>
           <td v-if="words.isCommon">{{ words.isCommon ? "Yes" : "no" }}</td>
           <td v-else>No Data</td>
+          <td>
+            <v-tooltip text="mark the word as a common word">
+              <template v-slot:activator="{ props }">
+                <v-btn
+                  :disabled="!signedIn"
+                  color="primary"
+                  v-bind="props"
+                  @click="markAsCommon(words.word, words.isCommon)"
+                  >Common</v-btn
+                >
+              </template>
+            </v-tooltip>
+          </td>
         </tr>
       </tbody>
     </v-table>
     <v-pagination
       v-model="pageNumber"
       :length="Math.ceil(totalCount / pageSize)"
-      @input="refreshWords"
+      @input="getWordList(wordToSearch, pageNumber, pageSize)"
       variant="outlined"
     />
     <!---->
-    <v-tooltip text="mark the word as a common word">
-      <template v-slot:activator="{ props }">
-        <v-btn :disabled="!signedIn" color="primary" v-bind="props"
-          >Common</v-btn
-        >
-      </template>
-    </v-tooltip>
+
     <!---->
     <div class="d-flex">
       <v-text-field
@@ -78,7 +95,7 @@
             :disabled="!canAddWords"
             color="primary"
             v-bind="props"
-            @click="console.log('word to add ' + wordToAdd)"
+            @click="addWord()"
             >Add Word</v-btn
           >
         </template>
@@ -93,11 +110,11 @@ const showSignInDialog = ref(false);
 const tokenService = new TokenService();
 const wordToAdd = ref("");
 const wordToSearch = ref("");
-const wordListApi = ref<WordListApi[]>();
 const wordList = ref<WordListItems[]>();
 const totalCount = ref(0);
 const pageNumber = ref(1);
 const pageSize = ref(10);
+const userNameGlobal: Ref<string> = inject("userName")! as Ref<string>;
 const signedIn = computed(() => tokenService.isLoggedIn());
 const parseToken = computed(() => tokenService.parseToken());
 const canAddWords = computed(() => {
@@ -107,10 +124,7 @@ const canAddWords = computed(() => {
     return false;
   }
 });
-interface WordListApi {
-  count: number;
-  items: WordListItems[];
-}
+
 interface WordListItems {
   word: string;
   isCommon: boolean;
@@ -121,15 +135,48 @@ onMounted(async () => {
   }
   wordList.value = await getWordList();
 });
-watch([wordToSearch, pageNumber, pageSize], () => {
-  refreshWords();
+watch([wordToSearch, pageNumber, pageSize], async () => {
+  wordList.value = await getWordList(
+    wordToSearch.value,
+    pageNumber.value,
+    pageSize.value
+  );
 });
-function addWord() {
+async function refreshWords() {
+  console.log("refresh words");
+  wordList.value = await getWordList(
+    wordToSearch.value,
+    pageNumber.value,
+    pageSize.value
+  );
+}
+async function addWord() {
+  //check size of word
+  if (wordToAdd.value.length < 5) {
+    window.alert("word must be at least 5 characters long");
+    return;
+  }
+  //check to see if it is in the word list already
+  var foundWord: WordListItems[] = await getWordList(wordToAdd.value);
+  for (var i = 0; i < foundWord.length; i++) {
+    if (foundWord[i].word == wordToAdd.value) {
+      window.alert("word is already in the list");
+      return;
+    }
+  }
+  const headers = tokenService.generateTokenHeader();
   console.log("word to add " + wordToAdd.value);
-  Axios.post("/Word/AddWord", {
-    word: wordToAdd.value,
-    isCommon: false,
+  Axios.post(
+    "/Word/AddWord",
+    {
+      word: wordToAdd.value.toUpperCase(),
+      isCommon: false,
+    },
+    { headers }
+  ).catch((error) => {
+    console.log("api add word error " + error);
   });
+  await refreshWords();
 }
 async function getWordList(
   wordToSearch: string = "",
@@ -154,17 +201,31 @@ async function getWordList(
     });
   return items;
 }
-async function refreshWords() {
-  //console.log("refresh words");
-  wordList.value = await getWordList(
-    wordToSearch.value,
-    pageNumber.value,
-    pageSize.value
-  );
-}
+
 function resetFilters() {
   wordToSearch.value = "";
   pageNumber.value = 1;
   pageSize.value = 10;
+}
+async function markAsCommon(word: string, isCommon: boolean) {
+  if (isCommon === null || isCommon === undefined) {
+    isCommon = true;
+  }
+  const headers = {
+    Authorization: "Bearer " + tokenService.getToken(),
+  };
+  console.log("headers " + headers);
+  console.log("mark as common " + word + " " + !isCommon);
+  Axios.post(
+    "/Word/UpdateWord",
+    {
+      word: word,
+      isCommon: !isCommon,
+    },
+    { headers }
+  ).catch((error) => {
+    console.log("api update word error " + error);
+  });
+  await refreshWords();
 }
 </script>

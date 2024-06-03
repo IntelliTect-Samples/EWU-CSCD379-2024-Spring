@@ -28,7 +28,7 @@ export default class TokenService {
     }
 
     public generateTokenHeader(){
-        return{'Authorization': 'Bearer ${this.getToken()}'}
+        return{'Authorization': 'Bearer ${this.getToken()}'};
     }
 
 
