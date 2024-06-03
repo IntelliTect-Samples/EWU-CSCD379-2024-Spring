@@ -172,7 +172,7 @@ const isLoading = ref<boolean>(true);
 const words = ref<Array<Word>>();
 const wordsCopy = ref<Array<Word>>();
 const isCommonWordChanged = ref<boolean[]>([]);
-const tokenService: TokenService | undefined = inject(key);
+const tokenService = ref(inject(key));
 const isWordOrderAscending = ref(true);
 const commonWordOrder = ref(CommonWordSortOrder.Unspecified);
 const addWordDialog = ref(false);
@@ -254,7 +254,7 @@ try {
 async function saveCommonWordFlag(word: string, isCommonWord: boolean) {
   try {
     const gameUrl = 'word/changeCommonWordFlag';
-    const headers = tokenService?.generateTokenHeader();
+    const headers = tokenService.value?.generateTokenHeader();
     await Axios.post(
       gameUrl,
       {
@@ -271,7 +271,7 @@ async function saveCommonWordFlag(word: string, isCommonWord: boolean) {
 async function deleteWord(word: Word) {
   try {
     const gameUrl = `word/deleteWord?word=${word.word}`;
-    const headers = tokenService?.generateTokenHeader();
+    const headers = tokenService.value?.generateTokenHeader();
     console.log(headers);
     await Axios.post(gameUrl, {}, { headers });
     let index = words.value?.indexOf(word);
@@ -353,7 +353,7 @@ function sortWords(words: Array<Word>) {
 async function addWord() {
   try {
     const gameUrl = `word/addWord?word=${wordToAdd.value}`;
-    const headers = tokenService?.generateTokenHeader();
+    const headers = tokenService.value?.generateTokenHeader();
     console.log(headers);
     await Axios.post(gameUrl, {}, { headers });
   } catch (error) {
