@@ -8,4 +8,5 @@ public class AppUser : IdentityUser
     public int AverageSecondsPerGame { get; set; }
 
     public DateOnly BirthDate { get; set; }
+    public bool IsMasterOfTheUniverse { get; set; }
 }

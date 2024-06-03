@@ -59,7 +59,8 @@ namespace Wordle.Api.Controllers
                     new("userId", user.Id.ToString()),
                     new("userName", user.UserName!.ToString().Substring(0,user.UserName.ToString().IndexOf("@"))), // Use the email as the username, but get rid of the email domain
                     new(Claims.Random, (new Random()).NextDouble().ToString()),
-                    new(Claims.BirthDate, user.BirthDate.ToString())
+                    new(Claims.BirthDate, user.BirthDate.ToString()),
+                    new(Claims.MasterOfTheUniverse, user.IsMasterOfTheUniverse.ToString())
                 };
 
                 // Retrieve all roles associated with the user

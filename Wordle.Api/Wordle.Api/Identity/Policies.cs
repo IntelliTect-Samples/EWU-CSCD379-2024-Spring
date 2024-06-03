@@ -29,6 +29,19 @@ namespace Wordle.Api.Identity
 
             policy.RequireAssertion(context =>
             {
+
+                var hasMasterClaim = context.User.Claims.FirstOrDefault(c => c.Type == Claims.MasterOfTheUniverse);
+                if (hasMasterClaim == null)
+                {
+                    return false;
+                }
+
+                // If hasMsterClaim == true then continue check
+                if (bool.TryParse(hasMasterClaim?.Value, out bool isMaster) && isMaster == false)
+                {
+                    return false;
+                }
+
                 var birthdateClaim = context.User.Claims.FirstOrDefault(c => c.Type == Claims.BirthDate);
                 if (birthdateClaim == null)
                 {
@@ -49,31 +62,6 @@ namespace Wordle.Api.Identity
                 return false;
 
             });
-            
-                //policy.RequireAssertion(context =>
-                //{
-                //    var birthdateClaim = context.User.Claims.FirstOrDefault(c => c.Type == Claims.BirthDate);
-                //    if (birthdateClaim != null)
-                //    {
-                //        return false;
-                //    }
-
-                //    if (DateTime.TryParse(birthdateClaim.Value, out DateTime birthdate))
-                //    {
-                //        var age = DateTime.Today.Year - birthdate.Year;
-                //        if (birthdate > DateTime.Today.AddYears(-age))
-                //        {
-                //            age--;
-                //        }
-
-                //        return age >= 21;
-                //    }
-
-                //    return false;
-                //});
-
-
-
             
         }
     }
