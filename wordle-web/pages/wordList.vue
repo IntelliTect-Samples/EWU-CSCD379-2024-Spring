@@ -211,9 +211,7 @@ async function markAsCommon(word: string, isCommon: boolean) {
   if (isCommon === null || isCommon === undefined) {
     isCommon = true;
   }
-  const headers = {
-    Authorization: "Bearer " + tokenService.getToken(),
-  };
+  const headers = tokenService.generateTokenHeader();
   console.log("headers " + headers);
   console.log("mark as common " + word + " " + !isCommon);
   Axios.post(
