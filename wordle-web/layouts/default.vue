@@ -60,6 +60,7 @@ const pages = [
   { name: "Wordle Of The Day", path: "/wordleOfTheDay" },
   { name: "Leaderboard", path: "/leaderboard" },
   { name: "Word Stats", path: "/wordStats" },
+  { name: "Word List", path: "/wordList"},
   { name: "How To Play", path: "/helpPage"},
   { name: "About", path: "/about" }
 ];
