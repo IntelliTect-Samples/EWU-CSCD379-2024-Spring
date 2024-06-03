@@ -26,13 +26,26 @@ public class WordEditService(WordleDbContext Db)
         await Db.SaveChangesAsync();
     }
 
-    public async Task RemoveWord(string Word)
+    public async Task RemoveWord(string wordToRemove)
     {
-        Word? word = await Db.Words.FirstOrDefaultAsync(word => word.Text == Word);
+        Word? word = await Db.Words.FirstOrDefaultAsync(word => word.Text == wordToRemove);
 
         if(word is not null)
         {
             Db.Words.Remove(word);
+            await Db.SaveChangesAsync();
+        }
+
+    }
+
+    public async Task UpdateWord(WordDto wordToUpdate)
+    {
+        Word? word = await Db.Words.FirstOrDefaultAsync(word => word.Text == wordToUpdate.Word);
+
+        if (word is not null)
+        {
+            word.IsCommon = wordToUpdate.IsCommon;
+
             await Db.SaveChangesAsync();
         }
 

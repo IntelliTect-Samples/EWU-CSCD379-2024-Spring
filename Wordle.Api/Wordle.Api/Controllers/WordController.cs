@@ -35,11 +35,17 @@ public class WordController(WordOfTheDayService wordOfTheDayService, WordEditSer
         await wordEditorService.AddWord(word);
     }
 
-    [HttpDelete("DeleteWord")]
+    [HttpDelete("RemoveWord")]
     [Authorize(Policy = Policies.AddOrRemoveWords)]
-    public async Task DeleteWord(string word)
+    public async Task RemoveWord(string word)
     {
         await wordEditorService.RemoveWord(word);
     }
 
+    [HttpPost("UpdateWord")]
+    [Authorize]
+    public async Task UpdateWord(WordDto word)
+    {
+        await wordEditorService.UpdateWord(word);
+    }
 }
