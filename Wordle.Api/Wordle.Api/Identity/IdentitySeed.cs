@@ -56,14 +56,15 @@ public static class IdentitySeed
             {
                 UserName = "nmarsee@ewu.edu",
                 Email = "nmarsee@ewu.edu",
-                Birthday = new DateOnly(2002, 5, 29, new System.Globalization.GregorianCalendar())
+                Birthday = new DateOnly(2002, 5, 29)
             };
 
-            IdentityResult result = userManager.CreateAsync(user, "nmarsee1").Result;
+            IdentityResult result = userManager.CreateAsync(user, "P@ssw0rd123N").Result;
 
             if (result.Succeeded)
             {
                 await userManager.AddToRoleAsync(user, Roles.Admin);
+                await userManager.AddClaimAsync(user, new Claim(Claims.MasterOfTheUniverse, "true"));
             }
         }
 
@@ -74,14 +75,15 @@ public static class IdentitySeed
             {
                 UserName = "madams41@ewu.edu",
                 Email = "madams41@ewu.edu",
-                Birthday = new DateOnly(2003, 1, 20, new System.Globalization.GregorianCalendar())
+                Birthday = new DateOnly(2003, 1, 20)
             };
 
-            IdentityResult result = userManager.CreateAsync(user, "madams1").Result;
+            IdentityResult result = userManager.CreateAsync(user, "P@ssw0rd123M").Result;
 
             if (result.Succeeded)
             {
                 await userManager.AddToRoleAsync(user, Roles.Admin);
+                await userManager.AddClaimAsync(user, new Claim(Claims.MasterOfTheUniverse, "true"));
             }
         }
 
