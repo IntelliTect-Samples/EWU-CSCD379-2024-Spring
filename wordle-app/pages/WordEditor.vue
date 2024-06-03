@@ -208,8 +208,13 @@ async function updateItem(item: Word) {
 async function deleteItem(item: Word) {
   try {
     isLoading.value = true;
+
+    const headers = tokenService.generateTokenHeader();
+
     const response = await Axios.post(
-      "/WordEditor/DeleteWord?word=" + item.text
+      "/WordEditor/DeleteWord?word=" + item.text,
+      {},
+      { headers }
     );
 
     if (response.status === 200) {

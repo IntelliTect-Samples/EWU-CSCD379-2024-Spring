@@ -3,6 +3,6 @@
     public class Claims
     {
         public const string Random = "Random";
-        public const string BirthDAte = "BirthDate";
+        public const string BirthDate = "BirthDate";
     }
 }

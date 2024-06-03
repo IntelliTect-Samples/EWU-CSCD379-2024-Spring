@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Wordle.Api.Dtos;
+using Wordle.Api.Identity;
 using Wordle.Api.Models;
 using Wordle.Api.Services;
 
@@ -10,6 +11,7 @@ namespace Wordle.Api.Controllers
     [Route("[controller]")]
     public class WordEditorController(WordEditorService wordEditorService) : ControllerBase
     {
+        [Authorize(Policy = Policies.CanAddDeleteWords)]
         [HttpPost("DeleteWord")]
         public async Task<IActionResult> DeleteWord(string word)
         {

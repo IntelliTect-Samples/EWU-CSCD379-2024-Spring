@@ -99,6 +99,7 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
 builder.Services.AddAuthorization(options =>
 {
     options.AddPolicy(Policies.RandomAdmin, Policies.RandomAdminPolicy);
+    options.AddPolicy(Policies.CanAddDeleteWords, Policies.CanAddDeleteWordsPolicy);
 });
 
 var app = builder.Build();
