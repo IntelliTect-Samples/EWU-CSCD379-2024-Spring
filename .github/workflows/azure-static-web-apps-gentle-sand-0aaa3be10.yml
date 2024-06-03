@@ -4,10 +4,7 @@ on:
   push:
     branches:
       - Assignment5-Hadi_Cynthia
-  pull_request:
-    types: [opened, synchronize, reopened, closed]
-    branches:
-      - Assignment5-Hadi_Cynthia
+  workflow_dispatch:
 
 jobs:
   build_and_deploy_job:
@@ -37,7 +34,6 @@ jobs:
         run: npm run test
         working-directory: ./wordle-web
 
-        
       - name: Upload artifact
         uses: actions/upload-artifact@v2
         with:
@@ -49,10 +45,6 @@ jobs:
         with:
           name: build-output
           path: ./wordle-web/.output/public
-      - uses: actions/checkout@v3
-        with:
-          submodules: true
-          lfs: false
       - name: Build And Deploy
         id: builddeploy
         uses: Azure/static-web-apps-deploy@v1
@@ -66,15 +58,3 @@ jobs:
           api_location: ".output/server" # Api source code path - optional
           output_location: ".output/public" # Built app content directory - optional
           ###### End of Repository/Build Configurations ######
-
-  close_pull_request_job:
-    if: github.event_name == 'pull_request' && github.event.action == 'closed'
-    runs-on: ubuntu-latest
-    name: Close Pull Request Job
-    steps:
-      - name: Close Pull Request
-        id: closepullrequest
-        uses: Azure/static-web-apps-deploy@v1
-        with:
-          azure_static_web_apps_api_token: ${{ secrets.AZURE_STATIC_WEB_APPS_API_TOKEN_GENTLE_SAND_0AAA3BE10 }}
-          action: "close"
