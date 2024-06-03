@@ -179,6 +179,7 @@ const addWordDialog = ref(false);
 const wordToAdd = ref('');
 const commonRadio = ref(CommonRadio.Both);
 
+<<<<<<< Updated upstream
 const itemsPerPage =ref(10);
 const curretnPage = ref(1);
 
@@ -219,6 +220,18 @@ const pageDisplay = (pageWord: number, text: string, page: number) =>{
 const isMotU = computed(() => tokenService?.getMotU());
 const isOlderThanTwentyOne = computed(() =>
   tokenService?.isOlderThanTwentyOne()
+=======
+const isMotU = ref(tokenService.value?.getMotU());
+const isOlderThanTwentyOne = ref(tokenService.value?.isOlderThanTwentyOne());
+
+watch(
+  () => tokenService.value?.getToken(),
+  () => {
+    console.log('hoellleo');
+    isMotU.value = tokenService.value?.getMotU();
+    isOlderThanTwentyOne.value = tokenService.value?.isOlderThanTwentyOne();
+  }
+>>>>>>> Stashed changes
 );
 
 watch([commonRadio], () => {
