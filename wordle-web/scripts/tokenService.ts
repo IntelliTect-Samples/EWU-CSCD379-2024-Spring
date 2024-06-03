@@ -1,3 +1,5 @@
+import { parse } from "date-fns";
+
 export default class TokenService {
     private tokenKey: string = "token";
 
@@ -13,12 +15,17 @@ export default class TokenService {
         return this.getToken() !== "";
     }
 
-    public getUserName(){
+    public parseToken():string[]{
         const token = this.getToken();
         if(token === ""){
-            return "";
+            return [];
         }
-        return JSON.parse(atob(token.split(".")[1]));
+        var tokenString = JSON.parse(atob(token.split(".")[1]));
+        var tokenArray:string[] = [];
+        for(var key in tokenString){
+            tokenArray.push(tokenString[key]);
+        }
+        return tokenArray;
     }
 
     public generateTokenHeader(){
@@ -26,4 +33,16 @@ export default class TokenService {
     }
 
 
+}
+enum TokenVals{
+    sub,
+    jti,
+    userId,
+    userName,
+    Age,
+    MasterOfTheUniverse,
+    Role,
+    exp,
+    iss,
+    aud
 }
