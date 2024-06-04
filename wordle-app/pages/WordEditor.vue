@@ -91,21 +91,6 @@ const isLogged = ref(tokenService.isLoggedIn());
 // Add Word Dialog setup and functions
 const showDialog = ref<boolean>(false);
 
-async function saveWord(word: string) {
-  console.log(word);
-  showDialog.value = false;
-
-  try {
-    const response = await Axios.post("/WordEditor/AddWord?word=" + word);
-
-    if (response.status === 200) {
-      await fetchWords();
-    }
-  } catch (error) {
-    console.error(error);
-  }
-}
-
 // Data table setup and functions
 
 // Headers for the data table
@@ -180,6 +165,27 @@ async function fetchWords() {
     console.error(error);
   } finally {
     isLoading.value = false;
+  }
+}
+
+async function saveWord(word: string) {
+  showDialog.value = false;
+
+  try {
+    isLoading.value = true;
+    const headers = tokenService.generateTokenHeader();
+
+    const response = await Axios.post(
+      "/WordEditor/AddWord?word=" + word,
+      {},
+      { headers }
+    );
+
+    if (response.status === 200) {
+      await fetchWords();
+    }
+  } catch (error) {
+    console.error(error);
   }
 }
 
