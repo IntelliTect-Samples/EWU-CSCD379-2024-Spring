@@ -69,7 +69,7 @@
                   :disabled="!signedIn"
                   color="primary"
                   v-bind="props"
-                  @click="markAsCommon(words.word, words.isCommon)"
+                  @click="markAsCommon(words.word, words.isCommon), refreshWords()"
                   >Common</v-btn
                 >
               </template>
@@ -82,7 +82,7 @@
                   :disabled="!canAddWords"
                   color="primary"
                   v-bind="props"
-                  @click="confirmDeleteWord(words.word)"
+                  @click="confirmDeleteWord(words.word), refreshWords()"
                   >Delete</v-btn
                 >
               </template>
@@ -94,7 +94,7 @@
     <v-pagination
       v-model="pageNumber"
       :length="Math.ceil(totalCount / pageSize)"
-      @input="getWordList(wordToSearch, pageNumber, pageSize)"
+      @input="getWordList(wordToSearch, pageNumber, pageSize), refreshWords()"
       variant="outlined"
     />
     <!---->
@@ -112,7 +112,7 @@
             :disabled="!canAddWords"
             color="primary"
             v-bind="props"
-            @click="addWord()"
+            @click="addWord(), refreshWords()"
             >Add Word</v-btn
           >
         </template>
@@ -226,7 +226,7 @@ async function addWord() {
   }
   const headers = { Authorization: `Bearer ${tokenService.getToken()}` };
   console.log("word to add " + wordToAdd.value);
-  Axios.post(
+  await Axios.post(
     "/Word/AddWord",
     {
       word: wordToAdd.value,
@@ -241,13 +241,11 @@ async function addWord() {
 
 
 async function markAsCommon(word: string, isCommon: boolean) {
-  if (isCommon === null || isCommon === undefined) {
-    isCommon = true;
-  }
+  
   const headers = { Authorization: `Bearer ${tokenService.getToken()}` };
   console.log("headers " + headers);
   console.log("mark as common " + word + " " + !isCommon);
-  Axios.post(
+  await Axios.post(
     "/Word/UpdateWord",
     {
       word: word,
@@ -269,7 +267,7 @@ async function markAsCommon(word: string, isCommon: boolean) {
 async function deleteWord(wordThatsDelete: string) {
   const headers = { Authorization: `Bearer ${tokenService.getToken()}` };
   console.log("delete word " + wordThatsDelete);
-  Axios.delete("/Word/RemoveWord?word=" + wordThatsDelete, { headers })
+  await Axios.delete("/Word/RemoveWord?word=" + wordThatsDelete, { headers })
     .then((response) => {
       console.log("delete word response " + response.status);
     })
