@@ -41,17 +41,13 @@
 <script setup lang="ts">
 import { useTheme } from "vuetify";
 import nuxtStorage from "nuxt-storage";
-import { defineProps } from "vue";
 const router = useRouter();
 const theme = useTheme();
 const showUserNameDialog = ref(false);
 const showSettingsDialog = ref(false);
 const userName = ref("guest");
 var dark = ref(true);
-const props = defineProps<{
-  userName: string
-  showUserNameDialog: boolean
-}>();
+
 provide("userName", userName);
 
 const pages = [
