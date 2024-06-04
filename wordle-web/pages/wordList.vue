@@ -61,8 +61,7 @@
         <tr v-for="words in wordList" :key="words.word">
           <td v-if="words.word">{{ words.word }}</td>
           <td v-else>No Data</td>
-          <td v-if="words.isCommon != null">{{ words.isCommon ? "Yes" : "no" }}</td>
-          <td v-else>No Data</td>
+          <td>{{ words.isCommon ? "Yes" : "no" }}</td>
           <td>
             <v-tooltip text="mark the word as a common word">
               <template v-slot:activator="{ props }">
@@ -173,7 +172,6 @@ async function refreshWords(){
     pageNumber.value,
     pageSize.value
   );
-  return true;
 }
 
 function resetFilters() {
@@ -271,7 +269,7 @@ async function markAsCommon(word: string, isCommon: boolean) {
 async function deleteWord(wordThatsDelete: string) {
   const headers = { Authorization: `Bearer ${tokenService.getToken()}` };
   console.log("delete word " + wordThatsDelete);
-  Axios.delete("/Word/RemoveWord?word=${wordThatsDelete!}", { headers })
+  Axios.delete("/Word/RemoveWord?word=" + wordThatsDelete, { headers })
     .then((response) => {
       console.log("delete word response " + response.status);
     })

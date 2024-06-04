@@ -4,6 +4,8 @@
       <v-alert v-if="errorMessage" type="error" title-date-format="Function">
         {{ errorMessage }}
       </v-alert>
+      <v-card-text v-if="signedIn">You Are Signed In</v-card-text>
+      <v-card-text v-else> You Are Not Signed In</v-card-text>
       <v-card-text>
         <v-text-field v-model="userName" @keyup.stop label="Username" />
         <v-text-field
