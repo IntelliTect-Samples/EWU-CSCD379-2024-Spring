@@ -2,9 +2,11 @@
   <SignInDialog v-model="showSignInDialog" />
   <v-card>
     <v-card-title class="text-center">Word List</v-card-title>
-    <ConfirmDeleteWord v-model="showConfirmDeleteWord"
-    @updated="deleteWord(wordToDelete)"
-    @cancel=" wordToDelete = ''" />
+    <ConfirmDeleteWord
+      v-model="showConfirmDeleteWord"
+      @updated="deleteWord(wordToDelete)"
+      @cancel="wordToDelete = ''"
+    />
     <v-tooltip text="Sign in to access more features">
       <template v-slot:activator="{ props }">
         <v-btn
@@ -133,10 +135,15 @@ const pageNumber = ref(1);
 const pageSize = ref(10);
 const showConfirmDeleteWord = ref(false);
 const userNameGlobal: Ref<string> = inject("userName")! as Ref<string>;
+provide("wordToDelete", wordToDelete);
 const signedIn = computed(() => tokenService.isLoggedIn());
 const parseToken = computed(() => tokenService.parseToken());
 const canAddWords = computed(() => {
-  if (parseToken.value[5] == "true" && parseInt(parseToken.value[4]) >= 21 && signedIn.value == true) {
+  if (
+    parseToken.value[5] == "true" &&
+    parseInt(parseToken.value[4]) >= 21 &&
+    signedIn.value == true
+  ) {
     return true;
   } else {
     return false;
@@ -161,7 +168,7 @@ watch([wordToSearch, pageNumber, pageSize], async () => {
   );
 });
 async function refreshWords() {
-  console.log("refresh words");
+  //console.log("refresh words");
   wordList.value = await getWordList(
     wordToSearch.value,
     pageNumber.value,
@@ -239,25 +246,33 @@ async function markAsCommon(word: string, isCommon: boolean) {
       isCommon: !isCommon,
     },
     { headers }
-  ).catch((error) => {
-    console.log("api update word error " + error);
-  });
+  )
+    .then((response) => {
+      console.log("mark as common response " + response.status + " " + response.data);
+    })
+    .catch((error) => {
+      console.log("api update word error " + error);
+    });
   await refreshWords();
 }
 function confirmDeleteWord(word: string) {
-  showConfirmDeleteWord.value = true;
   wordToDelete.value = word;
-  provide("wordToDelete", word);
+  console.log("word to delete " + wordToDelete.value);
+  showConfirmDeleteWord.value = true;
+  console.log("show confirm dio" + showConfirmDeleteWord.value);
 }
 
-function deleteWord(wordThatsDelete: string) {
+async function deleteWord(wordThatsDelete: string) {
   const headers = { Authorization: `Bearer ${tokenService.getToken()}` };
   console.log("delete word " + wordThatsDelete);
-  Axios.delete('/Word/RemoveWord?word=${wordThatsDelete!}',{ headers })
-  .catch((error) => {
-    console.log("api delete word error " + error);
-  });
+  Axios.delete("/Word/RemoveWord?word=${wordThatsDelete!}", { headers })
+    .then((response) => {
+      console.log("delete word response " + response.status);
+    })
+    .catch((error) => {
+      console.log("api delete word error " + error);
+    });
   showConfirmDeleteWord.value = false;
-  refreshWords();
+  await refreshWords();
 }
 </script>
