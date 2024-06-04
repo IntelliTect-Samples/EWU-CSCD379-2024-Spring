@@ -168,7 +168,7 @@ watch([wordToSearch, pageNumber, pageSize], async () => {
   );
 });
 async function refreshWords() {
-  //console.log("refresh words");
+  console.log("refreshing words");
   wordList.value = await getWordList(
     wordToSearch.value,
     pageNumber.value,
@@ -194,7 +194,7 @@ async function addWord() {
   Axios.post(
     "/Word/AddWord",
     {
-      word: wordToAdd.value.toUpperCase(),
+      word: wordToAdd.value,
       isCommon: false,
     },
     { headers }
