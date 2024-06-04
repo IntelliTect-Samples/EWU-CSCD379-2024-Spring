@@ -2,7 +2,9 @@
   <SignInDialog v-model="showSignInDialog" />
   <v-card>
     <v-card-title class="text-center">Word List</v-card-title>
-
+    <ConfirmDeleteWord v-model="showConfirmDeleteWord"
+    @updated="deleteWord(wordToDelete)"
+    @cancel=" wordToDelete = ''" />
     <v-tooltip text="Sign in to access more features">
       <template v-slot:activator="{ props }">
         <v-btn
@@ -49,7 +51,8 @@
         <tr>
           <th>Word</th>
           <th>Is It A Common Word</th>
-          <th>Actions</th>
+          <th>mark as common</th>
+          <th>delete</th>
         </tr>
       </thead>
       <tbody>
@@ -67,6 +70,19 @@
                   v-bind="props"
                   @click="markAsCommon(words.word, words.isCommon)"
                   >Common</v-btn
+                >
+              </template>
+            </v-tooltip>
+          </td>
+          <td>
+            <v-tooltip text="delete the word">
+              <template v-slot:activator="{ props }">
+                <v-btn
+                  :disabled="!canAddWords"
+                  color="primary"
+                  v-bind="props"
+                  @click="confirmDeleteWord(words.word)"
+                  >Delete</v-btn
                 >
               </template>
             </v-tooltip>
@@ -110,15 +126,17 @@ const showSignInDialog = ref(false);
 const tokenService = new TokenService();
 const wordToAdd = ref("");
 const wordToSearch = ref("");
+const wordToDelete = ref("");
 const wordList = ref<WordListItems[]>();
 const totalCount = ref(0);
 const pageNumber = ref(1);
 const pageSize = ref(10);
+const showConfirmDeleteWord = ref(false);
 const userNameGlobal: Ref<string> = inject("userName")! as Ref<string>;
 const signedIn = computed(() => tokenService.isLoggedIn());
 const parseToken = computed(() => tokenService.parseToken());
 const canAddWords = computed(() => {
-  if (parseToken.value[5] == "true" && parseInt(parseToken.value[4]) >= 21) {
+  if (parseToken.value[5] == "true" && parseInt(parseToken.value[4]) >= 21 && signedIn.value == true) {
     return true;
   } else {
     return false;
@@ -164,7 +182,7 @@ async function addWord() {
       return;
     }
   }
-  const headers = tokenService.generateTokenHeader();
+  const headers = { Authorization: `Bearer ${tokenService.getToken()}` };
   console.log("word to add " + wordToAdd.value);
   Axios.post(
     "/Word/AddWord",
@@ -211,9 +229,7 @@ async function markAsCommon(word: string, isCommon: boolean) {
   if (isCommon === null || isCommon === undefined) {
     isCommon = true;
   }
-  const headers = {
-    Authorization: "Bearer " + tokenService.getToken(),
-  };
+  const headers = { Authorization: `Bearer ${tokenService.getToken()}` };
   console.log("headers " + headers);
   console.log("mark as common " + word + " " + !isCommon);
   Axios.post(
@@ -227,5 +243,21 @@ async function markAsCommon(word: string, isCommon: boolean) {
     console.log("api update word error " + error);
   });
   await refreshWords();
+}
+function confirmDeleteWord(word: string) {
+  showConfirmDeleteWord.value = true;
+  wordToDelete.value = word;
+  provide("wordToDelete", word);
+}
+
+function deleteWord(wordThatsDelete: string) {
+  const headers = { Authorization: `Bearer ${tokenService.getToken()}` };
+  console.log("delete word " + wordThatsDelete);
+  Axios.delete('/Word/RemoveWord?word=${wordThatsDelete!}',{ headers })
+  .catch((error) => {
+    console.log("api delete word error " + error);
+  });
+  showConfirmDeleteWord.value = false;
+  refreshWords();
 }
 </script>
