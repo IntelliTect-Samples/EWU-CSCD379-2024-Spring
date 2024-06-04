@@ -50,6 +50,7 @@
    - Assigned: 4/2
    - In-class hackathon 6/6
    - Final project presentations finals week
+   - 3:30 pm on Thursday, 6/13/2024
 
 If you are having trouble viewing the below graph, copy the code and paste it [in this editor](https://mermaid-js.github.io/docs/mermaid-live-editor-beta)
 
