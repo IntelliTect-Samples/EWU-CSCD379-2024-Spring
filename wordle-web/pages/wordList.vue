@@ -61,7 +61,7 @@
         <tr v-for="words in wordList" :key="words.word">
           <td v-if="words.word">{{ words.word }}</td>
           <td v-else>No Data</td>
-          <td>{{ words.isCommon ? "Yes" : "no" }}</td>
+          <td>{{ words.isCommon? "Yes" : "No"}}</td>
           <td>
             <v-tooltip text="mark the word as a common word">
               <template v-slot:activator="{ props }">
@@ -200,13 +200,14 @@ async function getWordList(
     .then((data: any) => {
       items = data["items"].map((data: any) => ({
         word: data.word,
-        isCommon: data.isCommonWord,
+        isCommon: data.isCommon,
       }));
       totalCount.value = data["count"];
     })
     .catch((error) => {
       console.log("api get Words error " + error);
     });
+  console.log("items " + items);
   return items;
 }
 
@@ -243,7 +244,6 @@ async function addWord() {
 async function markAsCommon(word: string, isCommon: boolean) {
   
   const headers = { Authorization: `Bearer ${tokenService.getToken()}` };
-  console.log("headers " + headers);
   console.log("mark as common " + word + " " + !isCommon);
   await Axios.post(
     "/Word/UpdateWord",
