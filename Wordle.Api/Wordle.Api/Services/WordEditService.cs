@@ -28,7 +28,7 @@ public class WordEditService(WordleDbContext Db)
 
     public async Task RemoveWord(string wordToRemove)
     {
-        Word? word = await Db.Words.FirstOrDefaultAsync(word => word.Text == wordToRemove);
+        Word? word = await Db.Words.FirstOrDefaultAsync(word => word.Text.ToLower() == wordToRemove.ToLower());
 
         if(word is not null)
         {
@@ -40,7 +40,7 @@ public class WordEditService(WordleDbContext Db)
 
     public async Task UpdateWord(WordDto wordToUpdate)
     {
-        Word? word = await Db.Words.FirstOrDefaultAsync(word => word.Text == wordToUpdate.Word);
+        Word? word = await Db.Words.FirstOrDefaultAsync(word => word.Text.ToLower() == wordToUpdate.Word.ToLower());
 
         if (word is not null)
         {
