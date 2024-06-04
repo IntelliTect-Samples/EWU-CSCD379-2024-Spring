@@ -303,4 +303,6 @@ You should now be ready to follow along in class on Tuesday.
     - Menus
     - Tooltips 
 
-## Finals Week
+## Final
+- 3:30pm on Thursday, 6/13/2024
+
