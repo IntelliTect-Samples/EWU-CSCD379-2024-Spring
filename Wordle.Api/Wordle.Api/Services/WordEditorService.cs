@@ -35,7 +35,9 @@ public class WordEditorService(WordleDbContext Db)
     public async Task<(List<WordDto>, int TotalCount)> GetWordsAsync(string search, int page, int itemsPerPage, bool isCommonFilter)
     {
 
-        var query = Db.Words.AsQueryable();
+        var query = Db.Words
+            .OrderBy(w => w.Text)
+            .AsQueryable();
 
         if (!string.IsNullOrEmpty(search))
         {
