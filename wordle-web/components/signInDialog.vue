@@ -14,7 +14,7 @@
           <template v-if="!isRegisterMode">
             <v-text-field
               v-model="username"
-              label="Username"
+              label="Username(email)"
               prepend-icon="mdi-account"
               required
             ></v-text-field>
@@ -51,7 +51,7 @@
             ></v-text-field>
           </template>
           <v-btn style="box-shadow: inset;" color="primary" @click="toggleMode()">
-            {{ isRegisterMode ? 'Have an account? Sign-In' : 'Dont have an account? Register' }}
+            {{ isRegisterMode ? 'Sign-In' : 'Register' }}
           </v-btn>
         </v-form>
       </v-card-text>
@@ -72,11 +72,21 @@ const password = ref<string>('');
 const valid = ref<boolean>(false);
 const userName = ref<string>('');
 const isRegisterMode = ref<boolean>(false);
+const isAuthorized = ref<boolean>(false);
 
 function toggleMode(){
   isRegisterMode.value = !isRegisterMode.value;
 }
 
+
+function isMaster(){
+  if(userName.value = 'admin@masterOfUniverse.com')
+    {
+      isAuthorized.value = true;
+  } else {
+    isAuthorized.value = false;
+  }
+}
 </script>
 
 <style>
