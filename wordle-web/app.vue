@@ -1,12 +1,18 @@
 <template>
   <NuxtLayout>
+    <SignInDialog v-model="showSignIn"/>
     <v-app>
       <v-app-bar color="primary" :elevation="2">
         <v-app-bar-title @click="router.push('/')" style="cursor: pointer">
           HillBiddle
           <v-icon @click="router.push('/')"> mdi-greenhouse </v-icon>
         </v-app-bar-title>
-        
+        <v-spacer></v-spacer>
+        <v-list-item
+          prepend-icon="mdi-account"
+          title="Sign in"
+          @click="showSignIn = true"
+        />
       </v-app-bar>
         
       <HelpDialog v-model="showHelpDialog" />
@@ -188,6 +194,7 @@ const usersNameInput = ref<string>("");
 const router = useRouter();
 const theme = useTheme();
 const showHelpDialog = ref(false);
+const showSignIn = ref(false);
 const settingsDialog = ref(false);
 
 onMounted(() => {
