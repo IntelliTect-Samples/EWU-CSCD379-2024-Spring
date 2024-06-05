@@ -50,7 +50,11 @@
             <td>{{ item.word }}</td>
             <td>{{ item.isCommon }}</td>
             <td>
-              <v-icon>mdi-emoticon-dead-outline</v-icon>
+              <!-- Checkbox to toggle the isCommon property -->
+              <v-icon class="mr-2">mdi-flag</v-icon>
+              <v-btn v-model="item.isCommon" @click="updateCommonStatus(item)" color="secondary">common</v-btn>            </td>
+            <td>
+              <v-icon class="mr-2">mdi-emoticon-dead-outline</v-icon>
               <v-btn @click="deleteWord(item)" color="secondary">Delete</v-btn>
             </td>
           </tr>
@@ -77,7 +81,7 @@ const searchTerm = ref("");
 const words = ref(formattedWordList);
 const newWord = ref<string>("");
 const snackbar = ref({ show: false, message: "" });
-const showDialog = ref<boolean>(true);
+const showDialog = ref<boolean>(false);
 
 const headers = [
   { text: "Word", value: "word" },
@@ -97,6 +101,12 @@ const filteredWords = computed(() => {
     return false;
   });
 });
+
+const updateCommonStatus = (word) => {
+  word.isCommon = !word.isCommon;
+  // No need to manually synchronize, as v-model takes care of it
+  console.log(`Common status updated for ${word.word}. New value: ${word.isCommon}`);
+};
 
 const addWord = () => {
 
@@ -125,20 +135,21 @@ const addWord = () => {
 
 //on set up disable button, if the user logs in =-- > and they're authorized then authorize the
 const deleteWord = (wordToDelete) => {
-  const index = words.value.findIndex(word => word.word === wordToDelete.word);
-  if (index !== -1) {
-    // Remove the word from the array
-    words.value.splice(index, 1);
-    snackbar.value.message = "Word deleted successfully!";
-    // sprinkleAnimation();
-    snackbar.value.show = true;
-  } else {
-    // Word not found in the list
-    snackbar.value.message = "Word not found!";
-    snackbar.value.show = true;
-    console.error("Word not found!");
-  }
-};
+  // Prompt the user to confirm deletion
+  
+    const index = words.value.findIndex((word) => word.word === wordToDelete.word);
+    if (index !== -1) {
+      // Remove the word from the array
+      words.value.splice(index, 1);
+      snackbar.value.message = "Word deleted successfully!";
+      snackbar.value.show = true;
+    } else {
+      // Word not found in the list
+      snackbar.value.message = "Word not found!";
+      snackbar.value.show = true;
+      console.error("Word not found!");
+    }
+  };
 </script>
 
 <style>
