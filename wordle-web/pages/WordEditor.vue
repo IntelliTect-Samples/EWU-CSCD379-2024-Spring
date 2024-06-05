@@ -44,8 +44,7 @@
             <td>{{ item.word }}</td>
             <td>{{ item.isCommon }}</td>
             <td>
-              <!-- Add actions here -->
-              check
+              <v-btn @click="deleteWord(item)" color="error">Delete</v-btn>
             </td>
           </tr>
         </template>
@@ -114,8 +113,23 @@ export default defineComponent({
         console.error("Please enter a word!");
       }
     };
+    const deleteWord = (wordToDelete) => {
+    const index = words.value.findIndex(word => word.word === wordToDelete.word);
+    if (index !== -1) {
+      // Remove the word from the array
+      words.value.splice(index, 1);
+      // Optionally, show a confirmation message
+      snackbar.value.message = "Word deleted successfully!";
+      snackbar.value.show = true;
+    } else {
+      // Word not found in the list
+      snackbar.value.message = "Word not found!";
+      snackbar.value.show = true;
+      console.error("Word not found!");
+    }
+  };
 
-    return { searchTerm, headers, filteredWords, addWord, snackbar };
+    return { searchTerm, headers, filteredWords, addWord, deleteWord, snackbar };
   },
   data() {
     return {
