@@ -6,23 +6,36 @@
           >Word Editor</v-card-title
         >
       </v-card>
-      
+      <br><br>
+      <div>
       <v-text-field
         class="pa-3"
         v-model="searchTerm"
         label="Search words"
         style="color: saddlebrown; background-color: lavenderblush"
       ></v-text-field>
-      <v-text-field
-        v-model="newWord"
-        label="Enter new word"
-        variant= outlined
-        dense
-        class="mb-4"
-        @keydown.enter="addWord">
-      </v-text-field>
-      <v-btn class="pa-3" @click="addWord" color="primary">Add Word</v-btn>
-      <v-data-table :items="filteredWords" class="custom-table wordListStyle">
+      
+      
+      <br><br>
+      <div class="text-center">
+        <v-btn @click="showDialog = true" color="primary">Add Word</v-btn>
+      </div>
+
+       <v-dialog v-model="showDialog" max-width="500">
+        <v-card>
+          <br>
+          <v-card-title class="text-center">Add New Word</v-card-title>
+          <v-card-text>
+            <v-text-field v-model="newWord" label="Enter new word"></v-text-field>
+          </v-card-text>
+          <v-card-actions>
+            <v-btn color="primary" @click="addWord">Add</v-btn>
+            <v-btn color="primary" @click="showDialog = false">Cancel</v-btn>
+          </v-card-actions>
+        </v-card>
+      </v-dialog>
+</div>
+   <v-data-table :items="filteredWords" class="custom-table wordListStyle">
         <template v-slot:header>
           <thead>
             <tr class="header-cell">
@@ -64,6 +77,7 @@ const searchTerm = ref("");
 const words = ref(formattedWordList);
 const newWord = ref<string>("");
 const snackbar = ref({ show: false, message: "" });
+const showDialog = ref<boolean>(true);
 
 const headers = [
   { text: "Word", value: "word" },
@@ -96,6 +110,7 @@ const addWord = () => {
       console.log("Word added:", wordToAdd);
       // Clear the input field
       newWord.value = "";
+      showDialog.value = false;
     } else {
       // Word already exists
       snackbar.value.message = "Word already exists!";
@@ -105,11 +120,10 @@ const addWord = () => {
   } else {
     snackbar.value.message = "Please enter a word!";
     snackbar.value.show = true;
-    // Input field is empty, show error message or handle accordingly
-    //console.error("Please enter a word!");
   }
 };
 
+//on set up disable button, if the user logs in =-- > and they're authorized then authorize the
 const deleteWord = (wordToDelete) => {
   const index = words.value.findIndex(word => word.word === wordToDelete.word);
   if (index !== -1) {
