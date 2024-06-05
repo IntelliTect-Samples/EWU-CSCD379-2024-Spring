@@ -111,7 +111,6 @@ import axios from "axios";
 
 // apigame.startNewGame();
 provide("GAME", apigame);
-const myGuess = ref("");
 const engine = ref(false);
 const dialogBox = ref<boolean>(true);
 
