@@ -19,7 +19,13 @@
             prepend-icon="mdi-account"
             required
           ></v-text-field>
-
+          <v-text-field
+            v-model="password"
+            label="Password"
+            type="password"
+            prepend-icon="mdi-lock"
+            required
+          ></v-text-field>
         </v-form>
       </v-card-text>
       <v-card-actions>
