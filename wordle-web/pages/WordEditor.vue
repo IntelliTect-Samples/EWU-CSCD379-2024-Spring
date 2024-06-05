@@ -44,6 +44,7 @@
             <td>{{ item.word }}</td>
             <td>{{ item.isCommon }}</td>
             <td>
+              <v-icon>mdi-emoticon-dead-outline</v-icon>
               <v-btn @click="deleteWord(item)" color="error">Delete</v-btn>
             </td>
           </tr>
@@ -127,6 +128,14 @@ export default defineComponent({
       snackbar.value.show = true;
       console.error("Word not found!");
     }
+    const sprinkleAnimation = () => {
+      // Implement your sprinkle animation logic here
+      // For example, change the background color temporarily
+      document.body.style.backgroundColor = "lightblue";
+      setTimeout(() => {
+        document.body.style.backgroundColor = ""; // Revert to original color
+      }, 1000); // Adjust timing for animation
+    };
   };
 
     return { searchTerm, headers, filteredWords, addWord, deleteWord, snackbar };
