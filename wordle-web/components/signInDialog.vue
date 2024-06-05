@@ -51,7 +51,7 @@
             ></v-text-field>
           </template>
           <v-btn style="box-shadow: inset;" color="primary" @click="toggleMode()">
-            {{ isRegisterMode ? 'Sign-In' : 'Register' }}
+            {{ isRegisterMode ? 'Have an account? Sign-In' : 'Dont have an account? Register' }}
           </v-btn>
         </v-form>
       </v-card-text>
