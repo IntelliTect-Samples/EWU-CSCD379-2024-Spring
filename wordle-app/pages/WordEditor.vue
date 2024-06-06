@@ -59,32 +59,36 @@ const showDialog = ref<boolean>(false);
 // Data table setup and functions
 
 // Headers for the data table
-const headers = [
-  {
-    key: "text",
-    text: "Word",
-    title: "Word",
-    sortable: false,
-    align: "center",
-  },
-  {
-    key: "isCommon",
-    text: "Common",
-    title: "Common",
-    sortable: false,
-    align: "center",
-  },
-];
+const headers = computed(() => {
+  const baseHeaders = [
+    {
+      key: "text",
+      text: "Word",
+      title: "Word",
+      sortable: false,
+      align: "center",
+    },
+    {
+      key: "isCommon",
+      text: "Common",
+      title: "Common",
+      sortable: false,
+      align: "center",
+    },
+  ];
 
-if (isLogged.value) {
-  headers.push({
-    key: "actions",
-    text: "Actions",
-    title: "Actions",
-    sortable: false,
-    align: "center",
-  });
-}
+  if(isLogged.value) {
+    baseHeaders.push({
+      key: "actions",
+      text: "Actions",
+      title: "Actions",
+      sortable: false,
+      align: "center",
+    });
+  }
+
+  return baseHeaders;
+});
 
 interface Word {
   isCommon: boolean;
