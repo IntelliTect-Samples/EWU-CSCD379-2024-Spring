@@ -61,7 +61,7 @@
       </v-card-actions>
     </v-card>
   </v-container>
-  <v-snackbar v-model="snackbar.show" color="error" top>
+  <v-snackbar v-model="snackbar.show" color="green" top>
         {{ snackbar.message }}
         <v-btn text @click="snackbar.show = false">Close</v-btn>
       </v-snackbar>
