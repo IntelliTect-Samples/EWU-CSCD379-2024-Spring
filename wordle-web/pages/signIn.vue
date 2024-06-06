@@ -109,10 +109,10 @@ function login() {
 
   if (email.value === staticEmail && password.value === staticPassword) {
     isAuthorized.value = true;
-    nuxtStorage.localStorage.setData("isAuth", isAuthorized);
+    nuxtStorage.localStorage.setData("isAuth", isAuthorized.value);
   } else {
     isAuthorized.value = false;
-    nuxtStorage.localStorage.setData("isAuth", isAuthorized);
+    nuxtStorage.localStorage.setData("isAuth", isAuthorized.value);
 
   }
 

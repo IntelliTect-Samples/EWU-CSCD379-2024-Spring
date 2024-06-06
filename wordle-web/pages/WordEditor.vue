@@ -99,9 +99,9 @@ const words = ref(formattedWordList);
 const newWord = ref<string>("");
 const snackbar = ref({ show: false, message: "" });
 const showDialog = ref<boolean>(false);
-const auth = nuxtStorage.localStorage.getData("isAuth");
+var auth = nuxtStorage.localStorage.getData("isAuth");
 
-console.log("WORDEDITOR QUTH:"+auth);
+console.log("WORDEDITOR QUTH:"+auth.value);
 // Headers for the data table
 const headers = [
   { text: "Word", value: "word" },
@@ -131,9 +131,13 @@ const updateCommonStatus = (word) => {
   );
 };
 
+
+
 // Add a new word to the list
 const addWord = () => {
     const wordToAdd = newWord.value.trim();
+    var auth = nuxtStorage.localStorage.getData("isAuth");
+
     if(auth){
     if (wordToAdd !== "") {
       if (!words.value.some((word) => word.word === wordToAdd)) {
@@ -160,6 +164,8 @@ const addWord = () => {
 
 // Delete a word from the list
 const deleteWord = (wordToDelete) => {
+  var auth = nuxtStorage.localStorage.getData("isAuth");
+
   if (auth) {
     const index = words.value.findIndex(
       (word) => word.word === wordToDelete.word
