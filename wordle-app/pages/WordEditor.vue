@@ -3,49 +3,20 @@
     <v-toolbar flat class="mb-3">
       <v-toolbar-title>Word Editor</v-toolbar-title>
       <v-spacer></v-spacer>
-      <v-switch
-        label="Display common words only"
-        color="secondary"
-        @change="fetchWords"
-        class="d-flex justify-center"
-        v-model="isCommonFilter"
-      />
-      <v-btn
-        v-if="isLogged"
-        color="primary"
-        prepend-icon="mdi-plus-box"
-        variant="flat"
-        class="ml-5"
-        @click="showDialog = true"
-        >Add Word
+      <v-switch label="Display common words only" color="secondary" @change="fetchWords" class="d-flex justify-center"
+        v-model="isCommonFilter" />
+      <v-btn v-if="isLogged" color="primary" prepend-icon="mdi-plus-box" variant="flat" class="ml-5"
+        @click="showDialog = true">Add Word
       </v-btn>
     </v-toolbar>
 
-    <v-data-table-server
-      v-model:items-per-page="options.itemsPerPage"
-      :headers="headers"
-      :items="words"
-      :items-length="totalWords"
-      :options.sync="options"
-      @update:options="fetchWords"
-      @update:page="pageNumber"
-      @update:items-per-page="itemsPerPage"
-      :loading="isLoading"
-      :items-per-page-options="[10, 25, 50, 100]"
-      hover
-      density="compact"
-    >
+    <v-data-table-server v-model:items-per-page="options.itemsPerPage" :headers="headers" :items="words"
+      :items-length="totalWords" :options.sync="options" @update:options="fetchWords" @update:page="pageNumber"
+      @update:items-per-page="itemsPerPage" :loading="isLoading" :items-per-page-options="[10, 25, 50, 100]" hover
+      density="compact">
       <template #top>
-        <v-text-field
-          v-model="search"
-          label="Search"
-          @input="fetchWords"
-          clearable
-          clear-icon="mdi-close-circle"
-          variant="solo-filled"
-          bg-color="white"
-          prepend-inner-icon="mdi-magnify"
-        />
+        <v-text-field v-model="search" label="Search" @input="fetchWords" clearable clear-icon="mdi-close-circle"
+          variant="solo-filled" bg-color="white" prepend-inner-icon="mdi-magnify" />
       </template>
 
       <!-- Template for Word text -->
@@ -61,14 +32,8 @@
 
       <!-- Template for switch to change isCommon -->
       <template #item.isCommon="{ item }">
-        <v-switch
-          class="d-flex justify-center"
-          v-model="item.isCommon"
-          color="green"
-          inset
-          @change="updateItem(item)"
-          v-if="isLogged"
-        />
+        <v-switch class="d-flex justify-center" v-model="item.isCommon" color="green" inset @change="updateItem(item)"
+          v-if="isLogged" />
 
         <v-icon v-else :color="item.isCommon ? 'green' : 'red'" class="my-4">
           {{ item.isCommon ? "mdi-check" : "mdi-close" }}
@@ -85,8 +50,8 @@ import Axios from "axios";
 import TokenService from "~/scripts/tokenService";
 
 // Log in stuff here
-const tokenService = new TokenService();
-const isLogged = ref(tokenService.isLoggedIn());
+const tokenService = inject("TOKEN_SERVICE") as TokenService;
+const isLogged = ref(tokenService.isLoggedInValue);
 
 // Add Word Dialog setup and functions
 const showDialog = ref<boolean>(false);
@@ -239,7 +204,8 @@ watch([options, search, isCommonFilter], fetchWords, { immediate: true });
 
 <style scoped>
 /* Get rid of sharp corner above the search bar */
-.v-table {
+.v-table
+{
   border-radius: 10px 10px 0 0 !important;
 }
 </style>

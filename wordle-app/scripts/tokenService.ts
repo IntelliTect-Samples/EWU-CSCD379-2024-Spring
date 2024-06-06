@@ -1,5 +1,6 @@
 export default class TokenService {
     private tokenKey: string = 'token';
+    public isLoggedInValue = ref(false);
 
     public setToken(token: string) {
         localStorage.setItem(this.tokenKey, token);
@@ -11,7 +12,8 @@ export default class TokenService {
 
     public isLoggedIn(): boolean {
         // Won't work if the token is expired
-        return this.getToken() !== "";
+        // return this.getToken() !== "";
+        return this.isLoggedInValue.value = this.getToken() !== "";
     }
 
     public getUserName() {
