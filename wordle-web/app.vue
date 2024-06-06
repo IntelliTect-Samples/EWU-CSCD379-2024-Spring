@@ -1,6 +1,5 @@
 <template>
   <NuxtLayout>
-    <SignInDialog v-model="showSignIn"/>
     <v-app>
       <v-app-bar color="primary" :elevation="2">
         <v-app-bar-title @click="router.push('/')" style="cursor: pointer">
@@ -8,18 +7,19 @@
           <v-icon @click="router.push('/')"> mdi-greenhouse </v-icon>
         </v-app-bar-title>
         <v-spacer></v-spacer>
-        <v-list-item
+        <v-btn
           prepend-icon="mdi-account"
           title="Sign in"
-          @click="showSignIn = true"
-        />
+          @click="router.push('/signIn')"
+          >Sign In</v-btn
+        >
       </v-app-bar>
-        
+
       <HelpDialog v-model="showHelpDialog" />
 
       <v-navigation-drawer expand-on-hover rail location="right">
-        <v-list class = "bannerSmall" >
-          <v-list-item 
+        <v-list class="bannerSmall">
+          <v-list-item
             prepend-avatar="https://i.ibb.co/kx64H0R/Picture1.jpg"
             subtitle="Webdev"
             title="Cynthia"
@@ -37,6 +37,11 @@
             prepend-icon="mdi-home"
             title="Home"
             @click="router.push('/')"
+          />
+          <v-list-item
+            prepend-icon="mdi-account"
+            title="Sign in"
+            @click="router.push('/signIn')"
           />
           <v-list-item
             prepend-icon="mdi-halloween"
@@ -91,7 +96,7 @@
           />
         </v-list>
       </v-navigation-drawer>
-      
+
       <!-- Settings Dialog -->
       <v-dialog v-model="settingsDialog" max-width="500">
         <v-card style="outline-style: inset" color="primary">
@@ -175,7 +180,7 @@
           </v-card-text>
         </v-card>
       </v-dialog>
-      
+
       <v-main>
         <NuxtPage />
       </v-main>
@@ -194,7 +199,6 @@ const usersNameInput = ref<string>("");
 const router = useRouter();
 const theme = useTheme();
 const showHelpDialog = ref(false);
-const showSignIn = ref(false);
 const settingsDialog = ref(false);
 
 onMounted(() => {
@@ -227,6 +231,5 @@ alt="Logo"
 max-width="180"
 max-height="95"
 
-/>*/ 
+/>*/
 </style>
-
