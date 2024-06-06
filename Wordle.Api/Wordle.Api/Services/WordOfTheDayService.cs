@@ -135,8 +135,8 @@ public class WordOfTheDayService
 		}
 		var max = wordCount * pages;
 		word ??= "";
-		var allWords = await Db.Words.Where(w => w.Text.StartsWith(word))
-			.OrderBy(w => w.Text)
+		var allWords = await Db.Words.Select(w => new WordDto() { Word = w.Text, IsCommonWord = w.IsCommonWord }).Where(w => w.Word.StartsWith(word))
+			.OrderBy(w => w.Word)
 			.Skip(max - wordCount)
 			.Take(wordCount)
 			.ToListAsync();

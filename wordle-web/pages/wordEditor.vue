@@ -37,7 +37,7 @@
             class="text-center text-h8"
             @click="
               isWordOrderAscending = !isWordOrderAscending;
-              sortWords(words!);
+              sortWords(moreWordsArray!);
             ">
             <strong>Word</strong
             ><v-icon
@@ -49,7 +49,7 @@
             class="text-center text-h8"
             @click="
               commonWordOrder = (commonWordOrder + 1) % 3;
-              sortWords(words!);
+              sortWords(moreWordsArray!);
             ">
             <strong>Common Word</strong
             ><v-icon :icon="getCommonWordIcon()"></v-icon>
@@ -58,7 +58,7 @@
         </tr>
       </thead>
       <tbody>
-        <tr v-for="(word, index) in words">
+        <tr v-for="(word, index) in moreWordsArray">
           <td class="text-center text-h8">
             {{ word.word }}
           </td>
@@ -126,8 +126,10 @@
       </tbody>
     </v-table>
     <v-pagination
-      @prev="pageDisplay(wordPerPage, wordText, pageNum - 1)"
-      @next="pageDisplay(wordPerPage, wordText, pageNum + 1)"></v-pagination>
+      v-model="pageNum"
+      :length="Math.ceil(totalCount / wordPerPage)"
+      @input="refreshWords"
+      :totalVisible="7"></v-pagination>
     <!--<v-pagination v-model="curretnPage":length="pageCount()" :totalVisible="7"></v-pagination>-->
   </v-card>
   <v-dialog v-model="addWordDialog" width="400">
@@ -135,7 +137,7 @@
       <!--<v-text-field label="Word" v-model="wordToAdd" />-->
       <v-autocomplete
         v-model="wordToAdd"
-        :items="words!.map(w => w.word)"
+        :items="moreWordsArray!.map(w => w.word)"
         label="Add Word"></v-autocomplete>
       <v-btn
         @click="
@@ -170,7 +172,7 @@ enum CommonRadio {
 }
 
 const isLoading = ref<boolean>(true);
-const words = ref<Array<Word>>();
+//const words = ref<Array<Word>>();
 const wordsCopy = ref<Array<Word>>();
 const isCommonWordChanged = ref<boolean[]>([]);
 const tokenService = ref(inject(key));
@@ -180,22 +182,12 @@ const addWordDialog = ref(false);
 const wordToAdd = ref('');
 const commonRadio = ref(CommonRadio.Both);
 
-const itemsPerPage = ref(10);
-const curretnPage = ref(1);
-
-function paginatedWords() {
-  const start = (curretnPage.value - 1) * itemsPerPage.value;
-  const end = start + itemsPerPage.value;
-  return words.value?.slice(start, end);
-}
-function pageCount() {
-  return Math.ceil(words.value!.length / itemsPerPage.value);
-}
-
 const wordPerPage = ref(10);
 const wordText = ref('');
 const pageNum = ref(1);
 const countPages = ref(0);
+const moreWordsArray = ref<Word[]>([]);
+const totalCount = ref(0);
 
 type MoreWordsDto = {
   words: Word[];
@@ -203,7 +195,7 @@ type MoreWordsDto = {
 };
 
 //GetMoreWords(int wordCount, string? word, int pages)
-const pageDisplay = (pageWord: number, text: string, page: number) => {
+/*const pageDisplay = (pageWord: number, text: string, page: number) => {
   wordPerPage.value = pageWord;
   wordText.value = text;
   pageNum.value = page;
@@ -211,18 +203,41 @@ const pageDisplay = (pageWord: number, text: string, page: number) => {
     `word/GetMoreWords?wordCount=${wordPerPage.value}&word=${wordText.value}&pages=${pageNum.value}`
   ).then(result => {
     const data = result.data as MoreWordsDto;
-    words.value = result.data;
+    moreWordsArray.value = result.data;
     countPages.value = data.countPages;
     console.log(result);
   });
-};
+};*/
+async function getWordsPages(query: string = "", page: number = 1, pageSize = 10): Promise<Word[]> {
+  let item: Word[] = [];
+  return Axios.get(`word/GetMoreWords?wordCount=${pageSize}&word=${query}&pages=${page}`).then((result) => result.data).then((data: any) => {
+    item = data["words"].map((data: any) => ({
+      word: data.word,
+      isCommonWord: data.isCommonWord
+    }));
+    totalCount.value = data["pages"];
+
+  }).then(() => {
+    return item;
+  });
+}
+
+onMounted(async () => {
+  moreWordsArray.value = await getWordsPages();
+});
+watch([pageNum, wordPerPage, wordText], async () => {
+  moreWordsArray.value = await getWordsPages(wordText.value, pageNum.value, wordPerPage.value);
+});
+async function refreshWords() {
+  moreWordsArray.value = await getWordsPages(wordText.value, pageNum.value, wordPerPage.value);
+}
 
 const isMotU = computed(() => tokenService.value?.getMotU());
 const isOlderThanTwentyOne = computed(() =>
   tokenService.value?.isOlderThanTwentyOne()
 );
 
-watch([commonRadio], () => {
+/*watch([commonRadio], () => {
   sortWords(wordsCopy.value!);
   switch (commonRadio.value) {
     case CommonRadio.Both:
@@ -235,12 +250,12 @@ watch([commonRadio], () => {
       words.value = wordsCopy.value?.filter(word => !word.isCommonWord);
       break;
   }
-});
+});*/
 
 try {
   const gameUrl = 'word/getallwords';
   Axios.get(gameUrl).then(response => {
-    words.value = response.data;
+    moreWordsArray.value = response.data;
     wordsCopy.value = response.data;
     isLoading.value = false;
     isCommonWordChanged.value = Array.from(
@@ -275,8 +290,8 @@ async function deleteWord(word: Word) {
     const headers = tokenService.value?.generateTokenHeader();
     console.log(headers);
     await Axios.post(gameUrl, {}, { headers });
-    let index = words.value?.indexOf(word);
-    words.value?.splice(index!, 1);
+    let index = moreWordsArray.value?.indexOf(word);
+    moreWordsArray.value?.splice(index!, 1);
   } catch (error) {
     console.error('Error on deleteWord post:', error);
   }

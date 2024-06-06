@@ -87,7 +87,7 @@ public class WordController(WordOfTheDayService wordOfTheDayService) : Controlle
         return await wordOfTheDayService.GetAllWords();
     }
     [HttpGet("GetMoreWords")]
-    public async Task<MoreWordsDto> GetMoreWords(int wordCount, string? word, int pages)
+    public async Task<MoreWordsDto> GetMoreWords(int wordCount = 1, string word = "", int pages = 10)
     {
         return await wordOfTheDayService.GetMoreWords(wordCount, word, pages);
     }
