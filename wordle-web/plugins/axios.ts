@@ -8,7 +8,7 @@ export default defineNuxtPlugin(() => {
     ) {
       Axios.defaults.baseURL = "http://localhost:5297/";
     } else {
-      Axios.defaults.baseURL = "agreeable-island-web-app.azurewebsites.net";
+      Axios.defaults.baseURL = "https://agreeable-island-web-app.azurewebsites.net";
     }
   }
 })
