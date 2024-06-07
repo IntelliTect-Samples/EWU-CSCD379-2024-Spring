@@ -34,7 +34,7 @@ import Login from './components/Login.vue';
 const router = useRouter();
 const theme = useTheme();
 const showHelpDialog = ref(false);
-const showLoginDialog = ref(false);
+const showLoginDialog = ref(true);
 const user = ref(null);
 
 const handleLogin = (userInfo) => {

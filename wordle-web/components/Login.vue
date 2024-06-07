@@ -1,4 +1,5 @@
 <template>
+  <v-container>
   <v-dialog :value="modelValue" @update:value="modelValue = $event" width="500">
     <v-card class="login-card">
       <v-card-title class="headline">Login</v-card-title>
@@ -22,6 +23,7 @@
       </v-card-text>
     </v-card>
   </v-dialog>
+  </v-container>
 </template>
 
 <script setup lang='ts'>
