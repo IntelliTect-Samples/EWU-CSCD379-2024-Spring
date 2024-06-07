@@ -42,14 +42,14 @@ public class WordController(WordOfTheDayService wordOfTheDayService, WordEditorS
     }
 
     [HttpPost("AddWord")]
-    [Authorize(Policy = Policies.EditWord)]
+    [Authorize(Policy = Policies.AddOrDeleteWord)]
     public async Task AddWord(WordDto word)
     {
         await wordEditorService.AddWord(word);
     }
 
     [HttpDelete("DeleteWord")]
-    [Authorize(Policy = Policies.EditWord)]
+    [Authorize(Policy = Policies.AddOrDeleteWord)]
     public async Task DeleteWord(string word)
     {
         await wordEditorService.DeleteWord(word);

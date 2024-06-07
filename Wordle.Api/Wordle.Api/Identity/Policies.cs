@@ -1,12 +1,10 @@
 ﻿using Microsoft.AspNetCore.Authorization;
-using System.Security.Claims;
-using System.ComponentModel;
 
 namespace Wordle.Api.Identity;
 public static class Policies
 {
     public const string RandomAdmin = "RandomAdmin";
-    public const string EditWord = "EditWord";
+    public const string AddOrDeleteWord = "EditWord";
 
     public static void RandomAdminPolicy(AuthorizationPolicyBuilder policy)
     {
@@ -21,20 +19,21 @@ public static class Policies
             return false;
         });
     }
-    public static void EditWordPolicy(AuthorizationPolicyBuilder policy)
+    public static void AddOrDeleteWordPolicy(AuthorizationPolicyBuilder policy)
     {
         policy.RequireClaim(Claims.MasterOfTheUniverse, "true");
         policy.RequireAssertion(context =>
         {
             var birthdayString = context.User.Claims.FirstOrDefault(f => f.Type == Claims.BirthDate);
-            if (birthdayString != null)
+
+            if (DateTime.TryParse(birthdayString?.Value, out DateTime birthday))
             {
-                DateTime birthday;
-                if (DateTime.TryParse(birthdayString.Value, out birthday))
+                return (DateTime.Now.Year - birthday.Year) switch
                 {
-                    int birthYear = birthday.Year;
-                    return DateTime.UtcNow.Year - birthYear >= 21;
-                }
+                    > 21 => true,
+                    21 => DateTime.Now.Month >= birthday.Month && DateTime.Now.Day >= birthday.Day,
+                    _ => false
+                };
             }
             return false;
         });
