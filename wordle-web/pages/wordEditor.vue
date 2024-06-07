@@ -39,7 +39,7 @@
         </v-radio-group>
       </v-col>
     </v-row>
-    <v-data-table class="table my-2 mx-auto w-75 opacity-50">
+    <v-table class="table my-2 mx-auto w-75 opacity-50">
       <thead>
         <tr>
           <th
@@ -135,7 +135,7 @@
           </td>
         </tr>
       </tbody>
-    </v-data-table>
+    </v-table>
     <v-pagination
       v-model="pageNum"
       :length="Math.ceil(totalCount / wordPerPage)"
