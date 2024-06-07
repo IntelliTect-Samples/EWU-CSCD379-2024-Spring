@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Wordle.Api.Services;
+using Wordle.Api.Dtos;
 
 namespace Wordle.Api.Controllers;
 [ApiController]
@@ -23,5 +24,11 @@ public class WordController(WordOfTheDayService wordOfTheDayService) : Controlle
     {
         DateOnly today = DateOnly.FromDateTime(DateTime.UtcNow.AddHours(offsetInHours));
         return await wordOfTheDayService.GetWordOfTheDay(today);
+    }
+
+
+    [HttpGet("GetWordList")]
+    public async Task<List<WordsDto>> GetWordList(string search = "", int pageNum = 1, int pageSize = 10){
+      return await wordOfTheDayService.GetWordList(search, pageNum, pageSize);
     }
 }

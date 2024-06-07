@@ -15,7 +15,7 @@ public static class IdentitySeed
         // Seed Admin User
         await SeedAdminUserAsync(userManager);
 
-        //await SeedOtherUsersAsync(userManager);
+        await SeedOtherUsersAsync(userManager);
     }
 
     private static async Task SeedRolesAsync(RoleManager<IdentityRole> roleManager)
@@ -47,7 +47,7 @@ public static class IdentitySeed
         }
     }
 
-    /*
+
     private static async Task SeedOtherUsersAsync(UserManager<AppUser> userManager)
     {
            
@@ -57,13 +57,15 @@ public static class IdentitySeed
             {
                 UserName = "user1@example.com",
                 Email = "user1@example.com",
-                Birthdate = new DateTime(2000, 1, 1),
-                //Claims = new List<string> { Claims.MasterOfTheUniverse }
+                Birthday = new DateTime(2000, 1, 1),
+                MasterOfTheUniverse = false
                 //Need to find a way to add claims
             };
-              await userManager.CreateAsync(user1, "password1");
+              IdentityResult result = userManager.CreateAsync(user1, "password1").Result;
+
+              if(result.Succeeded){
+                await userManager.AddToRoleAsync(user1, Roles.User);
+              }
         }
-            // Add more users as needed
     }
-    */
 }

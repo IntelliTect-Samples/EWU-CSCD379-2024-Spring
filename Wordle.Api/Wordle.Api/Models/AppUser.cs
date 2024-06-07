@@ -10,6 +10,8 @@ namespace Wordle.Api.Models
 
         public int AverageSecondsPerGame { get; set; }
 
+        public bool MasterOfTheUniverse { get; set; }
+
         public DateTime Birthday { get; set; }
     }
 }

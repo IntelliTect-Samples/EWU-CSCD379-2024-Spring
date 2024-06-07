@@ -51,9 +51,18 @@
 <script setup lang='ts'>
 import { ref, computed, onMounted } from 'vue';
 import { WordList } from '../scripts/wordList'; // Adjust the import path as necessary
+import axios from "axios";
+import TokenScript from "~/scripts/tokenScript";
+
+export interface WordsDto {
+  text: string;
+  common: boolean;
+}
+
 
 // Initial list of words
-const initialWords = WordList.map(word => ({ text: word, isCommon: false }));
+//const initialWords = WordList.map(word => ({ text: word, isCommon: false }));
+const wordList: ref<WordsDto[]> = ref([]);
 
 // Reactive variables
 const words = ref(initialWords);
@@ -64,50 +73,42 @@ const searchQuery = ref('');
 const currentPage = ref(1);
 const itemsPerPage = ref(10);
 
-// Computed properties
-const filteredWords = computed(() => {
-  let filtered = words.value;
-  if (filterCommon.value) {
-    filtered = filtered.filter(word => word.isCommon);
-  }
-  if (searchQuery.value) {
-    filtered = filtered.filter(word => word.text.startsWith(searchQuery.value));
-  }
-  return filtered;
-});
+const totalPages = ref(0);
 
-const totalPages = computed(() => Math.ceil(filteredWords.value.length / itemsPerPage.value));
+const tokenService = new TokenScript();
 
-const paginatedWords = computed(() => {
-  const startIndex = (currentPage.value - 1) * itemsPerPage.value;
-  const endIndex = currentPage.value * itemsPerPage.value;
-  return filteredWords.value.slice(startIndex, endIndex);
-});
+const canAddAndDelete = computed(
+  () => tokenService.isLoggedIn() && tokenService.deleteAndAdd()
+);
 
-// Methods
-const paginateWords = () => {
-  currentPage.value = Math.min(currentPage.value, totalPages.value);
-};
+const loggedIn = computed(
+  () => tokenService.isLoggedIn()
+);
 
-const addWord = () => {
-  if (newWord.value && !words.value.some(word => word.text === newWord.value)) {
-    words.value.push({ text: newWord.value, isCommon: isCommon.value });
-    words.value.sort((a, b) => a.text.localeCompare(b.text));
-    newWord.value = '';
-    isCommon.value = false;
-    paginateWords();
-  }
-};
 
-const deleteWord = (wordText) => {
-  words.value = words.value.filter(word => word.text !== wordText);
-  paginateWords();
-};
-//workflow test
-// Lifecycle hooks
-onMounted(() => {
-  paginateWords();
-});
+async function getWordList(
+  query: string = "",
+  currentPage: number = 1,
+  pageSize: number = 10,
+): Promise<WordsDto[]>{
+  let words: WordsDto[] = [];
+  return Axios.get('')
+    .then((res) => res.data)
+    .then((data: any) => {
+      items = data["words"].map((data: any) => ({
+        text: data.text,
+        common: data.commonWord
+      }));
+    totalPages.value = data["total"]
+    });
+}
+
+onMounted(async () => {
+  wordList.value = await getWordList();
+})
+
+
+
 </script>
 
 <style scoped>
