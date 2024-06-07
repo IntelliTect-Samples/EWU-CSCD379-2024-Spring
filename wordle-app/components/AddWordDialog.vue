@@ -58,12 +58,7 @@ const emits = defineEmits<{
 }>();
 
 async function saveClicked() {
-
   await saveWord(word.value);
-
-  // emits("save");
-  // showModel.value = false;
-  // word.value = '';
 }
 
 function cancelClicked() {

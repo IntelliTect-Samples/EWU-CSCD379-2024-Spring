@@ -3,7 +3,7 @@
     <v-toolbar flat class="mb-3">
       <v-toolbar-title>Word Editor</v-toolbar-title>
       <v-spacer></v-spacer>
-      <v-switch label="Display common words only" color="secondary" @change="fetchWords" class="d-flex justify-center"
+      <v-switch label="Display common words only" color="secondary" @change="fetchWords" class="d-flex justify-center mr-3"
         v-model="isCommonFilter" />
       <v-btn v-if="isLogged" color="primary" prepend-icon="mdi-plus-box" variant="flat" class="ml-5"
         @click="showDialog = true">Add Word
