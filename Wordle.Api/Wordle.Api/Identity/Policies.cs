@@ -1,12 +1,12 @@
-
+using System.ComponentModel;
 using Microsoft.AspNetCore.Authorization;
 using System.Security.Claims;
 
 namespace Wordle.Api.Identity
 {
-  public static class Polices
+  public static class Policies
   {
-    public const string MasterOfTheUniverse = "MasterOfTheUniverseOnly";
+    public const string MasterOfTheUniverse = "MasterOfTheUniverse";
     public const string IsTwentyOne = "IsTwentyOne";
 
     public static void AddRemoveWordPoliciy(AuthorizationPolicyBuilder policy)

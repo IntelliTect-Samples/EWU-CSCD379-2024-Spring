@@ -3,7 +3,7 @@
     <v-card class="text-center">
       <v-card-title>Word Editor</v-card-title>
       <v-card-text>
-        <v-form @submit.prevent="addWord">
+        <v-form >
           <v-text-field
             v-model="newWord"
             label="Add a new word"
@@ -26,23 +26,22 @@
         ></v-checkbox>
         <v-list>
           <v-list-item
-            v-for="(word, index) in paginatedWords"
-            :key="index"
+            v-for="word in wordList";
+            :key="word.text"
           >
-            <v-list-item-content>{{ word.text }}</v-list-item-content>
-            <v-list-item-action>
-              <v-icon @click="deleteWord(word.text)" color="red">
-                mdi-delete
-              </v-icon>
+            <v-list-item-content>
+              <v-list-item-title>{{ word.text }}</v-list-item-title>
+              <v-list-item-subtitle>
+                {{ word.common ? 'Common' : 'Uncommon' }}
+              </v-list-item-subtitle>
+            </v-list-item-content>
+            <v-list-item-action v-if="canAddAndDelete">
+              <v-btn icon>
+                <v-icon>mdi-delete</v-icon>
+              </v-btn>
             </v-list-item-action>
           </v-list-item>
         </v-list>
-        <v-pagination
-          v-if="totalPages > 1"
-          v-model="currentPage"
-          :length="totalPages"
-          @input="paginateWords"
-        ></v-pagination>
       </v-card-text>
     </v-card>
   </v-container>
@@ -51,7 +50,7 @@
 <script setup lang='ts'>
 import { ref, computed, onMounted } from 'vue';
 import { WordList } from '../scripts/wordList'; // Adjust the import path as necessary
-import axios from "axios";
+import Axios from "axios";
 import TokenScript from "~/scripts/tokenScript";
 
 export interface WordsDto {
@@ -62,10 +61,9 @@ export interface WordsDto {
 
 // Initial list of words
 //const initialWords = WordList.map(word => ({ text: word, isCommon: false }));
-const wordList: ref<WordsDto[]> = ref([]);
+const wordList: Ref<WordsDto[]> = ref([]);
 
 // Reactive variables
-const words = ref(initialWords);
 const newWord = ref('');
 const isCommon = ref(false);
 const filterCommon = ref(false);
@@ -92,14 +90,16 @@ async function getWordList(
   pageSize: number = 10,
 ): Promise<WordsDto[]>{
   let words: WordsDto[] = [];
-  return Axios.get('')
+  return Axios.get('/Word/GetWordList?{searchQuery}&{currentPage}&{pageSize}')
     .then((res) => res.data)
     .then((data: any) => {
-      items = data["words"].map((data: any) => ({
+      words = data["words"].map((data: any) => ({
         text: data.text,
         common: data.commonWord
       }));
     totalPages.value = data["total"]
+    }).then(() => {
+      return words;
     });
 }
 
