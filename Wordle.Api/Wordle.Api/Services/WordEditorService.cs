@@ -41,6 +41,12 @@ public class WordEditorService(WordleDbContext Db)
             return new FetchResultDto { Code = 400, Message = "Word must be 5 characters long" };
         }
         
+        // Check if word already exists
+        if (await Db.Words.AnyAsync(w => string.Equals(w.Text, word.ToLower())))
+        {
+            return new FetchResultDto { Code = 400, Message = "Word already exists" };
+        }
+        
         if (await Db.Words.AnyAsync(w => string.Equals(w.Text, word.ToLower())))
         {
             return new FetchResultDto { Code = 400, Message = "Word already exists" };
