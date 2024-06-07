@@ -3,6 +3,15 @@
   <v-card class="ma-10">
     <v-row align="center">
       <v-col cols="6" align="center">
+        <v-autocomplete
+         prepend-inner-icon="mdi-magnify"
+         style="max-width: 300px;"
+         menu-icon=""
+         class="mx-auto"
+         v-model="wordText"
+         @input="pageDisplay(wordPerPage, $event.target.value, pageNum)"
+         label="Enter Word">
+        </v-autocomplete>
         <v-tooltip
           text="You must be Master of the Universe and 21 or older to add words"
           :disabled="isOlderThanTwentyOne && isMotU">
@@ -30,7 +39,7 @@
         </v-radio-group>
       </v-col>
     </v-row>
-    <v-table class="table my-2 mx-auto w-75 opacity-50">
+    <v-data-table class="table my-2 mx-auto w-75 opacity-50">
       <thead>
         <tr>
           <th
@@ -111,12 +120,14 @@
               </v-col>
               <v-col class="mt-2" cols="4">
                 <v-btn
-                  :variant="isCommonWordChanged[index] ? 'elevated' : 'plain'"
+                  elevation="3"
+                  :variant="isCommonWordChanged[index] ? 'elevated' : 'tonal'"
                   @click="
                     isCommonWordChanged[index] = false;
                     saveCommonWordFlag(word.word, word.isCommonWord);
                   "
-                  :color="isCommonWordChanged[index] ? 'primary' : ''">
+                  :color="isCommonWordChanged[index] ? 'secondary' : 'success'">
+                  
                   Save
                 </v-btn>
               </v-col>
@@ -124,7 +135,7 @@
           </td>
         </tr>
       </tbody>
-    </v-table>
+    </v-data-table>
     <v-pagination
       v-model="pageNum"
       :length="Math.ceil(totalCount / wordPerPage)"
@@ -134,11 +145,7 @@
   </v-card>
   <v-dialog v-model="addWordDialog" width="400">
     <v-card height="200">
-      <!--<v-text-field label="Word" v-model="wordToAdd" />-->
-      <v-autocomplete
-        v-model="wordToAdd"
-        :items="moreWordsArray!.map(w => w.word)"
-        label="Add Word"></v-autocomplete>
+      <v-text-field label="Word" v-model="wordToAdd" />-
       <v-btn
         @click="
           addWord();
@@ -152,7 +159,9 @@
 
 <script setup lang="ts">
 import Axios from 'axios';
+import type { Game } from '~/scripts/game';
 import { TokenService, key } from '~/scripts/tokenService';
+
 
 interface Word {
   word: string;
@@ -172,7 +181,7 @@ enum CommonRadio {
 }
 
 const isLoading = ref<boolean>(true);
-//const words = ref<Array<Word>>();
+const words = ref<Array<Word>>([]);
 const wordsCopy = ref<Array<Word>>();
 const isCommonWordChanged = ref<boolean[]>([]);
 const tokenService = ref(inject(key));
@@ -182,12 +191,12 @@ const addWordDialog = ref(false);
 const wordToAdd = ref('');
 const commonRadio = ref(CommonRadio.Both);
 
-const wordPerPage = ref(10);
-const wordText = ref('');
-const pageNum = ref(1);
-const countPages = ref(0);
+const wordPerPage = ref<number>(10);
+const wordText = ref<string>('');
+const pageNum = ref<number>(1);
 const moreWordsArray = ref<Word[]>([]);
-const totalCount = ref(0);
+const totalCount = ref<number>(0);
+const pageCount = ref<number>(0);
 
 type MoreWordsDto = {
   words: Word[];
@@ -195,7 +204,7 @@ type MoreWordsDto = {
 };
 
 //GetMoreWords(int wordCount, string? word, int pages)
-/*const pageDisplay = (pageWord: number, text: string, page: number) => {
+const pageDisplay = (pageWord: number, text: string, page: number) => {
   wordPerPage.value = pageWord;
   wordText.value = text;
   pageNum.value = page;
@@ -203,11 +212,13 @@ type MoreWordsDto = {
     `word/GetMoreWords?wordCount=${wordPerPage.value}&word=${wordText.value}&pages=${pageNum.value}`
   ).then(result => {
     const data = result.data as MoreWordsDto;
-    moreWordsArray.value = result.data;
-    countPages.value = data.countPages;
+    words.value = result.data;
+    pageCount.value = data.countPages;
     console.log(result);
   });
-};*/
+};
+pageDisplay(wordPerPage.value, wordText.value, pageNum.value);
+
 async function getWordsPages(query: string = "", page: number = 1, pageSize = 10): Promise<Word[]> {
   let item: Word[] = [];
   return Axios.get(`word/GetMoreWords?wordCount=${pageSize}&word=${query}&pages=${page}`).then((result) => result.data).then((data: any) => {

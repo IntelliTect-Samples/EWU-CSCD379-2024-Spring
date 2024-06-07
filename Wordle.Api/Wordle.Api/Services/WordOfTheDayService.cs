@@ -120,13 +120,13 @@ public class WordOfTheDayService
 		return false;
 	}
 
-	public async Task<List<WordDto>> GetAllWords()
+	/*public async Task<List<WordDto>> GetAllWords()
 	{
 		return await Db.Words.Select(word => new WordDto { Word = word.Text, IsCommonWord = word.IsCommonWord })
 			.OrderBy(word => word.Word)
 			.Take(10)
 			.ToListAsync();
-	}
+	}*/
 	public async Task<MoreWordsDto> GetMoreWords(int wordCount, string? word, int pages)
 	{
 		if (wordCount == 0)

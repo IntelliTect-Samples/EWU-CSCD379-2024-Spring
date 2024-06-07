@@ -81,11 +81,11 @@ public class WordController(WordOfTheDayService wordOfTheDayService) : Controlle
         return isChanged;
     }
 
-    [HttpGet("GetAllWords")]
+    /*[HttpGet("GetAllWords")]
     public async Task<List<WordDto>> GetAllWords()
     {
         return await wordOfTheDayService.GetAllWords();
-    }
+    }*/
     [HttpGet("GetMoreWords")]
     public async Task<MoreWordsDto> GetMoreWords(int wordCount = 1, string word = "", int pages = 10)
     {
