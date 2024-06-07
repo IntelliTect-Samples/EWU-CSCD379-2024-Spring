@@ -9,6 +9,7 @@
       <v-card-title class = "banner" >
         <h1 class="display-1 text-md-center hillbiddle-title" color="secondary">HILLBIDDLE</h1>
       </v-card-title>
+      <v-card-text class="text-center"> Welcome, to access the editWords page, please sign in above </v-card-text>
     </v-card>
   </v-container>
   <v-divider :width="cardWidth"> </v-divider>
