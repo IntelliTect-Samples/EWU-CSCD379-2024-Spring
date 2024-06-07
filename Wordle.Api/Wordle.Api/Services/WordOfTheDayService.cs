@@ -62,21 +62,32 @@ public class WordOfTheDayService
     }
 
 
-    public async Task<WordList> GetWordList(string search, int pageNum, int pageSize){
-      var searchResults = 
-        Db.Words
-        .Select(word => new WordsDto() { Text = word.Text, CommonWord = word.CommonWord })
-        .Where(wordsDto => wordsDto.Text.StartsWith(search))
-        .OrderBy(wordsDto => wordsDto.Text);
+  public async Task<WordList> GetWordList(string search, int pageNum, int pageSize, bool filterCommon)
+  {
+    var searchResults = Db.Words
+        .Where(word => word.Text.StartsWith(search));
 
-      var total = await searchResults.CountAsync();
-      var getCorrectPage = await searchResults
+    // Apply common word filter only if filterCommon is true
+    if (filterCommon)
+    {
+        searchResults = searchResults.Where(word => word.CommonWord);
+    }
+
+    var orderedResults = searchResults
+        .OrderBy(word => word.Text)
+        .Select(word => new WordsDto { Text = word.Text, CommonWord = word.CommonWord });
+
+    var total = await orderedResults.CountAsync();
+    var getCorrectPage = await orderedResults
         .Skip((pageNum - 1) * pageSize)
         .Take(pageSize)
         .ToListAsync();
 
-      return new WordList() { Total=total, Words=getCorrectPage };
-    }
+    return new WordList { Total = total, Words = getCorrectPage };
+  }
+
+
+
 
     public async Task DeleteWord(string Word){
       Word? word = await Db.Words.FirstOrDefaultAsync(word => word.Text == Word);

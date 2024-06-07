@@ -13,8 +13,7 @@
         <v-btn icon="mdi-theme-light-dark" @click="toggleTheme" />
         <v-btn icon="mdi-help-circle" @click="showHelpDialog = true" />
         <HelpDialog v-model="showHelpDialog" />
-        <v-btn @click="showLoginDialog = true" v-if="!user">Login</v-btn>
-        <v-btn v-if="user">{{ user.username }}</v-btn>
+        <v-btn icon="mdi-login" @click="showLoginDialog = true" /> 
       </v-app-bar>
        <v-dialog v-model="showLoginDialog" max-width="600px">
         <Login @login="handleLogin" />

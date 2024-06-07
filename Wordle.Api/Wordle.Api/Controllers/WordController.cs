@@ -30,20 +30,20 @@ public class WordController(WordOfTheDayService wordOfTheDayService) : Controlle
 
 
     [HttpGet("GetWordList")]
-    public async Task<WordList> GetWordList(string search="", int pageNum = 1, int pageSize = 10){
-      return await wordOfTheDayService.GetWordList(search, pageNum, pageSize);
+    public async Task<WordList> GetWordList(string search="", int pageNum = 1, int pageSize = 10, bool filterCommon = false){
+      return await wordOfTheDayService.GetWordList(search, pageNum, pageSize, filterCommon);
     }
 
     [HttpDelete("DeleteWord")]
-    [Authorize(Policy = Policies.MasterOfTheUniverse)]
-    [Authorize(Policy = Policies.IsTwentyOne)]
+    //[Authorize(Policy = Policies.MasterOfTheUniverse)]
+    //[Authorize(Policy = Policies.IsTwentyOne)]
     public async Task DeleteWord(string word){
       await wordOfTheDayService.DeleteWord(word);
     }
 
     [HttpPost("AddWord")]
-    [Authorize(Policy = Policies.MasterOfTheUniverse)]
-    [Authorize(Policy = Policies.IsTwentyOne)]
+    //[Authorize(Policy = Policies.MasterOfTheUniverse)]
+    //[Authorize(Policy = Policies.IsTwentyOne)]
     public async Task AddWord(WordsDto word){
       await wordOfTheDayService.AddWord(word);
     }
