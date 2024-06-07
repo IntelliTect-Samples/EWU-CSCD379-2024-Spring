@@ -30,7 +30,7 @@ public class WordController(WordOfTheDayService wordOfTheDayService) : Controlle
 
 
     [HttpGet("GetWordList")]
-    public async Task<WordList> GetWordList(string search = "", int pageNum = 1, int pageSize = 10){
+    public async Task<WordList> GetWordList(string search="", int pageNum = 1, int pageSize = 10){
       return await wordOfTheDayService.GetWordList(search, pageNum, pageSize);
     }
 

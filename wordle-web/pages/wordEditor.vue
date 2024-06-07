@@ -13,8 +13,8 @@
         <v-divider class="my-5"></v-divider>
 
         <!-- Search input and filter -->
-        <v-text-field v-model="searchQuery" label="Search words" @input="search"></v-text-field>
-        <v-checkbox v-model="filterCommon" label="Show only common words"></v-checkbox>
+        <v-text-field v-model="searchQuery" label="Search words" @input="updateWordList"></v-text-field>
+        <v-checkbox v-model="filterCommon" label="Show only common words" @change="updateWordList"></v-checkbox>
 
         <!-- Word list -->
         <v-list>
@@ -56,11 +56,11 @@ const tokenService = new TokenScript();
 
 const canAddAndDelete = () => tokenService.isLoggedIn() && tokenService.deleteAndAdd();
 
-async function fetchWordList() {
+async function fetchWordList(query: string, pageNum: number, itemsPer: number, filterCommon: boolean) {
   try {
-    const response = await Axios.get(`/Word/GetWordList?{searchQuery.value}&{currentPage.value}&{itemsPerPage.value}`);
+    const response = await Axios.get(`/Word/GetWordList?searchQuery=${query}&pageNum=${pageNum}&itemsPer=${itemsPer}&filterCommon=${filterCommon}`);
     wordList.value = response.data.words;
-    totalPages.value = Math.ceil(response.data.total / itemsPerPage.value);
+    totalPages.value = Math.ceil(response.data.total / itemsPer);
   } catch (error) {
     console.error('Error fetching word list:', error);
     wordList.value = [];
@@ -72,7 +72,7 @@ async function addWord() {
   if (!newWord.value) return;
   try {
     await Axios.post('/Word/AddWord', { text: newWord.value, commonWord: isCommon.value });
-    await fetchWordList();
+    await fetchWordList(searchQuery.value, currentPage.value, itemsPerPage.value, filterCommon.value);
     newWord.value = '';
     isCommon.value = false;
   } catch (error) {
@@ -83,7 +83,7 @@ async function addWord() {
 async function deleteWord(word: string) {
   try {
     await Axios.delete(`/Word/DeleteWord?word=${word}`);
-    await fetchWordList();
+    await fetchWordList(searchQuery.value, currentPage.value, itemsPerPage.value, filterCommon.value);
   } catch (error) {
     console.error('Error deleting word:', error);
   }
@@ -92,35 +92,42 @@ async function deleteWord(word: string) {
 async function nextPage() {
   if (currentPage.value < totalPages.value) {
     currentPage.value++;
-    fetchWordList();
+    await fetchWordList(searchQuery.value, currentPage.value, itemsPerPage.value, filterCommon.value);
   }
 }
 
 async function prevPage() {
   if (currentPage.value > 1) {
     currentPage.value--;
-    fetchWordList();
+    await fetchWordList(searchQuery.value, currentPage.value, itemsPerPage.value, filterCommon.value);
   }
 }
 
-// Watch for changes in currentPage and fetch word list
-watch(currentPage, () => {
-  fetchWordList();
-});
-
-// Watch for changes in searchQuery and fetch word list
-watch(searchQuery, () => {
-  currentPage.value = 1; // Reset to the first page when searching
-  fetchWordList();
-});
-
-// Define the search method to update the searchQuery
-function search(event) {
-  searchQuery.value = event.target.value;
+async function updateWordList() {
+  await fetchWordList(searchQuery.value, currentPage.value, itemsPerPage.value, filterCommon.value);
 }
 
+
+// Watch for changes in currentPage and fetch word list
+watch(currentPage, async () => {
+  await fetchWordList(searchQuery.value, currentPage.value, itemsPerPage.value, filterCommon.value);
+});
+// Watch for changes in searchQuery and fetch word list
+watch(searchQuery, async () => {
+  currentPage.value = 1; // Reset to the first page when searching
+  console.log("Search watch", searchQuery)
+  await fetchWordList(searchQuery.value, currentPage.value, itemsPerPage.value, filterCommon.value);
+  console.log("Search watch", searchQuery)
+});
+
+// Watch for changes in filterCommon and fetch word list
+watch(filterCommon, async () => {
+  currentPage.value = 1; // Reset to the first page when filter changes
+  await fetchWordList(searchQuery.value, currentPage.value, itemsPerPage.value, filterCommon.value);
+});
+
+// Fetch initial word list on component mount
 onMounted(async () => {
-  fetchWordList();
+  await fetchWordList(searchQuery.value, currentPage.value, itemsPerPage.value, filterCommon.value);
 });
 </script>
-
