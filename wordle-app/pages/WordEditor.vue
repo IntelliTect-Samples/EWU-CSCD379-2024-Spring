@@ -41,7 +41,7 @@
       </template>
     </v-data-table-server>
 
-    <AddWordDialog @save="saveWord" v-model:show="showDialog" />
+    <AddWordDialog @cancel="cancelDialog" v-model:show="showDialog" />
   </v-container>
 </template>
 
@@ -137,25 +137,10 @@ async function fetchWords() {
   }
 }
 
-async function saveWord(word: string) {
+async function cancelDialog() {
   showDialog.value = false;
 
-  try {
-    isLoading.value = true;
-    const headers = tokenService.generateTokenHeader();
-
-    const response = await Axios.post(
-      "/WordEditor/AddWord?word=" + word,
-      {},
-      { headers }
-    );
-
-    if (response.status === 200) {
-      await fetchWords();
-    }
-  } catch (error) {
-    console.error(error);
-  }
+  await fetchWords();
 }
 
 async function updateItem(item: Word) {

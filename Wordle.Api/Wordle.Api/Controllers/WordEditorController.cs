@@ -22,11 +22,9 @@ namespace Wordle.Api.Controllers
         
         [Authorize(Policy = Policies.CanAddDeleteWords)]
         [HttpPost("AddWord")]
-        public async Task<IActionResult> AddWord(string word)
+        public async Task<FetchResultDto> AddWord(string? word)
         {
-            var result = await wordEditorService.AddWordAsync(word);
-            
-            return result ? Ok() : BadRequest();
+            return await wordEditorService.AddWordAsync(word);
         }
         
         [HttpGet("GetWords")]

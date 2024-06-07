@@ -1,4 +1,5 @@
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
 using Wordle.Api.Dtos;
 using Wordle.Api.Models;
 
@@ -19,17 +20,36 @@ public class WordEditorService(WordleDbContext Db)
         return true;
     }
     
-    public async Task<bool> AddWordAsync(string word)
+    public async Task<FetchResultDto> AddWordAsync(string? word)
     {
-        if ( word.Length != 5 || await Db.Words.AnyAsync(w => string.Equals(w.Text, word.ToLower())))
+        
+        // Check if word is null or empty
+        if (string.IsNullOrEmpty(word))
         {
-            return false;
+            return new FetchResultDto { Code = 400, Message = "Word cannot be empty" };
+        }
+        
+        // Check if word has any non-alphabetic characters
+        if (word.Any(c => !char.IsLetter(c)))
+        {
+            return new FetchResultDto { Code = 400, Message = "Word must contain only alphabetic characters" };
+        }
+        
+        // Check if word is 5 characters long
+        if (word.Length != 5)
+        {
+            return new FetchResultDto { Code = 400, Message = "Word must be 5 characters long" };
+        }
+        
+        if (await Db.Words.AnyAsync(w => string.Equals(w.Text, word.ToLower())))
+        {
+            return new FetchResultDto { Code = 400, Message = "Word already exists" };
         }
         
         var wordToAdd = new Word { Text = word.ToLower() };
         await Db.Words.AddAsync(wordToAdd);
         await Db.SaveChangesAsync();
-        return true;
+        return new FetchResultDto { Code = 200, Message = "Word added successfully" };
     }
     
     public async Task<(List<WordDto>, int TotalCount)> GetWordsAsync(string search, int page, int itemsPerPage, bool isCommonFilter)

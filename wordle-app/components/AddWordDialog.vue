@@ -1,6 +1,10 @@
 <template>
   <v-dialog v-model="showModel" max-width="500px">
     <v-card>
+      <v-alert v-if="isLoaded" class="text-center" :color="fetchResult?.code == 200 ? 'success' : 'error'">
+        <v-icon>mdi-alert-circle</v-icon>
+        <span class="ml-2"> {{ fetchResult?.message }}</span>
+      </v-alert>
       <v-sheet color="primary">
         <v-card-text>Enter a word you want to add</v-card-text>
       </v-sheet>
@@ -34,23 +38,59 @@
 </template>
 
 <script lang="ts" setup>
+import type { fetchResult } from '~/scripts/fetchResult';
+import Axios from "axios";
+
+import TokenService from "~/scripts/tokenService";
+
+// Log in stuff here
+const isLoaded = ref(false);
+const fetchResult = ref<fetchResult>();
+
+const tokenService = inject("TOKEN_SERVICE") as TokenService;
+const isLogged = ref(tokenService.isLoggedInValue);
 
 const showModel = defineModel<boolean>("show");
 const word = ref('');
 
 const emits = defineEmits<{
-  (e: "save", word: string): void;
+  (e: "cancel"): void;
 }>();
 
-function saveClicked() {
+async function saveClicked() {
 
-  emits("save", word.value);
+  await saveWord(word.value);
+
+  // emits("save");
+  // showModel.value = false;
+  // word.value = '';
+}
+
+function cancelClicked() {
+  emits("cancel");
   showModel.value = false;
   word.value = '';
 }
 
-function cancelClicked() {
-  showModel.value = false;
-  word.value = '';
+async function saveWord(word: string) {
+  try {
+    const headers = tokenService.generateTokenHeader();
+
+    await Axios.post(
+      "/WordEditor/AddWord?word=" + word,
+      {},
+      { headers }
+    )
+    .then((response) => {
+      fetchResult.value = response.data;
+    });
+
+    isLoaded.value = true;
+    
+
+    
+  } catch (error) {
+    console.error(error);
+  }
 }
 </script>
