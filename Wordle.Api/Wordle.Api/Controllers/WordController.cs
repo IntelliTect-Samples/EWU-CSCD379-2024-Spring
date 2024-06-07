@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+using Wordle.Api.Identity;
 using Wordle.Api.Services;
 using Wordle.Api.Dtos;
 
@@ -28,7 +30,21 @@ public class WordController(WordOfTheDayService wordOfTheDayService) : Controlle
 
 
     [HttpGet("GetWordList")]
-    public async Task<List<WordsDto>> GetWordList(string search = "", int pageNum = 1, int pageSize = 10){
+    public async Task<WordList> GetWordList(string search = "", int pageNum = 1, int pageSize = 10){
       return await wordOfTheDayService.GetWordList(search, pageNum, pageSize);
+    }
+
+    [HttpDelete("DeleteWord")]
+    [Authorize(Policy = Policies.MasterOfTheUniverse)]
+    [Authorize(Policy = Policies.IsTwentyOne)]
+    public async Task DeleteWord(string word){
+      await wordOfTheDayService.DeleteWord(word);
+    }
+
+    [HttpPost("AddWord")]
+    [Authorize(Policy = Policies.MasterOfTheUniverse)]
+    [Authorize(Policy = Policies.IsTwentyOne)]
+    public async Task AddWord(WordsDto word){
+      await wordOfTheDayService.AddWord(word);
     }
 }

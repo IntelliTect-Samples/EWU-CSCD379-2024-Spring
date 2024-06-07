@@ -62,19 +62,43 @@ public class WordOfTheDayService
     }
 
 
-    public async Task<List<WordsDto>> GetWordList(string search, int pageNum, int pageSize){
+    public async Task<WordList> GetWordList(string search, int pageNum, int pageSize){
       var searchResults = 
         Db.Words
         .Select(word => new WordsDto() { Text = word.Text, CommonWord = word.CommonWord })
         .Where(wordsDto => wordsDto.Text.StartsWith(search))
         .OrderBy(wordsDto => wordsDto.Text);
 
+      var total = await searchResults.CountAsync();
       var getCorrectPage = await searchResults
         .Skip((pageNum - 1) * pageSize)
         .Take(pageSize)
         .ToListAsync();
 
-      return getCorrectPage;
+      return new WordList() { Total=total, Words=getCorrectPage };
+    }
+
+    public async Task DeleteWord(string Word){
+      Word? word = await Db.Words.FirstOrDefaultAsync(word => word.Text == Word);
+
+      if(word is not null){
+        Db.Words.Remove(word);
+        await Db.SaveChangesAsync();
+      }
+    }
+
+    public async Task AddWord(WordsDto newWord){
+      if(newWord.Text.Length != 5){
+        return;
+      }
+      Word word = new Word(){
+        Text = newWord.Text,
+        CommonWord = newWord.CommonWord
+      };
+
+      Db.Words.Add(word);
+
+      await Db.SaveChangesAsync();
     }
 
 
