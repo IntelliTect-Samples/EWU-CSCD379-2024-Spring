@@ -4,14 +4,14 @@ on:
   push:
     branches:
       - main
-      - Assignment-3
+      - Assignment-5
     paths:
       - "wordle-web/**"
   pull_request:
     types: [opened, synchronize, reopened, closed]
     branches:
       - main
-      - Assignment-3
+      - Assignment-5
   workflow_dispatch:
 
 jobs:
