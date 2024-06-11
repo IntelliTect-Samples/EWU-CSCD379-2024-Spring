@@ -21,6 +21,6 @@ namespace Wordle.Api.Models
         public double AverageAttempts { get; set; }
 
         [Range(0, int.MaxValue, ErrorMessage = "Average seconds per game must be non-negative.")]
-        public int AverageSecondsPerGame { get; set; } // Optional
+        public int AverageSecondsPerGame { get; set; }
     }
 }

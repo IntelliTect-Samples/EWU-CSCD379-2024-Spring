@@ -4,6 +4,7 @@ export default defineNuxtConfig({
   build: {
     transpile: ['vuetify'],
   },
+  ssr: false,
   plugins: [
     '@/plugins/axios.ts'
   ],

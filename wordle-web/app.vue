@@ -11,21 +11,14 @@
           </v-btn>
         </template>
 
-        <v-btn
-          @click="showLoginDialog = true"
-          class="mb-5"
-          flat
-          color="primary"
-        >
+        <v-btn @click="showLoginDialog = true">
           <v-icon>mdi-lock</v-icon>
           Login
         </v-btn>
-
-        <v-spacer></v-spacer> <!-- This pushes the rest of the items to the right -->
-
-        <v-btn icon="mdi-cog" @click="toggleSettingsDrawer" />
-        <v-btn icon="mdi-help-circle" @click="showHelpDialog = true" />
-        <v-btn icon="mdi-menu" @click="toggleDrawer" />
+        
+        <v-btn icon="mdi-cog" @click="toggleSettingsDrawer"></v-btn>
+        <v-btn icon="mdi-help-circle" @click="showHelpDialog = true"></v-btn>
+        <v-btn icon="mdi-menu" @click="toggleDrawer"></v-btn>
 
         <HelpDialog v-model="showHelpDialog" />
       </v-app-bar>
@@ -34,6 +27,7 @@
       <v-navigation-drawer v-model="drawer" location="right">
         <v-list>
           <v-list-item @click="router.push('/about')" class="text-center">About</v-list-item>
+          <v-list-item @click="router.push('/WordEditor')" class="text-center">Word Editor</v-list-item>
         </v-list>
       </v-navigation-drawer>
 
@@ -62,6 +56,9 @@
           <NuxtPage />
         </v-container>
       </v-main>
+
+      <!-- Login Dialog -->
+      <SigninDialog v-model="showLoginDialog" />
     </v-app>
   </NuxtLayout>
 </template>
@@ -70,6 +67,7 @@
 import { useRouter } from 'vue-router';
 import { ref } from 'vue';
 import { useTheme } from 'vuetify/lib/framework.mjs';
+import SigninDialog from '@/components/SigninDialog.vue'; // Adjust the path as necessary
 
 const router = useRouter();
 const theme = useTheme();
@@ -77,45 +75,6 @@ const showHelpDialog = ref(false);
 const drawer = ref(false);
 const settingsDrawer = ref(false);
 const showLoginDialog = ref(false);
-
-const username = ref('');
-const password = ref('');
-const valid = ref(false);
-const loginError = ref('');
-
-const usernameRules = [
-  v => !!v || 'Username is required',
-];
-
-const passwordRules = [
-  v => !!v || 'Password is required',
-];
-
-async function login() {
-  const isValid = await validateForm();
-  if (!isValid) return;
-
-  try {
-    // Simulate API call for login
-    const response = await ApiLogin(username.value, password.value);
-    if (response.success) {
-      console.log('Login successful');
-      showLoginDialog.value = false;
-      loginError.value = '';
-      // Handle successful login (e.g., store token, redirect, etc.)
-    } else {
-      loginError.value = 'Invalid username or password';
-    }
-  } catch (error) {
-    loginError.value = 'An error occurred during login';
-    console.error('Login error:', error);
-  }
-}
-
-async function validateForm() {
-  const form = ref(null);
-  return form.value.validate();
-}
 
 function toggleDrawer() {
   drawer.value = !drawer.value;
@@ -125,20 +84,7 @@ function toggleSettingsDrawer() {
   settingsDrawer.value = !settingsDrawer.value;
 }
 
-function setTheme(themeName) {
+function setTheme(themeName: string) {
   theme.global.name.value = themeName;
-}
-
-
-async function ApiLogin(username, password) {
-  return new Promise((resolve) => {
-    setTimeout(() => {
-      if (username === 'admin' && password === 'admin') {
-        resolve({ success: true });
-      } else {
-        resolve({ success: false });
-      }
-    }, 1000);
-  });
 }
 </script>

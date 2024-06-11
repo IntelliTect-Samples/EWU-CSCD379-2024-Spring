@@ -1,56 +1,34 @@
 using Microsoft.AspNetCore.Mvc;
-using Wordle.Api.Services;
 using Wordle.Api.Dtos;
 using Wordle.Api.Models;
-using Microsoft.Extensions.Logging;
+using Wordle.Api.Services;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
-namespace Wordle.Api.Controllers;
-
-[ApiController]
-[Route("[controller]")]
-public class LeaderboardController : ControllerBase
+namespace Wordle.Api.Controllers
 {
-    private readonly LeaderboardService _service;
-    private readonly ILogger<LeaderboardController> _logger;
-
-    public LeaderboardController(LeaderboardService service, ILogger<LeaderboardController> logger)
+    [ApiController]
+    [Route("[controller]")]
+    public class LeaderboardController : ControllerBase
     {
-        _service = service;
-        _logger = logger;
-    }
+        private readonly LeaderboardService _leaderboardService;
 
-    [HttpGet("GetScores")]
-    public async Task<ActionResult<List<PlayerDto>>> Get()
-    {
-        try
+        public LeaderboardController(LeaderboardService leaderboardService)
         {
-            var scores = await _service.GetTopScoresAsync();
-            return Ok(scores);
+            _leaderboardService = leaderboardService;
         }
-        catch (Exception ex)
-        {
-            _logger.LogError(ex, "An error occurred while getting scores");
-            return StatusCode(500, new { message = "An error occurred while getting scores. Please try again later." });
-        }
-    }
 
-    [HttpPost("PostScore")]
-    public async Task<ActionResult<PlayerDto>> Post(PlayerDto request)
-    {
-        try
+        [HttpGet("GetScores")]
+        public ActionResult<IEnumerable<PlayerDto>> GetScores()
         {
-            Player player = await _service.PostScoreAsync(request);
-            return Ok(new PlayerDto
-            {
-                Name = player.Name,
-                GameCount = player.GameCount,
-                AverageAttempts = player.AverageAttempts
-            });
+            return Ok(_leaderboardService.GetTopTenPlayers());
         }
-        catch (Exception ex)
+
+        [HttpPost("PostScore")]
+        public async Task<ActionResult> PostScore(Player player)
         {
-            _logger.LogError(ex, "An error occurred while posting score");
-            return StatusCode(500, new { message = "An error occurred while posting score. Please try again later." });
+            await _leaderboardService.SavePlayerScore(player);
+            return Ok();
         }
     }
 }
