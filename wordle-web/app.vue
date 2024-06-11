@@ -62,38 +62,6 @@
           <NuxtPage />
         </v-container>
       </v-main>
-
-      <!-- Login Dialog -->
-      <v-dialog v-model="showLoginDialog" persistent max-width="600px">
-        <v-card>
-          <v-card-title>
-            <span class="headline">Login</span>
-          </v-card-title>
-          <v-card-text>
-            <v-form ref="loginForm" v-model="valid" lazy-validation>
-              <v-text-field
-                v-model="username"
-                :rules="usernameRules"
-                label="Username"
-                required
-              ></v-text-field>
-              <v-text-field
-                v-model="password"
-                :rules="passwordRules"
-                label="Password"
-                type="password"
-                required
-              ></v-text-field>
-            </v-form>
-            <v-alert v-if="loginError" type="error" dismissible>{{ loginError }}</v-alert>
-          </v-card-text>
-          <v-card-actions>
-            <v-spacer></v-spacer>
-            <v-btn color="blue darken-1" text @click="showLoginDialog = false">Cancel</v-btn>
-            <v-btn color="blue darken-1" text @click="login">Login</v-btn>
-          </v-card-actions>
-        </v-card>
-      </v-dialog>
     </v-app>
   </NuxtLayout>
 </template>
