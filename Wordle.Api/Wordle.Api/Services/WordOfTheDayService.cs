@@ -1,70 +1,92 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Wordle.Api.Dtos;
 using Wordle.Api.Models;
 
-namespace Wordle.Api.Services;
-
-public class WordOfTheDayService
+namespace Wordle.Api.Services
 {
-    private readonly List<string> words = WordList();
-    private static object _lock = new();
-
-    public WordleDbContext Db { get; set; }
-
-    public WordOfTheDayService(WordleDbContext db)
+    public class WordOfTheDayService
     {
-        Db = db;
-    }
+        private readonly List<string> words = WordList();
+        private static object _lock = new();
 
-    public async Task<Word> GetRandomWord()
-    {
-        var numberOfWords = await Db.Words.CountAsync();
+        public WordleDbContext Db { get; set; }
 
-        Random random = new();
-        int randomIndex = random.Next(numberOfWords);
-
-        return await Db.Words.Skip(randomIndex).FirstAsync();
-    }
-
-    public async Task<string> GetWordOfTheDay(DateOnly date)
-    {
-        WordOfTheDay? wordOfTheDay = await Db.WordsOfTheDays
-            .Include(wordOfTheDay => wordOfTheDay.Word)
-            .FirstOrDefaultAsync(wordOfTheDay => wordOfTheDay.Date == date);
-
-        if (wordOfTheDay is null)
+        public WordOfTheDayService(WordleDbContext db)
         {
-            lock (_lock)
-            {
-                wordOfTheDay = Db.WordsOfTheDays
-                    .Include(wordOfTheDay => wordOfTheDay.Word)
-                    .FirstOrDefault(wordOfTheDay => wordOfTheDay.Date == date);
-
-                if (wordOfTheDay is null)
-                {
-                    var randomWordTask = GetRandomWord();
-                    randomWordTask.Wait();
-                    var randomWord = randomWordTask.Result;
-
-                    wordOfTheDay = new()
-                    {
-                        Word = randomWord,
-                        Date = date
-                    };
-
-                    Db.WordsOfTheDays.Add(wordOfTheDay);
-                    Db.SaveChanges();
-                }
-            }
+            Db = db;
         }
 
-        return wordOfTheDay.Word!.Text;
-    }
+        public async Task<Word> GetRandomWord()
+        {
+            var numberOfWords = await Db.Words.CountAsync();
+            Random random = new();
+            int randomIndex = random.Next(numberOfWords);
+            return await Db.Words.Skip(randomIndex).FirstAsync();
+        }
+
+        public async Task<string> GetWordOfTheDay(DateOnly date)
+        {
+            WordOfTheDay? wordOfTheDay = await Db.WordsOfTheDays
+                .Include(wordOfTheDay => wordOfTheDay.Word)
+                .FirstOrDefaultAsync(wordOfTheDay => wordOfTheDay.Date == date);
+
+            if (wordOfTheDay is null)
+            {
+                lock (_lock)
+                {
+                    wordOfTheDay = Db.WordsOfTheDays
+                        .Include(wordOfTheDay => wordOfTheDay.Word)
+                        .FirstOrDefault(wordOfTheDay => wordOfTheDay.Date == date);
+
+                    if (wordOfTheDay is null)
+                    {
+                        var randomWordTask = GetRandomWord();
+                        randomWordTask.Wait();
+                        var randomWord = randomWordTask.Result;
+
+                        wordOfTheDay = new()
+                        {
+                            Word = randomWord,
+                            Date = date
+                        };
+
+                        Db.WordsOfTheDays.Add(wordOfTheDay);
+                        Db.SaveChanges();
+                    }
+                }
+            }
+
+            return wordOfTheDay.Word!.Text;
+        }
+
+        public async Task<NewWordDto> GetWordsList(string query, int page, int pageSize)
+        {
+            var wordsQuery = Db.Words.AsQueryable();
+
+            if (!string.IsNullOrEmpty(query))
+            {
+                wordsQuery = wordsQuery.Where(w => w.Text.Contains(query));
+            }
+
+            var words = await wordsQuery
+                .Skip((page - 1) * pageSize)
+                .Take(pageSize)
+                .ToListAsync();
+
+            var count = await wordsQuery.CountAsync();
+
+            return new NewWordDto
+            {
+                Items = words.Select(w => new WordDto { Word = w.Text, IsCommon = w.IsCommon }).ToList(),
+                Count = count
+            };
+        }
 
     #region WordList
     public static List<string> WordList()
     {
         return [
-    "aargh",
+            "aargh",
             "abaca",
             "abaci",
             "aback",
@@ -5824,4 +5846,5 @@ public class WordOfTheDayService
         ];
     }
     #endregion WordList
+}
 }

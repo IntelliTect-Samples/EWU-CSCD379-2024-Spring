@@ -10,4 +10,6 @@ public class Word
 
     public ICollection<Game> Games { get; set; } = [];
     public ICollection<WordOfTheDay> WordsOfTheDays { get; set; } = [];
+
+    public bool IsCommon { get; set; } = true;
 }

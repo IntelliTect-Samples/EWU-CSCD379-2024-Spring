@@ -1,7 +1,9 @@
 using Microsoft.EntityFrameworkCore;
+using Wordle.Api;
 using Wordle.Api.Data;
 using Wordle.Api.Models;
 using Wordle.Api.Services;
+using Wordle.Api.Identity;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -27,8 +29,14 @@ builder.Services.AddDbContext<WordleDbContext>(options =>
 {
     options.UseSqlServer(connectionString);
 });
+builder.Services.AddAuthorization(options =>
+{
+    options.AddPolicy(Authorize.EliteAdmin, Authorize.EliteAdminPolicy);
+    options.AddPolicy(Authorize.WordMaster, Authorize.WordMasterPolicy);
+});
 builder.Services.AddScoped<WordOfTheDayService>();
 builder.Services.AddScoped<LeaderboardService>();
+builder.Services.AddScoped<WordEditorService>();
 
 var app = builder.Build();
 
@@ -36,6 +44,7 @@ using (var scope = app.Services.CreateScope())
 {
     var db = scope.ServiceProvider.GetRequiredService<WordleDbContext>();
     db.Database.Migrate();
+    Seeder.Seed(db).Wait(); // Call the seeder to seed the database
 }
 
 // Configure the HTTP request pipeline.
@@ -49,6 +58,7 @@ app.UseHttpsRedirection();
 
 app.UseCors("AllowAllOrigins");
 
+app.UseAuthentication(); // Ensure this line is before UseAuthorization
 app.UseAuthorization();
 
 app.MapControllers();
