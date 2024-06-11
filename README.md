@@ -1,7 +1,7 @@
 # Website
-https://lively-sea-0f3b4921e.5.azurestaticapps.net
+- https://lively-sea-0f3b4921e.5.azurestaticapps.net 
 #API
-https://lexiquestapi.azurewebsites.net/
+- https://lexiquestapi.azurewebsites.net/
 
 # EWU-CSCD378-2022-Spring
 
