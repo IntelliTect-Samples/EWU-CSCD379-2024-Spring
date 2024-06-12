@@ -49,7 +49,7 @@ jobs:
 
   deploy:
     runs-on: windows-latest
-    if: (github.ref == 'refs/heads/main' || github.event_name == 'workflow_dispatch')
+    if: (github.ref == 'refs/heads/main' || github.ref == 'refs/heads/Assignment-5' || github.event_name == 'workflow_dispatch')
     needs: build
     environment:
       name: 'Production'
