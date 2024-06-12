@@ -4,7 +4,7 @@ namespace Wordle.Api.Models
 {
     public class Word
     {
-        public int Id { get; set; }
+        public int WordId { get; set; }
 
         [Required]
         public required string Text { get; set; }
