@@ -12,15 +12,15 @@ using Wordle.Api.Models;
 namespace Wordle.Api.Migrations
 {
     [DbContext(typeof(WordleDbContext))]
-    [Migration("20240611092839_AddIsCommonColumn")]
-    partial class AddIsCommonColumn
+    [Migration("20240612113606_InitialCreate")]
+    partial class InitialCreate
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "8.0.4")
+                .HasAnnotation("ProductVersion", "8.0.6")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
@@ -76,8 +76,7 @@ namespace Wordle.Api.Migrations
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("PlayerId");
 
