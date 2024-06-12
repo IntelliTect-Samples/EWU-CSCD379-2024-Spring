@@ -13,6 +13,11 @@ public class WordEditorService
 
     public async Task AddWord(WordDto wordDto)
     {
+        if (_context.Words.Any(w => w.Text == wordDto.Word))
+        {
+            throw new InvalidOperationException("Word already exists.");
+        }
+
         var word = new Word
         {
             Text = wordDto.Word,
@@ -22,23 +27,25 @@ public class WordEditorService
         await _context.SaveChangesAsync();
     }
 
-    public async Task DeleteWord(string word)
+    public async Task<Word?> DeleteWordById(int id)
     {
-        var wordToDelete = await _context.Words.FirstOrDefaultAsync(w => w.Text == word);
+        var wordToDelete = await _context.Words.FindAsync(id);
         if (wordToDelete != null)
         {
             _context.Words.Remove(wordToDelete);
             await _context.SaveChangesAsync();
         }
+        return wordToDelete;
     }
 
-    public async Task UpdateWord(WordDto wordDto)
+    public async Task<Word?> UpdateWord(int id, WordDto wordDto)
     {
-        var wordToUpdate = await _context.Words.FirstOrDefaultAsync(w => w.Text == wordDto.Word);
+        var wordToUpdate = await _context.Words.FindAsync(id);
         if (wordToUpdate != null)
         {
             wordToUpdate.IsCommon = wordDto.IsCommon;
             await _context.SaveChangesAsync();
         }
+        return wordToUpdate;
     }
 }

@@ -1,9 +1,13 @@
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
 using Wordle.Api;
 using Wordle.Api.Data;
+using Wordle.Api.Identity;
 using Wordle.Api.Models;
 using Wordle.Api.Services;
-using Wordle.Api.Identity;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -24,16 +28,55 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-var connectionString = builder.Configuration.GetConnectionString("DefaultConnection") ?? throw new InvalidOperationException("Unable to connect to 'DefaultConnection'");
+var connectionString = builder.Configuration.GetConnectionString("DefaultConnection") 
+                      ?? throw new InvalidOperationException("Unable to connect to 'DefaultConnection'");
+
 builder.Services.AddDbContext<WordleDbContext>(options =>
 {
     options.UseSqlServer(connectionString);
 });
+
+// Add Identity
+builder.Services.AddIdentity<AppUser, IdentityRole>()
+    .AddEntityFrameworkStores<WordleDbContext>()
+    .AddDefaultTokenProviders();
+
+// Configure Identity options
+builder.Services.Configure<IdentityOptions>(options =>
+{
+    options.Password.RequireDigit = false;
+    options.Password.RequiredLength = 6;
+    options.Password.RequireNonAlphanumeric = false;
+    options.Password.RequireUppercase = false;
+    options.Password.RequireLowercase = false;
+    options.User.RequireUniqueEmail = true;
+});
+
+// Configure JWT authentication
+builder.Services.AddAuthentication(options =>
+{
+    options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+    options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+}).AddJwtBearer(options =>
+{
+    options.TokenValidationParameters = new TokenValidationParameters
+    {
+        ValidateIssuer = true,
+        ValidateAudience = true,
+        ValidateLifetime = true,
+        ValidateIssuerSigningKey = true,
+        ValidIssuer = builder.Configuration["Jwt:Issuer"],
+        ValidAudience = builder.Configuration["Jwt:Audience"],
+        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["Jwt:Key"] ?? ""))
+    };
+});
+
 builder.Services.AddAuthorization(options =>
 {
     options.AddPolicy(Authorize.EliteAdmin, Authorize.EliteAdminPolicy);
     options.AddPolicy(Authorize.WordMaster, Authorize.WordMasterPolicy);
 });
+
 builder.Services.AddScoped<WordOfTheDayService>();
 builder.Services.AddScoped<LeaderboardService>();
 builder.Services.AddScoped<WordEditorService>();

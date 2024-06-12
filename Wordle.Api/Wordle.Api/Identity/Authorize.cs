@@ -12,10 +12,10 @@ namespace Wordle.Api.Identity
             policy.RequireRole(Roles.Admin);
             policy.RequireAssertion(context =>
             {
-                var randomClaim = context.User.Claims.FirstOrDefault(c => c.Type == Claims.RandomValue);
-                if (randomClaim != null && double.TryParse(randomClaim.Value, out double randomValue))
+                var randomClaim = context.User.Claims.FirstOrDefault(c => c.Type == Claims.Random);
+                if (randomClaim != null && double.TryParse(randomClaim.Value, out double random))
                 {
-                    return randomValue > 0.75;
+                    return random > 0.75;
                 }
                 return false;
             });

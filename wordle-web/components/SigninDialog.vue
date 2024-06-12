@@ -1,5 +1,5 @@
 <template>
-  <v-dialog v-model="modelValue" width="500">
+  <v-dialog v-model="localModelValue" width="500">
     <v-card>
       <v-alert v-if="errorMessage" type="error">
         {{ errorMessage }}
@@ -12,9 +12,7 @@
           @keyup.stop
           label="Password"
           :type="showPassword ? 'text' : 'password'"
-          :append-inner-icon="
-            showPassword ? 'mdi-eye-off-outline' : 'mdi-eye-outline'
-          "
+          :append-inner-icon="showPassword ? 'mdi-eye-off-outline' : 'mdi-eye-outline'"
           @click:append-inner="showPassword = !showPassword"
         />
         <v-text-field v-if="isSignUp" v-model="secretPhrase" @keyup.stop label="Secret Phrase" />
@@ -23,7 +21,7 @@
       <v-card-actions>
         <v-row justify="center">
           <v-col cols="auto">
-            <v-btn color="primary" variant="tonal" @click="modelValue = false">
+            <v-btn color="primary" variant="tonal" @click="closeDialog">
               Cancel
             </v-btn>
           </v-col>
@@ -43,30 +41,44 @@
   </v-dialog>
 </template>
 
-
-
-
 <script setup lang="ts">
-import axios from "axios";
-const modelValue = defineModel<boolean>({ default: false });
+import { ref, watch } from 'vue';
+import axios from 'axios';
+import TokenService from '~/scripts/tokenService';
+
+const props = defineProps<{ modelValue: boolean }>();
+const emit = defineEmits(['update:modelValue']);
+
+const localModelValue = ref(props.modelValue);
 const showPassword = ref(false);
-const userName = ref("");
-const password = ref("");
-const email = ref("");
-const secretPhrase = ref("");
+const userName = ref('');
+const password = ref('');
+const email = ref('');
+const secretPhrase = ref('');
 const birthday = ref(null);
-const errorMessage = ref("");
+const errorMessage = ref('');
 const isSignUp = ref(false);
 
+const tokenService = new TokenService();
+
+watch(() => props.modelValue, (newVal) => {
+  localModelValue.value = newVal;
+});
+
+watch(localModelValue, (newVal) => {
+  emit('update:modelValue', newVal);
+});
+
 function signIn() {
-  errorMessage.value = "";
+  errorMessage.value = '';
   axios
-    .post("/Token/GetToken", {
+    .post('/api/Token/Authenticate', {
       username: userName.value,
       password: password.value,
     })
     .then((response) => {
-      modelValue.value = false;
+      tokenService.setToken(response.data.token);
+      closeDialog();
     })
     .catch((error) => {
       errorMessage.value = error.response.data;
@@ -74,17 +86,18 @@ function signIn() {
 }
 
 function signUp() {
-  errorMessage.value = "";
+  errorMessage.value = '';
   axios
-    .post("/User/Register", {
+    .post('/api/User/Register', {
       username: userName.value,
       password: password.value,
       email: email.value,
       secretPhrase: secretPhrase.value,
       birthday: birthday.value,
     })
-    .then((response) => {
-      modelValue.value = false;
+    .then(() => {
+      // Automatically sign in after successful registration
+      signIn();
     })
     .catch((error) => {
       errorMessage.value = error.response.data;
@@ -93,5 +106,9 @@ function signUp() {
 
 function toggleSignUp() {
   isSignUp.value = !isSignUp.value;
+}
+
+function closeDialog() {
+  localModelValue.value = false;
 }
 </script>

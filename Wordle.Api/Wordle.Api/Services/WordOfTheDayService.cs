@@ -1,32 +1,38 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Wordle.Api.Dtos;
 using Wordle.Api.Models;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace Wordle.Api.Services
 {
     public class WordOfTheDayService
     {
-        private readonly List<string> words = WordList();
-        private static object _lock = new();
+        private readonly WordleDbContext _context;
+        private static readonly object _lock = new();
 
-        public WordleDbContext Db { get; set; }
-
-        public WordOfTheDayService(WordleDbContext db)
+        public WordOfTheDayService(WordleDbContext context)
         {
-            Db = db;
+            _context = context;
         }
 
         public async Task<Word> GetRandomWord()
         {
-            var numberOfWords = await Db.Words.CountAsync();
-            Random random = new();
+            var numberOfWords = await _context.Words.CountAsync();
+            if (numberOfWords == 0)
+            {
+                throw new InvalidOperationException("No words available");
+            }
+
+            var random = new Random();
             int randomIndex = random.Next(numberOfWords);
-            return await Db.Words.Skip(randomIndex).FirstAsync();
+            return await _context.Words.Skip(randomIndex).FirstAsync();
         }
 
         public async Task<string> GetWordOfTheDay(DateOnly date)
         {
-            WordOfTheDay? wordOfTheDay = await Db.WordsOfTheDays
+            WordOfTheDay? wordOfTheDay = await _context.WordsOfTheDays
                 .Include(wordOfTheDay => wordOfTheDay.Word)
                 .FirstOrDefaultAsync(wordOfTheDay => wordOfTheDay.Date == date);
 
@@ -34,7 +40,7 @@ namespace Wordle.Api.Services
             {
                 lock (_lock)
                 {
-                    wordOfTheDay = Db.WordsOfTheDays
+                    wordOfTheDay = _context.WordsOfTheDays
                         .Include(wordOfTheDay => wordOfTheDay.Word)
                         .FirstOrDefault(wordOfTheDay => wordOfTheDay.Date == date);
 
@@ -44,14 +50,14 @@ namespace Wordle.Api.Services
                         randomWordTask.Wait();
                         var randomWord = randomWordTask.Result;
 
-                        wordOfTheDay = new()
+                        wordOfTheDay = new WordOfTheDay
                         {
                             Word = randomWord,
                             Date = date
                         };
 
-                        Db.WordsOfTheDays.Add(wordOfTheDay);
-                        Db.SaveChanges();
+                        _context.WordsOfTheDays.Add(wordOfTheDay);
+                        _context.SaveChanges();
                     }
                 }
             }
@@ -61,7 +67,7 @@ namespace Wordle.Api.Services
 
         public async Task<NewWordDto> GetWordsList(string query, int page, int pageSize)
         {
-            var wordsQuery = Db.Words.AsQueryable();
+            var wordsQuery = _context.Words.AsQueryable();
 
             if (!string.IsNullOrEmpty(query))
             {
@@ -77,15 +83,39 @@ namespace Wordle.Api.Services
 
             return new NewWordDto
             {
-                Items = words.Select(w => new WordDto { Word = w.Text, IsCommon = w.IsCommon }).ToList(),
+                Items = words.Select(w => new WordDto { Id = w.Id, Word = w.Text, IsCommon = w.IsCommon }).ToList(),
                 Count = count
             };
         }
 
-    #region WordList
-    public static List<string> WordList()
-    {
-        return [
+        public async Task<NewWordDto> SearchWords(string query, int page, int pageSize)
+        {
+            var wordsQuery = _context.Words.AsQueryable();
+
+            if (!string.IsNullOrEmpty(query))
+            {
+                wordsQuery = wordsQuery.Where(w => w.Text.Contains(query));
+            }
+
+            var words = await wordsQuery
+                .Skip((page - 1) * pageSize)
+                .Take(pageSize)
+                .ToListAsync();
+
+            var count = await wordsQuery.CountAsync();
+
+            return new NewWordDto
+            {
+                Items = words.Select(w => new WordDto { Id = w.Id, Word = w.Text, IsCommon = w.IsCommon }).ToList(),
+                Count = count
+            };
+        }
+
+        #region WordList
+        public static List<string> WordList()
+        {
+            return new List<string>
+            {
             "aargh",
             "abaca",
             "abaci",
@@ -5842,9 +5872,9 @@ namespace Wordle.Api.Services
             "zooey",
             "zooks",
             "zooms",
-            "zowie",
-        ];
+            "zowie"
+            };
+        }
+        #endregion WordList
     }
-    #endregion WordList
-}
 }
