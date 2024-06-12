@@ -2,9 +2,8 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
+using Microsoft.OpenApi.Models;
 using System.Text;
-using Wordle.Api;
-using Wordle.Api.Data;
 using Wordle.Api.Identity;
 using Wordle.Api.Models;
 using Wordle.Api.Services;
@@ -12,9 +11,11 @@ using Wordle.Api.Services;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
+const string AllOrigins = "AllowAllOrigins";
+
 builder.Services.AddCors(options =>
 {
-    options.AddPolicy("AllowAllOrigins", policy =>
+    options.AddPolicy(name: AllOrigins, policy =>
     {
         policy.AllowAnyOrigin()
               .AllowAnyMethod()
@@ -26,7 +27,32 @@ builder.Services.AddControllers();
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
+builder.Services.AddSwaggerGen(config =>
+{
+    config.SwaggerDoc("v1", new OpenApiInfo { Title = "Wordle API", Version = "v1" });
+    config.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
+    {
+        Description = "JWT Authorization header using the Bearer scheme. Example: \"Authorization: Bearer {token}\"",
+        Name = "Authorization",
+        In = ParameterLocation.Header,
+        Type = SecuritySchemeType.Http,
+        Scheme = "Bearer"
+    });
+    config.AddSecurityRequirement(new OpenApiSecurityRequirement
+    {
+        {
+            new OpenApiSecurityScheme
+            {
+                Reference = new OpenApiReference
+                {
+                    Type = ReferenceType.SecurityScheme,
+                    Id = "Bearer"
+                }
+            },
+            new List<string>()
+        }
+    });
+});
 
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection") 
                       ?? throw new InvalidOperationException("Unable to connect to 'DefaultConnection'");
@@ -52,28 +78,30 @@ builder.Services.Configure<IdentityOptions>(options =>
     options.User.RequireUniqueEmail = true;
 });
 
-// Configure JWT authentication
+// JWT Token Setup
+var jwtConfig = builder.Configuration
+    .GetSection("Jwt").Get<JwtConfiguration>() ?? throw new InvalidOperationException("JWT config not specified");
+builder.Services.AddSingleton(jwtConfig);
+
 builder.Services.AddAuthentication(options =>
 {
     options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
     options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
 }).AddJwtBearer(options =>
 {
-    var jwtSettings = builder.Configuration.GetSection("Jwt");
-    var secretKey = jwtSettings.GetValue<string>("Secret");
-    
     options.TokenValidationParameters = new TokenValidationParameters
     {
         ValidateIssuer = true,
         ValidateAudience = true,
         ValidateLifetime = true,
         ValidateIssuerSigningKey = true,
-        ValidIssuer = jwtSettings.GetValue<string>("Issuer"),
-        ValidAudience = jwtSettings.GetValue<string>("Audience"),
-        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(secretKey ?? throw new InvalidOperationException("JWT Key is missing")))
+        ValidIssuer = jwtConfig.Issuer,
+        ValidAudience = jwtConfig.Audience,
+        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtConfig.Secret ?? throw new InvalidOperationException("JWT Key is missing")))
     };
 });
 
+// Add Policies
 builder.Services.AddAuthorization(options =>
 {
     options.AddPolicy(Authorize.EliteAdmin, Authorize.EliteAdminPolicy);
@@ -89,8 +117,12 @@ var app = builder.Build();
 using (var scope = app.Services.CreateScope())
 {
     var db = scope.ServiceProvider.GetRequiredService<WordleDbContext>();
+    var userManager = scope.ServiceProvider.GetRequiredService<UserManager<AppUser>>();
+    var roleManager = scope.ServiceProvider.GetRequiredService<RoleManager<IdentityRole>>();
+
     db.Database.Migrate();
-    Seeder.Seed(db).Wait(); // Call the seeder to seed the database
+
+    await IdentitySeed.SeedAsync(userManager, roleManager, db);
 }
 
 // Configure the HTTP request pipeline.
@@ -103,7 +135,7 @@ if (app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 
 // Ensure UseCors is called before UseAuthentication and UseAuthorization
-app.UseCors("AllowAllOrigins");
+app.UseCors(AllOrigins);
 
 app.UseAuthentication();
 app.UseAuthorization();

@@ -1,46 +1,61 @@
 using Microsoft.AspNetCore.Identity;
-using System.Data;
-using System.Security.Claims;
 using System;
 using Wordle.Api.Models;
 
-namespace Wordle.Api.Identity;
-public static class IdentitySeed
+namespace Wordle.Api.Identity
 {
-    public static async Task SeedAsync(UserManager<AppUser> userManager, RoleManager<IdentityRole> roleManager, WordleDbContext db)
+    public static class IdentitySeed
     {
-        // Seed Roles
-        await SeedRolesAsync(roleManager);
-
-        // Seed Admin User
-        await SeedAdminUserAsync(userManager);
-    }
-
-    private static async Task SeedRolesAsync(RoleManager<IdentityRole> roleManager)
-    {
-        // Seed Roles
-        if (!await roleManager.RoleExistsAsync(Roles.Admin))
+        public static async Task SeedAsync(UserManager<AppUser> userManager, RoleManager<IdentityRole> roleManager, WordleDbContext db)
         {
-            await roleManager.CreateAsync(new IdentityRole(Roles.Admin));
+            // Seed Roles
+            await SeedRolesAsync(roleManager);
+
+            // Seed Users
+            await SeedUsersAsync(userManager);
         }
-    }
 
-    private static async Task SeedAdminUserAsync(UserManager<AppUser> userManager)
-    {
-        // Seed Admin User
-        if (await userManager.FindByEmailAsync("Admin@intellitect.com") == null)
+        private static async Task SeedRolesAsync(RoleManager<IdentityRole> roleManager)
         {
-            AppUser user = new AppUser
+            // Seed Admin Role
+            if (!await roleManager.RoleExistsAsync(Roles.Admin))
             {
-                UserName = "Admin@intellitect.com",
-                Email = "Admin@intellitect.com"
-            };
+                await roleManager.CreateAsync(new IdentityRole(Roles.Admin));
+            }
+        }
 
-            IdentityResult result = userManager.CreateAsync(user, "P@ssw0rd123").Result;
-
-            if (result.Succeeded)
+        private static async Task SeedUsersAsync(UserManager<AppUser> userManager)
+        {
+            // Seed Admin User (Over 21)
+            if (await userManager.FindByEmailAsync("admin@intellitect.com") == null)
             {
-                await userManager.AddToRoleAsync(user, Roles.Admin);
+                AppUser adminUser = new AppUser
+                {
+                    UserName = "admin@intellitect.com",
+                    Email = "admin@intellitect.com",
+                    Birthday = new DateTime(1980, 1, 1) // Over 21
+                };
+
+                IdentityResult adminResult = await userManager.CreateAsync(adminUser, "P@ssw0rd123");
+
+                if (adminResult.Succeeded)
+                {
+                    await userManager.AddToRoleAsync(adminUser, Roles.Admin);
+                }
+            }
+
+            // Seed Young User (Under 21)
+            if (await userManager.FindByEmailAsync("younguser@intellitect.com") == null)
+            {
+                AppUser youngUser = new AppUser
+                {
+                    UserName = "younguser@intellitect.com",
+                    Email = "younguser@intellitect.com",
+                    Birthday = new DateTime(2010, 1, 1) // Under 21
+                };
+
+                IdentityResult youngUserResult = await userManager.CreateAsync(youngUser, "P@ssw0rd123");
+
             }
         }
     }

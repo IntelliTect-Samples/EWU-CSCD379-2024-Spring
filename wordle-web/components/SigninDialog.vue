@@ -26,7 +26,7 @@
             </v-btn>
           </v-col>
           <v-col cols="auto">
-            <v-btn color="primary" variant="flat" @click="isSignUp ? signUp : signIn">
+            <v-btn color="primary" variant="flat" @click="handleSubmit">
               {{ isSignUp ? 'Sign Up' : 'Sign In' }}
             </v-btn>
           </v-col>
@@ -69,7 +69,15 @@ watch(localModelValue, (newVal) => {
   emit('update:modelValue', newVal);
 });
 
-function signIn() {
+const handleSubmit = () => {
+  if (isSignUp.value) {
+    signUp();
+  } else {
+    signIn();
+  }
+};
+
+const signIn = () => {
   errorMessage.value = '';
   axios
     .post('/api/Token/Authenticate', {
@@ -81,11 +89,11 @@ function signIn() {
       closeDialog();
     })
     .catch((error) => {
-      errorMessage.value = error.response.data;
+      errorMessage.value = error.response?.data || 'Sign-in failed.';
     });
-}
+};
 
-function signUp() {
+const signUp = () => {
   errorMessage.value = '';
   axios
     .post('/api/User/Register', {
@@ -100,15 +108,25 @@ function signUp() {
       signIn();
     })
     .catch((error) => {
-      errorMessage.value = error.response.data;
+      errorMessage.value = error.response?.data || 'Sign-up failed.';
     });
-}
+};
 
-function toggleSignUp() {
+const toggleSignUp = () => {
   isSignUp.value = !isSignUp.value;
-}
+  errorMessage.value = '';
+};
 
-function closeDialog() {
+const closeDialog = () => {
   localModelValue.value = false;
-}
+  clearFields();
+};
+
+const clearFields = () => {
+  userName.value = '';
+  password.value = '';
+  email.value = '';
+  secretPhrase.value = '';
+  birthday.value = null;
+};
 </script>
