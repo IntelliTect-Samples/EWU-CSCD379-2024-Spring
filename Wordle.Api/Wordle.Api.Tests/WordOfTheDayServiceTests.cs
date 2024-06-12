@@ -9,22 +9,23 @@ namespace Wordle.Api.Tests
     [TestClass]
     public class WordOfTheDayServiceTests : DatabaseTestBase
     {
-        private WordOfTheDayService _wordOfTheDayService = null!;
+        private WordOfTheDayService _wordOfTheDayService;
+        private WordleDbContext _context;
 
         [TestInitialize]
         public async Task Setup()
         {
             InitializeDb();
-
-            using var context = new WordleDbContext(Options);
-            await Seeder.Seed(context);
-            _wordOfTheDayService = new WordOfTheDayService(context);
+            _context = new WordleDbContext(Options);
+            await Seeder.Seed(_context);
+            _wordOfTheDayService = new WordOfTheDayService(_context);
         }
 
         [TestCleanup]
         public void Teardown()
         {
             CloseDbConnection();
+            _context.Dispose();
         }
 
         [TestMethod]
