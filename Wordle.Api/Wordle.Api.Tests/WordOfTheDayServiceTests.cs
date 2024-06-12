@@ -1,7 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using Wordle.Api.Models;
 using Wordle.Api.Services;
-using Microsoft.Data.Sqlite;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Threading.Tasks;
 
@@ -10,14 +9,15 @@ namespace Wordle.Api.Tests
     [TestClass]
     public class WordOfTheDayServiceTests : DatabaseTestBase
     {
-        private WordOfTheDayService _wordOfTheDayService;
+        private WordOfTheDayService _wordOfTheDayService = null!;
 
         [TestInitialize]
-        public void Setup()
+        public async Task Setup()
         {
             InitializeDb();
 
             using var context = new WordleDbContext(Options);
+            await Seeder.Seed(context);
             _wordOfTheDayService = new WordOfTheDayService(context);
         }
 
@@ -30,11 +30,8 @@ namespace Wordle.Api.Tests
         [TestMethod]
         public async Task GetRandomWord_ReturnsWord()
         {
-            using var context = new WordleDbContext(Options);
-            var wordOfTheDayService = new WordOfTheDayService(context);
-
             // Act
-            var word = await wordOfTheDayService.GetRandomWord();
+            var word = await _wordOfTheDayService.GetRandomWord();
 
             // Assert
             Assert.IsNotNull(word);
@@ -43,11 +40,8 @@ namespace Wordle.Api.Tests
         [TestMethod]
         public async Task GetWordOfTheDay_ReturnsWord()
         {
-            using var context = new WordleDbContext(Options);
-            var wordOfTheDayService = new WordOfTheDayService(context);
-
             // Act
-            var word = await wordOfTheDayService.GetWordOfTheDay(DateOnly.FromDateTime(DateTime.Now));
+            var word = await _wordOfTheDayService.GetWordOfTheDay(DateOnly.FromDateTime(DateTime.Now));
 
             // Assert
             Assert.IsNotNull(word);
