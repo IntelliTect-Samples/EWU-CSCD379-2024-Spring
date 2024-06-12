@@ -9,8 +9,8 @@ namespace Wordle.Api.Tests
     [TestClass]
     public class WordOfTheDayServiceTests : DatabaseTestBase
     {
-        private WordOfTheDayService _wordOfTheDayService;
-        private WordleDbContext _context;
+        private WordOfTheDayService _wordOfTheDayService = null!;
+        private WordleDbContext _context = null!;
 
         [TestInitialize]
         public async Task Setup()
