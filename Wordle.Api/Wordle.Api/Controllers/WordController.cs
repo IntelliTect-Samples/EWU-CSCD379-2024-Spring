@@ -89,7 +89,7 @@ namespace Wordle.Api.Controllers
         [Authorize(Policy = Authorize.WordMaster)]
         public async Task<IActionResult> UpdateWord(int id, WordDto wordDto)
         {
-            if (id != wordDto.Id)
+            if (id != wordDto.WordId)
             {
                 return BadRequest("Word ID mismatch.");
             }

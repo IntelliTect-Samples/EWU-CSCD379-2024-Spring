@@ -21,7 +21,7 @@ namespace Wordle.Api.Migrations
                 table: "WordOfTheDay");
 
             migrationBuilder.AddColumn<int>(
-                name: "WordId",
+                name: "Id",
                 table: "WordOfTheDay",
                 type: "int",
                 nullable: false,
@@ -31,13 +31,13 @@ namespace Wordle.Api.Migrations
                 name: "Words",
                 columns: table => new
                 {
-                    WordId = table.Column<int>(type: "int", nullable: false)
+                    Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Text = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Words", x => x.WordId);
+                    table.PrimaryKey("PK_Words", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(

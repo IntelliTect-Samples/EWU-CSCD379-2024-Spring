@@ -83,7 +83,7 @@ namespace Wordle.Api.Services
 
             return new NewWordDto
             {
-                Items = words.Select(w => new WordDto { Id = w.Id, Word = w.Text, IsCommon = w.IsCommon }).ToList(),
+                Items = words.Select(w => new WordDto { WordId = w.WordId, Word = w.Text, IsCommon = w.IsCommon }).ToList(),
                 Count = count
             };
         }
@@ -106,7 +106,7 @@ namespace Wordle.Api.Services
 
             return new NewWordDto
             {
-                Items = words.Select(w => new WordDto { Id = w.Id, Word = w.Text, IsCommon = w.IsCommon }).ToList(),
+                Items = words.Select(w => new WordDto { WordId = w.WordId, Word = w.Text, IsCommon = w.IsCommon }).ToList(),
                 Count = count
             };
         }
