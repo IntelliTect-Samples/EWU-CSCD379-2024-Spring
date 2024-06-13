@@ -17,7 +17,7 @@ namespace Wordle.Api.Tests
         {
             InitializeDb();
             _context = new WordleDbContext(Options);
-            await Seeder.Seed(_context);
+            await Seeder.SeedAsync(_context);
             _wordOfTheDayService = new WordOfTheDayService(_context);
         }
 
