@@ -12,8 +12,8 @@ using Wordle.Api.Models;
 namespace Wordle.Api.Migrations
 {
     [DbContext(typeof(WordleDbContext))]
-    [Migration("20240612233520_InitialIdentitySchema")]
-    partial class InitialIdentitySchema
+    [Migration("20240613072544_InitialCreate")]
+    partial class InitialCreate
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
