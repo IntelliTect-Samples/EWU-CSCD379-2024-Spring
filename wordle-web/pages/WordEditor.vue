@@ -62,9 +62,9 @@
           </template>
           <template v-slot:body.prepend>
             <tr>
-              <th class="text-uppercase">Word</th>
-              <th class="text-uppercase">Is Common</th>
-              <th v-if="isEditMode" class="text-uppercase">Actions</th>
+              <th class="text-uppercase text-center">Word</th>
+              <th class="text-uppercase text-center">Is Common</th>
+              <th v-if="isEditMode" class="text-uppercase text-left">Actions</th>
             </tr>
           </template>
           <template v-slot:item.isCommon="{ item }">
@@ -115,6 +115,7 @@
     />
   </v-container>
 </template>
+
 
 <script setup lang="ts">
 import { ref, computed, onMounted, watch } from 'vue';
