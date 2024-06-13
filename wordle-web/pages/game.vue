@@ -68,7 +68,6 @@
 
 <script setup lang="ts">
 import { Game, GameState } from '~/scripts/game';
-import nuxtStorage from 'nuxt-storage';
 import Axios from 'axios';
 
 const game = reactive(new Game());
@@ -86,7 +85,7 @@ function playAudio(): void {
 
 onMounted(() => {
   window.addEventListener('keyup', onKeyup);
-  const defaultName = nuxtStorage.localStorage.getData('name');
+  const defaultName = localStorage.getData('name');
   showNameDialog.value = !defaultName;
   username.value = defaultName || 'Guest';
 });
@@ -105,12 +104,12 @@ watch(() => game.gameState, () => {
 });
 
 function onKeyup(event: KeyboardEvent) {
-  if (showNameDialog.value) {
-    if (event.key === 'Enter') {
-      enterName();
-    }
-  } else {
-    game.handleKey(event);
+  if (event.key === "Enter") {
+    game.submitGuess();
+  } else if (event.key == "Backspace") {
+    game.removeLastLetter();
+  } else if (event.key.match(/[A-z]/) && event.key.length === 1) {
+    game.addLetter(event.key.toUpperCase());
   }
 }
 
@@ -118,7 +117,7 @@ function enterName() {
   if (username.value.trim() === '') {
     username.value = 'Guest';
   } else {
-    nuxtStorage.localStorage.setData('name', username.value);
+    localStorage.setData('name', username.value);
   }
   showNameDialog.value = false;
 }
