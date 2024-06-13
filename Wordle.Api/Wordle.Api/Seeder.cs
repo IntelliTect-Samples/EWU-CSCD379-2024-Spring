@@ -1,19 +1,22 @@
 ﻿using Wordle.Api.Models;
 using Wordle.Api.Services;
+using System.Threading.Tasks;
 
-namespace Wordle.Api;
-public static class Seeder
+namespace Wordle.Api
 {
-    public static async Task Seed(WordleDbContext db)
+    public static class Seeder
     {
-        if (!db.Words.Any())
+        public static async Task SeedAsync(WordleDbContext db)
         {
-            foreach(var word in WordOfTheDayService.WordList())
+            if (!db.Words.Any())
             {
-                db.Words.Add(new Word() { Text = word });
-            }
+                foreach (var word in WordOfTheDayService.WordList())
+                {
+                    db.Words.Add(new Word { Text = word });
+                }
 
-            await db.SaveChangesAsync();
+                await db.SaveChangesAsync();
+            }
         }
     }
 }

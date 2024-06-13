@@ -123,6 +123,9 @@ using (var scope = app.Services.CreateScope())
     db.Database.Migrate();
 
     await IdentitySeed.SeedAsync(userManager, roleManager, db);
+
+    // Call the Seeder to seed the database with initial words
+    await Wordle.Api.Seeder.SeedAsync(db);
 }
 
 // Configure the HTTP request pipeline.
