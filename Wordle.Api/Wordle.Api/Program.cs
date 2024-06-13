@@ -13,12 +13,20 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 const string AllOrigins = "AllowAllOrigins";
+const string FrontendOrigin = "AllowFrontendOrigin";
 
 builder.Services.AddCors(options =>
 {
     options.AddPolicy(name: AllOrigins, policy =>
     {
         policy.AllowAnyOrigin()
+              .AllowAnyMethod()
+              .AllowAnyHeader();
+    });
+
+    options.AddPolicy(name: FrontendOrigin, policy =>
+    {
+        policy.WithOrigins("https://lively-sea-0f3b4921e.5.azurestaticapps.net")
               .AllowAnyMethod()
               .AllowAnyHeader();
     });
@@ -142,7 +150,7 @@ if (app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 
 // Ensure UseCors is called before UseAuthentication and UseAuthorization
-app.UseCors(AllOrigins);
+app.UseCors(FrontendOrigin);
 
 app.UseAuthentication();
 app.UseAuthorization();
