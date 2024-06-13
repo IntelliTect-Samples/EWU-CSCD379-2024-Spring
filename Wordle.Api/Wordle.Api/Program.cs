@@ -11,10 +11,11 @@ using Wordle.Api.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
+// Define CORS policy names
 const string AllOrigins = "AllowAllOrigins";
 const string FrontendOrigin = "AllowFrontendOrigin";
 
+// Add services to the container.
 builder.Services.AddCors(options =>
 {
     options.AddPolicy(name: AllOrigins, policy =>
@@ -150,7 +151,7 @@ if (app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 
 // Ensure UseCors is called before UseAuthentication and UseAuthorization
-app.UseCors(FrontendOrigin);
+app.UseCors(AllOrigins);
 
 app.UseAuthentication();
 app.UseAuthorization();
