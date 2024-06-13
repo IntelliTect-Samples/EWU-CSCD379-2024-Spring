@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using System.Text;
+using Wordle.Api;
 using Wordle.Api.Identity;
 using Wordle.Api.Models;
 using Wordle.Api.Services;
@@ -120,12 +121,15 @@ using (var scope = app.Services.CreateScope())
     var userManager = scope.ServiceProvider.GetRequiredService<UserManager<AppUser>>();
     var roleManager = scope.ServiceProvider.GetRequiredService<RoleManager<IdentityRole>>();
 
-    db.Database.Migrate();
+    if (db.Database.GetPendingMigrations().Any())
+    {
+        db.Database.Migrate();
+    }
 
     await IdentitySeed.SeedAsync(userManager, roleManager, db);
 
     // Call the Seeder to seed the database with initial words
-    await Wordle.Api.Seeder.SeedAsync(db);
+    await Seeder.SeedAsync(db);
 }
 
 // Configure the HTTP request pipeline.
