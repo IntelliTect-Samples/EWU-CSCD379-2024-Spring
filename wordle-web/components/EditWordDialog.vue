@@ -1,97 +1,246 @@
 <template>
-  <v-dialog v-model="internalModelValue" max-width="500px">
+  <v-container>
     <v-card>
-      <v-card-title>
-        <span>{{ isAdd ? 'Add Word' : 'Edit Word' }}</span>
-        <v-spacer></v-spacer>
-        <v-btn icon @click="closeDialog">
-          <v-icon>mdi-close</v-icon>
-        </v-btn>
+      <v-card-title class="font-weight-bold my-3">
+        Word Editor
+        <v-btn-toggle
+          v-if="isLoggedIn"
+          variant="outlined"
+          v-model="userMode"
+          density="compact"
+          class="ml-3"
+          mandatory
+        >
+          <v-btn>View</v-btn>
+          <v-btn>Edit</v-btn>
+        </v-btn-toggle>
+        <!-- Add Word button visible only when user has edit permissions -->
+        <v-btn v-if="isEditUser" variant="outlined" @click="showAddEditor = true" class="ml-3">Add Word</v-btn>
       </v-card-title>
-
-      <v-card-text>
-        <v-form ref="wordForm" v-model="valid" lazy-validation>
-          <v-text-field
-            v-model="word.word"
-            label="Word"
-            :rules="wordRules"
-            required
-          ></v-text-field>
-          <v-checkbox
-            v-model="word.isCommon"
-            label="Common word"
-          ></v-checkbox>
-        </v-form>
-        <v-alert v-if="errorMessage" type="error" dismissible>{{ errorMessage }}</v-alert>
-      </v-card-text>
-
-      <v-card-actions>
-        <v-spacer></v-spacer>
-        <v-btn color="primary" @click="saveWord">
-          {{ isAdd ? 'Add' : 'Save' }}
-        </v-btn>
-      </v-card-actions>
+      <v-card-item>
+        <v-data-table
+          :headers="headers"
+          :items="wordsList"
+          :items-per-page="pageSize"
+          :loading="isWordsListLoading"
+          :sort-by="[{ key: 'word', order: 'asc' }]"
+          :header-props="{ class: 'text-uppercase' }"
+          :cell-props="{ class: 'text-uppercase text-button py-3' }"
+          v-model:page="pageNumber"
+        >
+          <template v-slot:top>
+            <v-row class="mb-1">
+              <v-col cols="12" lg="5" md="6" sm="12">
+                <v-text-field
+                  v-model="query"
+                  label="Search for a word"
+                  hide-details
+                  clearable
+                  single-line
+                  variant="outlined"
+                  density="compact"
+                />
+              </v-col>
+              <v-col cols="12" lg="3" md="6" sm="6">
+                <v-slider v-model="pageSize" min="10" max="100" step="1">
+                  <template v-slot:append>
+                    <v-select
+                      v-model="pageSize"
+                      :items="[10, 20, 25, 50, 100]"
+                      hide-details
+                      density="compact"
+                      variant="outlined"
+                    />
+                  </template>
+                </v-slider>
+              </v-col>
+              <v-col cols="auto">
+                <v-btn variant="outlined" @click="resetFilters">Clear</v-btn>
+              </v-col>
+            </v-row>
+          </template>
+          <template v-slot:body.prepend>
+            <tr>
+              <th class="text-uppercase">Word</th>
+              <th class="text-uppercase">Is Common</th>
+              <th v-if="isEditMode" class="text-uppercase">Actions</th>
+            </tr>
+          </template>
+          <template v-slot:item.isCommon="{ item }">
+            <v-switch
+              class="d-flex justify-center"
+              v-model="item.isCommon"
+              color="green"
+              inset
+              @change="updateItem(item)"
+              v-if="isLoggedIn"
+            />
+            <v-icon v-else :color="item.isCommon ? 'green' : 'red'" class="my-4">
+              {{ item.isCommon ? "mdi-check" : "mdi-close" }}
+            </v-icon>
+          </template>
+          <template v-slot:item.actions="{ item }" v-if="isEditMode">
+            <div class="d-flex ga-3">
+              <v-btn color="error" @click="deleteWord(item.word)">
+                <v-icon icon="mdi-delete" />
+                {{ $vuetify.display.smAndDown ? "" : "Delete" }}
+              </v-btn>
+            </div>
+          </template>
+          <template v-slot:bottom>
+            <v-divider />
+            <v-row class="pa-4">
+              <v-col cols="12" lg="12">
+                <v-pagination
+                  v-model="pageNumber"
+                  :length="Math.ceil(totalCount / pageSize)"
+                  @input="refreshWords"
+                  variant="outlined"
+                  density="comfortable"
+                />
+              </v-col>
+              <v-col cols="auto">
+                <v-btn variant="outlined" @click="returnToTop">BACK TO TOP</v-btn>
+              </v-col>
+            </v-row>
+          </template>
+        </v-data-table>
+      </v-card-item>
     </v-card>
-  </v-dialog>
+    <AddWordDialog
+      v-model:show="showAddEditor"
+      @submit="addWord"
+      @updated="refreshWords"
+    />
+  </v-container>
 </template>
 
 <script setup lang="ts">
-import { ref, watch } from 'vue';
-import Axios from 'axios';
+import { ref, computed, onMounted, watch } from 'vue';
+import axios from 'axios';
+import TokenService from '~/scripts/tokenService';
+import AddWordDialog from '@/components/AddWordDialog.vue';
 import type { WordDto } from '~/Models/WordDto';
 
-const props = defineProps<{
-  modelValue: boolean;
-  isAdd: boolean;
-  word?: WordDto;
-}>();
+const wordsList = ref<WordDto[]>([]);
+const isWordsListLoading = ref(true);
+const showAddEditor = ref(false);
+const chosenWord = ref<WordDto>();
 
-const emit = defineEmits(['update:modelValue', 'updated']);
+const pageNumber = ref(1);
+const pageSize = ref(10);
+const query = ref('');
 
-const internalModelValue = ref(props.modelValue);
-const word = ref<WordDto>(props.word ? { ...props.word } : { word: '', isCommon: false });
-const valid = ref(false);
-const errorMessage = ref('');
+const userMode = ref(0);
+const tokenService = new TokenService();
 
-const wordRules = [
-  (v: string) => !!v || 'Word is required',
-];
+const isEditMode = computed(() => userMode.value === 1);
+const totalCount = ref(0);
 
-watch(() => props.modelValue, (newVal) => {
-  internalModelValue.value = newVal;
-  if (!newVal) {
-    word.value = props.word ? { ...props.word } : { word: '', isCommon: false };
-    errorMessage.value = '';
-  }
+const isEditUser = computed(() => tokenService.isLoggedIn() && tokenService.canDeleteAndAdd());
+const isLoggedIn = computed(() => tokenService.isLoggedIn());
+
+const headers = computed(() => [
+  { text: 'Word', value: 'word' },
+  { text: 'Is Common', value: 'isCommon' },
+  isEditMode.value ? { text: 'Actions', value: 'actions' } : {},
+]);
+
+useHead({
+  title: 'Word Editor',
+  meta: [{ name: 'description', content: 'Manage your words' }],
 });
 
-watch(internalModelValue, (newVal) => {
-  emit('update:modelValue', newVal);
+watch([query, pageSize], async () => {
+  pageNumber.value = 1;
+  await refreshWords();
 });
 
-async function saveWord() {
-  const isValid = await validateForm();
-  if (!isValid) return;
+watch(pageNumber, async () => {
+  await refreshWords();
+});
 
+async function refreshWords() {
+  wordsList.value = await getWords(query.value, pageNumber.value, pageSize.value);
+}
+
+function resetFilters() {
+  query.value = '';
+  pageSize.value = 10;
+  pageNumber.value = 1;
+  refreshWords();
+}
+
+function returnToTop() {
+  window.scrollTo(0, 0);
+}
+
+async function getWords(query: string = '', pageNumber: number = 1, pageSize: number = 10): Promise<WordDto[]> {
+  let items: WordDto[] = [];
+  isWordsListLoading.value = true;
   try {
-    if (props.isAdd) {
-      await Axios.post('/word/AddWord', word.value);
-    } else {
-      await Axios.put('/word/UpdateWord', word.value);
-    }
-    emit('update:modelValue', false);
-    emit('updated');
+    const response = await axios.get(`word/WordsList?query=${query}&page=${pageNumber}&pageSize=${pageSize}`);
+    const data = response.data;
+    items = data.items.map((item: any) => ({
+      word: item.word,
+      isCommon: item.isCommonWord,
+    }));
+    totalCount.value = data.count;
   } catch (error) {
-    errorMessage.value = (error as any).response?.data || 'An error occurred';
+    console.error('Error fetching words:', error);
+  } finally {
+    isWordsListLoading.value = false;
+  }
+  return items;
+}
+
+async function deleteWord(word: string) {
+  try {
+    await axios.delete(`/word/DeleteWord?word=${word}`);
+    await refreshWords();
+  } catch (error) {
+    console.error('Error deleting word:', error);
   }
 }
 
-async function validateForm() {
-  const form = ref<any>(null);
-  return form.value?.validate() ?? false;
+async function addWord(newWord: { word: string; isCommon: boolean }) {
+  try {
+    const headers = tokenService.generateTokenHeader();
+    await axios.post(
+      "/WordEditor/AddWord",
+      { word: newWord.word, isCommon: newWord.isCommon },
+      { headers }
+    );
+
+    showAddEditor.value = false;
+    await refreshWords();
+  } catch (error) {
+    console.error('Error adding word:', error);
+  }
 }
 
-function closeDialog() {
-  internalModelValue.value = false;
+async function updateItem(item: WordDto) {
+  try {
+    const headers = tokenService.generateTokenHeader();
+    const response = await axios.post(
+      "/WordEditor/SetIsCommon",
+      { word: item.word, isCommon: item.isCommon },
+      { headers }
+    );
+
+    if (response.status === 200) {
+      await refreshWords();
+    }
+  } catch (error) {
+    console.error(error);
+  }
 }
+
+onMounted(refreshWords);
 </script>
+
+<style scoped>
+.v-table {
+  border-radius: 10px 10px 0 0 !important;
+}
+</style>

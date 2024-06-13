@@ -41,6 +41,8 @@ namespace Wordle.Api.Identity
                 if (adminResult.Succeeded)
                 {
                     await userManager.AddToRoleAsync(adminUser, Roles.Admin);
+                    await userManager.AddClaimAsync(adminUser, new System.Security.Claims.Claim(Claims.MasterLevel, "true"));
+                    await userManager.AddClaimAsync(adminUser, new System.Security.Claims.Claim(Claims.BirthDate, adminUser.Birthday.ToString("yyyy-MM-dd")));
                 }
             }
 
@@ -55,7 +57,6 @@ namespace Wordle.Api.Identity
                 };
 
                 IdentityResult youngUserResult = await userManager.CreateAsync(youngUser, "P@ssw0rd123");
-
             }
         }
     }

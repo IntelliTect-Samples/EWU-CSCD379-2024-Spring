@@ -28,11 +28,6 @@ namespace Wordle.Api.Controllers
             return randomWord.Text;
         }
 
-        /// <summary>
-        /// Get the word of the day.
-        /// </summary>
-        /// <param name="offsetInHours">Timezone offset in hours. Default to PST</param>
-        /// <returns></returns>
         [HttpGet("WordOfTheDay")]
         public async Task<string> GetWordOfDay(double offsetInHours = -7.0)
         {
@@ -59,7 +54,7 @@ namespace Wordle.Api.Controllers
         }
 
         [HttpPost("AddWord")]
-        [Authorize(Policy = Authorize.WordMaster)]
+        [Authorize(Policy = Authorize.MasterOfTheUniverse)]
         public async Task<IActionResult> AddWord(WordDto word)
         {
             try
@@ -73,41 +68,17 @@ namespace Wordle.Api.Controllers
             }
         }
 
-        [HttpDelete("{id}")]
-        [Authorize(Policy = Authorize.WordMaster)]
-        public async Task<IActionResult> DeleteWord(int id)
+        [HttpDelete("DeleteWord")]
+        [Authorize(Policy = Authorize.MasterOfTheUniverse)]
+        public async Task<IActionResult> DeleteWord(string word)
         {
-            var wordToDelete = await _wordEditorService.DeleteWordById(id);
+            var wordToDelete = await _wordEditorService.DeleteWordByWordText(word);
             if (wordToDelete == null)
             {
                 return NotFound("Word not found.");
             }
             return NoContent();
         }
-
-        [HttpPut("{id}")]
-        [Authorize(Policy = Authorize.WordMaster)]
-        public async Task<IActionResult> UpdateWord(int id, WordDto wordDto)
-        {
-            if (id != wordDto.WordId)
-            {
-                return BadRequest("Word ID mismatch.");
-            }
-
-            var wordToUpdate = await _wordEditorService.UpdateWord(id, wordDto);
-            if (wordToUpdate == null)
-            {
-                return NotFound("Word not found.");
-            }
-
-            return NoContent();
-        }
-
-        [HttpGet("SearchWords")]
-        public async Task<ActionResult<NewWordDto>> SearchWords(string query = "", int page = 1, int pageSize = 10)
-        {
-            var words = await _wordOfTheDayService.SearchWords(query, page, pageSize);
-            return Ok(words);
-        }
     }
 }
+

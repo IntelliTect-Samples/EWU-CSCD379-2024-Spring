@@ -5,7 +5,7 @@ namespace Wordle.Api.Identity
     public static class Authorize
     {
         public const string EliteAdmin = "EliteAdmin";
-        public const string WordMaster = "WordMaster";
+        public const string MasterOfTheUniverse = "MasterOfTheUniverse";
 
         public static void EliteAdminPolicy(AuthorizationPolicyBuilder policy)
         {
@@ -15,13 +15,13 @@ namespace Wordle.Api.Identity
                 var randomClaim = context.User.Claims.FirstOrDefault(c => c.Type == Claims.Random);
                 if (randomClaim != null && double.TryParse(randomClaim.Value, out double random))
                 {
-                    return random > 0.75;
+                    return random > 0.5;
                 }
                 return false;
             });
         }
 
-        public static void WordMasterPolicy(AuthorizationPolicyBuilder policy)
+        public static void MasterOfTheUniversePolicy(AuthorizationPolicyBuilder policy)
         {
             policy.RequireClaim(Claims.MasterLevel, "true");
             policy.RequireAssertion(context =>

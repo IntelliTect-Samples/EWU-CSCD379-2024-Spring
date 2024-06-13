@@ -1,6 +1,9 @@
 using Wordle.Api.Dtos;
 using Wordle.Api.Models;
 using Microsoft.EntityFrameworkCore;
+using System.Threading.Tasks;
+using System.Linq;
+using System;
 
 public class WordEditorService
 {
@@ -36,6 +39,17 @@ public class WordEditorService
             await _context.SaveChangesAsync();
         }
         return wordToDelete;
+    }
+
+    public async Task<Word?> DeleteWordByWordText(string wordText)
+    {
+        var word = await _context.Words.FirstOrDefaultAsync(w => w.Text == wordText);
+        if (word != null)
+        {
+            _context.Words.Remove(word);
+            await _context.SaveChangesAsync();
+        }
+        return word;
     }
 
     public async Task<Word?> UpdateWord(int id, WordDto wordDto)

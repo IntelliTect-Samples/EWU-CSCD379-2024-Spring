@@ -105,7 +105,7 @@ builder.Services.AddAuthentication(options =>
 builder.Services.AddAuthorization(options =>
 {
     options.AddPolicy(Authorize.EliteAdmin, Authorize.EliteAdminPolicy);
-    options.AddPolicy(Authorize.WordMaster, Authorize.WordMasterPolicy);
+    options.AddPolicy(Authorize.MasterOfTheUniverse, Authorize.MasterOfTheUniversePolicy);
 });
 
 builder.Services.AddScoped<WordOfTheDayService>();
