@@ -11,8 +11,6 @@
           </v-btn>
         </template>
 
-        <v-spacer></v-spacer>
-
         <v-btn @click="showLoginDialog = true">
           <v-icon>mdi-lock</v-icon>
           Login
@@ -145,44 +143,5 @@ onMounted(() => {
 .content {
   position: relative;
   z-index: 1; 
-}
-
-/* Media queries for responsiveness */
-@media (max-width: 1200px) {
-  .v-app-bar, .v-navigation-drawer, .v-main {
-    padding: 10px;
-  }
-}
-
-@media (max-width: 768px) {
-  .v-app-bar, .v-navigation-drawer, .v-main {
-    padding: 5px;
-  }
-
-  .v-app-bar {
-    flex-direction: column;
-  }
-
-  .v-btn {
-    margin: 5px 0;
-  }
-}
-
-@media (max-width: 425px) {
-  .v-app-bar, .v-navigation-drawer, .v-main {
-    padding: 2px;
-  }
-
-  .v-app-bar {
-    flex-direction: column;
-  }
-
-  .v-btn {
-    margin: 3px 0;
-  }
-
-  .v-icon {
-    font-size: 20px;
-  }
 }
 </style>
