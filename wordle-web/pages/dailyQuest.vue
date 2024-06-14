@@ -77,7 +77,6 @@
 <script setup lang="ts">
 import { Game, GameState } from '~/scripts/game';
 import { ref, reactive, onMounted, onUnmounted, watch, provide } from 'vue';
-import { useRoute } from 'vue-router';
 import nuxtStorage from 'nuxt-storage';
 import Axios from 'axios';
 
@@ -87,9 +86,6 @@ const username = ref('');
 const showNameDialog = ref(false);
 const showGuestSaveDialog = ref(false);
 
-const route = useRoute();
-const date = route.params.date; // Extract the date from the route parameters
-
 function playAudio(): void {
   const audio = new Audio('/sounds/magic-spell.mp3');
   audio.volume = 0.8;
@@ -98,14 +94,8 @@ function playAudio(): void {
 
 async function startNewGame() {
   try {
-    let wordOfTheDay;
-    if (date) {
-      const response = await Axios.get(`/word/WordOfTheDay/${date}`);
-      wordOfTheDay = response.data;
-    } else {
-      const response = await Axios.get('/word/WordOfTheDay');
-      wordOfTheDay = response.data;
-    }
+    const response = await Axios.get('/word/WordOfTheDay');
+    const wordOfTheDay = response.data;
     console.log("Word of the Day:", wordOfTheDay); // Debug log to check the word of the day
     await game.startNewGame(wordOfTheDay);
   } catch (error) {

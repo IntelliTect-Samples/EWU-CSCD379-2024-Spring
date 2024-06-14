@@ -7,7 +7,7 @@
     />
     <v-card v-else class="text-center" elevation="2">
       <v-sheet>
-        <v-container class="py-4">
+        <v-container height="150px">
           <v-sheet
             @click="showNameDialog = !showNameDialog"
             class="pa-2 mx-2 mt-2 cursor-pointer"
@@ -31,7 +31,8 @@
           The secret word was: <strong>{{ game.secretWord }}</strong>
         </v-card-text>
         <v-btn variant="outlined" @click="startNewGame">
-          <v-icon size="large" class="mr-2">mdi-restart</v-icon> Restart Quest
+          <v-icon size="large" class="mr-2">mdi-restart</v-icon>
+          Restart Quest
         </v-btn>
       </v-alert>
 
@@ -47,11 +48,7 @@
         <Keyboard />
       </div>
 
-      <v-btn
-        @click="game.submitGuess(); playAudio();"
-        class="mb-5"
-        color="amber darken-2"
-      >
+      <v-btn @click="game.submitGuess(); playAudio();" class="mb-5" color="amber darken-2">
         Cast Spell!
       </v-btn>
       <v-btn
@@ -61,15 +58,8 @@
       >
         View Hall of Heroes
       </v-btn>
-      <NameDialog
-        v-model:show="showNameDialog"
-        v-model:name="username"
-        @entered="enterName"
-      />
-      <GuestSaveDialog
-        v-model="showGuestSaveDialog"
-        @saveGuestScore="postScore"
-      />
+      <NameDialog v-model:show="showNameDialog" v-model:name="username" @entered="enterName" />
+      <GuestSaveDialog v-model="showGuestSaveDialog" @saveGuestScore="postScore" />
     </v-card>
   </v-container>
 </template>
@@ -91,7 +81,7 @@ const route = useRoute();
 const date = route.params.date; // Extract the date from the route parameters
 
 function playAudio(): void {
-  const audio = new Audio('/sounds/magic-spell.mp3');
+  const audio = new Audio('/magic-spell.mp3');
   audio.volume = 0.8;
   audio.play();
 }
@@ -162,48 +152,3 @@ function postScore() {
   });
 }
 </script>
-
-<style scoped>
-.v-container {
-  padding: 10px;
-}
-
-/* Media queries for responsiveness */
-@media (max-width: 1200px) {
-  .v-card {
-    padding: 10px;
-  }
-}
-
-@media (max-width: 768px) {
-  .v-card {
-    padding: 5px;
-  }
-
-  .v-card-title {
-    font-size: 1.2em;
-  }
-
-  .v-btn {
-    margin: 5px 0;
-  }
-}
-
-@media (max-width: 425px) {
-  .v-card {
-    padding: 2px;
-  }
-
-  .v-card-title {
-    font-size: 1em;
-  }
-
-  .v-btn {
-    margin: 3px 0;
-  }
-
-  .v-icon {
-    font-size: 20px;
-  }
-}
-</style>

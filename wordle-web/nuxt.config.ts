@@ -1,10 +1,11 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
-import vuetify, { transformAssetUrls } from 'vite-plugin-vuetify'
+import vuetify, { transformAssetUrls } from 'vite-plugin-vuetify';
+
 export default defineNuxtConfig({
   build: {
     transpile: ['vuetify'],
   },
-  ssr: false,
+  ssr: false,  // Disable Server-Side Rendering
   plugins: [
     '@/plugins/axios.ts'
   ],
@@ -14,8 +15,8 @@ export default defineNuxtConfig({
     (_options, nuxt) => {
       nuxt.hooks.hook('vite:extendConfig', (config) => {
         // @ts-expect-error
-        config.plugins.push(vuetify({ autoImport: true }))
-      })
+        config.plugins.push(vuetify({ autoImport: true }));
+      });
     },
   ],
   vite: {
@@ -24,5 +25,5 @@ export default defineNuxtConfig({
         transformAssetUrls,
       },
     },
-  },
-})
+  }
+});

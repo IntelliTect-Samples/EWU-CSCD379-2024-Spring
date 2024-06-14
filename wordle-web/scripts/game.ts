@@ -10,7 +10,7 @@ export class Game {
   public guessedLetters: Letter[] = [];
 
   private _secretWord: string = "";
-  private set secretWord(value: string){
+  private set secretWord(value: string) {
     this._secretWord = value.toUpperCase();
   }
   public get secretWord(): string {
@@ -31,9 +31,9 @@ export class Game {
     this.guessedLetters = [];
     
     // Get a word
-    if(!word){
-      this.secretWord = await this.getWordOfTheDayFromApi();
-    }else{
+    if (!word) {
+      this.secretWord = await this.getRandomWordFromApi();
+    } else {
       this.secretWord = word;
     }
     
@@ -53,7 +53,7 @@ export class Game {
     return this.guesses[this.guessIndex];
   }
 
-  public setGuessLetters(word: string){
+  public setGuessLetters(word: string) {
     // Loop through the word and add new letters
     this.guess.clear();
     for (let i = 0; i < word.length; i++) {
@@ -116,18 +116,15 @@ export class Game {
     }
   }
 
-  public async getWordOfTheDayFromApi(): Promise<string> {
+  public async getRandomWordFromApi(): Promise<string> {
     try {
-      let wordUrl = "word/wordOfTheDay";
-    
-      const response = await Axios.get(wordUrl);
-
+      const response = await Axios.get('/word/RandomWord');
       console.log("Response from API: " + response.data);
       console.log("Secret Word: " + this.secretWord);
       return response.data;
     } catch (error) {
-      console.error("Error fetching word of the day:", error);
-      return "ERROR" // Probably best to print the error on screen, but this is kind of funny. :)
+      console.error("Error fetching random word:", error);
+      return "ERROR"; // Probably best to print the error on screen, but this is kind of funny. :)
     }
   }
 }

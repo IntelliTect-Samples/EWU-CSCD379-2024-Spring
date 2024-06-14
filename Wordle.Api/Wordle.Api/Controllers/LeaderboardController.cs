@@ -1,9 +1,9 @@
 using Microsoft.AspNetCore.Mvc;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 using Wordle.Api.Dtos;
 using Wordle.Api.Models;
 using Wordle.Api.Services;
-using System.Collections.Generic;
-using System.Threading.Tasks;
 
 namespace Wordle.Api.Controllers
 {
@@ -19,9 +19,10 @@ namespace Wordle.Api.Controllers
         }
 
         [HttpGet("GetScores")]
-        public ActionResult<IEnumerable<PlayerDto>> GetScores()
+        public async Task<ActionResult<IEnumerable<PlayerDto>>> GetScores()
         {
-            return Ok(_leaderboardService.GetTopTenPlayers());
+            var scores = await _leaderboardService.GetTopTenPlayers();
+            return Ok(scores);
         }
 
         [HttpPost("PostScore")]
@@ -29,6 +30,18 @@ namespace Wordle.Api.Controllers
         {
             await _leaderboardService.SavePlayerScore(player);
             return Ok();
+        }
+
+        [HttpGet("GetDailyStats/{date}")]
+        public async Task<ActionResult<DailyStatsDto>> GetDailyStats(string date)
+        {
+            if (!DateOnly.TryParse(date, out var parsedDate))
+            {
+                return BadRequest("Invalid date format.");
+            }
+
+            var stats = await _leaderboardService.GetDailyStatsAsync(parsedDate);
+            return Ok(stats);
         }
     }
 }

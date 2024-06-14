@@ -9,6 +9,8 @@ namespace Wordle.Api.Models
         public DbSet<Game> Games { get; set; }
         public DbSet<Word> Words { get; set; }
         public DbSet<Player> Players { get; set; }
+        public DbSet<DailyStats> DailyStats { get; set; } // Add this line
+
         public WordleDbContext(DbContextOptions<WordleDbContext> options) : base(options)
         {
         }
