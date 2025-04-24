@@ -1,5 +1,5 @@
 # Lectures
-- [Recording Links](https://intellitectsp.sharepoint.com/:f:/r/sites/EWU-CSCD379-2024-Spring/Shared%20Documents/General/Recordings?csf=1&web=1&e=DcoaGK)
+- [Recording Links](https://intellitectsp.sharepoint.com/:f:/s/IntelliTect/EvGdLADNFW9CvOrujRXr8vYBB5XA1UcVjoL7xTdwagu9sQ)
 - This is an MS Teams link and everyone in the class should have access. If not, please contact an instructor.
 
 ## TENTATIVE Lecture Schedule
